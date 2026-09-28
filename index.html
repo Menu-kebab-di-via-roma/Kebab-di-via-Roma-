@@ -41,6 +41,27 @@
       justify-content: center; 
       gap: 5px; 
     }
+
+    /* Language Switcher */
+    .lang-switch-container {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+    }
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .lang-btn.active {
+      background: white;
+      color: var(--primary);
+    }
     
     .container { max-width: 600px; margin: 0 auto; padding: 15px; }
     
@@ -72,6 +93,26 @@
       color: #008176;
     }
     .type-btn small { display: block; font-size: 0.7rem; color: #666; font-weight: normal; }
+
+    .asporto-info-box {
+      background: #fdf2f2;
+      border: 1px solid var(--primary);
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    .instructions-notice {
+      background: #fff8e7;
+      border-left: 4px solid var(--secondary);
+      color: #8a6d3b;
+      padding: 8px 12px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
 
     .category-nav {
       display: flex;
@@ -236,6 +277,10 @@
 <body>
 
 <header>
+  <div class="lang-switch-container">
+    <button class="lang-btn active" id="lang-it" onclick="switchLanguage('it')">IT</button>
+    <button class="lang-btn" id="lang-en" onclick="switchLanguage('en')">EN</button>
+  </div>
   <h1>Kebab di Via Roma</h1>
   <p>
     Via Roma 29b, Jesi (AN) | 
@@ -249,49 +294,62 @@
 <div class="container">
   <div class="order-type-selector">
     <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
-      Asporto
-      <small>(-0.50€ su TUTTO)</small>
+      <span data-i18n="asporto">Asporto</span>
+      <small data-i18n="asportoSub">(-0.50€ su TUTTO)</small>
     </div>
     <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
-      Consegna
-      <small>Sab & Dom > 17:00</small>
+      <span data-i18n="consegna">Consegna</span>
+      <small data-i18n="consegnaSub">Sab & Dom > 17:00</small>
     </div>
     <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
-      Note Deliveroo
-      <small>Personalizza Ordine</small>
+      <span data-i18n="deliveroo">Note Deliveroo</span>
+      <small data-i18n="deliverooSub">Personalizza Ordine</small>
+    </div>
+  </div>
+
+  <!-- Asporto Info Box -->
+  <div id="asporto-info-box" class="asporto-info-box">
+    <label><strong data-i18n="asportoNameLabel">Nome e Cognome: *</strong></label>
+    <input type="text" id="asporto-cust-name" class="input-field" placeholder="Es: Mario Rossi">
+
+    <label><strong data-i18n="asportoTimeLabel">Orario di Ritiro: *</strong></label>
+    <input type="time" id="asporto-time" class="input-field">
+
+    <div class="instructions-notice" data-i18n="customNotice">
+      💡 Personalizza ogni prodotto con "Con" o "Senza" ingredienti.
     </div>
   </div>
 
   <!-- Deliveroo Specific Instruction Box -->
   <div id="deliveroo-info-box" class="deliveroo-info-box" style="display: none;">
-    <strong>ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO</strong><br>
-    Questo strumento serve <u>solo per inviare le preferenze</u> (salse e ingredienti) del tuo ordine effettuato su Deliveroo.
+    <strong data-i18n="delivTitle">ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO</strong><br>
+    <span data-i18n="delivSub">Questo strumento serve solo per inviare le preferenze (salse e ingredienti) del tuo ordine effettuato su Deliveroo.</span>
     <br><br>
-    <label><strong>Nome dell'account Deliveroo o Numero Ordine: *</strong></label>
+    <label><strong data-i18n="delivNameLabel">Nome dell'account Deliveroo o Numero Ordine: *</strong></label>
     <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi (Nome su Deliveroo)">
   </div>
 
   <!-- Consegna Info Box -->
   <div id="delivery-info-box" class="delivery-info" style="display: none;">
-    <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;">
+    <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;" data-i18n="deliveryWarning">
       ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puoi scegliere "Asporto" o "Note Deliveroo".
     </div>
     <div id="delivery-inputs">
-      <label><strong>Nome e Cognome: *</strong></label>
+      <label><strong data-i18n="deliveryNameLabel">Nome e Cognome: *</strong></label>
       <input type="text" id="cust-name" class="input-field" placeholder="Inserisci il tuo nome e cognome">
 
-      <label><strong>Indirizzo Completo: *</strong></label>
+      <label><strong data-i18n="deliveryAddressLabel">Indirizzo Completo: *</strong></label>
       <input type="text" id="cust-address" class="input-field" placeholder="Es: Via San Giuseppe 29b, Jesi">
     </div>
   </div>
 
   <div class="category-nav">
-    <button class="cat-btn active" onclick="filterCategory('all', this)">Tutti</button>
+    <button class="cat-btn active" onclick="filterCategory('all', this)" data-i18n="catAll">Tutti</button>
     <button class="cat-btn" onclick="filterCategory('kebab', this)">Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('non-kebab', this)">Non Solo Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('fritti', this)">Fritti</button>
-    <button class="cat-btn" onclick="filterCategory('bevande', this)">Bevande</button>
-    <button class="cat-btn" onclick="filterCategory('alcolici', this)">Alcolici</button>
+    <button class="cat-btn" onclick="filterCategory('non-kebab', this)" data-i18n="catNonKebab">Non Solo Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('fritti', this)" data-i18n="catFritti">Fritti</button>
+    <button class="cat-btn" onclick="filterCategory('bevande', this)" data-i18n="catBevande">Bevande</button>
+    <button class="cat-btn" onclick="filterCategory('alcolici', this)" data-i18n="catAlcolici">Alcolici</button>
   </div>
 
   <div id="menu-container"></div>
@@ -299,15 +357,104 @@
 
 <div class="bottom-bar">
   <div id="total-price-box">
-    <span style="font-size: 0.8rem; color: #666;">Totale:</span><br>
+    <span style="font-size: 0.8rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
-  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="sendWhatsAppOrder()">
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="sendWhatsAppOrder()" data-i18n="btnOrder">
     ORDINA ORA SU WHATSAPP
   </button>
 </div>
 
 <script>
+const translations = {
+  it: {
+    asporto: "Asporto",
+    asportoSub: "(-0.50€ su TUTTO)",
+    consegna: "Consegna",
+    consegnaSub: "Sab & Dom > 17:00",
+    deliveroo: "Note Deliveroo",
+    deliverooSub: "Personalizza Ordine",
+    asportoNameLabel: "Nome e Cognome: *",
+    asportoTimeLabel: "Orario di Ritiro: *",
+    customNotice: "💡 Personalizza ogni prodotto scegliendo 'Con' o 'Senza' ingredienti.",
+    delivTitle: "ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO",
+    delivSub: "Questo strumento serve solo per inviare le preferenze (salse e ingredienti) del tuo ordine effettuato su Deliveroo.",
+    delivNameLabel: "Nome dell'account Deliveroo o Numero Ordine: *",
+    deliveryWarning: "⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.",
+    deliveryNameLabel: "Nome e Cognome: *",
+    deliveryAddressLabel: "Indirizzo Completo: *",
+    catAll: "Tutti",
+    catNonKebab: "Non Solo Kebab",
+    catFritti: "Fritti",
+    catBevande: "Bevande",
+    catAlcolici: "Alcolici",
+    totalLabel: "Totale:",
+    btnOrder: "ORDINA ORA SU WHATSAPP",
+    btnDeliverooOrder: "INVIA NOTE DELIVEROO SU WHATSAPP",
+    sauces: "Salse:",
+    veggies: "Verdure:",
+    extras: "Extra:",
+    customize: "Personalizza",
+    with: "Con",
+    without: "Senza"
+  },
+  en: {
+    asporto: "Takeaway",
+    asportoSub: "(-0.50€ on EVERYTHING)",
+    consegna: "Delivery",
+    consegnaSub: "Sat & Sun > 17:00",
+    deliveroo: "Deliveroo Notes",
+    deliverooSub: "Customize Order",
+    asportoNameLabel: "Full Name: *",
+    asportoTimeLabel: "Pickup Time: *",
+    customNotice: "💡 Customize each item by selecting 'With' or 'Without' ingredients.",
+    delivTitle: "ℹ️ DELIVEROO ORDER CUSTOMIZATION",
+    delivSub: "Use this tool only to send ingredient/sauce preferences for your Deliveroo order.",
+    delivNameLabel: "Deliveroo Account Name or Order #: *",
+    deliveryWarning: "⚠️ Attention: Home delivery is available only Saturday and Sunday after 17:00.",
+    deliveryNameLabel: "Full Name: *",
+    deliveryAddressLabel: "Full Address: *",
+    catAll: "All",
+    catNonKebab: "Not Only Kebab",
+    catFritti: "Sides",
+    catBevande: "Drinks",
+    catAlcolici: "Alcoholic",
+    totalLabel: "Total:",
+    btnOrder: "ORDER NOW ON WHATSAPP",
+    btnDeliverooOrder: "SEND DELIVEROO NOTES ON WHATSAPP",
+    sauces: "Sauces:",
+    veggies: "Vegetables:",
+    extras: "Extras:",
+    customize: "Customize",
+    with: "With",
+    without: "Without"
+  }
+};
+
+let currentLang = 'it';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.getElementById('lang-it').classList.toggle('active', lang === 'it');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+
+  const submitBtn = document.getElementById('whatsapp-submit-btn');
+  if (state.orderType === 'deliveroo') {
+    submitBtn.innerText = translations[lang].btnDeliverooOrder;
+  } else {
+    submitBtn.innerText = translations[lang].btnOrder;
+  }
+
+  renderMenu(currentFilteredItems || menuItems);
+}
+
 const ingredientConfig = {
   salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Ketchup", "Maionese"],
   verdure: ["Insalata", "Verza e Carote"],
@@ -374,6 +521,7 @@ function setOrderType(type) {
   const btnConsegna = document.getElementById('btn-consegna');
   const btnDeliveroo = document.getElementById('btn-deliveroo');
   const totalBox = document.getElementById('total-price-box');
+  const asportoInfoBox = document.getElementById('asporto-info-box');
   const deliveryInfoBox = document.getElementById('delivery-info-box');
   const deliverooInfoBox = document.getElementById('deliveroo-info-box');
   const submitBtn = document.getElementById('whatsapp-submit-btn');
@@ -382,16 +530,16 @@ function setOrderType(type) {
   btnConsegna.classList.toggle('active', type === 'consegna');
   btnDeliveroo.classList.toggle('deliveroo-active', type === 'deliveroo');
 
+  asportoInfoBox.style.display = type === 'asporto' ? 'block' : 'none';
+  deliveryInfoBox.style.display = type === 'consegna' ? 'block' : 'none';
+  deliverooInfoBox.style.display = type === 'deliveroo' ? 'block' : 'none';
+
   if (type === 'deliveroo') {
     totalBox.style.display = 'none';
-    deliveryInfoBox.style.display = 'none';
-    deliverooInfoBox.style.display = 'block';
-    submitBtn.innerHTML = 'INVIA NOTE DELIVEROO SU WHATSAPP';
+    submitBtn.innerText = translations[currentLang].btnDeliverooOrder;
   } else {
     totalBox.style.display = 'block';
-    deliverooInfoBox.style.display = 'none';
-    deliveryInfoBox.style.display = type === 'consegna' ? 'block' : 'none';
-    submitBtn.innerHTML = 'ORDINA ORA SU WHATSAPP';
+    submitBtn.innerText = translations[currentLang].btnOrder;
   }
 
   renderMenu(currentFilteredItems || menuItems);
@@ -413,277 +561,4 @@ function filterCategory(cat, btn) {
   if (cat === 'all') {
     currentFilteredItems = menuItems;
   } else {
-    currentFilteredItems = menuItems.filter(i => i.cat === cat);
-  }
-  renderMenu(currentFilteredItems);
-}
-
-function renderMenu(items) {
-  const container = document.getElementById('menu-container');
-  container.innerHTML = '';
-
-  items.forEach(item => {
-    const activePrice = getItemPrice(item).toFixed(2);
-    const cartInstances = state.cart[item.id] || [];
-    const qty = cartInstances.length;
-
-    // Show price only if NOT deliveroo
-    const priceDisplay = state.orderType === 'deliveroo' ? '' : `<div class="item-price">€ ${activePrice}</div>`;
-
-    let itemHtml = `
-      <div class="menu-item">
-        <div class="item-header">
-          <div>
-            <div class="item-title">${item.name}</div>
-            ${priceDisplay}
-          </div>
-          <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
-            <span>${qty}</span>
-            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-          </div>
-        </div>
-    `;
-
-    if (item.customizable && qty > 0) {
-      cartInstances.forEach((inst, idx) => {
-        itemHtml += renderCustomizer(item.id, idx, inst);
-      });
-    }
-
-    itemHtml += `</div>`;
-    container.innerHTML += itemHtml;
-  });
-}
-
-function renderCustomizer(itemId, index, instData) {
-  return `
-    <div class="unit-customizer">
-      <div class="unit-controls">
-        <div class="unit-title">Personalizza #${index + 1}</div>
-        <div class="mode-switch">
-          <button class="mode-btn ${instData.mode === 'senza' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'senza')">Senza</button>
-          <button class="mode-btn ${instData.mode === 'con' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'con')">Con</button>
-        </div>
-      </div>
-      
-      <div class="ingredient-line">
-        <span class="line-label">Salse:</span>
-        <div class="chip-group">
-          ${ingredientConfig.salse.map(s => {
-            const isSelected = instData.ingredients.includes(s);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${s}')">${s}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-
-      <div class="ingredient-line">
-        <span class="line-label">Verdure:</span>
-        <div class="chip-group">
-          ${ingredientConfig.verdure.map(v => {
-            const isSelected = instData.ingredients.includes(v);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${v}')">${v}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-
-      <div class="ingredient-line">
-        <span class="line-label">Extra:</span>
-        <div class="chip-group">
-          ${ingredientConfig.extra.map(e => {
-            const isSelected = instData.ingredients.includes(e);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${e}')">${e}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function updateQty(itemId, delta) {
-  if (!state.cart[itemId]) state.cart[itemId] = [];
-  
-  if (delta > 0) {
-    state.cart[itemId].push({ mode: 'senza', ingredients: [] });
-  } else if (delta < 0 && state.cart[itemId].length > 0) {
-    state.cart[itemId].pop();
-  }
-  
-  if (state.cart[itemId].length === 0) delete state.cart[itemId];
-
-  renderMenu(currentFilteredItems || menuItems);
-  updateTotal();
-}
-
-function setInstanceMode(itemId, instanceIdx, mode) {
-  const instance = state.cart[itemId][instanceIdx];
-  if(instance.mode !== mode) {
-    instance.mode = mode;
-    instance.ingredients = [];
-    renderMenu(currentFilteredItems || menuItems);
-  }
-}
-
-function toggleIngredient(itemId, instanceIdx, value) {
-  const instance = state.cart[itemId][instanceIdx];
-  const list = instance.ingredients;
-  const pos = list.indexOf(value);
-  
-  if (pos > -1) {
-    list.splice(pos, 1);
-  } else {
-    list.push(value);
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-}
-
-function isDeliveryAllowed() {
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-  const isWeekend = (day === 0 || day === 6);
-  const isAfter17 = hour >= 17;
-
-  return isWeekend && isAfter17;
-}
-
-function checkDeliveryAvailability() {
-  const allowed = isDeliveryAllowed();
-  const warning = document.getElementById('time-warning');
-  const inputs = document.getElementById('delivery-inputs');
-
-  if (!allowed) {
-    warning.style.display = 'block';
-    inputs.style.display = 'none';
-  } else {
-    warning.style.display = 'none';
-    inputs.style.display = 'block';
-  }
-}
-
-function updateTotal() {
-  if (state.orderType === 'deliveroo') return;
-
-  let subtotal = 0;
-  Object.keys(state.cart).forEach(itemId => {
-    const item = menuItems.find(i => i.id === itemId);
-    const price = getItemPrice(item);
-    subtotal += price * state.cart[itemId].length;
-  });
-
-  document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
-}
-
-function sendWhatsAppOrder() {
-  let hasItems = false;
-  Object.keys(state.cart).forEach(itemId => {
-    if (state.cart[itemId].length > 0) hasItems = true;
-  });
-
-  if (!hasItems) {
-    alert("Per favore, seleziona i prodotti da personalizzare.");
-    return;
-  }
-
-  const isDeliveroo = state.orderType === 'deliveroo';
-
-  if (isDeliveroo) {
-    const delivName = document.getElementById('deliv-cust-name').value.trim();
-    if (!delivName) {
-      alert("Per favore, inserisci il tuo nome su Deliveroo o il numero dell'ordine.");
-      return;
-    }
-  }
-
-  if (state.orderType === 'consegna') {
-    if (!isDeliveryAllowed()) {
-      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.");
-      return;
-    }
-
-    const custName = document.getElementById('cust-name').value.trim();
-    const custAddress = document.getElementById('cust-address').value.trim();
-
-    if (!custName || !custAddress) {
-      alert("Per favore, inserisci sia il Nome e Cognome che l'Indirizzo Completo.");
-      return;
-    }
-  }
-
-  let text = "";
-  if (isDeliveroo) {
-    const delivName = document.getElementById('deliv-cust-name').value.trim();
-    text += `*NOTE E PERSONALIZZAZIONE ORDINE DELIVEROO*\n`;
-    text += `Nome/Ordine Deliveroo: *${delivName}*\n`;
-    text += `_(Nota: Questo non è un nuovo ordine, ma le istruzioni per l'ordine Deliveroo)_\n`;
-  } else {
-    let orderTypeTitle = state.orderType === 'asporto' ? 'Asporto (-0.50€)' : 'Consegna a Domicilio';
-    text += `*NUOVO ORDINE - Kebab di Via Roma*\n`;
-    text += `Tipo: *${orderTypeTitle}*\n`;
-
-    if (state.orderType === 'consegna') {
-      const custName = document.getElementById('cust-name').value.trim();
-      const custAddress = document.getElementById('cust-address').value.trim();
-      text += `Cliente: *${custName}*\n`;
-      text += `Indirizzo: *${custAddress}*\n`;
-    }
-  }
-
-  text += `-----------------------------------\n`;
-
-  let totalSum = 0;
-
-  Object.keys(state.cart).forEach(itemId => {
-    const item = menuItems.find(i => i.id === itemId);
-    const instances = state.cart[itemId];
-    const unitPrice = getItemPrice(item);
-    const qty = instances.length;
-
-    if (qty > 0) {
-      const itemTotalPrice = unitPrice * qty;
-      totalSum += itemTotalPrice;
-
-      const priceText = isDeliveroo ? '' : ` (€${itemTotalPrice.toFixed(2)})`;
-
-      if (item.customizable) {
-        text += `*${qty}x ${item.name}*${priceText}:\n`;
-        instances.forEach((inst, idx) => {
-          const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
-          const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
-          text += `  ${idx + 1}. ${modeStr}: ${ingsStr}\n`;
-        });
-      } else {
-        text += `*${qty}x ${item.name}*${priceText}\n`;
-      }
-    }
-  });
-
-  text += `-----------------------------------\n`;
-  
-  if (!isDeliveroo) {
-    text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
-  }
-
-  const encodedText = encodeURIComponent(text);
-  const whatsappUrl = `https://wa.me/393932228224?text=${encodedText}`;
-  window.open(whatsappUrl, '_blank');
-}
-
-window.onload = init;
-</script>
-
-</body>
-</html>
+    currentFilteredItems = menuItems.f
