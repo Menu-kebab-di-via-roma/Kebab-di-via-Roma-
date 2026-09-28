@@ -272,6 +272,105 @@
       align-items: center;
       gap: 8px;
     }
+
+    /* Modal / Form Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border: 2px solid #e0e0e0;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .receipt-header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+      text-align: center;
+    }
+    .receipt-header h2 { margin: 0; font-size: 1.2rem; }
+    .receipt-header p { margin: 3px 0 0; font-size: 0.8rem; opacity: 0.8; }
+    .receipt-body {
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .receipt-section {
+      background: #f8f9fa;
+      border: 1px dashed #ccc;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .receipt-section-title {
+      font-weight: bold;
+      color: var(--primary);
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    .receipt-total {
+      text-align: right;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 10px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      padding: 15px 20px;
+      background: #f1f3f5;
+      border-radius: 0 0 10px 10px;
+    }
+    .btn-cancel {
+      flex: 1;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-confirm {
+      flex: 2;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
   </style>
 </head>
 <body>
@@ -360,9 +459,28 @@
     <span style="font-size: 0.8rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
-  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="sendWhatsAppOrder()" data-i18n="btnOrder">
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()" data-i18n="btnOrder">
     ORDINA ORA SU WHATSAPP
   </button>
+</div>
+
+<!-- CONFIRMATION MODAL (FORM / RECEIPT PREVIEW) -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-card">
+    <div class="receipt-header">
+      <h2>📋 Conferma Ordine / Order Summary</h2>
+      <p>Controlla i dettagli prima di inviare su WhatsApp</p>
+    </div>
+    <div class="receipt-body" id="modal-receipt-body">
+      <!-- Dynamic Receipt Content -->
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeConfirmationModal()">✏️ Modifica</button>
+      <button class="btn-confirm" onclick="sendWhatsAppOrder()">
+        ✅ Invia su WhatsApp
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -389,8 +507,8 @@ const translations = {
     catBevande: "Bevande",
     catAlcolici: "Alcolici",
     totalLabel: "Totale:",
-    btnOrder: "ORDINA ORA SU WHATSAPP",
-    btnDeliverooOrder: "INVIA NOTE DELIVEROO SU WHATSAPP",
+    btnOrder: "VERIFICA E ORDINA",
+    btnDeliverooOrder: "VERIFICA NOTE DELIVEROO",
     sauces: "Salse:",
     veggies: "Verdure:",
     extras: "Extra:",
@@ -420,8 +538,8 @@ const translations = {
     catBevande: "Drinks",
     catAlcolici: "Alcoholic",
     totalLabel: "Total:",
-    btnOrder: "ORDER NOW ON WHATSAPP",
-    btnDeliverooOrder: "SEND DELIVEROO NOTES ON WHATSAPP",
+    btnOrder: "CHECK AND ORDER",
+    btnDeliverooOrder: "CHECK DELIVEROO NOTES",
     sauces: "Sauces:",
     veggies: "Vegetables:",
     extras: "Extras:",
@@ -736,14 +854,15 @@ function updateTotal() {
   document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
 }
 
-function sendWhatsAppOrder() {
+// ----------------- CONFIRMATION MODAL FUNCTIONS -----------------
+function openConfirmationModal() {
   const keys = Object.keys(state.cart);
   if (keys.length === 0) {
     alert(currentLang === 'it' ? "Seleziona almeno un prodotto!" : "Please select at least one item!");
     return;
   }
 
-  let text = "";
+  let customerDetailsHtml = "";
 
   if (state.orderType === 'asporto') {
     const name = document.getElementById('asporto-cust-name').value.trim();
@@ -752,7 +871,11 @@ function sendWhatsAppOrder() {
       alert(currentLang === 'it' ? "Inserisci il tuo Nome e l'Orario di Ritiro!" : "Please enter your Name and Pickup Time!");
       return;
     }
-    text += `*ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n\n`;
+    customerDetailsHtml = `
+      <strong>Tipo:</strong> ASPORTO<br>
+      <strong>👤 Nome:</strong> ${name}<br>
+      <strong>⏰ Orario Ritiro:</strong> ${time}
+    `;
   } else if (state.orderType === 'consegna') {
     const name = document.getElementById('cust-name').value.trim();
     const address = document.getElementById('cust-address').value.trim();
@@ -760,17 +883,100 @@ function sendWhatsAppOrder() {
       alert(currentLang === 'it' ? "Inserisci Nome e Indirizzo!" : "Please enter Name and Address!");
       return;
     }
-    text += `*ORDINE CONSEGNA*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n\n`;
+    customerDetailsHtml = `
+      <strong>Tipo:</strong> CONSEGNA A DOMICILIO<br>
+      <strong>👤 Nome:</strong> ${name}<br>
+      <strong>📍 Indirizzo:</strong> ${address}
+    `;
   } else {
     const name = document.getElementById('deliv-cust-name').value.trim();
     if (!name) {
       alert(currentLang === 'it' ? "Inserisci il nome account Deliveroo!" : "Please enter Deliveroo account name!");
       return;
     }
+    customerDetailsHtml = `
+      <strong>Tipo:</strong> NOTE DELIVEROO<br>
+      <strong>👤 Account:</strong> ${name}
+    `;
+  }
+
+  // Summary Table HTML
+  let totalSummaryHtml = "<ul style='margin: 5px 0; padding-left: 20px;'>";
+  keys.forEach(id => {
+    const item = menuItems.find(i => i.id === id);
+    const qty = state.cart[id].length;
+    totalSummaryHtml += `<li><strong>${qty}x</strong> ${item.name}</li>`;
+  });
+  totalSummaryHtml += "</ul>";
+
+  // Step-by-Step Item Details HTML
+  let stepDetailsHtml = "";
+  keys.forEach(id => {
+    const item = menuItems.find(i => i.id === id);
+    const instances = state.cart[id];
+    
+    stepDetailsHtml += `<div style='margin-top: 8px;'><strong>📌 ${item.name}</strong> (Totale: ${instances.length}):</div>`;
+    stepDetailsHtml += "<ol style='margin: 3px 0 8px; padding-left: 20px;'>";
+    instances.forEach((inst) => {
+      let ingText = inst.ingredients.length > 0 
+        ? `<span style='color: var(--primary); font-weight: bold;'>${inst.mode.toUpperCase()}</span>: ${inst.ingredients.join(', ')}`
+        : `<span style='color: #777;'>(Completo / Standard)</span>`;
+      stepDetailsHtml += `<li>${item.name} &rarr; ${ingText}</li>`;
+    });
+    stepDetailsHtml += "</ol>";
+  });
+
+  let receiptHtml = `
+    <div class="receipt-section">
+      <div class="receipt-section-title">📌 Dettagli Cliente / Info</div>
+      ${customerDetailsHtml}
+    </div>
+
+    <div class="receipt-section">
+      <div class="receipt-section-title">📊 Totale Prodotti / Summary</div>
+      ${totalSummaryHtml}
+    </div>
+
+    <div class="receipt-section">
+      <div class="receipt-section-title">📝 Dettagli Specifici / Step-by-Step</div>
+      ${stepDetailsHtml}
+    </div>
+  `;
+
+  if (state.orderType !== 'deliveroo') {
+    receiptHtml += `
+      <div class="receipt-total">
+        Totale Finale: ${document.getElementById('grand-total').innerText}
+      </div>
+    `;
+  }
+
+  document.getElementById('modal-receipt-body').innerHTML = receiptHtml;
+  document.getElementById('confirm-modal').style.display = 'flex';
+}
+
+function closeConfirmationModal() {
+  document.getElementById('confirm-modal').style.display = 'none';
+}
+
+function sendWhatsAppOrder() {
+  const keys = Object.keys(state.cart);
+  let text = "";
+
+  if (state.orderType === 'asporto') {
+    const name = document.getElementById('asporto-cust-name').value.trim();
+    const time = document.getElementById('asporto-time').value;
+    text += `*ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n\n`;
+  } else if (state.orderType === 'consegna') {
+    const name = document.getElementById('cust-name').value.trim();
+    const address = document.getElementById('cust-address').value.trim();
+    text += `*ORDINE CONSEGNA*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n\n`;
+  } else {
+    const name = document.getElementById('deliv-cust-name').value.trim();
     text += `*NOTE ORDINE DELIVEROO*\n👤 Account: ${name}\n\n`;
   }
 
-  // 1. کل تعداد کی سمری (Total Quantity Summary)
+  // 1. Total Quantity Summary
   text += "*RIEPILOGO PRODOTTI (Totale):*\n";
   keys.forEach(id => {
     const item = menuItems.find(i => i.id === id);
@@ -781,7 +987,7 @@ function sendWhatsAppOrder() {
   text += "\n----------------------------------------\n";
   text += "*DETTAGLI ORDINE (Specifiche):*\n";
 
-  // 2. نمبر وار الگ الگ تفصیل (Step by step detail per item)
+  // 2. Step by step detail per item
   keys.forEach(id => {
     const item = menuItems.find(i => i.id === id);
     const instances = state.cart[id];
@@ -805,6 +1011,8 @@ function sendWhatsAppOrder() {
 
   const phone = "393932228224";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  
+  closeConfirmationModal();
   window.open(url, '_blank');
 }
 
