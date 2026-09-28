@@ -770,21 +770,37 @@ function sendWhatsAppOrder() {
     text += `*NOTE ORDINE DELIVEROO*\n👤 Account: ${name}\n\n`;
   }
 
-  text += "*PRODOTTI:*\n";
+  // 1. کل تعداد کی سمری (Total Quantity Summary)
+  text += "*RIEPILOGO PRODOTTI (Totale):*\n";
+  keys.forEach(id => {
+    const item = menuItems.find(i => i.id === id);
+    const qty = state.cart[id].length;
+    text += `• ${qty}x ${item.name}\n`;
+  });
+
+  text += "\n----------------------------------------\n";
+  text += "*DETTAGLI ORDINE (Specifiche):*\n";
+
+  // 2. نمبر وار الگ الگ تفصیل (Step by step detail per item)
   keys.forEach(id => {
     const item = menuItems.find(i => i.id === id);
     const instances = state.cart[id];
+    
+    text += `\n📌 *${item.name}* (Totale: ${instances.length}):\n`;
     instances.forEach((inst, idx) => {
-      text += `• ${item.name}`;
+      text += `   ${idx + 1}. ${item.name}`;
       if (inst.ingredients.length > 0) {
-        text += ` (${inst.mode.toUpperCase()}: ${inst.ingredients.join(', ')})`;
+        text += ` -> *${inst.mode.toUpperCase()}*: ${inst.ingredients.join(', ')}`;
+      } else {
+        text += ` -> (Completo / Standard)`;
       }
       text += `\n`;
     });
   });
 
   if (state.orderType !== 'deliveroo') {
-    text += `\n*Totale:* ${document.getElementById('grand-total').innerText}`;
+    text += `\n----------------------------------------\n`;
+    text += `💰 *TOTALE FINALE:* ${document.getElementById('grand-total').innerText}`;
   }
 
   const phone = "393932228224";
