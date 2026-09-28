@@ -1,441 +1,187 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kebab di Via Roma - Jesi</title>
-  <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f8f9fa; margin: 0; padding: 0; color: #333; }
-    .header { background-color: #1a1a1a; color: #fff; text-align: center; padding: 20px 10px; }
-    .header h1 { margin: 0; font-size: 26px; color: #ffcc00; }
-    .header p { margin: 5px 0; font-size: 14px; color: #ddd; }
-    .container { max-width: 600px; margin: 0 auto; padding: 15px; }
-    
-    /* Promo Banner */
-    .promo-card { background: linear-gradient(135deg, #054d28, #0b2e1b); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px; border: 2px solid #d4af37; text-align: center; color: #fff; }
-    .promo-header { padding: 12px; background: rgba(0,0,0,0.3); }
-    .promo-title { font-size: 22px; font-weight: bold; color: #ffd700; margin: 0; text-transform: uppercase; }
-    .promo-sub { font-size: 16px; color: #fff; margin-top: 4px; font-weight: 600; }
-    .promo-img { width: 100%; max-height: 250px; object-fit: cover; display: block; }
-    .promo-body { padding: 12px; }
-    .promo-desc { font-size: 14px; margin-bottom: 8px; }
-    .promo-price { font-size: 20px; font-weight: bold; color: #ffd700; background: rgba(0,0,0,0.4); display: inline-block; padding: 4px 12px; border-radius: 20px; border: 1px solid #ffd700; }
-    
-    /* Category Buttons */
-    .category-container { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-    .cat-btn { flex: 1; min-width: 100px; padding: 10px 5px; background: #e0e0e0; border: none; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; text-align: center; color: #333; white-space: nowrap; }
-    .cat-btn.active { background: #054d28; color: #fff; }
-
-    /* Menu Section */
-    .menu-category { display: none; }
-    .menu-category.active { display: block; }
-    .menu-item { background: #fff; border-radius: 8px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .item-header { display: flex; justify-content: space-between; align-items: center; }
-    .item-title { font-size: 16px; font-weight: bold; color: #222; }
-    .item-desc { font-size: 12px; color: #666; margin: 4px 0; }
-    .item-price { color: #054d28; font-weight: bold; font-size: 16px; }
-    .qty-input { width: 55px; padding: 5px; text-align: center; border: 1px solid #ccc; border-radius: 5px; font-weight: bold; }
-    
-    /* Customization Options */
-    .options-box { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ddd; display: none; }
-    .options-title { font-size: 12px; font-weight: bold; color: #054d28; margin-bottom: 6px; }
-    .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; }
-    .checkbox-grid label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
-
-    /* Form & Button */
-    .section-title { border-bottom: 2px solid #054d28; padding-bottom: 4px; color: #054d28; font-size: 18px; margin-top: 25px; text-transform: uppercase; }
-    .input-group { margin-top: 12px; }
-    .input-group label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 13px; }
-    .input-group input, .input-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-    .btn-order { background-color: #25d366; color: white; border: none; width: 100%; padding: 14px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
-    .footer-info { text-align: center; margin-top: 20px; font-size: 12px; color: #777; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non Solo Kebab - Menu Online</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 15px; background-color: #f4f4f4; color: #333; }
+        .header { text-align: center; background: #8b0000; color: white; padding: 15px; border-radius: 8px; }
+        .header p { font-size: 0.9em; margin: 5px 0 0; }
+        .order-type-tabs { display: flex; gap: 10px; margin: 15px 0; justify-content: center; }
+        .order-tab { flex: 1; text-align: center; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .order-tab.active { border-color: #8b0000; color: #8b0000; font-weight: bold; }
+        .tab-icon { font-size: 1.6em; display: block; margin-bottom: 5px; }
+        .category-buttons { display: flex; gap: 8px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap; }
+        .category-btn { padding: 10px 15px; background: #eee; color: #555; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.9em; transition: 0.2s; }
+        .category-btn.active { background: #8b0000; color: white; }
+        .menu-section { display: none; }
+        .menu-section.active { display: block; }
+        .item-card { background: white; padding: 12px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; gap: 12px; align-items: center; }
+        .item-img { width: 70px; height: 70px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: #eee; }
+        .item-details { flex-grow: 1; }
+        .item-title { font-weight: bold; font-size: 1em; color: #222; }
+        .item-price-container { margin-top: 5px; }
+        .item-price-original { font-weight: bold; color: #8b0000; font-size: 1em; }
+        .item-price-discount { display: none; }
+        .asporto-mode .item-price-original { display: none; }
+        .asporto-mode .item-price-discount { display: inline; font-weight: bold; color: #2e7d32; font-size: 1em; }
+        .quantity-input { width: 45px; padding: 6px; text-align: center; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 15px; width: 100%; font-size: 1.1em; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        #deliveryZoneSection { display: none; margin-top: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        #deliveryZoneSection select { width: 100%; padding: 10px; font-size: 1em; margin-top: 8px; }
+    </style>
 </head>
-<body>
+<body onload="initOrderType()">
 
-  <div class="header">
-    <h1>Kebab di Via Roma</h1>
-    <p>Via Roma 29b, Jesi (AN) | WhatsApp: 393 222 8224</p>
-  </div>
-
-  <div class="container">
-    
-    <!-- MEGA OFERTA BANNER -->
-    <div class="promo-card">
-      <div class="promo-header">
-        <div class="promo-title">MEGA OFERTA</div>
-        <div class="promo-sub">Piadina Artigianale con Kebab</div>
-      </div>
-      <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=800&q=80" alt="Piadina Kebab" class="promo-img">
-      <div class="promo-body">
-        <div class="promo-desc">Piadina Artigianale cotta al momento + Kebab Speziato + Lattina a scelta!</div>
-        <div class="promo-price">Solo 5.00 €</div>
-      </div>
+    <div class="header">
+        <h1>Kebab di Via Roma</h1>
+        <p>Via Roma 29b, Jesi (AN) | 📞 393 222 8224</p>
     </div>
 
-    <!-- CATEGORY BUTTONS -->
-    <div class="category-container">
-      <button class="cat-btn active" onclick="showCategory('kebab')">Kebab</button>
-      <button class="cat-btn" onclick="showCategory('non-solo')">Non Solo Kebab</button>
-      <button class="cat-btn" onclick="showCategory('fritti')">Fritti</button>
-      <button class="cat-btn" onclick="showCategory('bevande')">Bevande</button>
+    <!-- MAIN OFFER -->
+    <div class="item-card" style="border: 2px solid #8b0000; margin-top: 15px; background-color: #fff9f9;">
+        <img src="https://i.imgur.com/FflK9lr.jpg" class="item-img" alt="Piadina Kebab">
+        <div class="item-details">
+            <div class="item-title">Piadina Artigianale + Kebab Speziato</div>
+            <div class="item-price-container">
+                <span class="item-price-original">Solo 5.00 €</span>
+                <span class="item-price-discount">Solo 4.50 € (-0.50€ Asporto)</span>
+            </div>
+        </div>
+        <input type="number" min="0" value="0" class="quantity-input">
     </div>
 
-    <!-- MENU CONTENT -->
-    <div id="menu-content">
-      
-      <!-- 1. KEBAB CATEGORY -->
-      <div id="cat-kebab" class="menu-category active">
-        
-        <div class="menu-item" data-id="piadina_promo">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Piadina Artigianale Kebab (Offerta)</div>
-              <p class="item-desc">Con Kebab e lattina inclusa</p>
-            </div>
-            <div>
-              <span class="item-price">5.00 €</span>
-              <input type="number" class="qty-input" min="0" value="0" onchange="toggleOptions(this)">
-            </div>
-          </div>
-          <div class="options-box">
-            <div class="options-title">Scegli Ingredienti & Salse:</div>
-            <div class="checkbox-grid">
-              <label><input type="checkbox" value="Insalata"> Insalata</label>
-              <label><input type="checkbox" value="Pomodoro"> Pomodoro</label>
-              <label><input type="checkbox" value="Cipolla"> Cipolla</label>
-              <label><input type="checkbox" value="Cetrioli"> Cetrioli</label>
-              <label><input type="checkbox" value="Olive"> Olive</label>
-              <label><input type="checkbox" value="Peperoncini"> Peperoncini</label>
-              <label><input type="checkbox" value="Verza Bianca"> Verza Bianca</label>
-              <label><input type="checkbox" value="Carote"> Carote</label>
-              <label><input type="checkbox" value="Salsa Piccante"> Salsa Piccante</label>
-              <label><input type="checkbox" value="Salsa Yogurt"> Salsa Yogurt</label>
-              <label><input type="checkbox" value="Salsa Rosa"> Salsa Rosa</label>
-              <label><input type="checkbox" value="Ketchup"> Ketchup</label>
-              <label><input type="checkbox" value="Maionese"> Maionese</label>
-            </div>
-          </div>
+    <!-- ORDER TYPE TABS (Home Delivery or Asporto) -->
+    <div class="order-type-tabs">
+        <div id="tabAsporto" class="order-tab active" onclick="selectOrderType('asporto')">
+            <span class="tab-icon">🛍️</span>
+            <span>Asporto<br><small>(-0.50€ su TUTTO)</small></span>
         </div>
-
-        <div class="menu-item" data-id="panino_kebab">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Panino Kebab</div>
-              <p class="item-desc">Carne, verdure e salse a scelta</p>
-            </div>
-            <div>
-              <span class="item-price">5.00 €</span>
-              <input type="number" class="qty-input" min="0" value="0" onchange="toggleOptions(this)">
-            </div>
-          </div>
-          <div class="options-box">
-            <div class="options-title">Scegli Ingredienti & Salse:</div>
-            <div class="checkbox-grid">
-              <label><input type="checkbox" value="Insalata"> Insalata</label>
-              <label><input type="checkbox" value="Pomodoro"> Pomodoro</label>
-              <label><input type="checkbox" value="Cipolla"> Cipolla</label>
-              <label><input type="checkbox" value="Cetrioli"> Cetrioli</label>
-              <label><input type="checkbox" value="Olive"> Olive</label>
-              <label><input type="checkbox" value="Peperoncini"> Peperoncini</label>
-              <label><input type="checkbox" value="Verza Bianca"> Verza Bianca</label>
-              <label><input type="checkbox" value="Carote"> Carote</label>
-              <label><input type="checkbox" value="Salsa Piccante"> Salsa Piccante</label>
-              <label><input type="checkbox" value="Salsa Yogurt"> Salsa Yogurt</label>
-              <label><input type="checkbox" value="Salsa Rosa"> Salsa Rosa</label>
-              <label><input type="checkbox" value="Ketchup"> Ketchup</label>
-              <label><input type="checkbox" value="Maionese"> Maionese</label>
-            </div>
-          </div>
+        <div id="tabConsegna" class="order-tab" onclick="selectOrderType('consegna')">
+            <span class="tab-icon">🛵</span>
+            <span>Consegna<br><small>a Domicilio</small></span>
         </div>
-
-        <div class="menu-item" data-id="piatto_kebab">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Piatto Kebab</div>
-              <p class="item-desc">Servito con patatine, insalata e pane</p>
-            </div>
-            <div>
-              <span class="item-price">8.00 €</span>
-              <input type="number" class="qty-input" min="0" value="0" onchange="toggleOptions(this)">
-            </div>
-          </div>
-          <div class="options-box">
-            <div class="options-title">Scegli Ingredienti & Salse:</div>
-            <div class="checkbox-grid">
-              <label><input type="checkbox" value="Insalata"> Insalata</label>
-              <label><input type="checkbox" value="Pomodoro"> Pomodoro</label>
-              <label><input type="checkbox" value="Cipolla"> Cipolla</label>
-              <label><input type="checkbox" value="Cetrioli"> Cetrioli</label>
-              <label><input type="checkbox" value="Salsa Piccante"> Salsa Piccante</label>
-              <label><input type="checkbox" value="Salsa Yogurt"> Salsa Yogurt</label>
-              <label><input type="checkbox" value="Ketchup"> Ketchup</label>
-              <label><input type="checkbox" value="Maionese"> Maionese</label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- 2. NON SOLO KEBAB CATEGORY -->
-      <div id="cat-non-solo" class="menu-category">
-        
-        <div class="menu-item" data-id="panino_solo_carne">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Panino Solo Carne</div>
-              <p class="item-desc">Extra carne kebab senza verdure</p>
-            </div>
-            <div>
-              <span class="item-price">6.00 €</span>
-              <input type="number" class="qty-input" min="0" value="0" onchange="toggleOptions(this)">
-            </div>
-          </div>
-          <div class="options-box">
-            <div class="options-title">Scegli Salse:</div>
-            <div class="checkbox-grid">
-              <label><input type="checkbox" value="Salsa Piccante"> Salsa Piccante</label>
-              <label><input type="checkbox" value="Salsa Yogurt"> Salsa Yogurt</label>
-              <label><input type="checkbox" value="Salsa Rosa"> Salsa Rosa</label>
-              <label><input type="checkbox" value="Ketchup"> Ketchup</label>
-              <label><input type="checkbox" value="Maionese"> Maionese</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="falafel_roll">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Falafel Roll</div>
-              <p class="item-desc">Polpette di ceci con insalata e salsa</p>
-            </div>
-            <div>
-              <span class="item-price">4.50 €</span>
-              <input type="number" class="qty-input" min="0" value="0" onchange="toggleOptions(this)">
-            </div>
-          </div>
-          <div class="options-box">
-            <div class="options-title">Scegli Ingredienti:</div>
-            <div class="checkbox-grid">
-              <label><input type="checkbox" value="Insalata"> Insalata</label>
-              <label><input type="checkbox" value="Pomodoro"> Pomodoro</label>
-              <label><input type="checkbox" value="Salsa Yogurt"> Salsa Yogurt</label>
-              <label><input type="checkbox" value="Salsa Piccante"> Salsa Piccante</label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- 3. FRITTI CATEGORY -->
-      <div id="cat-fritti" class="menu-category">
-        
-        <div class="menu-item" data-id="patatine">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Patatine Fritte</div>
-              <p class="item-desc">Porzione croccante di patatine</p>
-            </div>
-            <div>
-              <span class="item-price">3.00 €</span>
-              <input type="number" class="qty-input" min="0" value="0">
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- 4. BEVANDE CATEGORY -->
-      <div id="cat-bevande" class="menu-category">
-        
-        <div class="menu-item" data-id="cocacola">
-          <div class="item-header">
-            <div class="item-title">Coca Cola (Lattina)</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="coca_zero">
-          <div class="item-header">
-            <div class="item-title">Coca Cola Zero</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="sprite">
-          <div class="item-header">
-            <div class="item-title">Sprite</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="fanta">
-          <div class="item-header">
-            <div class="item-title">Fanta</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="estathe_limone">
-          <div class="item-header">
-            <div class="item-title">EstaThé Limone</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="estathe_pesca">
-          <div class="item-header">
-            <div class="item-title">EstaThé Pesca</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="acqua_naturale">
-          <div class="item-header">
-            <div class="item-title">Acqua Naturale (Piccola)</div>
-            <div><span class="item-price">1.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="acqua_frizzante">
-          <div class="item-header">
-            <div class="item-title">Acqua Frizzante (Piccola)</div>
-            <div><span class="item-price">1.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="birra_peroni">
-          <div class="item-header">
-            <div class="item-title">Birra Peroni 66cl</div>
-            <div><span class="item-price">3.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="birra_moretti">
-          <div class="item-header">
-            <div class="item-title">Birra Moretti 66cl</div>
-            <div><span class="item-price">3.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="monster">
-          <div class="item-header">
-            <div class="item-title">Monster Energy</div>
-            <div><span class="item-price">2.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="redbull">
-          <div class="item-header">
-            <div class="item-title">Red Bull</div>
-            <div><span class="item-price">2.00 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-        <div class="menu-item" data-id="hell_energy">
-          <div class="item-header">
-            <div class="item-title">Hell Energy Drink</div>
-            <div><span class="item-price">1.50 €</span> <input type="number" class="qty-input" min="0" value="0"></div>
-          </div>
-        </div>
-
-      </div>
-
     </div>
 
-    <!-- CUSTOMER DETAILS -->
-    <h2 class="section-title">Informazioni Cliente</h2>
-    
-    <div class="input-group">
-      <label>Il tuo Nome:</label>
-      <input type="text" id="custName" placeholder="Inserisci il tuo nome">
+    <!-- DELIVERY ZONES SECTION -->
+    <div id="deliveryZoneSection">
+        <label for="deliveryZone">🏡 Seleziona la tua zona di consegna:</label>
+        <select id="deliveryZone">
+            <option value="0" data-cost="0.00">-- Scegli la zona --</option>
+            <option value="viroma" data-cost="1.00">Via Roma / Vicinanze (€1.00)</option>
+            <option value="centro" data-cost="2.00">Centro Storico (€2.00)</option>
+            <option value="sangiuseppe" data-cost="2.50">San Giuseppe (€2.50)</option>
+            <option value="fuori" data-cost="3.00">Altre Zone / Industriali (€3.00)</option>
+        </select>
+        <div style="font-size: 0.85em; color: #d32f2f; font-weight: bold; margin-top: 5px;">
+            Consegne disponibili solo Sabato e Domenica dalle 17:00 in poi.
+        </div>
     </div>
 
-    <div class="input-group">
-      <label>Indirizzo o Dettagli Ritiro:</label>
-      <textarea id="custAddress" rows="2" placeholder="Indirizzo di consegna o orario ritiro"></textarea>
+    <!-- CATEGORY NAVIGATION -->
+    <div class="category-buttons">
+        <button class="category-btn active" onclick="showCategory(event, 'kebab')">Kebab</button>
+        <button class="category-btn" onclick="showCategory(event, 'nonsolo')">Non Solo Kebab</button>
+        <button class="category-btn" onclick="showCategory(event, 'fritti')">Fritti</button>
     </div>
 
-    <button class="btn-order" onclick="sendToWhatsApp()">Invia Ordine su WhatsApp</button>
+    <form id="orderForm" class="asporto-mode">
+        <!-- KEBAB SECTION -->
+        <div id="kebab" class="menu-section active">
+            <div class="item-card"><div class="item-details"><div class="item-title">Panino Kebab</div><div class="item-price-container"><span class="item-price-original">4.50 €</span><span class="item-price-discount">4.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Panino Solo Carne</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Menu Panino (Bibita + Patatine)</div><div class="item-price-container"><span class="item-price-original">7.00 €</span><span class="item-price-discount">6.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Menu Panino Studenti</div><div class="item-price-container"><span class="item-price-original">6.50 €</span><span class="item-price-discount">6.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Piatto Kebab</div><div class="item-price-container"><span class="item-price-original">8.00 €</span><span class="item-price-discount">7.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+        </div>
 
-    <div class="footer-info">
-      Via Roma 29b - Jesi (AN) | Ordina comodamente online!
-    </div>
+        <!-- NON SOLO KEBAB SECTION -->
+        <div id="nonsolo" class="menu-section">
+            <div class="item-card"><div class="item-details"><div class="item-title">Panino Falafel</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Piadina Falafel</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Panino Seekh Kebab</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Piadina Seekh Kebab</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Crispy Hamburger</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Panino Cotoletta</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+        </div>
 
-  </div>
+        <!-- FRITTI SECTION -->
+        <div id="fritti" class="menu-section">
+            <div class="item-card"><div class="item-details"><div class="item-title">Patatine Fritte (Piccola)</div><div class="item-price-container"><span class="item-price-original">2.50 €</span><span class="item-price-discount">2.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Patatine Fritte (Grande)</div><div class="item-price-container"><span class="item-price-original">3.50 €</span><span class="item-price-discount">3.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Mozzarella Stick (6pz)</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+            <div class="item-card"><div class="item-details"><div class="item-title">Chicken Nuggets (6pz)</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
+        </div>
 
-  <script>
-    function showCategory(catName) {
-      var categories = document.querySelectorAll('.menu-category');
-      categories.forEach(function(cat) { cat.classList.remove('active'); });
+        <button type="button" class="btn-whatsapp" onclick="sendWhatsApp()">ORDINA ORA SU WHATSAPP</button>
+    </form>
 
-      var buttons = document.querySelectorAll('.cat-btn');
-      buttons.forEach(function(btn) { btn.classList.remove('active'); });
-
-      document.getElementById('cat-' + catName).classList.add('active');
-      event.currentTarget.classList.add('active');
-    }
-
-    function toggleOptions(inputElement) {
-      var itemBox = inputElement.closest('.menu-item');
-      var optionsBox = itemBox.querySelector('.options-box');
-      if (optionsBox) {
-        if (parseInt(inputElement.value) > 0) {
-          optionsBox.style.display = 'block';
-        } else {
-          optionsBox.style.display = 'none';
+    <script>
+        function showCategory(evt, catId) {
+            document.querySelectorAll('.menu-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(catId).classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
-      }
-    }
 
-    function sendToWhatsApp() {
-      var name = document.getElementById("custName").value;
-      var address = document.getElementById("custAddress").value;
+        // Check if delivery is available (Only Saturday & Sunday after 17:00)
+        function isDeliveryAvailable() {
+            const now = new Date();
+            const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
+            const currentHour = now.getHours(); // 0 to 23
 
-      if (name === "" || address === "") {
-        alert("Per favore, inserisci il tuo nome e indirizzo/orario.");
-        return;
-      }
+            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+            const isAfter5PM = (currentHour >= 17);
 
-      var items = document.querySelectorAll('.menu-item');
-      var orderText = "";
-      var hasOrder = false;
-
-      items.forEach(function(item) {
-        var qtyInput = item.querySelector('.qty-input');
-        var qty = parseInt(qtyInput.value);
-
-        if (qty > 0) {
-          hasOrder = true;
-          var title = item.querySelector('.item-title').innerText;
-          orderText += "• *" + title + "* x " + qty + "\n";
-
-          var checkboxes = item.querySelectorAll('.options-box input[type="checkbox"]:checked');
-          if (checkboxes.length > 0) {
-            var selectedOpts = [];
-            checkboxes.forEach(function(cb) { selectedOpts.push(cb.value); });
-            orderText += "   _Ingredienti: " + selectedOpts.join(", ") + "_\n";
-          }
+            return isWeekend && isAfter5PM;
         }
-      });
 
-      if (!hasOrder) {
-        alert("Per favore, seleziona almeno un articolo dal menù.");
-        return;
-      }
+        function initOrderType() {
+            const deliveryTab = document.getElementById('tabConsegna');
 
-      var message = "Ciao! Kebab di Via Roma, nuovo ordine:\n\n";
-      message += "*Nome:* " + name + "\n";
-      message += "*Indirizzo/Note:* " + address + "\n\n";
-      message += "*Ordine:*\n" + orderText;
+            if (!isDeliveryAvailable()) {
+                deliveryTab.style.opacity = '0.5';
+                deliveryTab.style.cursor = 'not-allowed';
+                deliveryTab.onclick = function() {
+                    alert("Le consegne a domicilio sono disponibili solo Sabato e Domenica dopo le 17:00!");
+                };
+            }
+        }
 
-      var phoneNumber = "393932228224";
-      var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
-      
-      window.open(whatsappUrl, '_blank');
-    }
-  </script>
+        function selectOrderType(type) {
+            if (type === 'consegna' && !isDeliveryAvailable()) {
+                alert("Le consegne a domicilio sono disponibili solo Sabato e Domenica dopo le 17:00!");
+                return;
+            }
 
+            document.querySelectorAll('.order-tab').forEach(tab => tab.classList.remove('active'));
+            const zoneSection = document.getElementById('deliveryZoneSection');
+            const form = document.getElementById('orderForm');
+
+            if (type === 'consegna') {
+                document.getElementById('tabConsegna').classList.add('active');
+                zoneSection.style.display = 'block';
+                form.classList.remove('asporto-mode');
+            } else { // type === 'asporto'
+                document.getElementById('tabAsporto').classList.add('active');
+                zoneSection.style.display = 'none';
+                form.classList.add('asporto-mode');
+                document.getElementById('deliveryZone').value = "0";
+            }
+        }
+
+        function sendWhatsApp() {
+            const isConsegna = document.getElementById('tabConsegna').classList.contains('active');
+            const zoneSelect = document.getElementById('deliveryZone');
+
+            if (isConsegna && zoneSelect.value === "0") {
+                alert("Per favore, seleziona la tua zona di consegna.");
+                return;
+            }
+
+            alert("Ordinazione pronta per l'invio!");
+        }
+    </script>
 </body>
 </html>
