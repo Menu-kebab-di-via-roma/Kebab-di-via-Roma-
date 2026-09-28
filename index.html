@@ -173,17 +173,19 @@
       background: #fff3cd;
       border: 1px solid #ffeeba;
       color: #856404;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       font-size: 0.85rem;
       margin-bottom: 15px;
     }
-    .zone-select {
+    .input-field {
       width: 100%;
-      padding: 8px;
+      padding: 8px 10px;
       margin-top: 5px;
+      margin-bottom: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
     }
 
     .bottom-bar {
@@ -240,16 +242,16 @@
     </div>
   </div>
 
-  <div id="delivery-zone-box" class="delivery-info" style="display: none;">
-    <strong>Zona di Consegna:</strong>
-    <select id="delivery-zone" class="zone-select" onchange="updateTotal()">
-      <option value="1.00">Via Roma (€ 1,00)</option>
-      <option value="2.00">Centro Storico (€ 2,00)</option>
-      <option value="2.50">San Giuseppe (€ 2,50)</option>
-      <option value="3.00">Zona Industriale / Periferia (€ 3,00)</option>
-    </select>
-    <div id="time-warning" style="color: #d9534f; margin-top: 5px; font-weight: bold; display: none;">
-      Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.
+  <div id="delivery-info-box" class="delivery-info" style="display: none;">
+    <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;">
+      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puedes scegliere solo "Asporto".
+    </div>
+    <div id="delivery-inputs">
+      <label><strong>Nome e Cognome: *</strong></label>
+      <input type="text" id="cust-name" class="input-field" placeholder="Inserisci il tuo nome e cognome">
+
+      <label><strong>Indirizzo Completo: *</strong></label>
+      <input type="text" id="cust-address" class="input-field" placeholder="Es: Via San Giuseppe 29b, Jesi">
     </div>
   </div>
 
@@ -339,12 +341,15 @@ function setOrderType(type) {
   state.orderType = type;
   document.getElementById('btn-asporto').classList.toggle('active', type === 'asporto');
   document.getElementById('btn-consegna').classList.toggle('active', type === 'consegna');
-  document.getElementById('delivery-zone-box').style.display = type === 'consegna' ? 'block' : 'none';
+  document.getElementById('delivery-info-box').style.display = type === 'consegna' ? 'block' : 'none';
   renderMenu(currentFilteredItems || menuItems);
   updateTotal();
 }
 
 function getItemPrice(item) {
+  if (item.cat === 'bevande') {
+    return Math.max(0, item.basePrice - 0.50);
+  }
   return state.orderType === 'asporto' ? Math.max(0, item.basePrice - 0.50) : item.basePrice;
 }
 
@@ -490,18 +495,27 @@ function toggleIngredient(itemId, instanceIdx, value) {
   renderMenu(currentFilteredItems || menuItems);
 }
 
-function checkDeliveryAvailability() {
+function isDeliveryAllowed() {
   const now = new Date();
-  const day = now.getDay();
+  const day = now.getDay(); // 0 = Sunday, 6 = Saturday
   const hour = now.getHours();
   const isWeekend = (day === 0 || day === 6);
   const isAfter17 = hour >= 17;
 
+  return isWeekend && isAfter17;
+}
+
+function checkDeliveryAvailability() {
+  const allowed = isDeliveryAllowed();
   const warning = document.getElementById('time-warning');
-  if (!isWeekend || !isAfter17) {
+  const inputs = document.getElementById('delivery-inputs');
+
+  if (!allowed) {
     warning.style.display = 'block';
+    inputs.style.display = 'none';
   } else {
     warning.style.display = 'none';
+    inputs.style.display = 'block';
   }
 }
 
@@ -514,27 +528,47 @@ function updateTotal() {
     subtotal += price * state.cart[itemId].length;
   });
 
-  if (state.orderType === 'consegna') {
-    const zoneFee = parseFloat(document.getElementById('delivery-zone').value || '0');
-    subtotal += zoneFee;
-  }
-
   document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
 }
 
 function sendWhatsAppOrder() {
+  let hasItems = false;
+  Object.keys(state.cart).forEach(itemId => {
+    if (state.cart[itemId].length > 0) hasItems = true;
+  });
+
+  if (!hasItems) {
+    alert("Per favore, aggiungi almeno un elemento al carrello.");
+    return;
+  }
+
+  if (state.orderType === 'consegna') {
+    if (!isDeliveryAllowed()) {
+      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Seleziona 'Asporto' per continuare.");
+      return;
+    }
+
+    const custName = document.getElementById('cust-name').value.trim();
+    const custAddress = document.getElementById('cust-address').value.trim();
+
+    if (!custName || !custAddress) {
+      alert("Per favore, inserisci sia il Nome e Cognome che l'Indirizzo Completo per la consegna.");
+      return;
+    }
+  }
+
   let text = `*NUOVO ORDINE - Kebab di Via Roma*\n`;
   text += `Tipo: *${state.orderType === 'asporto' ? 'Asporto (-0.50€ applicato)' : 'Consegna a Domicilio'}*\n`;
 
   if (state.orderType === 'consegna') {
-    const zoneSelect = document.getElementById('delivery-zone');
-    const zoneName = zoneSelect.options[zoneSelect.selectedIndex].text;
-    text += `Zona: ${zoneName}\n`;
+    const custName = document.getElementById('cust-name').value.trim();
+    const custAddress = document.getElementById('cust-address').value.trim();
+    text += `Cliente: *${custName}*\n`;
+    text += `Indirizzo: *${custAddress}*\n`;
   }
   text += `-----------------------------------\n`;
 
   let totalSum = 0;
-  let hasItems = false;
 
   Object.keys(state.cart).forEach(itemId => {
     const item = menuItems.find(i => i.id === itemId);
@@ -542,7 +576,6 @@ function sendWhatsAppOrder() {
     const unitPrice = getItemPrice(item);
 
     if (instances.length > 0) {
-      hasItems = true;
       if (item.customizable && instances.length > 1) {
         text += `*${instances.length}x ${item.name}* (€${(unitPrice * instances.length).toFixed(2)}):\n`;
         instances.forEach((inst, idx) => {
@@ -564,16 +597,6 @@ function sendWhatsAppOrder() {
       }
     }
   });
-
-  if (!hasItems) {
-    alert("Per favore, aggiungi almeno un elemento al carrello.");
-    return;
-  }
-
-  if (state.orderType === 'consegna') {
-    const zoneFee = parseFloat(document.getElementById('delivery-zone').value || '0');
-    totalSum += zoneFee;
-  }
 
   text += `-----------------------------------\n`;
   text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
