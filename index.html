@@ -361,11 +361,6 @@ function setOrderType(type) {
 }
 
 function getItemPrice(item) {
-  // Bevande category gets €0.50 discount in BOTH Asporto and Consegna
-  if (item.cat === 'bevande') {
-    return Math.max(0, item.basePrice - 0.50);
-  }
-  // Other categories get €0.50 discount ONLY in Asporto
   return state.orderType === 'asporto' ? Math.max(0, item.basePrice - 0.50) : item.basePrice;
 }
 
@@ -590,3 +585,7 @@ function sendWhatsAppOrder() {
     if (instances.length > 0) {
       if (item.customizable && instances.length > 1) {
         text += `*${instances.length}x ${item.name}* (€${(unitPrice * instances.length).toFixed(2)}):\n`;
+        instances.forEach((inst, idx) => {
+          totalSum += unitPrice;
+          const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
+          const ingsStr = inst.ingredients.length > 0 ? inst.ingredie
