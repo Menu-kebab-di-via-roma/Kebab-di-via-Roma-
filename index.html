@@ -8,6 +8,7 @@
     :root {
       --primary: #c0392b;
       --secondary: #e67e22;
+      --deliveroo: #00cdbc;
       --bg: #f8f9fa;
       --card-bg: #ffffff;
       --text: #2c3e50;
@@ -45,18 +46,19 @@
     
     .order-type-selector {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 15px;
     }
     .type-btn {
       flex: 1;
-      padding: 12px;
+      padding: 10px 5px;
       border: 2px solid #ddd;
       border-radius: 10px;
       background: white;
       text-align: center;
       cursor: pointer;
       font-weight: bold;
+      font-size: 0.85rem;
       transition: all 0.2s ease;
     }
     .type-btn.active {
@@ -64,7 +66,12 @@
       background: #fdf2f2;
       color: var(--primary);
     }
-    .type-btn small { display: block; font-size: 0.75rem; color: #666; font-weight: normal; }
+    .type-btn.deliveroo-active {
+      border-color: var(--deliveroo);
+      background: #e6f9f8;
+      color: #008176;
+    }
+    .type-btn small { display: block; font-size: 0.7rem; color: #666; font-weight: normal; }
 
     .category-nav {
       display: flex;
@@ -237,14 +244,18 @@
       <small>(-0.50€ su TUTTO)</small>
     </div>
     <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
-      Consegna a Domicilio
-      <small>Sabato & Domenica > 17:00</small>
+      Consegna
+      <small>Sab & Dom > 17:00</small>
+    </div>
+    <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
+      Deliveroo
+      <small>Menu Personalizzato</small>
     </div>
   </div>
 
   <div id="delivery-info-box" class="delivery-info" style="display: none;">
     <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;">
-      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puedes scegliere solo "Asporto".
+      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puoi scegliere "Asporto" o "Deliveroo".
     </div>
     <div id="delivery-inputs">
       <label><strong>Nome e Cognome: *</strong></label>
@@ -268,11 +279,11 @@
 </div>
 
 <div class="bottom-bar">
-  <div>
+  <div id="total-price-box">
     <span style="font-size: 0.8rem; color: #666;">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
-  <button class="whatsapp-btn" onclick="sendWhatsAppOrder()">
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="sendWhatsAppOrder()">
     ORDINA ORA SU WHATSAPP
   </button>
 </div>
@@ -307,8 +318,8 @@ const menuItems = [
   { id: 'pat_g', name: 'Patatine Fritte (Grande)', basePrice: 3.50, cat: 'fritti', customizable: false },
   { id: 'mozz_st', name: 'Mozzarella Stick (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
   { id: 'ch_nug', name: 'Chicken Nuggets (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
-  { id: 'anelli_cip', name: 'Anelli di Cipolla', basePrice: 3.50, cat: 'fritti', customizable: false },
-  { id: 'ch_wings', name: 'Chicken Wings', basePrice: 4.00, cat: 'fritti', customizable: false },
+  { id: 'anelli_cip', name: 'Anelli di Cipolla (8pz)', basePrice: 3.50, cat: 'fritti', customizable: false },
+  { id: 'ch_wings', name: 'Chicken Wings (5pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
 
   // Bevande
   { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
@@ -339,9 +350,26 @@ function init() {
 
 function setOrderType(type) {
   state.orderType = type;
-  document.getElementById('btn-asporto').classList.toggle('active', type === 'asporto');
-  document.getElementById('btn-consegna').classList.toggle('active', type === 'consegna');
-  document.getElementById('delivery-info-box').style.display = type === 'consegna' ? 'block' : 'none';
+  
+  const btnAsporto = document.getElementById('btn-asporto');
+  const btnConsegna = document.getElementById('btn-consegna');
+  const btnDeliveroo = document.getElementById('btn-deliveroo');
+  const totalBox = document.getElementById('total-price-box');
+  const deliveryInfoBox = document.getElementById('delivery-info-box');
+
+  btnAsporto.classList.toggle('active', type === 'asporto');
+  btnConsegna.classList.toggle('active', type === 'consegna');
+  btnDeliveroo.classList.toggle('deliveroo-active', type === 'deliveroo');
+
+  // Hide prices for Deliveroo
+  if (type === 'deliveroo') {
+    totalBox.style.display = 'none';
+    deliveryInfoBox.style.display = 'none';
+  } else {
+    totalBox.style.display = 'block';
+    deliveryInfoBox.style.display = type === 'consegna' ? 'block' : 'none';
+  }
+
   renderMenu(currentFilteredItems || menuItems);
   updateTotal();
 }
@@ -375,12 +403,15 @@ function renderMenu(items) {
     const cartInstances = state.cart[item.id] || [];
     const qty = cartInstances.length;
 
+    // Show price only if NOT deliveroo
+    const priceDisplay = state.orderType === 'deliveroo' ? '' : `<div class="item-price">€ ${activePrice}</div>`;
+
     let itemHtml = `
       <div class="menu-item">
         <div class="item-header">
           <div>
             <div class="item-title">${item.name}</div>
-            <div class="item-price">€ ${activePrice}</div>
+            ${priceDisplay}
           </div>
           <div class="qty-controls">
             <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
@@ -497,7 +528,7 @@ function toggleIngredient(itemId, instanceIdx, value) {
 
 function isDeliveryAllowed() {
   const now = new Date();
-  const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+  const day = now.getDay();
   const hour = now.getHours();
   const isWeekend = (day === 0 || day === 6);
   const isAfter17 = hour >= 17;
@@ -520,8 +551,9 @@ function checkDeliveryAvailability() {
 }
 
 function updateTotal() {
-  let subtotal = 0;
+  if (state.orderType === 'deliveroo') return;
 
+  let subtotal = 0;
   Object.keys(state.cart).forEach(itemId => {
     const item = menuItems.find(i => i.id === itemId);
     const price = getItemPrice(item);
@@ -544,7 +576,7 @@ function sendWhatsAppOrder() {
 
   if (state.orderType === 'consegna') {
     if (!isDeliveryAllowed()) {
-      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Seleziona 'Asporto' per continuare.");
+      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Seleziona 'Asporto' o 'Deliveroo' per continuare.");
       return;
     }
 
@@ -557,8 +589,13 @@ function sendWhatsAppOrder() {
     }
   }
 
+  const isDeliveroo = state.orderType === 'deliveroo';
+  let orderTypeTitle = 'Asporto (-0.50€ applicato)';
+  if (state.orderType === 'consegna') orderTypeTitle = 'Consegna a Domicilio';
+  if (isDeliveroo) orderTypeTitle = 'Ordine DELIVEROO (Pagato su App)';
+
   let text = `*NUOVO ORDINE - Kebab di Via Roma*\n`;
-  text += `Tipo: *${state.orderType === 'asporto' ? 'Asporto (-0.50€ applicato)' : 'Consegna a Domicilio'}*\n`;
+  text += `Tipo: *${orderTypeTitle}*\n`;
 
   if (state.orderType === 'consegna') {
     const custName = document.getElementById('cust-name').value.trim();
@@ -574,32 +611,34 @@ function sendWhatsAppOrder() {
     const item = menuItems.find(i => i.id === itemId);
     const instances = state.cart[itemId];
     const unitPrice = getItemPrice(item);
+    const qty = instances.length;
 
-    if (instances.length > 0) {
-      if (item.customizable && instances.length > 1) {
-        text += `*${instances.length}x ${item.name}* (€${(unitPrice * instances.length).toFixed(2)}):\n`;
+    if (qty > 0) {
+      const itemTotalPrice = unitPrice * qty;
+      totalSum += itemTotalPrice;
+
+      // Price tag for line item (hide if deliveroo)
+      const priceText = isDeliveroo ? '' : ` (€${itemTotalPrice.toFixed(2)})`;
+
+      if (item.customizable) {
+        text += `*${qty}x ${item.name}*${priceText}:\n`;
         instances.forEach((inst, idx) => {
-          totalSum += unitPrice;
           const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
           const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
           text += `  ${idx + 1}. ${modeStr}: ${ingsStr}\n`;
         });
       } else {
-        instances.forEach((inst, idx) => {
-          totalSum += unitPrice;
-          text += `*1x ${item.name}* (€${unitPrice.toFixed(2)})\n`;
-          if (item.customizable) {
-            const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
-            const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
-            text += `   ${modeStr}: ${ingsStr}\n`;
-          }
-        });
+        text += `*${qty}x ${item.name}*${priceText}\n`;
       }
     }
   });
 
   text += `-----------------------------------\n`;
-  text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
+  
+  // Total summary string only if NOT deliveroo
+  if (!isDeliveroo) {
+    text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
+  }
 
   const encodedText = encodeURIComponent(text);
   const whatsappUrl = `https://wa.me/393932228224?text=${encodedText}`;
