@@ -185,6 +185,15 @@
       font-size: 0.85rem;
       margin-bottom: 15px;
     }
+    .deliveroo-info-box {
+      background: #e6f9f8;
+      border: 1px solid #00cdbc;
+      color: #005b53;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
     .input-field {
       width: 100%;
       padding: 8px 10px;
@@ -248,14 +257,24 @@
       <small>Sab & Dom > 17:00</small>
     </div>
     <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
-      Deliveroo
-      <small>Menu Personalizzato</small>
+      Note Deliveroo
+      <small>Personalizza Ordine</small>
     </div>
   </div>
 
+  <!-- Deliveroo Specific Instruction Box -->
+  <div id="deliveroo-info-box" class="deliveroo-info-box" style="display: none;">
+    <strong>ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO</strong><br>
+    Questo strumento serve <u>solo per inviare le preferenze</u> (salse e ingredienti) del tuo ordine effettuato su Deliveroo.
+    <br><br>
+    <label><strong>Nome dell'account Deliveroo o Numero Ordine: *</strong></label>
+    <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi (Nome su Deliveroo)">
+  </div>
+
+  <!-- Consegna Info Box -->
   <div id="delivery-info-box" class="delivery-info" style="display: none;">
     <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;">
-      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puoi scegliere "Asporto" o "Deliveroo".
+      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puoi scegliere "Asporto" o "Note Deliveroo".
     </div>
     <div id="delivery-inputs">
       <label><strong>Nome e Cognome: *</strong></label>
@@ -356,18 +375,23 @@ function setOrderType(type) {
   const btnDeliveroo = document.getElementById('btn-deliveroo');
   const totalBox = document.getElementById('total-price-box');
   const deliveryInfoBox = document.getElementById('delivery-info-box');
+  const deliverooInfoBox = document.getElementById('deliveroo-info-box');
+  const submitBtn = document.getElementById('whatsapp-submit-btn');
 
   btnAsporto.classList.toggle('active', type === 'asporto');
   btnConsegna.classList.toggle('active', type === 'consegna');
   btnDeliveroo.classList.toggle('deliveroo-active', type === 'deliveroo');
 
-  // Hide prices for Deliveroo
   if (type === 'deliveroo') {
     totalBox.style.display = 'none';
     deliveryInfoBox.style.display = 'none';
+    deliverooInfoBox.style.display = 'block';
+    submitBtn.innerHTML = 'INVIA NOTE DELIVEROO SU WHATSAPP';
   } else {
     totalBox.style.display = 'block';
+    deliverooInfoBox.style.display = 'none';
     deliveryInfoBox.style.display = type === 'consegna' ? 'block' : 'none';
+    submitBtn.innerHTML = 'ORDINA ORA SU WHATSAPP';
   }
 
   renderMenu(currentFilteredItems || menuItems);
@@ -570,13 +594,23 @@ function sendWhatsAppOrder() {
   });
 
   if (!hasItems) {
-    alert("Per favore, aggiungi almeno un elemento al carrello.");
+    alert("Per favore, seleziona i prodotti da personalizzare.");
     return;
+  }
+
+  const isDeliveroo = state.orderType === 'deliveroo';
+
+  if (isDeliveroo) {
+    const delivName = document.getElementById('deliv-cust-name').value.trim();
+    if (!delivName) {
+      alert("Per favore, inserisci il tuo nome su Deliveroo o il numero dell'ordine.");
+      return;
+    }
   }
 
   if (state.orderType === 'consegna') {
     if (!isDeliveryAllowed()) {
-      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Seleziona 'Asporto' o 'Deliveroo' per continuare.");
+      alert("Spiacenti! La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.");
       return;
     }
 
@@ -584,25 +618,30 @@ function sendWhatsAppOrder() {
     const custAddress = document.getElementById('cust-address').value.trim();
 
     if (!custName || !custAddress) {
-      alert("Per favore, inserisci sia il Nome e Cognome che l'Indirizzo Completo per la consegna.");
+      alert("Per favore, inserisci sia il Nome e Cognome che l'Indirizzo Completo.");
       return;
     }
   }
 
-  const isDeliveroo = state.orderType === 'deliveroo';
-  let orderTypeTitle = 'Asporto (-0.50€ applicato)';
-  if (state.orderType === 'consegna') orderTypeTitle = 'Consegna a Domicilio';
-  if (isDeliveroo) orderTypeTitle = 'Ordine DELIVEROO (Pagato su App)';
+  let text = "";
+  if (isDeliveroo) {
+    const delivName = document.getElementById('deliv-cust-name').value.trim();
+    text += `*NOTE E PERSONALIZZAZIONE ORDINE DELIVEROO*\n`;
+    text += `Nome/Ordine Deliveroo: *${delivName}*\n`;
+    text += `_(Nota: Questo non è un nuovo ordine, ma le istruzioni per l'ordine Deliveroo)_\n`;
+  } else {
+    let orderTypeTitle = state.orderType === 'asporto' ? 'Asporto (-0.50€)' : 'Consegna a Domicilio';
+    text += `*NUOVO ORDINE - Kebab di Via Roma*\n`;
+    text += `Tipo: *${orderTypeTitle}*\n`;
 
-  let text = `*NUOVO ORDINE - Kebab di Via Roma*\n`;
-  text += `Tipo: *${orderTypeTitle}*\n`;
-
-  if (state.orderType === 'consegna') {
-    const custName = document.getElementById('cust-name').value.trim();
-    const custAddress = document.getElementById('cust-address').value.trim();
-    text += `Cliente: *${custName}*\n`;
-    text += `Indirizzo: *${custAddress}*\n`;
+    if (state.orderType === 'consegna') {
+      const custName = document.getElementById('cust-name').value.trim();
+      const custAddress = document.getElementById('cust-address').value.trim();
+      text += `Cliente: *${custName}*\n`;
+      text += `Indirizzo: *${custAddress}*\n`;
+    }
   }
+
   text += `-----------------------------------\n`;
 
   let totalSum = 0;
@@ -617,7 +656,6 @@ function sendWhatsAppOrder() {
       const itemTotalPrice = unitPrice * qty;
       totalSum += itemTotalPrice;
 
-      // Price tag for line item (hide if deliveroo)
       const priceText = isDeliveroo ? '' : ` (€${itemTotalPrice.toFixed(2)})`;
 
       if (item.customizable) {
@@ -635,7 +673,6 @@ function sendWhatsAppOrder() {
 
   text += `-----------------------------------\n`;
   
-  // Total summary string only if NOT deliveroo
   if (!isDeliveroo) {
     text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
   }
