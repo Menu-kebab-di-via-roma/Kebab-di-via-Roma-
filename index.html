@@ -1,187 +1,531 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Non Solo Kebab - Menu Online</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 15px; background-color: #f4f4f4; color: #333; }
-        .header { text-align: center; background: #8b0000; color: white; padding: 15px; border-radius: 8px; }
-        .header p { font-size: 0.9em; margin: 5px 0 0; }
-        .order-type-tabs { display: flex; gap: 10px; margin: 15px 0; justify-content: center; }
-        .order-tab { flex: 1; text-align: center; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .order-tab.active { border-color: #8b0000; color: #8b0000; font-weight: bold; }
-        .tab-icon { font-size: 1.6em; display: block; margin-bottom: 5px; }
-        .category-buttons { display: flex; gap: 8px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap; }
-        .category-btn { padding: 10px 15px; background: #eee; color: #555; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.9em; transition: 0.2s; }
-        .category-btn.active { background: #8b0000; color: white; }
-        .menu-section { display: none; }
-        .menu-section.active { display: block; }
-        .item-card { background: white; padding: 12px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; gap: 12px; align-items: center; }
-        .item-img { width: 70px; height: 70px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: #eee; }
-        .item-details { flex-grow: 1; }
-        .item-title { font-weight: bold; font-size: 1em; color: #222; }
-        .item-price-container { margin-top: 5px; }
-        .item-price-original { font-weight: bold; color: #8b0000; font-size: 1em; }
-        .item-price-discount { display: none; }
-        .asporto-mode .item-price-original { display: none; }
-        .asporto-mode .item-price-discount { display: inline; font-weight: bold; color: #2e7d32; font-size: 1em; }
-        .quantity-input { width: 45px; padding: 6px; text-align: center; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
-        .btn-whatsapp { background: #25d366; color: white; border: none; padding: 15px; width: 100%; font-size: 1.1em; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
-        #deliveryZoneSection { display: none; margin-top: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        #deliveryZoneSection select { width: 100%; padding: 10px; font-size: 1em; margin-top: 8px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Non Solo Kebab - Jesi</title>
+  <style>
+    :root {
+      --primary: #c0392b;
+      --secondary: #e67e22;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      padding-bottom: 100px;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.9; }
+    
+    .container { max-width: 600px; margin: 0 auto; padding: 15px; }
+    
+    /* Dynamic Order Type Toggle */
+    .order-type-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .type-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background: white;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    .type-btn.active {
+      border-color: var(--primary);
+      background: #fdf2f2;
+      color: var(--primary);
+    }
+    .type-btn small { display: block; font-size: 0.75rem; color: #666; font-weight: normal; }
+
+    /* Category Nav */
+    .category-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .cat-btn {
+      padding: 8px 16px;
+      background: #e9ecef;
+      border: none;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .cat-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Menu Cards */
+    .menu-item {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-title { font-weight: bold; font-size: 1rem; }
+    .item-price { color: var(--primary); font-weight: bold; }
+    
+    /* Quantity Controls */
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Granular Unit Customization UI */
+    .unit-customizer {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f1f3f5;
+      border-radius: 8px;
+      border-left: 3px solid var(--secondary);
+    }
+    .unit-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 6px; }
+    
+    .ingredient-line {
+      margin-bottom: 8px;
+    }
+    .line-label { font-size: 0.75rem; font-weight: bold; color: #555; display: block; margin-bottom: 4px; }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .chip.selected {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+    }
+
+    /* Delivery Zone Modal / Info */
+    .delivery-info {
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      color: #856404;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+    .zone-select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    /* Fixed Bottom Action Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 12px 20px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .total-price { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
 </head>
-<body onload="initOrderType()">
+<body>
 
-    <div class="header">
-        <h1>Kebab di Via Roma</h1>
-        <p>Via Roma 29b, Jesi (AN) | 📞 393 222 8224</p>
+<header>
+  <h1>Non Solo Kebab</h1>
+  <p>Via Roma 29b, Jesi (AN) | Tel: +39 393 222 8224</p>
+</header>
+
+<div class="container">
+  <!-- Order Type Selection -->
+  <div class="order-type-selector">
+    <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
+      Asporto
+      <small>(-0.50€ su TUTTO)</small>
     </div>
-
-    <!-- MAIN OFFER -->
-    <div class="item-card" style="border: 2px solid #8b0000; margin-top: 15px; background-color: #fff9f9;">
-        <img src="https://i.imgur.com/FflK9lr.jpg" class="item-img" alt="Piadina Kebab">
-        <div class="item-details">
-            <div class="item-title">Piadina Artigianale + Kebab Speziato</div>
-            <div class="item-price-container">
-                <span class="item-price-original">Solo 5.00 €</span>
-                <span class="item-price-discount">Solo 4.50 € (-0.50€ Asporto)</span>
-            </div>
-        </div>
-        <input type="number" min="0" value="0" class="quantity-input">
+    <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
+      Consegna a Domicilio
+      <small>Sabato & Domenica > 17:00</small>
     </div>
+  </div>
 
-    <!-- ORDER TYPE TABS (Home Delivery or Asporto) -->
-    <div class="order-type-tabs">
-        <div id="tabAsporto" class="order-tab active" onclick="selectOrderType('asporto')">
-            <span class="tab-icon">🛍️</span>
-            <span>Asporto<br><small>(-0.50€ su TUTTO)</small></span>
-        </div>
-        <div id="tabConsegna" class="order-tab" onclick="selectOrderType('consegna')">
-            <span class="tab-icon">🛵</span>
-            <span>Consegna<br><small>a Domicilio</small></span>
-        </div>
+  <!-- Delivery Restrictions & Zone Selection -->
+  <div id="delivery-zone-box" class="delivery-info" style="display: none;">
+    <strong>Zona di Consegna:</strong>
+    <select id="delivery-zone" class="zone-select" onchange="updateTotal()">
+      <option value="1.00">Via Roma (€ 1,00)</option>
+      <option value="2.00">Centro Storico (€ 2,00)</option>
+      <option value="2.50">San Giuseppe (€ 2,50)</option>
+      <option value="3.00">Zona Industriale / Periferia (€ 3,00)</option>
+    </select>
+    <div id="time-warning" style="color: #d9534f; margin-top: 5px; font-weight: bold; display: none;">
+      Attentione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.
     </div>
+  </div>
 
-    <!-- DELIVERY ZONES SECTION -->
-    <div id="deliveryZoneSection">
-        <label for="deliveryZone">🏡 Seleziona la tua zona di consegna:</label>
-        <select id="deliveryZone">
-            <option value="0" data-cost="0.00">-- Scegli la zona --</option>
-            <option value="viroma" data-cost="1.00">Via Roma / Vicinanze (€1.00)</option>
-            <option value="centro" data-cost="2.00">Centro Storico (€2.00)</option>
-            <option value="sangiuseppe" data-cost="2.50">San Giuseppe (€2.50)</option>
-            <option value="fuori" data-cost="3.00">Altre Zone / Industriali (€3.00)</option>
-        </select>
-        <div style="font-size: 0.85em; color: #d32f2f; font-weight: bold; margin-top: 5px;">
-            Consegne disponibili solo Sabato e Domenica dalle 17:00 in poi.
+  <!-- Category Nav -->
+  <div class="category-nav">
+    <button class="cat-btn active" onclick="filterCategory('all', this)">Tutti</button>
+    <button class="cat-btn" onclick="filterCategory('kebab', this)">Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('non-kebab', this)">Non Solo Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('fritti', this)">Fritti</button>
+    <button class="cat-btn" onclick="filterCategory('bevande', this)">Bevande</button>
+    <button class="cat-btn" onclick="filterCategory('alcolici', this)">Alcolici</button>
+  </div>
+
+  <!-- Menu List -->
+  <div id="menu-container"></div>
+</div>
+
+<!-- Bottom Action Bar -->
+<div class="bottom-bar">
+  <div>
+    <span style="font-size: 0.8rem; color: #666;">Totale:</span><br>
+    <span class="total-price" id="grand-total">€ 0,00</span>
+  </div>
+  <button class="whatsapp-btn" onclick="sendWhatsAppOrder()">
+    ORDINA ORA SU WHATSAPP
+  </button>
+</div>
+
+<script>
+// Master Ingredients Structure (3 Lines)
+const ingredientConfig = {
+  salse: ["Piccante", "Maionese", "Ketchup", "Salsa Bianca", "Barbecue"],
+  verdure: ["Insalata Verza", "Carote"],
+  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
+};
+
+// Updated Menu Database
+const menuItems = [
+  // Kebab
+  { id: 'p_kebab', name: 'Panino Kebab', basePrice: 4.50, cat: 'kebab', customizable: true },
+  { id: 'p_carne', name: 'Panino Solo Carne', basePrice: 5.00, cat: 'kebab', customizable: true },
+  { id: 'pi_kebab', name: 'Piadina Kebab', basePrice: 5.00, cat: 'kebab', customizable: true },
+  { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 5.50, cat: 'kebab', customizable: true },
+  { id: 'm_panino', name: 'Menu Panino (Bibita + Patatine)', basePrice: 7.00, cat: 'kebab', customizable: true },
+  { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true },
+  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 8.00, cat: 'kebab', customizable: true },
+
+  // Non Solo Kebab
+  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true },
+  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true },
+  { id: 'p_seekh', name: 'Panino Seekh Kebab', basePrice: 4.00, cat: 'non-kebab', customizable: true },
+  { id: 'pi_seekh', name: 'Piadina Seekh Kebab', basePrice: 5.00, cat: 'non-kebab', customizable: true },
+  { id: 'c_burger', name: 'Crispy Hamburger', basePrice: 4.00, cat: 'non-kebab', customizable: false },
+  { id: 'p_cotoletta', name: 'Panino Cotoletta', basePrice: 4.00, cat: 'non-kebab', customizable: false },
+
+  // Fritti
+  { id: 'pat_p', name: 'Patatine Fritte (Piccola)', basePrice: 2.50, cat: 'fritti', customizable: false },
+  { id: 'pat_g', name: 'Patatine Fritte (Grande)', basePrice: 3.50, cat: 'fritti', customizable: false },
+  { id: 'mozz_st', name: 'Mozzarella Stick (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
+  { id: 'ch_nug', name: 'Chicken Nuggets (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
+  { id: 'anelli_cip', name: 'Anelli di Cipolla', basePrice: 3.50, cat: 'fritti', customizable: false },
+  { id: 'ch_wings', name: 'Chicken Wings', basePrice: 5.50, cat: 'fritti', customizable: false },
+
+  // Bevande
+  { id: 'lat_33', name: 'Lattina (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
+  { id: 'bot_g', name: 'Bottiglia Grande (1.5 L)', basePrice: 3.00, cat: 'bevande', customizable: false },
+  { id: 'acq_p', name: 'Acqua (50 cl)', basePrice: 1.00, cat: 'bevande', customizable: false },
+  { id: 'acq_g', name: 'Acqua (1.5 L)', basePrice: 1.50, cat: 'bevande', customizable: false },
+  { id: 'red_bull', name: 'Red Bull (25 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+
+  // Alcolici
+  { id: 'peroni_66', name: 'Peroni (66 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false },
+  { id: 'moretti_66', name: 'Moretti (66 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false }
+];
+
+let state = {
+  orderType: 'asporto', // 'asporto' | 'consegna'
+  cart: {} // { itemId: [ { instanceIndex: 0, salse: [], verdure: [], extra: [] } ] }
+};
+
+function init() {
+  renderMenu(menuItems);
+  checkDeliveryAvailability();
+}
+
+function setOrderType(type) {
+  state.orderType = type;
+  document.getElementById('btn-asporto').classList.toggle('active', type === 'asporto');
+  document.getElementById('btn-consegna').classList.toggle('active', type === 'consegna');
+  document.getElementById('delivery-zone-box').style.display = type === 'consegna' ? 'block' : 'none';
+  renderMenu(currentFilteredItems || menuItems);
+  updateTotal();
+}
+
+function getItemPrice(item) {
+  return state.orderType === 'asporto' ? Math.max(0, item.basePrice - 0.50) : item.basePrice;
+}
+
+let currentFilteredItems = null;
+function filterCategory(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  if (cat === 'all') {
+    currentFilteredItems = menuItems;
+  } else {
+    currentFilteredItems = menuItems.filter(i => i.cat === cat);
+  }
+  renderMenu(currentFilteredItems);
+}
+
+function renderMenu(items) {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+
+  items.forEach(item => {
+    const activePrice = getItemPrice(item).toFixed(2);
+    const cartInstances = state.cart[item.id] || [];
+    const qty = cartInstances.length;
+
+    let itemHtml = `
+      <div class="menu-item">
+        <div class="item-header">
+          <div>
+            <div class="item-title">${item.name}</div>
+            <div class="item-price">€ ${activePrice}</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
+            <span>${qty}</span>
+            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+          </div>
         </div>
+    `;
+
+    // Render granular customization boxes per unit instance
+    if (item.customizable && qty > 0) {
+      cartInstances.forEach((inst, idx) => {
+        itemHtml += renderCustomizer(item.id, idx, inst);
+      });
+    }
+
+    itemHtml += `</div>`;
+    container.innerHTML += itemHtml;
+  });
+}
+
+function renderCustomizer(itemId, index, instData) {
+  return `
+    <div class="unit-customizer">
+      <div class="unit-title">Personalizza Unità #${index + 1}</div>
+      
+      <!-- Line 1: Salse -->
+      <div class="ingredient-line">
+        <span class="line-label">Salse:</span>
+        <div class="chip-group">
+          ${ingredientConfig.salse.map(s => `
+            <span class="chip ${instData.salse.includes(s) ? 'selected' : ''}" 
+                  onclick="toggleIngredient('${itemId}',${index}, 'salse', '${s}')">${s}</span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Line 2: Verdure -->
+      <div class="ingredient-line">
+        <span class="line-label">Verdure:</span>
+        <div class="chip-group">
+          ${ingredientConfig.verdure.map(v => `
+            <span class="chip ${instData.verdure.includes(v) ? 'selected' : ''}" 
+                  onclick="toggleIngredient('${itemId}',${index}, 'verdure', '${v}')">${v}</span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Line 3: Extra -->
+      <div class="ingredient-line">
+        <span class="line-label">Extra:</span>
+        <div class="chip-group">
+          ${ingredientConfig.extra.map(e => `
+            <span class="chip ${instData.extra.includes(e) ? 'selected' : ''}" 
+                  onclick="toggleIngredient('${itemId}',${index}, 'extra', '${e}')">${e}</span>
+          `).join('')}
+        </div>
+      </div>
     </div>
+  `;
+}
 
-    <!-- CATEGORY NAVIGATION -->
-    <div class="category-buttons">
-        <button class="category-btn active" onclick="showCategory(event, 'kebab')">Kebab</button>
-        <button class="category-btn" onclick="showCategory(event, 'nonsolo')">Non Solo Kebab</button>
-        <button class="category-btn" onclick="showCategory(event, 'fritti')">Fritti</button>
-    </div>
+function updateQty(itemId, delta) {
+  if (!state.cart[itemId]) state.cart[itemId] = [];
+  
+  if (delta > 0) {
+    state.cart[itemId].push({ salse: [], verdure: [], extra: [] });
+  } else if (delta < 0 && state.cart[itemId].length > 0) {
+    state.cart[itemId].pop();
+  }
+  
+  if (state.cart[itemId].length === 0) delete state.cart[itemId];
 
-    <form id="orderForm" class="asporto-mode">
-        <!-- KEBAB SECTION -->
-        <div id="kebab" class="menu-section active">
-            <div class="item-card"><div class="item-details"><div class="item-title">Panino Kebab</div><div class="item-price-container"><span class="item-price-original">4.50 €</span><span class="item-price-discount">4.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Panino Solo Carne</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Menu Panino (Bibita + Patatine)</div><div class="item-price-container"><span class="item-price-original">7.00 €</span><span class="item-price-discount">6.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Menu Panino Studenti</div><div class="item-price-container"><span class="item-price-original">6.50 €</span><span class="item-price-discount">6.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Piatto Kebab</div><div class="item-price-container"><span class="item-price-original">8.00 €</span><span class="item-price-discount">7.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-        </div>
+  renderMenu(currentFilteredItems || menuItems);
+  updateTotal();
+}
 
-        <!-- NON SOLO KEBAB SECTION -->
-        <div id="nonsolo" class="menu-section">
-            <div class="item-card"><div class="item-details"><div class="item-title">Panino Falafel</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Piadina Falafel</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Panino Seekh Kebab</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Piadina Seekh Kebab</div><div class="item-price-container"><span class="item-price-original">5.00 €</span><span class="item-price-discount">4.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Crispy Hamburger</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Panino Cotoletta</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-        </div>
+function toggleIngredient(itemId, instanceIdx, category, value) {
+  const instance = state.cart[itemId][instanceIdx];
+  const list = instance[category];
+  const pos = list.indexOf(value);
+  
+  if (pos > -1) {
+    list.splice(pos, 1);
+  } else {
+    list.push(value);
+  }
 
-        <!-- FRITTI SECTION -->
-        <div id="fritti" class="menu-section">
-            <div class="item-card"><div class="item-details"><div class="item-title">Patatine Fritte (Piccola)</div><div class="item-price-container"><span class="item-price-original">2.50 €</span><span class="item-price-discount">2.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Patatine Fritte (Grande)</div><div class="item-price-container"><span class="item-price-original">3.50 €</span><span class="item-price-discount">3.00 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Mozzarella Stick (6pz)</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-            <div class="item-card"><div class="item-details"><div class="item-title">Chicken Nuggets (6pz)</div><div class="item-price-container"><span class="item-price-original">4.00 €</span><span class="item-price-discount">3.50 €</span></div></div><input type="number" min="0" value="0" class="quantity-input"></div>
-        </div>
+  renderMenu(currentFilteredItems || menuItems);
+}
 
-        <button type="button" class="btn-whatsapp" onclick="sendWhatsApp()">ORDINA ORA SU WHATSAPP</button>
-    </form>
+function checkDeliveryAvailability() {
+  const now = new Date();
+  const day = now.getDay(); // 0 = Sun, 6 = Sat
+  const hour = now.getHours();
+  const isWeekend = (day === 0 || day === 6);
+  const isAfter17 = hour >= 17;
 
-    <script>
-        function showCategory(evt, catId) {
-            document.querySelectorAll('.menu-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(catId).classList.add('active');
-            evt.currentTarget.classList.add('active');
+  const warning = document.getElementById('time-warning');
+  if (!isWeekend || !isAfter17) {
+    warning.style.display = 'block';
+  } else {
+    warning.style.display = 'none';
+  }
+}
+
+function updateTotal() {
+  let subtotal = 0;
+
+  Object.keys(state.cart).forEach(itemId => {
+    const item = menuItems.find(i => i.id === itemId);
+    const price = getItemPrice(item);
+    subtotal += price * state.cart[itemId].length;
+  });
+
+  if (state.orderType === 'consegna') {
+    const zoneFee = parseFloat(document.getElementById('delivery-zone').value || '0');
+    subtotal += zoneFee;
+  }
+
+  document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
+}
+
+function sendWhatsAppOrder() {
+  let text = `*NUOVO ORDINE - Non Solo Kebab*\n`;
+  text += `Tipo: *${state.orderType === 'asporto' ? 'Asporto (-0.50€ applicato)' : 'Consegna a Domicilio'}*\n`;
+
+  if (state.orderType === 'consegna') {
+    const zoneSelect = document.getElementById('delivery-zone');
+    const zoneName = zoneSelect.options[zoneSelect.selectedIndex].text;
+    text += `Zona: ${zoneName}\n`;
+  }
+  text += `-----------------------------------\n`;
+
+  let totalSum = 0;
+  let hasItems = false;
+
+  Object.keys(state.cart).forEach(itemId => {
+    const item = menuItems.find(i => i.id === itemId);
+    const instances = state.cart[itemId];
+    const unitPrice = getItemPrice(item);
+
+    instances.forEach((inst, idx) => {
+      hasItems = true;
+      totalSum += unitPrice;
+      text += `*1x ${item.name}* (€${unitPrice.toFixed(2)})\n`;
+      
+      if (item.customizable) {
+        const allIngs = [...inst.salse, ...inst.verdure, ...inst.extra];
+        if (allIngs.length > 0) {
+          text += `   Con: ${allIngs.join(', ')}\n`;
+        } else {
+          text += `   Con: Nessuna modifica\n`;
         }
+      }
+    });
+  });
 
-        // Check if delivery is available (Only Saturday & Sunday after 17:00)
-        function isDeliveryAvailable() {
-            const now = new Date();
-            const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
-            const currentHour = now.getHours(); // 0 to 23
+  if (!hasItems) {
+    alert("Per favore, aggiungi almeno un elemento al carrello.");
+    return;
+  }
 
-            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-            const isAfter5PM = (currentHour >= 17);
+  if (state.orderType === 'consegna') {
+    const zoneFee = parseFloat(document.getElementById('delivery-zone').value || '0');
+    totalSum += zoneFee;
+  }
 
-            return isWeekend && isAfter5PM;
-        }
+  text += `-----------------------------------\n`;
+  text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
 
-        function initOrderType() {
-            const deliveryTab = document.getElementById('tabConsegna');
+  const encodedText = encodeURIComponent(text);
+  const whatsappUrl = `https://wa.me/393932228224?text=${encodedText}`;
+  window.open(whatsappUrl, '_blank');
+}
 
-            if (!isDeliveryAvailable()) {
-                deliveryTab.style.opacity = '0.5';
-                deliveryTab.style.cursor = 'not-allowed';
-                deliveryTab.onclick = function() {
-                    alert("Le consegne a domicilio sono disponibili solo Sabato e Domenica dopo le 17:00!");
-                };
-            }
-        }
+window.onload = init;
+</script>
 
-        function selectOrderType(type) {
-            if (type === 'consegna' && !isDeliveryAvailable()) {
-                alert("Le consegne a domicilio sono disponibili solo Sabato e Domenica dopo le 17:00!");
-                return;
-            }
-
-            document.querySelectorAll('.order-tab').forEach(tab => tab.classList.remove('active'));
-            const zoneSection = document.getElementById('deliveryZoneSection');
-            const form = document.getElementById('orderForm');
-
-            if (type === 'consegna') {
-                document.getElementById('tabConsegna').classList.add('active');
-                zoneSection.style.display = 'block';
-                form.classList.remove('asporto-mode');
-            } else { // type === 'asporto'
-                document.getElementById('tabAsporto').classList.add('active');
-                zoneSection.style.display = 'none';
-                form.classList.add('asporto-mode');
-                document.getElementById('deliveryZone').value = "0";
-            }
-        }
-
-        function sendWhatsApp() {
-            const isConsegna = document.getElementById('tabConsegna').classList.contains('active');
-            const zoneSelect = document.getElementById('deliveryZone');
-
-            if (isConsegna && zoneSelect.value === "0") {
-                alert("Per favore, seleziona la tua zona di consegna.");
-                return;
-            }
-
-            alert("Ordinazione pronta per l'invio!");
-        }
-    </script>
 </body>
 </html>
