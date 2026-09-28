@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kebab di Via Roma - Jesi</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f8f9fa; margin: 0; padding: 0; color: #333; }
+    .header { background-color: #1a1a1a; color: #fff; text-align: center; padding: 20px 10px; }
+    .header h1 { margin: 0; font-size: 26px; color: #ffcc00; }
+    .header p { margin: 5px 0; font-size: 14px; color: #ddd; }
+    .container { max-width: 600px; margin: 0 auto; padding: 15px; }
+    
+    /* Promo Banner */
+    .promo-card { background: linear-gradient(135deg, #054d28, #0b2e1b); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 25px; border: 2px solid #d4af37; text-align: center; color: #fff; }
+    .promo-header { padding: 15px; background: rgba(0,0,0,0.3); }
+    .promo-title { font-size: 24px; font-weight: bold; color: #ffd700; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+    .promo-sub { font-size: 18px; color: #fff; margin-top: 5px; font-weight: 600; }
+    .promo-img { width: 100%; max-height: 280px; object-fit: cover; display: block; }
+    .promo-body { padding: 15px; }
+    .promo-desc { font-size: 16px; margin-bottom: 10px; }
+    .promo-price { font-size: 22px; font-weight: bold; color: #ffd700; background: rgba(0,0,0,0.4); display: inline-block; padding: 5px 15px; border-radius: 20px; border: 1px solid #ffd700; }
+    
+    /* Menu Section */
+    .section-title { border-bottom: 3px solid #054d28; padding-bottom: 5px; color: #054d28; font-size: 20px; margin-top: 20px; text-transform: uppercase; }
+    .menu-item { background: #fff; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .item-details { flex-grow: 1; }
+    .item-title { font-size: 16px; font-weight: bold; color: #222; margin-bottom: 3px; }
+    .item-desc { font-size: 12px; color: #666; margin: 0; }
+    .item-price { color: #054d28; font-weight: bold; font-size: 16px; margin-right: 10px; }
+    .qty-input { width: 50px; padding: 6px; text-align: center; border: 1px solid #ccc; border-radius: 5px; font-weight: bold; }
+    
+    /* User Details & Button */
+    .input-group { margin-top: 15px; }
+    .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+    .input-group input, .input-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .btn-order { background-color: #25d366; color: white; border: none; width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
+    .footer-info { text-align: center; margin-top: 25px; font-size: 13px; color: #777; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Kebab di Via Roma</h1>
+    <p>Via Roma 29b, Jesi (AN) | Tel/WhatsApp: 393 222 8224</p>
+  </div>
+
+  <div class="container">
+    
+    <!-- MEGA OFERTA BANNER -->
+    <div class="promo-card">
+      <div class="promo-header">
+        <div class="promo-title">MEGA OFERTA</div>
+        <div class="promo-sub">Piadina Artigianale con Kebab</div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=800&q=80" alt="Piadina Kebab Artigianale" class="promo-img">
+      <div class="promo-body">
+        <div class="promo-desc">Piadina Artigianale cotta al momento + Kebab Speziato + una Lattina a scelta!</div>
+        <div class="promo-price">Solo 5.00 €</div>
+      </div>
+    </div>
+
+    <!-- MENU LIST -->
+    <h2 class="section-title">Il Nostro Menù</h2>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Piadina Artigianale Kebab (Offerta)</div>
+        <p class="item-desc">Piadina fatta a mano con Kebab e lattina inclusa</p>
+      </div>
+      <span class="item-price">5.00 €</span>
+      <input type="number" id="item_promo" class="qty-input" min="0" value="0">
+    </div>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Panino Kebab</div>
+        <p class="item-desc">Carne, insalata, pomodoro, cipolla e salse</p>
+      </div>
+      <span class="item-price">5.00 €</span>
+      <input type="number" id="item1" class="qty-input" min="0" value="0">
+    </div>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Panino Solo Carne</div>
+        <p class="item-desc">Extra carne kebab senza verdure</p>
+      </div>
+      <span class="item-price">6.00 €</span>
+      <input type="number" id="item2" class="qty-input" min="0" value="0">
+    </div>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Piatto Kebab</div>
+        <p class="item-desc">Servito con patatine, insalata e pane</p>
+      </div>
+      <span class="item-price">8.00 €</span>
+      <input type="number" id="item3" class="qty-input" min="0" value="0">
+    </div>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Falafel Roll</div>
+        <p class="item-desc">Polpette di ceci con insalata e salsa in piadina</p>
+      </div>
+      <span class="item-price">4.50 €</span>
+      <input type="number" id="item4" class="qty-input" min="0" value="0">
+    </div>
+
+    <div class="menu-item">
+      <div class="item-details">
+        <div class="item-title">Patatine Fritte</div>
+        <p class="item-desc">Porzione croccante di patatine</p>
+      </div>
+      <span class="item-price">3.00 €</span>
+      <input type="number" id="item5" class="qty-input" min="0" value="0">
+    </div>
+
+    <!-- CUSTOMER DETAILS -->
+    <h2 class="section-title">Informazioni Cliente</h2>
+    
+    <div class="input-group">
+      <label>Il tuo Nome:</label>
+      <input type="text" id="custName" placeholder="Inserisci il tuo nome">
+    </div>
+
+    <div class="input-group">
+      <label>Indirizzo o Dettagli Ritiro:</label>
+      <textarea id="custAddress" rows="2" placeholder="Indirizzo di consegna o orario ritiro"></textarea>
+    </div>
+
+    <button class="btn-order" onclick="sendToWhatsApp()">Invia Ordine su WhatsApp</button>
+
+    <div class="footer-info">
+      Via Roma 29b - Jesi (AN) | Ordina comodamente online!
+    </div>
+
+  </div>
+
+  <script>
+    function sendToWhatsApp() {
+      var name = document.getElementById("custName").value;
+      var address = document.getElementById("custAddress").value;
+
+      if (name === "" || address === "") {
+        alert("Per favore, inserisci il tuo nome e indirizzo/orario.");
+        return;
+      }
+
+      var items = [
+        { id: "item_promo", name: "Piadina Artigianale (Promo 5€)" },
+        { id: "item1", name: "Panino Kebab" },
+        { id: "item2", name: "Panino Solo Carne" },
+        { id: "item3", name: "Piatto Kebab" },
+        { id: "item4", name: "Falafel Roll" },
+        { id: "item5", name: "Patatine Fritte" }
+      ];
+
+      var orderText = "";
+      var hasOrder = false;
+
+      for (var i = 0; i < items.length; i++) {
+        var qty = document.getElementById(items[i].id).value;
+        if (qty > 0) {
+          orderText += "- " + items[i].name + " x " + qty + "\n";
+          hasOrder = true;
+        }
+      }
+
+      if (!hasOrder) {
+        alert("Per favore, seleziona almeno un articolo dal menù.");
+        return;
+      }
+
+      var message = "Ciao! Kebab di Via Roma, nuovo ordine:\n\n";
+      message += "*Nome:* " + name + "\n";
+      message += "*Indirizzo/Note:* " + address + "\n\n";
+      message += "*Ordine:*\n" + orderText;
+
+      var phoneNumber = "393932228224";
+      var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+      
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+
+</body>
+      </html>
+      
