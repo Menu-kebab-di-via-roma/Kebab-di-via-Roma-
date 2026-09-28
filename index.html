@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebab di Via Roma - Jesi</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; padding: 15px; direction: rtl; text-align: right; }
+        .header { background-color: #900c3f; color: white; padding: 25px 15px; border-radius: 12px; text-align: center; }
+        .header h1 { margin: 0 0 10px 0; font-size: 28px; }
+        .header p { margin: 5px 0; font-size: 15px; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0px 4px 12px rgba(0,0,0,0.1); }
+        .section-title { border-bottom: 2px solid #900c3f; padding-bottom: 8px; color: #333; margin-top: 20px; font-size: 20px; }
+        .menu-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
+        .item-info strong { font-size: 17px; color: #222; }
+        .item-info span { color: #666; font-size: 14px; }
+        .qty-input { width: 50px; padding: 6px; text-align: center; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        .input-group { margin-top: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
+        .input-group input, .input-group textarea { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; }
+        .btn-order { background-color: #25D366; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; transition: 0.3s; }
+        .btn-order:hover { background-color: #1ebd56; }
+        .footer-info { text-align: center; margin-top: 25px; font-size: 13px; color: #777; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌯 Kebab di Via Roma</h1>
+        <p>📍 Via Roma 29b, Jesi (AN)</p>
+        <p>📞 393 222 8224</p>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">ہماری مینو (Menu)</h2>
+        
+        <div class="menu-item">
+            <div class="item-info">
+                <strong>کباب ڈونر (Doner Kebab Roll)</strong><br>
+                <span>قیمت: € 5.00</span>
+            </div>
+            <input type="number" id="item1" class="qty-input" min="0" value="0">
+        </div>
+
+        <div class="menu-item">
+            <div class="item-info">
+                <strong>کباب پلیٹ (Kebab Plate)</strong><br>
+                <span>قیمت: € 8.00</span>
+            </div>
+            <input type="number" id="item2" class="qty-input" min="0" value="0">
+        </div>
+
+        <div class="menu-item">
+            <div class="item-info">
+                <strong>فلافل رول (Falafel Roll)</strong><br>
+                <span>قیمت: € 4.50</span>
+            </div>
+            <input type="number" id="item3" class="qty-input" min="0" value="0">
+        </div>
+
+        <div class="menu-item">
+            <div class="item-info">
+                <strong>فرنچ فرائز (Chips / Patatine)</strong><br>
+                <span>قیمت: € 3.00</span>
+            </div>
+            <input type="number" id="item4" class="qty-input" min="0" value="0">
+        </div>
+
+        <h2 class="section-title">کسٹمر کی معلومات</h2>
+
+        <div class="input-group">
+            <label>آپ کا نام:</label>
+            <input type="text" id="custName" placeholder="اپنا پورا نام لکھیں">
+        </div>
+
+        <div class="input-group">
+            <label>ڈیلیوری یا پک اپ کا پتہ/تفصیل:</label>
+            <textarea id="custAddress" rows="2" placeholder="اپنا پتہ درج کریں (یا لکھیں: Takeaway/Pickup)"></textarea>
+        </div>
+
+        <button class="btn-order" onclick="sendToWhatsApp()">📲 واٹس ایپ پر آرڈر کریں</button>
+    </div>
+
+    <div class="footer-info">
+        Kebab di Via Roma - Jesi (AN) | Online Order System
+    </div>
+
+    <script>
+        function sendToWhatsApp() {
+            // آپ کا فون نمبر اطالوی کنٹری کوڈ (39) کے ساتھ سیٹ کر دیا گیا ہے
+            var phoneNumber = "393932228224"; 
+
+            var name = document.getElementById("custName").value.trim();
+            var address = document.getElementById("custAddress").value.trim();
+
+            var qty1 = document.getElementById("item1").value;
+            var qty2 = document.getElementById("item2").value;
+            var qty3 = document.getElementById("item3").value;
+            var qty4 = document.getElementById("item4").value;
+
+            if (name === "" || address === "") {
+                alert("برائے مہربانی اپنا نام اور پتہ/تفصیل لازمی درج کریں!");
+                return;
+            }
+
+            if (qty1 == 0 && qty2 == 0 && qty3 == 0 && qty4 == 0) {
+                alert("برائے مہربانی کم از کم ایک ائٹم منتخب کریں!");
+                return;
+            }
+
+            var message = "السلام علیکم! *Kebab di Via Roma* پر نیا آرڈر آ گیا ہے:\n\n";
+            message += "👤 *نام:* " + name + "\n";
+            message += "📍 *پتہ / طریقہ:* " + address + "\n\n";
+            message += "🛒 *آرڈر کی تفصیل:* \n";
+
+            if (qty1 > 0) message += "- کباب ڈونر: " + qty1 + "\n";
+            if (qty2 > 0) message += "- کباب پلیٹ: " + qty2 + "\n";
+            if (qty3 > 0) message += "- فلافل رول: " + qty3 + "\n";
+            if (qty4 > 0) message += "- فرنچ فرائز: " + qty4 + "\n";
+
+            var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+
+</body>
+</html>
