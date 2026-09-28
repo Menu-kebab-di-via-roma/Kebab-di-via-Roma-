@@ -125,7 +125,27 @@
       border-radius: 8px;
       border-left: 3px solid var(--secondary);
     }
-    .unit-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 6px; }
+    .unit-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .unit-title { font-size: 0.85rem; font-weight: bold; }
+    .mode-switch { display: flex; gap: 5px; }
+    .mode-btn {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .mode-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
     
     .ingredient-line { margin-bottom: 8px; }
     .line-label { font-size: 0.75rem; font-weight: bold; color: #555; display: block; margin-bottom: 4px; }
@@ -142,6 +162,11 @@
       background: var(--secondary);
       color: white;
       border-color: var(--secondary);
+    }
+    .chip.selected-senza {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
     }
 
     .delivery-info {
@@ -284,20 +309,20 @@ const menuItems = [
   { id: 'ch_wings', name: 'Chicken Wings', basePrice: 4.00, cat: 'fritti', customizable: false },
 
   // Bevande
-  { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'esta_pesca', name: 'Estathé Pesca (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'esta_limone', name: 'Estathé Limone (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'hell', name: 'Hell Energy Drink (25 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'bot_g', name: 'Bottiglia Grande (1.5 L)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'acq_p', name: 'Acqua (50 cl)', basePrice: 1.00, cat: 'bevande', customizable: false },
-  { id: 'red_bull', name: 'Red Bull (25 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'esta_pesca', name: 'Estathé Pesca (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'esta_limone', name: 'Estathé Limone (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'hell', name: 'Hell Energy Drink (25 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'bot_g', name: 'Bottiglia Grande (1.5 L)', basePrice: 2.50, cat: 'bevande', customizable: false },
+  { id: 'acq_p', name: 'Acqua (50 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
+  { id: 'red_bull', name: 'Red Bull (25 cl)', basePrice: 2.50, cat: 'bevande', customizable: false },
 
   // Alcolici
-  { id: 'peroni_66', name: 'Peroni (66 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false },
-  { id: 'moretti_66', name: 'Moretti (66 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false }
+  { id: 'peroni_66', name: 'Peroni (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false },
+  { id: 'moretti_66', name: 'Moretti (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false }
 ];
 
 let state = {
@@ -374,35 +399,53 @@ function renderMenu(items) {
 function renderCustomizer(itemId, index, instData) {
   return `
     <div class="unit-customizer">
-      <div class="unit-title">Personalizza #${index + 1}</div>
+      <div class="unit-controls">
+        <div class="unit-title">Personalizza #${index + 1}</div>
+        <div class="mode-switch">
+          <button class="mode-btn ${instData.mode === 'senza' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'senza')">Senza</button>
+          <button class="mode-btn ${instData.mode === 'con' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'con')">Con</button>
+        </div>
+      </div>
       
       <div class="ingredient-line">
         <span class="line-label">Salse:</span>
         <div class="chip-group">
-          ${ingredientConfig.salse.map(s => `
-            <span class="chip ${instData.salse.includes(s) ? 'selected' : ''}" 
-                  onclick="toggleIngredient('${itemId}',${index}, 'salse', '${s}')">${s}</span>
-          `).join('')}
+          ${ingredientConfig.salse.map(s => {
+            const isSelected = instData.ingredients.includes(s);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${s}')">${s}</span>
+            `;
+          }).join('')}
         </div>
       </div>
 
       <div class="ingredient-line">
         <span class="line-label">Verdure:</span>
         <div class="chip-group">
-          ${ingredientConfig.verdure.map(v => `
-            <span class="chip ${instData.verdure.includes(v) ? 'selected' : ''}" 
-                  onclick="toggleIngredient('${itemId}',${index}, 'verdure', '${v}')">${v}</span>
-          `).join('')}
+          ${ingredientConfig.verdure.map(v => {
+            const isSelected = instData.ingredients.includes(v);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${v}')">${v}</span>
+            `;
+          }).join('')}
         </div>
       </div>
 
       <div class="ingredient-line">
         <span class="line-label">Extra:</span>
         <div class="chip-group">
-          ${ingredientConfig.extra.map(e => `
-            <span class="chip ${instData.extra.includes(e) ? 'selected' : ''}" 
-                  onclick="toggleIngredient('${itemId}',${index}, 'extra', '${e}')">${e}</span>
-          `).join('')}
+          ${ingredientConfig.extra.map(e => {
+            const isSelected = instData.ingredients.includes(e);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${e}')">${e}</span>
+            `;
+          }).join('')}
         </div>
       </div>
     </div>
@@ -413,7 +456,7 @@ function updateQty(itemId, delta) {
   if (!state.cart[itemId]) state.cart[itemId] = [];
   
   if (delta > 0) {
-    state.cart[itemId].push({ salse: [], verdure: [], extra: [] });
+    state.cart[itemId].push({ mode: 'senza', ingredients: [] });
   } else if (delta < 0 && state.cart[itemId].length > 0) {
     state.cart[itemId].pop();
   }
@@ -424,9 +467,18 @@ function updateQty(itemId, delta) {
   updateTotal();
 }
 
-function toggleIngredient(itemId, instanceIdx, category, value) {
+function setInstanceMode(itemId, instanceIdx, mode) {
   const instance = state.cart[itemId][instanceIdx];
-  const list = instance[category];
+  if(instance.mode !== mode) {
+    instance.mode = mode;
+    instance.ingredients = [];
+    renderMenu(currentFilteredItems || menuItems);
+  }
+}
+
+function toggleIngredient(itemId, instanceIdx, value) {
+  const instance = state.cart[itemId][instanceIdx];
+  const list = instance.ingredients;
   const pos = list.indexOf(value);
   
   if (pos > -1) {
@@ -495,18 +547,18 @@ function sendWhatsAppOrder() {
         text += `*${instances.length}x ${item.name}* (€${(unitPrice * instances.length).toFixed(2)}):\n`;
         instances.forEach((inst, idx) => {
           totalSum += unitPrice;
-          const allIngs = [...inst.salse, ...inst.verdure, ...inst.extra];
-          const ingsStr = allIngs.length > 0 ? allIngs.join(', ') : 'Nessuna modifica';
-          text += `  ${idx + 1}. Con: ${ingsStr}\n`;
+          const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
+          const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
+          text += `  ${idx + 1}. ${modeStr}: ${ingsStr}\n`;
         });
       } else {
         instances.forEach((inst, idx) => {
           totalSum += unitPrice;
           text += `*1x ${item.name}* (€${unitPrice.toFixed(2)})\n`;
           if (item.customizable) {
-            const allIngs = [...inst.salse, ...inst.verdure, ...inst.extra];
-            const ingsStr = allIngs.length > 0 ? allIngs.join(', ') : 'Nessuna modifica';
-            text += `   Con: ${ingsStr}\n`;
+            const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
+            const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
+            text += `   ${modeStr}: ${ingsStr}\n`;
           }
         });
       }
