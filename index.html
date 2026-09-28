@@ -432,6 +432,7 @@ const translations = {
 };
 
 let currentLang = 'it';
+let currentFilteredItems = null;
 
 function switchLanguage(lang) {
   currentLang = lang;
@@ -510,7 +511,8 @@ let state = {
 };
 
 function init() {
-  renderMenu(menuItems);
+  currentFilteredItems = menuItems;
+  renderMenu(currentFilteredItems);
   checkDeliveryAvailability();
 }
 
@@ -553,7 +555,6 @@ function getItemPrice(item) {
   return state.orderType === 'asporto' ? Math.max(0, item.basePrice - 0.50) : item.basePrice;
 }
 
-let currentFilteredItems = null;
 function filterCategory(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -561,4 +562,237 @@ function filterCategory(cat, btn) {
   if (cat === 'all') {
     currentFilteredItems = menuItems;
   } else {
-    currentFilteredItems = menuItems.f
+    currentFilteredItems = menuItems.filter(i => i.cat === cat);
+  }
+  renderMenu(currentFilteredItems);
+}
+
+function renderMenu(items) {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+
+  items.forEach(item => {
+    const activePrice = getItemPrice(item).toFixed(2);
+    const cartInstances = state.cart[item.id] || [];
+    const qty = cartInstances.length;
+
+    const priceDisplay = state.orderType === 'deliveroo' ? '' : `<div class="item-price">€ ${activePrice}</div>`;
+
+    let itemHtml = `
+      <div class="menu-item">
+        <div class="item-header">
+          <div>
+            <div class="item-title">${item.name}</div>
+            ${priceDisplay}
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
+            <span>${qty}</span>
+            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+          </div>
+        </div>
+    `;
+
+    if (item.customizable && qty > 0) {
+      cartInstances.forEach((inst, idx) => {
+        itemHtml += renderCustomizer(item.id, idx, inst);
+      });
+    }
+
+    itemHtml += `</div>`;
+    container.innerHTML += itemHtml;
+  });
+}
+
+function renderCustomizer(itemId, index, instData) {
+  const t = translations[currentLang];
+  return `
+    <div class="unit-customizer">
+      <div class="unit-controls">
+        <div class="unit-title">${t.customize} #${index + 1}</div>
+        <div class="mode-switch">
+          <button class="mode-btn ${instData.mode === 'senza' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'senza')">${t.without}</button>
+          <button class="mode-btn ${instData.mode === 'con' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'con')">${t.with}</button>
+        </div>
+      </div>
+      
+      <div class="ingredient-line">
+        <span class="line-label">${t.sauces}</span>
+        <div class="chip-group">
+          ${ingredientConfig.salse.map(s => {
+            const isSelected = instData.ingredients.includes(s);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${s}')">${s}</span>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="ingredient-line">
+        <span class="line-label">${t.veggies}</span>
+        <div class="chip-group">
+          ${ingredientConfig.verdure.map(v => {
+            const isSelected = instData.ingredients.includes(v);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${v}')">${v}</span>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="ingredient-line">
+        <span class="line-label">${t.extras}</span>
+        <div class="chip-group">
+          ${ingredientConfig.extra.map(e => {
+            const isSelected = instData.ingredients.includes(e);
+            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
+            return `
+              <span class="chip ${chipClass}" 
+                    onclick="toggleIngredient('${itemId}',${index}, '${e}')">${e}</span>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateQty(itemId, delta) {
+  if (!state.cart[itemId]) state.cart[itemId] = [];
+  
+  if (delta > 0) {
+    state.cart[itemId].push({ mode: 'senza', ingredients: [] });
+  } else if (delta < 0 && state.cart[itemId].length > 0) {
+    state.cart[itemId].pop();
+  }
+  
+  if (state.cart[itemId].length === 0) delete state.cart[itemId];
+
+  renderMenu(currentFilteredItems || menuItems);
+  updateTotal();
+}
+
+function setInstanceMode(itemId, instanceIdx, mode) {
+  const instance = state.cart[itemId][instanceIdx];
+  if(instance.mode !== mode) {
+    instance.mode = mode;
+    instance.ingredients = [];
+    renderMenu(currentFilteredItems || menuItems);
+  }
+}
+
+function toggleIngredient(itemId, instanceIdx, value) {
+  const instance = state.cart[itemId][instanceIdx];
+  const list = instance.ingredients;
+  const pos = list.indexOf(value);
+  
+  if (pos > -1) {
+    list.splice(pos, 1);
+  } else {
+    list.push(value);
+  }
+
+  renderMenu(currentFilteredItems || menuItems);
+}
+
+function isDeliveryAllowed() {
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const isWeekend = (day === 0 || day === 6);
+  const isAfter17 = hour >= 17;
+
+  return isWeekend && isAfter17;
+}
+
+function checkDeliveryAvailability() {
+  const allowed = isDeliveryAllowed();
+  const warning = document.getElementById('time-warning');
+  const inputs = document.getElementById('delivery-inputs');
+
+  if (!allowed) {
+    warning.style.display = 'block';
+    inputs.style.display = 'none';
+  } else {
+    warning.style.display = 'none';
+    inputs.style.display = 'block';
+  }
+}
+
+function updateTotal() {
+  if (state.orderType === 'deliveroo') return;
+
+  let subtotal = 0;
+  Object.keys(state.cart).forEach(itemId => {
+    const item = menuItems.find(i => i.id === itemId);
+    const price = getItemPrice(item);
+    subtotal += price * state.cart[itemId].length;
+  });
+
+  document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
+}
+
+function sendWhatsAppOrder() {
+  const keys = Object.keys(state.cart);
+  if (keys.length === 0) {
+    alert(currentLang === 'it' ? "Seleziona almeno un prodotto!" : "Please select at least one item!");
+    return;
+  }
+
+  let text = "";
+
+  if (state.orderType === 'asporto') {
+    const name = document.getElementById('asporto-cust-name').value.trim();
+    const time = document.getElementById('asporto-time').value;
+    if (!name || !time) {
+      alert(currentLang === 'it' ? "Inserisci il tuo Nome e l'Orario di Ritiro!" : "Please enter your Name and Pickup Time!");
+      return;
+    }
+    text += `*ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n\n`;
+  } else if (state.orderType === 'consegna') {
+    const name = document.getElementById('cust-name').value.trim();
+    const address = document.getElementById('cust-address').value.trim();
+    if (!name || !address) {
+      alert(currentLang === 'it' ? "Inserisci Nome e Indirizzo!" : "Please enter Name and Address!");
+      return;
+    }
+    text += `*ORDINE CONSEGNA*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n\n`;
+  } else {
+    const name = document.getElementById('deliv-cust-name').value.trim();
+    if (!name) {
+      alert(currentLang === 'it' ? "Inserisci il nome account Deliveroo!" : "Please enter Deliveroo account name!");
+      return;
+    }
+    text += `*NOTE ORDINE DELIVEROO*\n👤 Account: ${name}\n\n`;
+  }
+
+  text += "*PRODOTTI:*\n";
+  keys.forEach(id => {
+    const item = menuItems.find(i => i.id === id);
+    const instances = state.cart[id];
+    instances.forEach((inst, idx) => {
+      text += `• ${item.name}`;
+      if (inst.ingredients.length > 0) {
+        text += ` (${inst.mode.toUpperCase()}: ${inst.ingredients.join(', ')})`;
+      }
+      text += `\n`;
+    });
+  });
+
+  if (state.orderType !== 'deliveroo') {
+    text += `\n*Totale:* ${document.getElementById('grand-total').innerText}`;
+  }
+
+  const phone = "393932228224";
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+
+init();
+</script>
+</body>
+</html>
