@@ -173,19 +173,10 @@
       background: #fff3cd;
       border: 1px solid #ffeeba;
       color: #856404;
-      padding: 12px;
+      padding: 10px;
       border-radius: 8px;
       font-size: 0.85rem;
       margin-bottom: 15px;
-    }
-    .input-field {
-      width: 100%;
-      padding: 8px 10px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
     }
     .zone-select {
       width: 100%;
@@ -193,7 +184,6 @@
       margin-top: 5px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
     }
 
     .bottom-bar {
@@ -251,20 +241,14 @@
   </div>
 
   <div id="delivery-zone-box" class="delivery-info" style="display: none;">
-    <label><strong>Nome e Cognome: *</strong></label>
-    <input type="text" id="cust-name" class="input-field" placeholder="Inserisci il tuo nome e cognome">
-
-    <label><strong>Indirizzo Completo: *</strong></label>
-    <input type="text" id="cust-address" class="input-field" placeholder="Es: Via San Giuseppe 29b, Jesi">
-
-    <label><strong>Zona di Consegna:</strong></label>
+    <strong>Zona di Consegna:</strong>
     <select id="delivery-zone" class="zone-select" onchange="updateTotal()">
       <option value="1.00">Via Roma (€ 1,00)</option>
       <option value="2.00">Centro Storico (€ 2,00)</option>
       <option value="2.50">San Giuseppe (€ 2,50)</option>
       <option value="3.00">Zona Industriale / Periferia (€ 3,00)</option>
     </select>
-    <div id="time-warning" style="color: #d9534f; margin-top: 8px; font-weight: bold; display: none;">
+    <div id="time-warning" style="color: #d9534f; margin-top: 5px; font-weight: bold; display: none;">
       Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.
     </div>
   </div>
@@ -539,43 +523,18 @@ function updateTotal() {
 }
 
 function sendWhatsAppOrder() {
-  // Check if cart is empty
-  let hasItems = false;
-  Object.keys(state.cart).forEach(itemId => {
-    if (state.cart[itemId].length > 0) hasItems = true;
-  });
-
-  if (!hasItems) {
-    alert("Per favore, aggiungi almeno un elemento al carrello.");
-    return;
-  }
-
-  // Delivery check
-  let custName = "";
-  let custAddress = "";
-  if (state.orderType === 'consegna') {
-    custName = document.getElementById('cust-name').value.trim();
-    custAddress = document.getElementById('cust-address').value.trim();
-
-    if (!custName || !custAddress) {
-      alert("Per favore, inserisci sia il Nome e Cognome che l'Indirizzo Completo per la consegna.");
-      return;
-    }
-  }
-
   let text = `*NUOVO ORDINE - Kebab di Via Roma*\n`;
   text += `Tipo: *${state.orderType === 'asporto' ? 'Asporto (-0.50€ applicato)' : 'Consegna a Domicilio'}*\n`;
 
   if (state.orderType === 'consegna') {
     const zoneSelect = document.getElementById('delivery-zone');
     const zoneName = zoneSelect.options[zoneSelect.selectedIndex].text;
-    text += `Cliente: *${custName}*\n`;
-    text += `Indirizzo: *${custAddress}*\n`;
     text += `Zona: ${zoneName}\n`;
   }
   text += `-----------------------------------\n`;
 
   let totalSum = 0;
+  let hasItems = false;
 
   Object.keys(state.cart).forEach(itemId => {
     const item = menuItems.find(i => i.id === itemId);
@@ -583,9 +542,49 @@ function sendWhatsAppOrder() {
     const unitPrice = getItemPrice(item);
 
     if (instances.length > 0) {
+      hasItems = true;
       if (item.customizable && instances.length > 1) {
         text += `*${instances.length}x ${item.name}* (€${(unitPrice * instances.length).toFixed(2)}):\n`;
         instances.forEach((inst, idx) => {
           totalSum += unitPrice;
           const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
-          const ingsStr = inst.ingredients.length > 0 ? inst.ingredie
+          const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
+          text += `  ${idx + 1}. ${modeStr}: ${ingsStr}\n`;
+        });
+      } else {
+        instances.forEach((inst, idx) => {
+          totalSum += unitPrice;
+          text += `*1x ${item.name}* (€${unitPrice.toFixed(2)})\n`;
+          if (item.customizable) {
+            const modeStr = inst.mode === 'con' ? 'Con' : 'Senza';
+            const ingsStr = inst.ingredients.length > 0 ? inst.ingredients.join(', ') : 'Nessuna specifica';
+            text += `   ${modeStr}: ${ingsStr}\n`;
+          }
+        });
+      }
+    }
+  });
+
+  if (!hasItems) {
+    alert("Per favore, aggiungi almeno un elemento al carrello.");
+    return;
+  }
+
+  if (state.orderType === 'consegna') {
+    const zoneFee = parseFloat(document.getElementById('delivery-zone').value || '0');
+    totalSum += zoneFee;
+  }
+
+  text += `-----------------------------------\n`;
+  text += `*TOTALE FINALE: €${totalSum.toFixed(2)}*\n`;
+
+  const encodedText = encodeURIComponent(text);
+  const whatsappUrl = `https://wa.me/393932228224?text=${encodedText}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+window.onload = init;
+</script>
+
+</body>
+</html>
