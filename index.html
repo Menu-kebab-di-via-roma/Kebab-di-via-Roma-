@@ -25,16 +25,16 @@
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 12px;
       position: sticky;
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    header h1 { margin: 0; font-size: 1.4rem; }
+    header h1 { margin: 0; font-size: 1.3rem; }
     header p { 
-      margin: 5px 0 0; 
-      font-size: 0.85rem; 
+      margin: 3px 0 0; 
+      font-size: 0.8rem; 
       opacity: 0.9; 
       display: flex; 
       align-items: center; 
@@ -42,19 +42,18 @@
       gap: 5px; 
     }
 
-    /* Language Switcher */
     .lang-switch-container {
       position: absolute;
-      top: 12px;
-      right: 15px;
+      top: 10px;
+      right: 12px;
     }
     .lang-btn {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid white;
       color: white;
-      padding: 3px 8px;
-      border-radius: 5px;
-      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
       cursor: pointer;
       font-weight: bold;
     }
@@ -63,23 +62,23 @@
       color: var(--primary);
     }
     
-    .container { max-width: 600px; margin: 0 auto; padding: 15px; }
+    .container { max-width: 550px; margin: 0 auto; padding: 12px; }
     
     .order-type-selector {
       display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
+      gap: 6px;
+      margin-bottom: 12px;
     }
     .type-btn {
       flex: 1;
-      padding: 10px 5px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
+      padding: 8px 4px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
       background: white;
       text-align: center;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       transition: all 0.2s ease;
     }
     .type-btn.active {
@@ -92,33 +91,34 @@
       background: #e6f9f8;
       color: #008176;
     }
-    .type-btn small { display: block; font-size: 0.7rem; color: #666; font-weight: normal; }
+    .type-btn small { display: block; font-size: 0.65rem; color: #666; font-weight: normal; }
 
     .instructions-notice {
       background: #fff8e7;
-      border-left: 4px solid var(--secondary);
+      border-left: 3px solid var(--secondary);
       color: #8a6d3b;
-      padding: 8px 12px;
-      margin-bottom: 15px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
       border-radius: 4px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
     }
 
     .category-nav {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
     }
     .cat-btn {
-      padding: 8px 16px;
+      padding: 6px 12px;
       background: #e9ecef;
       border: none;
-      border-radius: 20px;
+      border-radius: 15px;
       white-space: nowrap;
       font-weight: 600;
+      font-size: 0.78rem;
       cursor: pointer;
     }
     .cat-btn.active {
@@ -128,87 +128,110 @@
 
     .menu-item {
       background: var(--card-bg);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
     .item-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .item-title { font-weight: bold; font-size: 1rem; }
-    .item-price { color: var(--primary); font-weight: bold; }
+    .item-title { font-weight: bold; font-size: 0.92rem; }
+    .item-price { color: var(--primary); font-weight: bold; font-size: 0.88rem; }
     
     .qty-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
     }
     .qty-btn {
-      width: 30px;
-      height: 30px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       border: 1px solid #ccc;
       background: white;
       font-weight: bold;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
     }
 
-    /* Senza-Only Customizer Layout */
+    /* Compact Customizer Layout */
     .unit-customizer {
-      margin-top: 12px;
-      padding: 12px;
-      background: #f1f3f5;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary);
+      margin-top: 8px;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+      border-left: 3px solid var(--primary);
     }
-    .unit-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 10px; color: #333; }
+    .unit-title { font-size: 0.78rem; font-weight: bold; margin-bottom: 6px; color: #495057; }
 
     .ingredient-block {
       background: white;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      border: 1px solid #e0e0e0;
+      padding: 6px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      border: 1px solid #eee;
     }
     .block-title {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: bold;
       color: var(--primary);
-      margin-bottom: 8px;
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 3px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
-    .chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
+    
     .chip-minus {
-      font-size: 0.75rem;
-      padding: 6px 10px;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      font-size: 0.68rem;
+      padding: 3px 7px;
+      background: #f1f3f5;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
       cursor: pointer;
       transition: all 0.15s ease;
-      color: #333;
+      color: #495057;
     }
     .chip-minus.selected-senza {
-      background: var(--primary);
+      background: #e74c3c;
       color: white;
-      border-color: var(--primary);
+      border-color: #c0392b;
+      font-weight: bold;
+    }
+
+    .chip-plus {
+      font-size: 0.68rem;
+      padding: 3px 7px;
+      background: #f1f3f5;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: #495057;
+    }
+    .chip-plus.selected-extra {
+      background: #27ae60;
+      color: white;
+      border-color: #219653;
       font-weight: bold;
     }
 
     .input-field {
       width: 100%;
-      padding: 8px 10px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      padding: 6px 8px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      border-radius: 4px;
       border: 1px solid #ccc;
       box-sizing: border-box;
+      font-size: 0.8rem;
     }
 
     .bottom-bar {
@@ -217,29 +240,29 @@
       left: 0;
       right: 0;
       background: white;
-      padding: 12px 20px;
+      padding: 10px 16px;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
     }
-    .total-price { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+    .total-price { font-size: 1.1rem; font-weight: bold; color: var(--primary); }
     .whatsapp-btn {
       background: #25D366;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-weight: bold;
+      font-size: 0.85rem;
       cursor: pointer;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    /* Modal / Form Styles */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -251,58 +274,48 @@
       justify-content: center;
       align-items: center;
       z-index: 2000;
-      padding: 15px;
+      padding: 12px;
       box-sizing: border-box;
     }
     .modal-card {
       background: white;
-      border-radius: 12px;
+      border-radius: 10px;
       width: 100%;
-      max-width: 500px;
+      max-width: 450px;
       max-height: 85vh;
       overflow-y: auto;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      border: 2px solid #e0e0e0;
-      animation: fadeIn 0.2s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
     }
     .receipt-header {
       background: #2c3e50;
       color: white;
-      padding: 15px;
+      padding: 12px;
       border-radius: 10px 10px 0 0;
       text-align: center;
     }
-    .receipt-header h2 { margin: 0; font-size: 1.2rem; }
-    .receipt-header p { margin: 3px 0 0; font-size: 0.8rem; opacity: 0.8; }
-    .receipt-body {
-      padding: 20px;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
+    .receipt-header h2 { margin: 0; font-size: 1.1rem; }
+    .receipt-header p { margin: 2px 0 0; font-size: 0.75rem; opacity: 0.8; }
+    .receipt-body { padding: 15px; font-size: 0.85rem; }
     .receipt-section {
       background: #f8f9fa;
       border: 1px dashed #ccc;
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
     }
     .receipt-section-title {
       font-weight: bold;
       color: var(--primary);
       border-bottom: 1px solid #ddd;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
-      font-size: 0.85rem;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
       text-transform: uppercase;
     }
     .modal-actions {
       display: flex;
-      gap: 10px;
-      padding: 15px 20px;
+      gap: 8px;
+      padding: 12px 15px;
       background: #f1f3f5;
       border-radius: 0 0 10px 10px;
     }
@@ -311,24 +324,22 @@
       background: #e74c3c;
       color: white;
       border: none;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 0.8rem;
     }
     .btn-confirm {
       flex: 2;
       background: #25D366;
       color: white;
       border: none;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      font-size: 0.8rem;
     }
   </style>
 </head>
@@ -340,13 +351,7 @@
     <button class="lang-btn" id="lang-en" onclick="switchLanguage('en')">EN</button>
   </div>
   <h1>Kebab di Via Roma</h1>
-  <p>
-    Via Roma 29b, Jesi (AN) | 
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" style="margin-left: 2px;">
-      <path d="M12.012 2c-5.513 0-9.992 4.478-9.992 9.991 0 1.764.459 3.488 1.332 5.01L2 22l5.127-1.343c1.472.803 3.136 1.226 4.885 1.226 5.514 0 9.992-4.478 9.992-9.991 0-5.513-4.478-9.992-9.992-9.992zm0 18.232c-1.554 0-3.078-.418-4.413-1.21l-.316-.188-3.036.796.81-2.96-.206-.328c-.872-1.388-1.333-2.998-1.333-4.651 0-4.705 3.828-8.533 8.533-8.533 4.706 0 8.534 3.828 8.534 8.533 0 4.705-3.828 8.533-8.579 8.533z"/>
-    </svg>
-    +39 393 222 8224
-  </p>
+  <p>Via Roma 29b, Jesi (AN) | +39 393 222 8224</p>
 </header>
 
 <div class="container">
@@ -366,7 +371,7 @@
   </div>
 
   <div class="instructions-notice" data-i18n="customNotice">
-    💡 Tutti i prodotti arrivano COMPLETI. Clicca su "SENZA (-)" solo per rimuovere quello che non vuoi 🥙.
+    💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su "SENZA (-)".
   </div>
 
   <div class="category-nav">
@@ -383,7 +388,7 @@
 
 <div class="bottom-bar">
   <div id="total-price-box">
-    <span style="font-size: 0.8rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
+    <span style="font-size: 0.75rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
   <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()" data-i18n="btnOrder">
@@ -395,14 +400,11 @@
 <div class="modal-overlay" id="confirm-modal">
   <div class="modal-card">
     <div class="receipt-header">
-      <h2>📋 Conferma Ordine / Order Summary</h2>
+      <h2>📋 Conferma Ordine</h2>
       <p>Inserisci i tuoi dati prima di inviare su WhatsApp</p>
     </div>
     <div class="receipt-body">
-      <!-- Dynamic Form Inputs for User Details based on Order Type -->
       <div id="modal-user-inputs" class="receipt-section"></div>
-
-      <!-- Receipt Summary -->
       <div id="modal-receipt-body"></div>
     </div>
     <div class="modal-actions">
@@ -425,10 +427,9 @@ const translations = {
     deliverooSub: "Personalizza Ordine",
     asportoNameLabel: "Nome e Cognome: *",
     asportoTimeLabel: "Orario di Ritiro: *",
-    customNotice: "💡 Tutti i prodotti arrivano COMPLETI. Clicca per rimuovere gli ingredienti che SENZA desideri.",
-    delivTitle: "ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO",
+    customNotice: "💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su 'SENZA (-)'.",
     delivSub: "Questo strumento serve solo per inviare le preferenze del tuo ordine effettuato su Deliveroo.",
-    delivNameLabel: "Nome dell'account Deliveroo o Numero Ordine: *",
+    delivNameLabel: "Nome account Deliveroo o N° Ordine: *",
     deliveryWarning: "⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.",
     deliveryNameLabel: "Nome e Cognome: *",
     deliveryAddressLabel: "Indirizzo Completo: *",
@@ -442,7 +443,8 @@ const translations = {
     btnDeliverooOrder: "VERIFICA NOTE DELIVEROO",
     sauces: "Salse",
     veggies: "Verdure",
-    extras: "Extra"
+    extras: "Extra",
+    optionalSauces: "Aggiungi Salsa (Opzionale)"
   },
   en: {
     asporto: "Takeaway",
@@ -453,8 +455,7 @@ const translations = {
     deliverooSub: "Customize Order",
     asportoNameLabel: "Full Name: *",
     asportoTimeLabel: "Pickup Time: *",
-    customNotice: "💡 All items come FULL. Click to select items you want WITHOUT.",
-    delivTitle: "ℹ️ DELIVEROO ORDER CUSTOMIZATION",
+    customNotice: "💡 If there is something you don't like, you can simply remove it by clicking 'WITHOUT (-)'.",
     delivSub: "Use this tool only to send ingredient preferences for your Deliveroo order.",
     delivNameLabel: "Deliveroo Account Name or Order #: *",
     deliveryWarning: "⚠️ Attention: Home delivery is available only Saturday and Sunday after 17:00.",
@@ -470,7 +471,8 @@ const translations = {
     btnDeliverooOrder: "CHECK DELIVEROO NOTES",
     sauces: "Sauces",
     veggies: "Vegetables",
-    extras: "Extras"
+    extras: "Extras",
+    optionalSauces: "Add Sauce (Optional)"
   }
 };
 
@@ -519,8 +521,10 @@ const menuItems = [
   { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false }
 ];
 
+// Ketchup & Maionese separated to Optional Section
 const ingredientConfig = {
-  salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)", "Ketchup", "Maionese"],
+  salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)"],
+  salseOpzionali: ["Ketchup", "Maionese"],
   verdure: ["Insalata", "Verza e Carote"],
   extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
 };
@@ -580,7 +584,7 @@ function changeQty(itemId, delta) {
     delete state.cart[itemId];
   } else {
     if (delta > 0) {
-      item.units.push({ withoutIngs: [] });
+      item.units.push({ withoutIngs: [], withExtraIngs: [] });
     } else {
       item.units.pop();
     }
@@ -603,6 +607,19 @@ function toggleIngredient(itemId, unitIdx, ingName) {
   renderMenu(currentFilteredItems || menuItems);
 }
 
+function toggleExtraIngredient(itemId, unitIdx, ingName) {
+  const unit = state.cart[itemId].units[unitIdx];
+  const idx = unit.withExtraIngs.indexOf(ingName);
+  
+  if (idx > -1) {
+    unit.withExtraIngs.splice(idx, 1);
+  } else {
+    unit.withExtraIngs.push(ingName);
+  }
+
+  renderMenu(currentFilteredItems || menuItems);
+}
+
 function filterCategory(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -615,16 +632,31 @@ function filterCategory(cat, btn) {
   renderMenu(currentFilteredItems);
 }
 
-// Render Only SENZA Options
+// Compact Render Functions
 function renderIngredientSection(itemId, uIdx, categoryKey, categoryLabel, unit) {
   const list = ingredientConfig[categoryKey];
   return `
     <div class="ingredient-block">
-      <div class="block-title">🔸 Rimuovi ${categoryLabel} (SENZA)</div>
+      <div class="block-title">➖ SENZA ${categoryLabel}</div>
       <div class="chip-group">
         ${list.map(ing => {
           const isWithout = unit.withoutIngs.includes(ing);
-          return `<button class="chip-minus ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${itemId}',${uIdx}, '${ing}')">➖ SENZA ${ing}</button>`;
+          return `<button class="chip-minus ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${itemId}',${uIdx}, '${ing}')">➖ ${ing}</button>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderExtraSection(itemId, uIdx, categoryKey, categoryLabel, unit) {
+  const list = ingredientConfig[categoryKey];
+  return `
+    <div class="ingredient-block">
+      <div class="block-title">➕ ${categoryLabel}</div>
+      <div class="chip-group">
+        ${list.map(ing => {
+          const isSelected = unit.withExtraIngs.includes(ing);
+          return `<button class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleExtraIngredient('${itemId}',${uIdx}, '${ing}')">➕ ${ing}</button>`;
         }).join('')}
       </div>
     </div>
@@ -662,6 +694,7 @@ function renderMenu(items) {
             ${renderIngredientSection(item.id, uIdx, 'salse', translations[currentLang].sauces, unit)}
             ${renderIngredientSection(item.id, uIdx, 'verdure', translations[currentLang].veggies, unit)}
             ${renderIngredientSection(item.id, uIdx, 'extra', translations[currentLang].extras, unit)}
+            ${renderExtraSection(item.id, uIdx, 'salseOpzionali', translations[currentLang].optionalSauces, unit)}
           </div>
         `;
       });
@@ -692,7 +725,6 @@ function openConfirmationModal() {
     return;
   }
 
-  // Inject Customer Info Inputs dynamically in Modal
   const inputContainer = document.getElementById('modal-user-inputs');
   if (state.orderType === 'asporto') {
     inputContainer.innerHTML = `
@@ -705,14 +737,14 @@ function openConfirmationModal() {
   } else if (state.orderType === 'deliveroo') {
     inputContainer.innerHTML = `
       <div class="receipt-section-title">🛵 Note Deliveroo</div>
-      <p style="font-size:0.8rem; margin:0 0 8px 0; color:#005b53;">${translations[currentLang].delivSub}</p>
+      <p style="font-size:0.75rem; margin:0 0 6px 0; color:#005b53;">${translations[currentLang].delivSub}</p>
       <label><strong>${translations[currentLang].delivNameLabel}</strong></label>
       <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi (Nome Deliveroo)">
     `;
   } else if (state.orderType === 'consegna') {
     inputContainer.innerHTML = `
       <div class="receipt-section-title">🚚 Dettagli Consegna</div>
-      <div style="color: #d9534f; margin-bottom: 8px; font-weight: bold; font-size: 0.78rem;">
+      <div style="color: #d9534f; margin-bottom: 6px; font-weight: bold; font-size: 0.75rem;">
         ${translations[currentLang].deliveryWarning}
       </div>
       <label><strong>${translations[currentLang].deliveryNameLabel}</strong></label>
@@ -722,7 +754,6 @@ function openConfirmationModal() {
     `;
   }
 
-  // Render Receipt Content inside modal
   const modalReceiptBody = document.getElementById('modal-receipt-body');
   let total = 0;
   let receiptHtml = `<div class="receipt-section">
@@ -735,14 +766,19 @@ function openConfirmationModal() {
     const itemTotal = unitPrice * cartItem.qty;
     total += itemTotal;
 
-    receiptHtml += `<div style="margin-bottom: 10px;">
+    receiptHtml += `<div style="margin-bottom: 8px;">
       <strong>${cartItem.qty}x ${item.name}</strong> - € ${itemTotal.toFixed(2)}`;
 
     if (item.customizable) {
       cartItem.units.forEach((u, i) => {
         if (u.withoutIngs.length > 0) {
-          receiptHtml += `<div style="font-size: 0.8rem; color: #c0392b; padding-left: 10px;">
+          receiptHtml += `<div style="font-size: 0.75rem; color: #c0392b; padding-left: 8px;">
             • #${i+1}: SENZA: ${u.withoutIngs.join(', ')}
+          </div>`;
+        }
+        if (u.withExtraIngs.length > 0) {
+          receiptHtml += `<div style="font-size: 0.75rem; color: #27ae60; padding-left: 8px;">
+            • #${i+1}: CON AGGIUNTA: ${u.withExtraIngs.join(', ')}
           </div>`;
         }
       });
@@ -754,7 +790,7 @@ function openConfirmationModal() {
   receiptHtml += `</div>`;
 
   if (state.orderType !== 'deliveroo') {
-    receiptHtml += `<div style="text-align: right; font-size: 1.1rem; font-weight: bold; color: var(--primary);">
+    receiptHtml += `<div style="text-align: right; font-size: 1rem; font-weight: bold; color: var(--primary);">
       Totale: € ${total.toFixed(2)}
     </div>`;
   }
@@ -811,6 +847,9 @@ function sendWhatsAppOrder() {
       cartItem.units.forEach((u, i) => {
         if (u.withoutIngs.length > 0) {
           text += `   👉 #${i+1}: SENZA: ${u.withoutIngs.join(', ')}\n`;
+        }
+        if (u.withExtraIngs.length > 0) {
+          text += `   👉 #${i+1}: CON AGGIUNTA: ${u.withExtraIngs.join(', ')}\n`;
         }
       });
     }
