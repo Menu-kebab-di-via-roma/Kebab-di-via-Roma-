@@ -101,19 +101,36 @@
 
     .menu-item {
       background: var(--card-bg);
-      border-radius: 6px;
-      padding: 6px 8px;
+      border-radius: 8px;
+      padding: 8px;
       margin-bottom: 6px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .item-header { display: flex; justify-content: space-between; align-items: center; }
-    .item-title { font-weight: bold; font-size: 0.8rem; }
+    
+    /* ITEM DISPLAY WITH IMAGE */
+    .item-header { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    .item-img {
+      width: 55px;
+      height: 55px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #eee;
+    }
+    .item-details {
+      flex: 1;
+    }
+    .item-title { font-weight: bold; font-size: 0.8rem; margin-bottom: 2px; }
     .item-price { color: var(--primary); font-weight: bold; font-size: 0.78rem; }
     
     .qty-controls { display: flex; align-items: center; gap: 5px; }
     .qty-btn {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       border: 1px solid #ccc;
       background: white;
@@ -389,36 +406,37 @@ const state = {
   cart: {} 
 };
 
+/* MENU ITEMS WITH IMAGES */
 const menuItems = [
-  { id: 'p_kebab', name: 'Panino Kebab', basePrice: 4.50, cat: 'kebab', customizable: true },
-  { id: 'p_carne', name: 'Panino Solo Carne', basePrice: 5.00, cat: 'kebab', customizable: true },
-  { id: 'pi_kebab', name: 'Piadina Kebab', basePrice: 5.50, cat: 'kebab', customizable: true },
-  { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 6.50, cat: 'kebab', customizable: true },
-  { id: 'm_panino', name: 'Menu Panino (Bibita + Patatine)', basePrice: 7.00, cat: 'kebab', customizable: true },
-  { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true },
-  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true },
+  { id: 'p_kebab', name: 'Panino Kebab', basePrice: 4.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=150' },
+  { id: 'p_carne', name: 'Panino Solo Carne', basePrice: 5.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=150' },
+  { id: 'pi_kebab', name: 'Piadina Kebab', basePrice: 5.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=150' },
+  { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 6.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=150' },
+  { id: 'm_panino', name: 'Menu Panino (Bibita + Patatine)', basePrice: 7.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=150' },
+  { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=150' },
+  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=150' },
 
-  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true },
-  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true },
-  { id: 'p_seekh', name: 'Panino Seekh Kebab', basePrice: 4.00, cat: 'non-kebab', customizable: true },
-  { id: 'pi_seekh', name: 'Piadina Seekh Kebab', basePrice: 5.00, cat: 'non-kebab', customizable: true },
-  { id: 'c_burger', name: 'Crispy pollo Hamburger', basePrice: 4.00, cat: 'non-kebab', customizable: false },
-  { id: 'p_cotoletta', name: 'Panino Cotoletta', basePrice: 4.00, cat: 'non-kebab', customizable: false },
+  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=150' },
+  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=150' },
+  { id: 'p_seekh', name: 'Panino Seekh Kebab', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=150' },
+  { id: 'pi_seekh', name: 'Piadina Seekh Kebab', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=150' },
+  { id: 'c_burger', name: 'Crispy pollo Hamburger', basePrice: 4.00, cat: 'non-kebab', customizable: false, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150' },
+  { id: 'p_cotoletta', name: 'Panino Cotoletta', basePrice: 4.00, cat: 'non-kebab', customizable: false, img: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?w=150' },
 
-  { id: 'pat_p', name: 'Patatine Fritte (Piccola)', basePrice: 2.50, cat: 'fritti', customizable: false },
-  { id: 'pat_g', name: 'Patatine Fritte (Grande)', basePrice: 3.50, cat: 'fritti', customizable: false },
-  { id: 'mozz_st', name: 'Mozzarella Stick (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
-  { id: 'ch_nug', name: 'Chicken Nuggets (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false },
-  { id: 'anelli_cip', name: 'Anelli di Cipolla (8pz)', basePrice: 3.50, cat: 'fritti', customizable: false },
-  { id: 'ch_wings', name: 'Chicken Wings (5pz)', basePrice: 4.50, cat: 'fritti', customizable: false },
+  { id: 'pat_p', name: 'Patatine Fritte (Piccola)', basePrice: 2.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=150' },
+  { id: 'pat_g', name: 'Patatine Fritte (Grande)', basePrice: 3.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=150' },
+  { id: 'mozz_st', name: 'Mozzarella Stick (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=150' },
+  { id: 'ch_nug', name: 'Chicken Nuggets (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=150' },
+  { id: 'anelli_cip', name: 'Anelli di Cipolla (8pz)', basePrice: 3.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=150' },
+  { id: 'ch_wings', name: 'Chicken Wings (5pz)', basePrice: 4.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=150' },
 
-  { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
+  { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=150' },
+  { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=150' },
+  { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=150' },
+  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=150' },
 
-  { id: 'birra_33', name: 'Birra (33 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false },
-  { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false }
+  { id: 'birra_33', name: 'Birra (33 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=150' },
+  { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=150' }
 ];
 
 const ingredientConfig = {
@@ -561,7 +579,8 @@ function renderMenu(items) {
     let html = `
       <div class="menu-item">
         <div class="item-header">
-          <div>
+          <img src="${item.img || 'https://via.placeholder.com/150'}" alt="${item.name}" class="item-img">
+          <div class="item-details">
             <div class="item-title">${item.name}</div>
             <div class="item-price">€ ${price.toFixed(2)} ${state.orderType === 'asporto' ? '<small style="color:#27ae60;">(-0.50€)</small>' : ''}</div>
           </div>
