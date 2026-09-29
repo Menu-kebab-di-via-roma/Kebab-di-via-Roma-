@@ -31,37 +31,40 @@
       z-index: 100;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    
+    /* Title with TikTok button */
+    .title-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
     header h1 { margin: 0; font-size: 1.1rem; }
     header p { margin: 2px 0 0; font-size: 0.7rem; opacity: 0.9; }
 
-    /* LANG & SOCIAL BAR */
-    .top-controls {
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .social-links {
-      display: flex;
-      gap: 4px;
-    }
-    .social-btn {
+    /* TIKTOK BUTTON */
+    .tiktok-btn {
       color: white;
       text-decoration: none;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid white;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: 0.2s;
     }
-    .social-btn:hover { background: white; color: var(--primary); }
+    .tiktok-btn:hover { background: white; color: var(--primary); }
+
+    /* LANG SWITCH BAR */
+    .top-controls {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+    }
 
     .lang-switch-container {
       display: flex;
@@ -320,13 +323,6 @@
 
 <header>
   <div class="top-controls">
-    <!-- SOCIAL LINKS -->
-    <div class="social-links">
-      <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="social-btn" title="TikTok">🎵</a>
-      <a href="https://www.instagram.com" target="_blank" class="social-btn" title="Instagram">📸</a>
-      <a href="https://www.facebook.com" target="_blank" class="social-btn" title="Facebook">📘</a>
-    </div>
-
     <!-- LANGUAGE SWITCH -->
     <div class="lang-switch-container">
       <button class="lang-btn active" id="lang-it" onclick="switchLanguage('it')">IT</button>
@@ -334,7 +330,11 @@
     </div>
   </div>
 
-  <h1>Kebab di Via Roma</h1>
+  <div class="title-container">
+    <!-- TIKTOK BUTTON ON THE LEFT SIDE OF KEBAB LOGO/TITLE -->
+    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-btn" title="TikTok">🎵</a>
+    <h1>Kebab di Via Roma</h1>
+  </div>
   <p>Via Roma 29b, Jesi (AN) | +39 393 222 8224</p>
 </header>
 
@@ -447,7 +447,7 @@ const translations = {
     customNotice: "💡 If there is something you don't like, you can simply remove it by clicking 'WITHOUT (-)'.",
     delivSub: "Use this tool only to send ingredient preferences for your Deliveroo order.",
     delivNameLabel: "Deliveroo Account Name or Order #: *",
-    deliveryWarning: "⚠️️ Delivery available Saturday & Sunday after 17:00.",
+    deliveryWarning: "⚠️ Delivery available Saturday & Sunday after 17:00.",
     deliveryNameLabel: "Full Name: *",
     deliveryAddressLabel: "Full Address: *",
     catAll: "All",
