@@ -19,83 +19,64 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      padding-bottom: 100px;
+      padding-bottom: 90px;
     }
     header {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       text-align: center;
-      padding: 10px;
+      padding: 8px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    header h1 { margin: 0; font-size: 1.2rem; }
-    header p { 
-      margin: 2px 0 0; 
-      font-size: 0.75rem; 
-      opacity: 0.9; 
-    }
+    header h1 { margin: 0; font-size: 1.1rem; }
+    header p { margin: 2px 0 0; font-size: 0.7rem; opacity: 0.9; }
 
     .lang-switch-container {
       position: absolute;
-      top: 8px;
-      right: 10px;
+      top: 6px;
+      right: 8px;
     }
     .lang-btn {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid white;
       color: white;
-      padding: 2px 5px;
-      border-radius: 4px;
-      font-size: 0.65rem;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.6rem;
       cursor: pointer;
       font-weight: bold;
     }
-    .lang-btn.active {
-      background: white;
-      color: var(--primary);
-    }
+    .lang-btn.active { background: white; color: var(--primary); }
     
-    .container { max-width: 500px; margin: 0 auto; padding: 8px; }
+    .container { max-width: 500px; margin: 0 auto; padding: 6px; }
     
-    .order-type-selector {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
+    .order-type-selector { display: flex; gap: 4px; margin-bottom: 6px; }
     .type-btn {
       flex: 1;
-      padding: 6px 2px;
+      padding: 5px 2px;
       border: 1px solid #ddd;
       border-radius: 6px;
       background: white;
       text-align: center;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
     }
-    .type-btn.active {
-      border-color: var(--primary);
-      background: #fdf2f2;
-      color: var(--primary);
-    }
-    .type-btn.deliveroo-active {
-      border-color: var(--deliveroo);
-      background: #e6f9f8;
-      color: #008176;
-    }
-    .type-btn small { display: block; font-size: 0.6rem; color: #666; font-weight: normal; }
+    .type-btn.active { border-color: var(--primary); background: #fdf2f2; color: var(--primary); }
+    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e6f9f8; color: #008176; }
+    .type-btn small { display: block; font-size: 0.55rem; color: #666; font-weight: normal; }
 
     .instructions-notice {
       background: #fff8e7;
       border-left: 3px solid var(--secondary);
       color: #8a6d3b;
-      padding: 5px 8px;
-      margin-bottom: 8px;
+      padding: 4px 6px;
+      margin-bottom: 6px;
       border-radius: 4px;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 600;
     }
 
@@ -104,46 +85,35 @@
       gap: 4px;
       overflow-x: auto;
       padding-bottom: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .cat-btn {
-      padding: 4px 10px;
+      padding: 3px 8px;
       background: #e9ecef;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       white-space: nowrap;
       font-weight: 600;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       cursor: pointer;
     }
-    .cat-btn.active {
-      background: var(--primary);
-      color: white;
-    }
+    .cat-btn.active { background: var(--primary); color: white; }
 
     .menu-item {
       background: var(--card-bg);
       border-radius: 6px;
-      padding: 8px 10px;
-      margin-bottom: 8px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .item-title { font-weight: bold; font-size: 0.85rem; }
-    .item-price { color: var(--primary); font-weight: bold; font-size: 0.82rem; }
+    .item-header { display: flex; justify-content: space-between; align-items: center; }
+    .item-title { font-weight: bold; font-size: 0.8rem; }
+    .item-price { color: var(--primary); font-weight: bold; font-size: 0.78rem; }
     
-    .qty-controls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .qty-controls { display: flex; align-items: center; gap: 5px; }
     .qty-btn {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       border: 1px solid #ccc;
       background: white;
@@ -152,57 +122,53 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
-    /* ULTRA COMPACT CUSTOMIZER */
+    /* COMPACT CUSTOMIZER */
     .unit-customizer {
-      margin-top: 6px;
-      padding: 6px;
+      margin-top: 5px;
+      padding: 5px;
       background: #f8f9fa;
       border-radius: 4px;
       border: 1px solid #e0e0e0;
-      border-left: 2.5px solid var(--primary);
+      border-left: 2px solid var(--primary);
     }
-    .unit-title { 
-      font-size: 0.72rem; 
-      font-weight: bold; 
-      margin-bottom: 4px; 
-      color: #333; 
-    }
+    .unit-title { font-size: 0.68rem; font-weight: bold; margin-bottom: 3px; color: #333; }
 
     .ingredient-block {
       background: white;
-      padding: 4px 5px;
+      padding: 3px 4px;
       border-radius: 3px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       border: 1px solid #eee;
     }
     .block-title {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: bold;
       color: var(--primary);
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       text-transform: uppercase;
     }
 
     .chip-group { display: flex; flex-wrap: wrap; gap: 3px; }
     
     .chip-minus, .chip-plus {
-      font-size: 0.62rem;
-      padding: 2px 5px;
+      font-size: 0.6rem;
+      padding: 2px 4px;
       background: #f1f3f5;
       border: 1px solid #ced4da;
       border-radius: 3px;
       cursor: pointer;
       color: #333;
-      line-height: 1.1;
+      line-height: 1;
     }
     .chip-minus.selected-senza {
       background: #e74c3c;
       color: white;
       border-color: #c0392b;
       font-weight: bold;
+      text-decoration: line-through;
     }
     .chip-plus.selected-extra {
       background: #27ae60;
@@ -213,13 +179,13 @@
 
     .input-field {
       width: 100%;
-      padding: 5px 6px;
-      margin-top: 3px;
-      margin-bottom: 6px;
+      padding: 4px 6px;
+      margin-top: 2px;
+      margin-bottom: 4px;
       border-radius: 4px;
       border: 1px solid #ccc;
       box-sizing: border-box;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
     }
 
     .bottom-bar {
@@ -228,22 +194,22 @@
       left: 0;
       right: 0;
       background: white;
-      padding: 8px 12px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+      padding: 6px 10px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
     }
-    .total-price { font-size: 1rem; font-weight: bold; color: var(--primary); }
+    .total-price { font-size: 0.95rem; font-weight: bold; color: var(--primary); }
     .whatsapp-btn {
       background: #25D366;
       color: white;
       border: none;
-      padding: 6px 14px;
-      border-radius: 16px;
+      padding: 6px 12px;
+      border-radius: 14px;
       font-weight: bold;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       cursor: pointer;
     }
 
@@ -255,46 +221,30 @@
       justify-content: center;
       align-items: center;
       z-index: 2000;
-      padding: 10px;
+      padding: 8px;
       box-sizing: border-box;
     }
     .modal-card {
       background: white;
       border-radius: 8px;
       width: 100%;
-      max-width: 400px;
+      max-width: 380px;
       max-height: 85vh;
       overflow-y: auto;
     }
-    .receipt-header {
-      background: #2c3e50;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .receipt-header h2 { margin: 0; font-size: 0.95rem; }
-    .receipt-body { padding: 10px; font-size: 0.78rem; }
-    .receipt-section {
-      background: #f8f9fa;
-      border: 1px dashed #ccc;
-      padding: 6px 8px;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-    .modal-actions {
-      display: flex;
-      gap: 6px;
-      padding: 8px 10px;
-      background: #f1f3f5;
-    }
+    .receipt-header { background: #2c3e50; color: white; padding: 8px; text-align: center; }
+    .receipt-header h2 { margin: 0; font-size: 0.9rem; }
+    .receipt-body { padding: 8px; font-size: 0.75rem; }
+    .receipt-section { background: #f8f9fa; border: 1px dashed #ccc; padding: 5px 6px; border-radius: 4px; margin-bottom: 6px; }
+    .modal-actions { display: flex; gap: 5px; padding: 6px 8px; background: #f1f3f5; }
     .btn-cancel, .btn-confirm {
       flex: 1;
-      padding: 8px;
+      padding: 6px;
       border-radius: 4px;
       font-weight: bold;
       border: none;
       cursor: pointer;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: white;
     }
     .btn-cancel { background: #e74c3c; }
@@ -346,7 +296,7 @@
 
 <div class="bottom-bar">
   <div id="total-price-box">
-    <span style="font-size: 0.65rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
+    <span style="font-size: 0.6rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
   <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()" data-i18n="btnOrder">
@@ -670,13 +620,13 @@ function openConfirmationModal() {
     `;
   } else if (state.orderType === 'deliveroo') {
     inputContainer.innerHTML = `
-      <p style="font-size:0.7rem; color:#005b53; margin:0 0 4px 0;">${translations[currentLang].delivSub}</p>
+      <p style="font-size:0.65rem; color:#005b53; margin:0 0 3px 0;">${translations[currentLang].delivSub}</p>
       <label><strong>${translations[currentLang].delivNameLabel}</strong></label>
       <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi">
     `;
   } else if (state.orderType === 'consegna') {
     inputContainer.innerHTML = `
-      <div style="color:#d9534f; font-size:0.7rem; font-weight:bold; margin-bottom:4px;">
+      <div style="color:#d9534f; font-size:0.65rem; font-weight:bold; margin-bottom:3px;">
         ${translations[currentLang].deliveryWarning}
       </div>
       <label><strong>${translations[currentLang].deliveryNameLabel}</strong></label>
@@ -697,15 +647,15 @@ function openConfirmationModal() {
     const itemTotal = unitPrice * cartItem.qty;
     total += itemTotal;
 
-    receiptHtml += `<div style="margin-top:4px;"><strong>${cartItem.qty}x ${item.name}</strong> - € ${itemTotal.toFixed(2)}`;
+    receiptHtml += `<div style="margin-top:3px;"><strong>${cartItem.qty}x ${item.name}</strong> - € ${itemTotal.toFixed(2)}`;
 
     if (item.customizable) {
       cartItem.units.forEach((u, i) => {
         if (u.withoutIngs.length > 0) {
-          receiptHtml += `<div style="font-size: 0.7rem; color: #c0392b; padding-left:6px;">• #${i+1} SENZA: ${u.withoutIngs.join(', ')}</div>`;
+          receiptHtml += `<div style="font-size: 0.68rem; color: #c0392b; padding-left:4px;">🔴 #${i+1} <span style="text-decoration:line-through;">SENZA: ${u.withoutIngs.join(', ')}</span></div>`;
         }
         if (u.withExtraIngs.length > 0) {
-          receiptHtml += `<div style="font-size: 0.7rem; color: #27ae60; padding-left:6px;">• #${i+1} AGGIUNTA: ${u.withExtraIngs.join(', ')}</div>`;
+          receiptHtml += `<div style="font-size: 0.68rem; color: #27ae60; padding-left:4px;">🟢 #${i+1} EXTRA: ${u.withExtraIngs.join(', ')}</div>`;
         }
       });
     }
@@ -737,14 +687,14 @@ function sendWhatsAppOrder() {
       alert("Per favore inserisci il Nome e l'Orario di Ritiro!");
       return;
     }
-    text += `📌 *ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n------------------------\n`;
+    text += `📌 *ORDINE ASPORTO*\n👤 *Nome:* ${name}\n⏰ *Ritiro:* ${time}\n------------------------\n`;
   } else if (state.orderType === 'deliveroo') {
     const delivName = document.getElementById('deliv-cust-name').value.trim();
     if (!delivName) {
       alert("Per favore inserisci il Nome Deliveroo o Numero Ordine!");
       return;
     }
-    text += `🛵 *NOTE ORDINE DELIVEROO*\n👤 Account/Ordine: ${delivName}\n------------------------\n`;
+    text += `🛵 *NOTE DELIVEROO*\n👤 *Ordine:* ${delivName}\n------------------------\n`;
   } else if (state.orderType === 'consegna') {
     const name = document.getElementById('cust-name').value.trim();
     const address = document.getElementById('cust-address').value.trim();
@@ -753,7 +703,7 @@ function sendWhatsAppOrder() {
       alert("Per favore inserisci Nome e Indirizzo completo!");
       return;
     }
-    text += `🚚 *ORDINE A DOMICILIO*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n------------------------\n`;
+    text += `🚚 *DOMICILIO*\n👤 *Nome:* ${name}\n📍 *Indirizzo:* ${address}\n------------------------\n`;
   }
 
   let total = 0;
@@ -769,10 +719,10 @@ function sendWhatsAppOrder() {
     if (item.customizable) {
       cartItem.units.forEach((u, i) => {
         if (u.withoutIngs.length > 0) {
-          text += `   👉 #${i+1}: SENZA: ${u.withoutIngs.join(', ')}\n`;
+          text += `   🔴 #${i+1} ~SENZA: ${u.withoutIngs.join(', ')}~\n`;
         }
         if (u.withExtraIngs.length > 0) {
-          text += `   👉 #${i+1}: CON AGGIUNTA: ${u.withExtraIngs.join(', ')}\n`;
+          text += `   🟢 #${i+1} EXTRA: ${u.withExtraIngs.join(', ')}\n`;
         }
       });
     }
