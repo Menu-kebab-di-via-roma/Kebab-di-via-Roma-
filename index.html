@@ -94,21 +94,12 @@
     }
     .type-btn small { display: block; font-size: 0.7rem; color: #666; font-weight: normal; }
 
-    .asporto-info-box {
-      background: #fdf2f2;
-      border: 1px solid var(--primary);
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-bottom: 15px;
-    }
-
     .instructions-notice {
       background: #fff8e7;
       border-left: 4px solid var(--secondary);
       color: #8a6d3b;
       padding: 8px 12px;
-      margin-top: 10px;
+      margin-bottom: 15px;
       border-radius: 4px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -180,20 +171,6 @@
       margin-bottom: 8px;
     }
     .unit-title { font-size: 0.85rem; font-weight: bold; }
-    .mode-switch { display: flex; gap: 5px; }
-    .mode-btn {
-      font-size: 0.75rem;
-      padding: 2px 8px;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .mode-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
     
     .ingredient-line { margin-bottom: 8px; }
     .line-label { font-size: 0.75rem; font-weight: bold; color: #555; display: block; margin-bottom: 4px; }
@@ -217,24 +194,6 @@
       border-color: var(--primary);
     }
 
-    .delivery-info {
-      background: #fff3cd;
-      border: 1px solid #ffeeba;
-      color: #856404;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-bottom: 15px;
-    }
-    .deliveroo-info-box {
-      background: #e6f9f8;
-      border: 1px solid #00cdbc;
-      color: #005b53;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-bottom: 15px;
-    }
     .input-field {
       width: 100%;
       padding: 8px 10px;
@@ -333,13 +292,6 @@
       font-size: 0.85rem;
       text-transform: uppercase;
     }
-    .receipt-total {
-      text-align: right;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: var(--primary);
-      margin-top: 10px;
-    }
     .modal-actions {
       display: flex;
       gap: 10px;
@@ -406,40 +358,8 @@
     </div>
   </div>
 
-  <!-- Asporto Info Box -->
-  <div id="asporto-info-box" class="asporto-info-box">
-    <label><strong data-i18n="asportoNameLabel">Nome e Cognome: *</strong></label>
-    <input type="text" id="asporto-cust-name" class="input-field" placeholder="Es: Mario Rossi">
-
-    <label><strong data-i18n="asportoTimeLabel">Orario di Ritiro: *</strong></label>
-    <input type="time" id="asporto-time" class="input-field">
-
-    <div class="instructions-notice" data-i18n="customNotice">
-      💡 Personalizza ogni prodotto con "Con" o "Senza" ingredienti, se non scegli ti arriva completo 🥙.
-    </div>
-  </div>
-
-  <!-- Deliveroo Specific Instruction Box -->
-  <div id="deliveroo-info-box" class="deliveroo-info-box" style="display: none;">
-    <strong data-i18n="delivTitle">ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO</strong><br>
-    <span data-i18n="delivSub">Questo strumento serve solo per inviare le preferenze (salse e ingredienti) del tuo ordine effettuato su Deliveroo.</span>
-    <br><br>
-    <label><strong data-i18n="delivNameLabel">Nome dell'account Deliveroo o Numero Ordine: *</strong></label>
-    <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi (Nome su Deliveroo)">
-  </div>
-
-  <!-- Consegna Info Box -->
-  <div id="delivery-info-box" class="delivery-info" style="display: none;">
-    <div id="time-warning" style="color: #d9534f; margin-bottom: 10px; font-weight: bold; display: none;" data-i18n="deliveryWarning">
-      ⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00. Puoi scegliere "Asporto" o "Note Deliveroo".
-    </div>
-    <div id="delivery-inputs">
-      <label><strong data-i18n="deliveryNameLabel">Nome e Cognome: *</strong></label>
-      <input type="text" id="cust-name" class="input-field" placeholder="Inserisci il tuo nome e cognome">
-
-      <label><strong data-i18n="deliveryAddressLabel">Indirizzo Completo: *</strong></label>
-      <input type="text" id="cust-address" class="input-field" placeholder="Es: Via San Giuseppe 29b, Jesi">
-    </div>
+  <div class="instructions-notice" data-i18n="customNotice">
+    💡 Personalizza ogni prodotto con "Con" o "Senza" ingredienti, se non scegli ti arriva completo 🥙.
   </div>
 
   <div class="category-nav">
@@ -460,19 +380,25 @@
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
   <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()" data-i18n="btnOrder">
-    ORDINA ORA SU WHATSAPP
+    VERIFICA E ORDINA
   </button>
 </div>
 
-<!-- CONFIRMATION MODAL (FORM / RECEIPT PREVIEW) -->
+<!-- CONFIRMATION MODAL -->
 <div class="modal-overlay" id="confirm-modal">
   <div class="modal-card">
     <div class="receipt-header">
       <h2>📋 Conferma Ordine / Order Summary</h2>
-      <p>Controlla i dettagli prima di inviare su WhatsApp</p>
+      <p>Inserisci i tuoi dati prima di inviare su WhatsApp</p>
     </div>
-    <div class="receipt-body" id="modal-receipt-body">
-      <!-- Dynamic Receipt Content -->
+    <div class="receipt-body">
+      <!-- Dynamic Form Inputs for User Details based on Order Type -->
+      <div id="modal-user-inputs" class="receipt-section">
+        <!-- JS will dynamically inject name/time or address inputs here -->
+      </div>
+
+      <!-- Receipt Summary -->
+      <div id="modal-receipt-body"></div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeConfirmationModal()">✏️ Modifica</button>
@@ -512,9 +438,7 @@ const translations = {
     sauces: "Salse:",
     veggies: "Verdure:",
     extras: "Extra:",
-    customize: "Personalizza",
-    with: "Con",
-    without: "Senza"
+    customize: "Personalizza"
   },
   en: {
     asporto: "Takeaway",
@@ -543,41 +467,16 @@ const translations = {
     sauces: "Sauces:",
     veggies: "Vegetables:",
     extras: "Extras:",
-    customize: "Customize",
-    with: "With",
-    without: "Without"
+    customize: "Customize"
   }
 };
 
 let currentLang = 'it';
 let currentFilteredItems = null;
 
-function switchLanguage(lang) {
-  currentLang = lang;
-  document.getElementById('lang-it').classList.toggle('active', lang === 'it');
-  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) {
-      el.innerText = translations[lang][key];
-    }
-  });
-
-  const submitBtn = document.getElementById('whatsapp-submit-btn');
-  if (state.orderType === 'deliveroo') {
-    submitBtn.innerText = translations[lang].btnDeliverooOrder;
-  } else {
-    submitBtn.innerText = translations[lang].btnOrder;
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-}
-
-const ingredientConfig = {
-  salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Ketchup", "Maionese"],
-  verdure: ["Insalata", "Verza e Carote"],
-  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
+const state = {
+  orderType: 'asporto',
+  cart: {} 
 };
 
 const menuItems = [
@@ -611,72 +510,113 @@ const menuItems = [
   { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
   { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
   { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'esta_pesca', name: 'Estathé Pesca (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'esta_limone', name: 'Estathé Limone (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'hell', name: 'Hell Energy Drink (25 cl)', basePrice: 2.00, cat: 'bevande', customizable: false },
-  { id: 'bot_g', name: 'Bottiglia Grande (1.5 L)', basePrice: 2.50, cat: 'bevande', customizable: false },
-  { id: 'acq_p', name: 'Acqua (50 cl)', basePrice: 1.50, cat: 'bevande', customizable: false },
-  { id: 'red_bull', name: 'Red Bull (25 cl)', basePrice: 2.50, cat: 'bevande', customizable: false },
 
   // Alcolici
-  { id: 'peroni_66', name: 'Peroni (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false },
-  { id: 'moretti_66', name: 'Moretti (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false }
+  { id: 'birra_33', name: 'Birra (33 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false },
+  { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false }
 ];
 
-let state = {
-  orderType: 'asporto',
-  cart: {}
+const ingredientConfig = {
+  salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Ketchup", "Maionese"],
+  verdure: ["Insalata", "Verza e Carote"],
+  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
 };
 
-function init() {
-  currentFilteredItems = menuItems;
-  renderMenu(currentFilteredItems);
-  checkDeliveryAvailability();
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.getElementById('lang-it').classList.toggle('active', lang === 'it');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+
+  const submitBtn = document.getElementById('whatsapp-submit-btn');
+  if (state.orderType === 'deliveroo') {
+    submitBtn.innerText = translations[lang].btnDeliverooOrder;
+  } else {
+    submitBtn.innerText = translations[lang].btnOrder;
+  }
+
+  renderMenu(currentFilteredItems || menuItems);
 }
 
 function setOrderType(type) {
   state.orderType = type;
-  
-  const btnAsporto = document.getElementById('btn-asporto');
-  const btnConsegna = document.getElementById('btn-consegna');
-  const btnDeliveroo = document.getElementById('btn-deliveroo');
-  const totalBox = document.getElementById('total-price-box');
-  const asportoInfoBox = document.getElementById('asporto-info-box');
-  const deliveryInfoBox = document.getElementById('delivery-info-box');
-  const deliverooInfoBox = document.getElementById('deliveroo-info-box');
+
+  document.getElementById('btn-asporto').className = 'type-btn' + (type === 'asporto' ? ' active' : '');
+  document.getElementById('btn-consegna').className = 'type-btn' + (type === 'consegna' ? ' active' : '');
+  document.getElementById('btn-deliveroo').className = 'type-btn' + (type === 'deliveroo' ? ' deliveroo-active' : '');
+
   const submitBtn = document.getElementById('whatsapp-submit-btn');
+  submitBtn.innerText = type === 'deliveroo' ? translations[currentLang].btnDeliverooOrder : translations[currentLang].btnOrder;
 
-  btnAsporto.classList.toggle('active', type === 'asporto');
-  btnConsegna.classList.toggle('active', type === 'consegna');
-  btnDeliveroo.classList.toggle('deliveroo-active', type === 'deliveroo');
+  renderMenu(currentFilteredItems || menuItems);
+  updateTotal();
+}
 
-  asportoInfoBox.style.display = type === 'asporto' ? 'block' : 'none';
-  deliveryInfoBox.style.display = type === 'consegna' ? 'block' : 'none';
-  deliverooInfoBox.style.display = type === 'deliveroo' ? 'block' : 'none';
+function getItemPrice(basePrice) {
+  if (state.orderType === 'asporto') {
+    return Math.max(0, basePrice - 0.50);
+  }
+  return basePrice;
+}
 
-  if (type === 'deliveroo') {
-    totalBox.style.display = 'none';
-    submitBtn.innerText = translations[currentLang].btnDeliverooOrder;
+function changeQty(itemId, delta) {
+  if (!state.cart[itemId]) {
+    state.cart[itemId] = { qty: 0, units: [] };
+  }
+  
+  const item = state.cart[itemId];
+  item.qty += delta;
+
+  if (item.qty <= 0) {
+    delete state.cart[itemId];
   } else {
-    totalBox.style.display = 'block';
-    submitBtn.innerText = translations[currentLang].btnOrder;
+    if (delta > 0) {
+      item.units.push({ withIngs: [], withoutIngs: [] });
+    } else {
+      item.units.pop();
+    }
   }
 
   renderMenu(currentFilteredItems || menuItems);
   updateTotal();
 }
 
-function getItemPrice(item) {
-  if (item.cat === 'bevande') {
-    return Math.max(0, item.basePrice - 0.50);
+function toggleIngredient(itemId, unitIdx, type, ingName) {
+  const unit = state.cart[itemId].units[unitIdx];
+  
+  if (type === 'with') {
+    const idx = unit.withIngs.indexOf(ingName);
+    if (idx > -1) {
+      unit.withIngs.splice(idx, 1);
+    } else {
+      unit.withIngs.push(ingName);
+      const wIdx = unit.withoutIngs.indexOf(ingName);
+      if (wIdx > -1) unit.withoutIngs.splice(wIdx, 1);
+    }
+  } else if (type === 'without') {
+    const idx = unit.withoutIngs.indexOf(ingName);
+    if (idx > -1) {
+      unit.withoutIngs.splice(idx, 1);
+    } else {
+      unit.withoutIngs.push(ingName);
+      const wIdx = unit.withIngs.indexOf(ingName);
+      if (wIdx > -1) unit.withIngs.splice(wIdx, 1);
+    }
   }
-  return state.orderType === 'asporto' ? Math.max(0, item.basePrice - 0.50) : item.basePrice;
+
+  renderMenu(currentFilteredItems || menuItems);
 }
 
 function filterCategory(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  
+
   if (cat === 'all') {
     currentFilteredItems = menuItems;
   } else {
@@ -690,268 +630,178 @@ function renderMenu(items) {
   container.innerHTML = '';
 
   items.forEach(item => {
-    const activePrice = getItemPrice(item).toFixed(2);
-    const cartInstances = state.cart[item.id] || [];
-    const qty = cartInstances.length;
+    const cartItem = state.cart[item.id] || { qty: 0, units: [] };
+    const price = getItemPrice(item.basePrice);
 
-    const priceDisplay = state.orderType === 'deliveroo' ? '' : `<div class="item-price">€ ${activePrice}</div>`;
-
-    let itemHtml = `
+    let html = `
       <div class="menu-item">
         <div class="item-header">
           <div>
             <div class="item-title">${item.name}</div>
-            ${priceDisplay}
+            <div class="item-price">€ ${price.toFixed(2)} ${state.orderType === 'asporto' ? '<small style="color:#27ae60;">(-0.50€)</small>' : ''}</div>
           </div>
           <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
-            <span>${qty}</span>
-            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+            <strong>${cartItem.qty}</strong>
+            <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
           </div>
         </div>
     `;
 
-    if (item.customizable && qty > 0) {
-      cartInstances.forEach((inst, idx) => {
-        itemHtml += renderCustomizer(item.id, idx, inst);
+    if (item.customizable && cartItem.qty > 0) {
+      cartItem.units.forEach((unit, uIdx) => {
+        html += `
+          <div class="unit-customizer">
+            <div class="unit-controls">
+              <span class="unit-title">📍 ${item.name} #${uIdx + 1}</span>
+            </div>
+            
+            <!-- SALSE -->
+            <div class="ingredient-line">
+              <span class="line-label">${translations[currentLang].sauces}</span>
+              <div class="chip-group">
+                ${ingredientConfig.salse.map(ing => {
+                  const isWith = unit.withIngs.includes(ing);
+                  const isWithout = unit.withoutIngs.includes(ing);
+                  return `
+                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
+                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- VERDURE -->
+            <div class="ingredient-line">
+              <span class="line-label">${translations[currentLang].veggies}</span>
+              <div class="chip-group">
+                ${ingredientConfig.verdure.map(ing => {
+                  const isWith = unit.withIngs.includes(ing);
+                  const isWithout = unit.withoutIngs.includes(ing);
+                  return `
+                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
+                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- EXTRA -->
+            <div class="ingredient-line">
+              <span class="line-label">${translations[currentLang].extras}</span>
+              <div class="chip-group">
+                ${ingredientConfig.extra.map(ing => {
+                  const isWith = unit.withIngs.includes(ing);
+                  const isWithout = unit.withoutIngs.includes(ing);
+                  return `
+                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
+                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        `;
       });
     }
 
-    itemHtml += `</div>`;
-    container.innerHTML += itemHtml;
+    html += `</div>`;
+    container.innerHTML += html;
   });
-}
-
-function renderCustomizer(itemId, index, instData) {
-  const t = translations[currentLang];
-  return `
-    <div class="unit-customizer">
-      <div class="unit-controls">
-        <div class="unit-title">${t.customize} #${index + 1}</div>
-        <div class="mode-switch">
-          <button class="mode-btn ${instData.mode === 'senza' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'senza')">${t.without}</button>
-          <button class="mode-btn ${instData.mode === 'con' ? 'active' : ''}" onclick="setInstanceMode('${itemId}', ${index}, 'con')">${t.with}</button>
-        </div>
-      </div>
-      
-      <div class="ingredient-line">
-        <span class="line-label">${t.sauces}</span>
-        <div class="chip-group">
-          ${ingredientConfig.salse.map(s => {
-            const isSelected = instData.ingredients.includes(s);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${s}')">${s}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-
-      <div class="ingredient-line">
-        <span class="line-label">${t.veggies}</span>
-        <div class="chip-group">
-          ${ingredientConfig.verdure.map(v => {
-            const isSelected = instData.ingredients.includes(v);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${v}')">${v}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-
-      <div class="ingredient-line">
-        <span class="line-label">${t.extras}</span>
-        <div class="chip-group">
-          ${ingredientConfig.extra.map(e => {
-            const isSelected = instData.ingredients.includes(e);
-            const chipClass = instData.mode === 'senza' ? (isSelected ? 'selected-senza' : '') : (isSelected ? 'selected' : '');
-            return `
-              <span class="chip ${chipClass}" 
-                    onclick="toggleIngredient('${itemId}',${index}, '${e}')">${e}</span>
-            `;
-          }).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function updateQty(itemId, delta) {
-  if (!state.cart[itemId]) state.cart[itemId] = [];
-  
-  if (delta > 0) {
-    state.cart[itemId].push({ mode: 'senza', ingredients: [] });
-  } else if (delta < 0 && state.cart[itemId].length > 0) {
-    state.cart[itemId].pop();
-  }
-  
-  if (state.cart[itemId].length === 0) delete state.cart[itemId];
-
-  renderMenu(currentFilteredItems || menuItems);
-  updateTotal();
-}
-
-function setInstanceMode(itemId, instanceIdx, mode) {
-  const instance = state.cart[itemId][instanceIdx];
-  if(instance.mode !== mode) {
-    instance.mode = mode;
-    instance.ingredients = [];
-    renderMenu(currentFilteredItems || menuItems);
-  }
-}
-
-function toggleIngredient(itemId, instanceIdx, value) {
-  const instance = state.cart[itemId][instanceIdx];
-  const list = instance.ingredients;
-  const pos = list.indexOf(value);
-  
-  if (pos > -1) {
-    list.splice(pos, 1);
-  } else {
-    list.push(value);
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-}
-
-function isDeliveryAllowed() {
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-  const isWeekend = (day === 0 || day === 6);
-  const isAfter17 = hour >= 17;
-
-  return isWeekend && isAfter17;
-}
-
-function checkDeliveryAvailability() {
-  const allowed = isDeliveryAllowed();
-  const warning = document.getElementById('time-warning');
-  const inputs = document.getElementById('delivery-inputs');
-
-  if (!allowed) {
-    warning.style.display = 'block';
-    inputs.style.display = 'none';
-  } else {
-    warning.style.display = 'none';
-    inputs.style.display = 'block';
-  }
 }
 
 function updateTotal() {
-  if (state.orderType === 'deliveroo') return;
-
-  let subtotal = 0;
-  Object.keys(state.cart).forEach(itemId => {
-    const item = menuItems.find(i => i.id === itemId);
-    const price = getItemPrice(item);
-    subtotal += price * state.cart[itemId].length;
+  let total = 0;
+  Object.keys(state.cart).forEach(id => {
+    const item = menuItems.find(m => m.id === id);
+    if (item) {
+      total += getItemPrice(item.basePrice) * state.cart[id].qty;
+    }
   });
 
-  document.getElementById('grand-total').innerText = `€ ${subtotal.toFixed(2)}`;
+  document.getElementById('grand-total').innerText = `€ ${total.toFixed(2)}`;
 }
 
-// ----------------- CONFIRMATION MODAL FUNCTIONS -----------------
+// MODAL & ORDER CONFIRMATION
 function openConfirmationModal() {
-  const keys = Object.keys(state.cart);
-  if (keys.length === 0) {
-    alert(currentLang === 'it' ? "Seleziona almeno un prodotto!" : "Please select at least one item!");
+  const hasItems = Object.keys(state.cart).length > 0;
+  if (!hasItems) {
+    alert("Per favore seleziona almeno un prodotto prima di continuare!");
     return;
   }
 
-  let customerDetailsHtml = "";
-
+  // Inject Customer Info Inputs dynamically in Modal
+  const inputContainer = document.getElementById('modal-user-inputs');
   if (state.orderType === 'asporto') {
-    const name = document.getElementById('asporto-cust-name').value.trim();
-    const time = document.getElementById('asporto-time').value;
-    if (!name || !time) {
-      alert(currentLang === 'it' ? "Inserisci il tuo Nome e l'Orario di Ritiro!" : "Please enter your Name and Pickup Time!");
-      return;
-    }
-    customerDetailsHtml = `
-      <strong>Tipo:</strong> ASPORTO<br>
-      <strong>👤 Nome:</strong> ${name}<br>
-      <strong>⏰ Orario Ritiro:</strong> ${time}
+    inputContainer.innerHTML = `
+      <div class="receipt-section-title">📍 Dettagli Asporto</div>
+      <label><strong>${translations[currentLang].asportoNameLabel}</strong></label>
+      <input type="text" id="asporto-cust-name" class="input-field" placeholder="Es: Mario Rossi">
+      <label><strong>${translations[currentLang].asportoTimeLabel}</strong></label>
+      <input type="time" id="asporto-time" class="input-field">
+    `;
+  } else if (state.orderType === 'deliveroo') {
+    inputContainer.innerHTML = `
+      <div class="receipt-section-title">🛵 Note Deliveroo</div>
+      <p style="font-size:0.8rem; margin:0 0 8px 0; color:#005b53;">${translations[currentLang].delivSub}</p>
+      <label><strong>${translations[currentLang].delivNameLabel}</strong></label>
+      <input type="text" id="deliv-cust-name" class="input-field" placeholder="Es: Mario Rossi (Nome Deliveroo)">
     `;
   } else if (state.orderType === 'consegna') {
-    const name = document.getElementById('cust-name').value.trim();
-    const address = document.getElementById('cust-address').value.trim();
-    if (!name || !address) {
-      alert(currentLang === 'it' ? "Inserisci Nome e Indirizzo!" : "Please enter Name and Address!");
-      return;
-    }
-    customerDetailsHtml = `
-      <strong>Tipo:</strong> CONSEGNA A DOMICILIO<br>
-      <strong>👤 Nome:</strong> ${name}<br>
-      <strong>📍 Indirizzo:</strong> ${address}
-    `;
-  } else {
-    const name = document.getElementById('deliv-cust-name').value.trim();
-    if (!name) {
-      alert(currentLang === 'it' ? "Inserisci il nome account Deliveroo!" : "Please enter Deliveroo account name!");
-      return;
-    }
-    customerDetailsHtml = `
-      <strong>Tipo:</strong> NOTE DELIVEROO<br>
-      <strong>👤 Account:</strong> ${name}
+    inputContainer.innerHTML = `
+      <div class="receipt-section-title">🚚 Dettagli Consegna</div>
+      <div style="color: #d9534f; margin-bottom: 8px; font-weight: bold; font-size: 0.78rem;">
+        ${translations[currentLang].deliveryWarning}
+      </div>
+      <label><strong>${translations[currentLang].deliveryNameLabel}</strong></label>
+      <input type="text" id="cust-name" class="input-field" placeholder="Es: Mario Rossi">
+      <label><strong>${translations[currentLang].deliveryAddressLabel}</strong></label>
+      <input type="text" id="cust-address" class="input-field" placeholder="Es: Via San Giuseppe 29b, Jesi">
     `;
   }
 
-  // Summary Table HTML
-  let totalSummaryHtml = "<ul style='margin: 5px 0; padding-left: 20px;'>";
-  keys.forEach(id => {
-    const item = menuItems.find(i => i.id === id);
-    const qty = state.cart[id].length;
-    totalSummaryHtml += `<li><strong>${qty}x</strong> ${item.name}</li>`;
+  // Render Receipt Content inside modal
+  const modalReceiptBody = document.getElementById('modal-receipt-body');
+  let total = 0;
+  let receiptHtml = `<div class="receipt-section">
+    <div class="receipt-section-title">🛒 Prodotti Selezionati</div>`;
+
+  Object.keys(state.cart).forEach(id => {
+    const item = menuItems.find(m => m.id === id);
+    const cartItem = state.cart[id];
+    const unitPrice = getItemPrice(item.basePrice);
+    const itemTotal = unitPrice * cartItem.qty;
+    total += itemTotal;
+
+    receiptHtml += `<div style="margin-bottom: 10px;">
+      <strong>${cartItem.qty}x ${item.name}</strong> - € ${itemTotal.toFixed(2)}`;
+
+    if (item.customizable) {
+      cartItem.units.forEach((u, i) => {
+        let details = [];
+        if (u.withIngs.length > 0) details.push(`Con: ${u.withIngs.join(', ')}`);
+        if (u.withoutIngs.length > 0) details.push(`Senza: ${u.withoutIngs.join(', ')}`);
+        
+        if (details.length > 0) {
+          receiptHtml += `<div style="font-size: 0.8rem; color: #555; padding-left: 10px;">
+            • #${i+1}: ${details.join(' | ')}
+          </div>`;
+        }
+      });
+    }
+
+    receiptHtml += `</div>`;
   });
-  totalSummaryHtml += "</ul>";
 
-  // Step-by-Step Item Details HTML
-  let stepDetailsHtml = "";
-  keys.forEach(id => {
-    const item = menuItems.find(i => i.id === id);
-    const instances = state.cart[id];
-    
-    stepDetailsHtml += `<div style='margin-top: 8px;'><strong>📌 ${item.name}</strong> (Totale: ${instances.length}):</div>`;
-    stepDetailsHtml += "<ol style='margin: 3px 0 8px; padding-left: 20px;'>";
-    instances.forEach((inst) => {
-      let ingText = inst.ingredients.length > 0 
-        ? `<span style='color: var(--primary); font-weight: bold;'>${inst.mode.toUpperCase()}</span>: ${inst.ingredients.join(', ')}`
-        : `<span style='color: #777;'>(Completo / Standard)</span>`;
-      stepDetailsHtml += `<li>${item.name} &rarr; ${ingText}</li>`;
-    });
-    stepDetailsHtml += "</ol>";
-  });
-
-  let receiptHtml = `
-    <div class="receipt-section">
-      <div class="receipt-section-title">📌 Dettagli Cliente / Info</div>
-      ${customerDetailsHtml}
-    </div>
-
-    <div class="receipt-section">
-      <div class="receipt-section-title">📊 Totale Prodotti / Summary</div>
-      ${totalSummaryHtml}
-    </div>
-
-    <div class="receipt-section">
-      <div class="receipt-section-title">📝 Dettagli Specifici / Step-by-Step</div>
-      ${stepDetailsHtml}
-    </div>
-  `;
+  receiptHtml += `</div>`;
 
   if (state.orderType !== 'deliveroo') {
-    receiptHtml += `
-      <div class="receipt-total">
-        Totale Finale: ${document.getElementById('grand-total').innerText}
-      </div>
-    `;
+    receiptHtml += `<div style="text-align: right; font-size: 1.1rem; font-weight: bold; color: var(--primary);">
+      Totale: € ${total.toFixed(2)}
+    </div>`;
   }
 
-  document.getElementById('modal-receipt-body').innerHTML = receiptHtml;
+  modalReceiptBody.innerHTML = receiptHtml;
   document.getElementById('confirm-modal').style.display = 'flex';
 }
 
@@ -960,63 +810,70 @@ function closeConfirmationModal() {
 }
 
 function sendWhatsAppOrder() {
-  const keys = Object.keys(state.cart);
   let text = "";
 
   if (state.orderType === 'asporto') {
     const name = document.getElementById('asporto-cust-name').value.trim();
     const time = document.getElementById('asporto-time').value;
-    text += `*ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n\n`;
+
+    if (!name || !time) {
+      alert("Per favore inserisci il Nome e l'Orario di Ritiro!");
+      return;
+    }
+    text += `📌 *ORDINE ASPORTO*\n👤 Nome: ${name}\n⏰ Orario Ritiro: ${time}\n------------------------\n`;
+  } else if (state.orderType === 'deliveroo') {
+    const delivName = document.getElementById('deliv-cust-name').value.trim();
+    if (!delivName) {
+      alert("Per favore inserisci il Nome Deliveroo o Numero Ordine!");
+      return;
+    }
+    text += `🛵 *NOTE ORDINE DELIVEROO*\n👤 Account/Ordine: ${delivName}\n------------------------\n`;
   } else if (state.orderType === 'consegna') {
     const name = document.getElementById('cust-name').value.trim();
     const address = document.getElementById('cust-address').value.trim();
-    text += `*ORDINE CONSEGNA*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n\n`;
-  } else {
-    const name = document.getElementById('deliv-cust-name').value.trim();
-    text += `*NOTE ORDINE DELIVEROO*\n👤 Account: ${name}\n\n`;
+
+    if (!name || !address) {
+      alert("Per favore inserisci Nome e Indirizzo completo!");
+      return;
+    }
+    text += `🚚 *ORDINE A DOMICILIO*\n👤 Nome: ${name}\n📍 Indirizzo: ${address}\n------------------------\n`;
   }
 
-  // 1. Total Quantity Summary
-  text += "*RIEPILOGO PRODOTTI (Totale):*\n";
-  keys.forEach(id => {
-    const item = menuItems.find(i => i.id === id);
-    const qty = state.cart[id].length;
-    text += `• ${qty}x ${item.name}\n`;
-  });
+  let total = 0;
+  Object.keys(state.cart).forEach(id => {
+    const item = menuItems.find(m => m.id === id);
+    const cartItem = state.cart[id];
+    const unitPrice = getItemPrice(item.basePrice);
+    const itemTotal = unitPrice * cartItem.qty;
+    total += itemTotal;
 
-  text += "\n----------------------------------------\n";
-  text += "*DETTAGLI ORDINE (Specifiche):*\n";
+    text += `*${cartItem.qty}x ${item.name}* (€${itemTotal.toFixed(2)})\n`;
 
-  // 2. Step by step detail per item
-  keys.forEach(id => {
-    const item = menuItems.find(i => i.id === id);
-    const instances = state.cart[id];
-    
-    text += `\n📌 *${item.name}* (Totale: ${instances.length}):\n`;
-    instances.forEach((inst, idx) => {
-      text += `   ${idx + 1}. ${item.name}`;
-      if (inst.ingredients.length > 0) {
-        text += ` -> *${inst.mode.toUpperCase()}*: ${inst.ingredients.join(', ')}`;
-      } else {
-        text += ` -> (Completo / Standard)`;
-      }
-      text += `\n`;
-    });
+    if (item.customizable) {
+      cartItem.units.forEach((u, i) => {
+        let details = [];
+        if (u.withIngs.length > 0) details.push(`CON: ${u.withIngs.join(', ')}`);
+        if (u.withoutIngs.length > 0) details.push(`SENZA: ${u.withoutIngs.join(', ')}`);
+        
+        if (details.length > 0) {
+          text += `   👉 #${i+1}: ${details.join(' | ')}\n`;
+        }
+      });
+    }
   });
 
   if (state.orderType !== 'deliveroo') {
-    text += `\n----------------------------------------\n`;
-    text += `💰 *TOTALE FINALE:* ${document.getElementById('grand-total').innerText}`;
+    text += `------------------------\n💰 *TOTALE: € ${total.toFixed(2)}*`;
   }
 
-  const phone = "393932228224";
+  const phone = "+393932228224";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-  
-  closeConfirmationModal();
   window.open(url, '_blank');
 }
 
-init();
+// Initial Render
+renderMenu(menuItems);
 </script>
+
 </body>
 </html>
