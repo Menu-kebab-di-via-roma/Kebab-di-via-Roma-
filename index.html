@@ -12,6 +12,7 @@
       --bg: #f8f9fa;
       --card-bg: #ffffff;
       --text: #2c3e50;
+      --green: #27ae60;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -157,41 +158,75 @@
       cursor: pointer;
     }
 
+    /* Split Customizer Layout */
     .unit-customizer {
       margin-top: 12px;
-      padding: 10px;
+      padding: 12px;
       background: #f1f3f5;
       border-radius: 8px;
-      border-left: 3px solid var(--secondary);
+      border-left: 4px solid var(--secondary);
     }
-    .unit-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .unit-title { font-size: 0.85rem; font-weight: bold; margin-bottom: 10px; color: #333; }
+
+    .ingredient-block {
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #e0e0e0;
+    }
+    .block-title {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--primary);
       margin-bottom: 8px;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 3px;
     }
-    .unit-title { font-size: 0.85rem; font-weight: bold; }
-    
-    .ingredient-line { margin-bottom: 8px; }
-    .line-label { font-size: 0.75rem; font-weight: bold; color: #555; display: block; margin-bottom: 4px; }
-    .chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .split-container {
+      display: flex;
+      gap: 10px;
+    }
+    .split-col {
+      flex: 1;
+      background: #fafafa;
+      padding: 6px;
+      border-radius: 6px;
+    }
+    .col-title {
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+      text-align: center;
+      padding: 2px 0;
+      border-radius: 4px;
+    }
+    .col-title.plus { background: #e8f8f5; color: var(--green); }
+    .col-title.minus { background: #fdf2f2; color: var(--primary); }
+
+    .chip-group { display: flex; flex-direction: column; gap: 4px; }
     .chip {
-      font-size: 0.75rem;
-      padding: 4px 8px;
+      font-size: 0.72rem;
+      padding: 5px 8px;
       background: white;
       border: 1px solid #ccc;
-      border-radius: 12px;
+      border-radius: 6px;
       cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
     }
-    .chip.selected {
-      background: var(--secondary);
+    .chip-plus.selected {
+      background: var(--green);
       color: white;
-      border-color: var(--secondary);
+      border-color: var(--green);
+      font-weight: bold;
     }
-    .chip.selected-senza {
+    .chip-minus.selected-senza {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
+      font-weight: bold;
     }
 
     .input-field {
@@ -338,7 +373,7 @@
     <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" style="margin-left: 2px;">
       <path d="M12.012 2c-5.513 0-9.992 4.478-9.992 9.991 0 1.764.459 3.488 1.332 5.01L2 22l5.127-1.343c1.472.803 3.136 1.226 4.885 1.226 5.514 0 9.992-4.478 9.992-9.991 0-5.513-4.478-9.992-9.992-9.992zm0 18.232c-1.554 0-3.078-.418-4.413-1.21l-.316-.188-3.036.796.81-2.96-.206-.328c-.872-1.388-1.333-2.998-1.333-4.651 0-4.705 3.828-8.533 8.533-8.533 4.706 0 8.534 3.828 8.534 8.533 0 4.705-3.828 8.533-8.579 8.533z"/>
     </svg>
-    +39 393 222 8 224
+    +39 393 222 8224
   </p>
 </header>
 
@@ -359,7 +394,7 @@
   </div>
 
   <div class="instructions-notice" data-i18n="customNotice">
-    💡 Personalizza ogni prodotto con "+Con" o "-Senza" ingredienti, se non scegli ti arriva completo 🥙.
+    💡 Personalizza ogni prodotto con "Con (+)" o "Senza (-)", se non scegli ti arriva completo 🥙.
   </div>
 
   <div class="category-nav">
@@ -393,9 +428,7 @@
     </div>
     <div class="receipt-body">
       <!-- Dynamic Form Inputs for User Details based on Order Type -->
-      <div id="modal-user-inputs" class="receipt-section">
-        <!-- JS will dynamically inject name/time or address inputs here -->
-      </div>
+      <div id="modal-user-inputs" class="receipt-section"></div>
 
       <!-- Receipt Summary -->
       <div id="modal-receipt-body"></div>
@@ -420,9 +453,9 @@ const translations = {
     deliverooSub: "Personalizza Ordine",
     asportoNameLabel: "Nome e Cognome: *",
     asportoTimeLabel: "Orario di Ritiro: *",
-    customNotice: "💡 Personalizza ogni prodotto scegliendo 'Con' o 'Senza' ingredienti.",
+    customNotice: "💡 Personalizza ogni prodotto con 'Con (+)' o 'Senza (-)' ingredienti.",
     delivTitle: "ℹ️ PERSONALIZZAZIONE ORDINE DELIVEROO",
-    delivSub: "Questo strumento serve solo per inviare le preferenze (salse e ingredienti) del tuo ordine effettuato su Deliveroo.",
+    delivSub: "Questo strumento serve solo per inviare le preferenze del tuo ordine effettuato su Deliveroo.",
     delivNameLabel: "Nome dell'account Deliveroo o Numero Ordine: *",
     deliveryWarning: "⚠️ Attenzione: La consegna a domicilio è disponibile solo Sabato e Domenica dopo le 17:00.",
     deliveryNameLabel: "Nome e Cognome: *",
@@ -435,10 +468,11 @@ const translations = {
     totalLabel: "Totale:",
     btnOrder: "VERIFICA E ORDINA",
     btnDeliverooOrder: "VERIFICA NOTE DELIVEROO",
-    sauces: "Salse:",
-    veggies: "Verdure:",
-    extras: "Extra:",
-    customize: "Personalizza"
+    sauces: "Salse",
+    veggies: "Verdure",
+    extras: "Extra",
+    withLabel: "➕ CON",
+    withoutLabel: "➖ SENZA"
   },
   en: {
     asporto: "Takeaway",
@@ -449,9 +483,9 @@ const translations = {
     deliverooSub: "Customize Order",
     asportoNameLabel: "Full Name: *",
     asportoTimeLabel: "Pickup Time: *",
-    customNotice: "💡 Customize each item by selecting 'With' or 'Without' ingredients.",
+    customNotice: "💡 Customize each item using 'With (+)' or 'Without (-)' columns.",
     delivTitle: "ℹ️ DELIVEROO ORDER CUSTOMIZATION",
-    delivSub: "Use this tool only to send ingredient/sauce preferences for your Deliveroo order.",
+    delivSub: "Use this tool only to send ingredient preferences for your Deliveroo order.",
     delivNameLabel: "Deliveroo Account Name or Order #: *",
     deliveryWarning: "⚠️ Attention: Home delivery is available only Saturday and Sunday after 17:00.",
     deliveryNameLabel: "Full Name: *",
@@ -464,10 +498,11 @@ const translations = {
     totalLabel: "Total:",
     btnOrder: "CHECK AND ORDER",
     btnDeliverooOrder: "CHECK DELIVEROO NOTES",
-    sauces: "Sauces:",
-    veggies: "Vegetables:",
-    extras: "Extras:",
-    customize: "Customize"
+    sauces: "Sauces",
+    veggies: "Vegetables",
+    extras: "Extras",
+    withLabel: "➕ WITH",
+    withoutLabel: "➖ WITHOUT"
   }
 };
 
@@ -625,6 +660,38 @@ function filterCategory(cat, btn) {
   renderMenu(currentFilteredItems);
 }
 
+// Helper to render Split Ingredients (Separated CON and SENZA)
+function renderIngredientSection(itemId, uIdx, categoryKey, categoryLabel, unit) {
+  const list = ingredientConfig[categoryKey];
+  return `
+    <div class="ingredient-block">
+      <div class="block-title">🔸 ${categoryLabel}</div>
+      <div class="split-container">
+        <!-- PLUS COLUMN -->
+        <div class="split-col">
+          <div class="col-title plus">${translations[currentLang].withLabel}</div>
+          <div class="chip-group">
+            ${list.map(ing => {
+              const isWith = unit.withIngs.includes(ing);
+              return `<button class="chip chip-plus ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${itemId}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>`;
+            }).join('')}
+          </div>
+        </div>
+        <!-- MINUS COLUMN -->
+        <div class="split-col">
+          <div class="col-title minus">${translations[currentLang].withoutLabel}</div>
+          <div class="chip-group">
+            ${list.map(ing => {
+              const isWithout = unit.withoutIngs.includes(ing);
+              return `<button class="chip chip-minus ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${itemId}',${uIdx}, 'without', '${ing}')">- ${ing}</button>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderMenu(items) {
   const container = document.getElementById('menu-container');
   container.innerHTML = '';
@@ -652,54 +719,10 @@ function renderMenu(items) {
       cartItem.units.forEach((unit, uIdx) => {
         html += `
           <div class="unit-customizer">
-            <div class="unit-controls">
-              <span class="unit-title">📍 ${item.name} #${uIdx + 1}</span>
-            </div>
-            
-            <!-- SALSE -->
-            <div class="ingredient-line">
-              <span class="line-label">${translations[currentLang].sauces}</span>
-              <div class="chip-group">
-                ${ingredientConfig.salse.map(ing => {
-                  const isWith = unit.withIngs.includes(ing);
-                  const isWithout = unit.withoutIngs.includes(ing);
-                  return `
-                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
-                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-
-            <!-- VERDURE -->
-            <div class="ingredient-line">
-              <span class="line-label">${translations[currentLang].veggies}</span>
-              <div class="chip-group">
-                ${ingredientConfig.verdure.map(ing => {
-                  const isWith = unit.withIngs.includes(ing);
-                  const isWithout = unit.withoutIngs.includes(ing);
-                  return `
-                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
-                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-
-            <!-- EXTRA -->
-            <div class="ingredient-line">
-              <span class="line-label">${translations[currentLang].extras}</span>
-              <div class="chip-group">
-                ${ingredientConfig.extra.map(ing => {
-                  const isWith = unit.withIngs.includes(ing);
-                  const isWithout = unit.withoutIngs.includes(ing);
-                  return `
-                    <button class="chip ${isWith ? 'selected' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'with', '${ing}')">+ ${ing}</button>
-                    <button class="chip ${isWithout ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}',${uIdx}, 'without', '${ing}')">- ${ing}</button>
-                  `;
-                }).join('')}
-              </div>
-            </div>
+            <div class="unit-title">📍 ${item.name} #${uIdx + 1}</div>
+            ${renderIngredientSection(item.id, uIdx, 'salse', translations[currentLang].sauces, unit)}
+            ${renderIngredientSection(item.id, uIdx, 'verdure', translations[currentLang].veggies, unit)}
+            ${renderIngredientSection(item.id, uIdx, 'extra', translations[currentLang].extras, unit)}
           </div>
         `;
       });
