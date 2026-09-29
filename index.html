@@ -32,7 +32,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
-    /* Title with TikTok button */
+    /* Title with TikTok logo */
     .title-container {
       display: flex;
       align-items: center;
@@ -42,22 +42,17 @@
     header h1 { margin: 0; font-size: 1.1rem; }
     header p { margin: 2px 0 0; font-size: 0.7rem; opacity: 0.9; }
 
-    /* TIKTOK BUTTON */
-    .tiktok-btn {
-      color: white;
-      text-decoration: none;
-      font-size: 0.8rem;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid white;
-      width: 24px;
-      height: 24px;
+    /* TIKTOK LOGO STYLE */
+    .tiktok-logo-img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
+      display: inline-block;
+      vertical-align: middle;
+      border: 1px solid white;
+      background: #000;
     }
-    .tiktok-btn:hover { background: white; color: var(--primary); }
 
     /* LANG SWITCH BAR */
     .top-controls {
@@ -331,8 +326,10 @@
   </div>
 
   <div class="title-container">
-    <!-- TIKTOK BUTTON ON THE LEFT SIDE OF KEBAB LOGO/TITLE -->
-    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-btn" title="TikTok">🎵</a>
+    <!-- TIKTOK LOGO WITH LINK -->
+    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" title="TikTok">
+      <img src="1000157484.png" alt="TikTok" class="tiktok-logo-img">
+    </a>
     <h1>Kebab di Via Roma</h1>
   </div>
   <p>Via Roma 29b, Jesi (AN) | +39 393 222 8224</p>
@@ -482,8 +479,11 @@ const menuItems = [
   { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500' },
   { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500' },
 
-  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=500' },
-  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=500' },
+  /* Updated Falafel Items with your custom images */
+  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: '1000157482.jpg' },
+  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: '1000157481.jpg' },
+  { id: 'piatto_f', name: 'Piatto Falafel', basePrice: 7.00, cat: 'non-kebab', customizable: true, img: '1000157483.jpg' },
+
   { id: 'p_seekh', name: 'Panino Seekh Kebab', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500' },
   { id: 'pi_seekh', name: 'Piadina Seekh Kebab', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500' },
   { id: 'c_burger', name: 'Crispy pollo Hamburger', basePrice: 4.00, cat: 'non-kebab', customizable: false, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500' },
