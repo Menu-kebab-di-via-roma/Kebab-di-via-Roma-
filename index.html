@@ -531,7 +531,165 @@ function setOrderType(type) {
   submitBtn.innerText = type === 'deliveroo' ? translations[currentLang].btnDeliverooOrder : translations[currentLang].btnOrder;
 
   renderMenu(currentFilteredItems || menuItems);
+  updateTotal();
 }
+
+function getItemPrice(basePrice) {
+  if (state.orderType === 'asporto') {
+    return Math.max(0, basePrice - 0.50);
+  }
+  return basePrice;
+}
+
+function filterCategory(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  if (cat === 'all') {
+    currentFilteredItems = null;
+    renderMenu(menuItems);
+  } else {
+    currentFilteredItems = menuItems.filter(item => item.cat === cat);
+    renderMenu(currentFilteredItems);
+  }
+}
+
+function renderMenu(items) {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+
+  items.forEach(item => {
+    const finalPrice = getItemPrice(item.basePrice);
+    const cartItem = state.cart[item.id] || { qty: 0, senza: [], salse: [], extra: [], salseOpzionali: [], notes: '' };
+    
+    let html = `
+      <div class="menu-item">
+        <div class="item-header">
+          <img src="${item.img}" alt="${item.name}" class="item-img" onclick="openImageModal('${item.img}', '${item.name}')">
+          <div class="item-details">
+            <div class="item-title">${item.name}</div>
+            <div class="item-price">€ ${finalPrice.toFixed(2)}</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
+            <span style="font-size:0.8rem; font-weight:bold; min-width:15px; text-align:center;">${cartItem.qty}</span>
+            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+          </div>
+        </div>
+    `;
+
+    if (item.customizable && cartItem.qty > 0) {
+      html += `<div class="unit-customizer">
+        <div class="unit-title">Personalizza:</div>`;
+
+      // Senza
+      html += `<div class="ingredient-block"><div class="block-title">Senza (-)</div><div class="chip-group">`;
+      ingredientConfig.verdure.forEach(v => {
+        const isSelected = cartItem.senza.includes(v);
+        html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', 'senza', '${v}')">${v}</span>`;
+      });
+      html += `</div></div>`;
+
+      // Salse
+      html += `<div class="ingredient-block"><div class="block-title">Salse</div><div class="chip-group">`;
+      ingredientConfig.salse.forEach(s => {
+        const isSelected = cartItem.salse.includes(s);
+        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'salse', '${s}')">${s}</span>`;
+      });
+      html += `</div></div>`;
+
+      // Extra
+      html += `<div class="ingredient-block"><div class="block-title">Extra</div><div class="chip-group">`;
+      ingredientConfig.extra.forEach(e => {
+        const isSelected = cartItem.extra.includes(e);
+        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'extra', '${e}')">${e}</span>`;
+      });
+      html += `</div></div>`;
+
+      // Notes
+      html += `<input type="text" class="input-field" placeholder="Note specifiche..." value="${cartItem.notes || ''}" onchange="updateItemNotes('${item.id}', this.value)">`;
+
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+    container.innerHTML += html;
+  });
+
+  updateTotal();
+}
+
+function updateQty(id, change) {
+  if (!state.cart[id]) {
+    state.cart[id] = { qty: 0, senza: [], salse: [], extra: [], salseOpzionali: [], notes: '' };
+  }
+  state.cart[id].qty += change;
+  if (state.cart[id].qty <= 0) {
+    delete state.cart[id];
+  }
+  renderMenu(currentFilteredItems || menuItems);
+}
+
+function toggleIngredient(itemId, type, val) {
+  const item = state.cart[itemId];
+  if (!item) return;
+  const index = item[type].indexOf(val);
+  if (index > -1) {
+    item[type].splice(index, 1);
+  } else {
+    item[type].push(val);
+  }
+  renderMenu(currentFilteredItems || menuItems);
+}
+
+function updateItemNotes(itemId, val) {
+  if (state.cart[itemId]) {
+    state.cart[itemId].notes = val;
+  }
+}
+
+function updateTotal() {
+  let total = 0;
+  for (let id in state.cart) {
+    const menuItem = menuItems.find(m => m.id === id);
+    if (menuItem) {
+      total += getItemPrice(menuItem.basePrice) * state.cart[id].qty;
+    }
+  }
+  document.getElementById('grand-total').innerText = `€ ${total.toFixed(2)}`;
+}
+
+function openConfirmationModal() {
+  document.getElementById('confirm-modal').style.display = 'flex';
+  let bodyHtml = '';
+  for (let id in state.cart) {
+    const menuItem = menuItems.find(m => m.id === id);
+    const cartItem = state.cart[id];
+    bodyHtml += `<div><b>${cartItem.qty}x ${menuItem.name}</b></div>`;
+  }
+  document.getElementById('modal-receipt-body').innerHTML = bodyHtml || 'Carrello vuoto';
+}
+
+function closeConfirmationModal() {
+  document.getElementById('confirm-modal').style.display = 'none';
+}
+
+function openImageModal(src, caption) {
+  document.getElementById('expanded-img').src = src;
+  document.getElementById('img-caption').innerText = caption;
+  document.getElementById('image-modal').style.display = 'flex';
+}
+
+function closeImageModal() {
+  document.getElementById('image-modal').style.display = 'none';
+}
+
+function sendWhatsAppOrder() {
+  alert("Ordine inviato con successo!");
+}
+
+// Initial Render
+renderMenu(menuItems);
 </script>
 </body>
 </html>
