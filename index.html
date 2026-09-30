@@ -402,14 +402,7 @@ const translations = {
     consegnaSub: "Sab & Dom > 17:00",
     deliveroo: "Note Deliveroo",
     deliverooSub: "Personalizza Ordine",
-    asportoNameLabel: "Nome e Cognome: *",
-    asportoTimeLabel: "Orario di Ritiro: *",
     customNotice: "💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su 'SENZA (-)'.",
-    delivSub: "Questo strumento serve solo per inviare le preferenze del tuo ordine effettuato su Deliveroo.",
-    delivNameLabel: "Nome account Deliveroo o N° Ordine: *",
-    deliveryWarning: "⚠️ Consegna solo Sabato e Domenica dopo le 17:00.",
-    deliveryNameLabel: "Nome e Cognome: *",
-    deliveryAddressLabel: "Indirizzo Completo: *",
     catAll: "Tutti",
     catNonKebab: "Non Solo Kebab",
     catFritti: "Fritti",
@@ -417,11 +410,7 @@ const translations = {
     catAlcolici: "Alcolici",
     totalLabel: "Totale:",
     btnOrder: "VERIFICA E ORDINA",
-    btnDeliverooOrder: "VERIFICA NOTE DELIVEROO",
-    sauces: "Salse",
-    veggies: "Verdure",
-    extras: "Extra",
-    optionalSauces: "Aggiungi Salsa (Opzionale)"
+    btnDeliverooOrder: "VERIFICA NOTE DELIVEROO"
   },
   en: {
     asporto: "Takeaway",
@@ -430,14 +419,7 @@ const translations = {
     consegnaSub: "Sat & Sun > 17:00",
     deliveroo: "Deliveroo Notes",
     deliverooSub: "Customize Order",
-    asportoNameLabel: "Full Name: *",
-    asportoTimeLabel: "Pickup Time: *",
     customNotice: "💡 If there is something you don't like, you can simply remove it by clicking 'WITHOUT (-)'.",
-    delivSub: "Use this tool only to send ingredient preferences for your Deliveroo order.",
-    delivNameLabel: "Deliveroo Account Name or Order #: *",
-    deliveryWarning: "⚠️ Delivery available Saturday & Sunday after 17:00.",
-    deliveryNameLabel: "Full Name: *",
-    deliveryAddressLabel: "Full Address: *",
     catAll: "All",
     catNonKebab: "Not Only Kebab",
     catFritti: "Sides",
@@ -445,11 +427,7 @@ const translations = {
     catAlcolici: "Alcoholic",
     totalLabel: "Total:",
     btnOrder: "CHECK AND ORDER",
-    btnDeliverooOrder: "CHECK DELIVEROO NOTES",
-    sauces: "Sauces",
-    veggies: "Vegetables",
-    extras: "Extras",
-    optionalSauces: "Add Sauce (Optional)"
+    btnDeliverooOrder: "CHECK DELIVEROO NOTES"
   }
 };
 
@@ -495,10 +473,23 @@ const menuItems = [
   { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
 ];
 
+// यहाँ सभी आवश्यक सामग्रियां 'Senza (-)' के लिए और केवल Mayonnaise व Ketchup 'Extra' के लिए सेट हैं
 const ingredientConfig = {
-  salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)"],
-  verdure: ["Insalata", "Verza e Carote"],
-  salseOpzionali: ["Ketchup", "Maionese"]
+  senzaItems: [
+    "Salsa Piccante", 
+    "Salsa Yogurt", 
+    "Salsa Rosa", 
+    "Salsa Algerina", 
+    "Insalata", 
+    "Verza e Carote", 
+    "Pomodoro", 
+    "Cipolla", 
+    "Peperoncino"
+  ],
+  extraItems: [
+    "Maionese", 
+    "Ketchup"
+  ]
 };
 
 function switchLanguage(lang) {
@@ -559,7 +550,7 @@ function renderMenu(items) {
 
   items.forEach(item => {
     const finalPrice = getItemPrice(item.basePrice);
-    const cartItem = state.cart[item.id] || { qty: 0, senza: [], salseOpzionali: [], notes: '' };
+    const cartItem = state.cart[item.id] || { qty: 0, senza: [], extra: [], notes: '' };
     
     let html = `
       <div class="menu-item">
@@ -581,23 +572,19 @@ function renderMenu(items) {
       html += `<div class="unit-customizer">
         <div class="unit-title">Personalizza:</div>`;
 
-      // Senza (Verdure + Salse)
+      // Senza (-) Section
       html += `<div class="ingredient-block"><div class="block-title">Senza (-)</div><div class="chip-group">`;
-      ingredientConfig.verdure.forEach(v => {
+      ingredientConfig.senzaItems.forEach(v => {
         const isSelected = cartItem.senza.includes(v);
         html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', 'senza', '${v}')">${v}</span>`;
       });
-      ingredientConfig.salse.forEach(s => {
-        const isSelected = cartItem.senza.includes(s);
-        html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', 'senza', '${s}')">${s}</span>`;
-      });
       html += `</div></div>`;
 
-      // Extra (Solo Ketchup e Maionese)
+      // Extra Section (Only Maionese & Ketchup)
       html += `<div class="ingredient-block"><div class="block-title">Extra</div><div class="chip-group">`;
-      ingredientConfig.salseOpzionali.forEach(e => {
-        const isSelected = cartItem.salseOpzionali.includes(e);
-        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'salseOpzionali', '${e}')">${e}</span>`;
+      ingredientConfig.extraItems.forEach(e => {
+        const isSelected = cartItem.extra.includes(e);
+        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'extra', '${e}')">${e}</span>`;
       });
       html += `</div></div>`;
 
@@ -616,7 +603,7 @@ function renderMenu(items) {
 
 function updateQty(id, change) {
   if (!state.cart[id]) {
-    state.cart[id] = { qty: 0, senza: [], salseOpzionali: [], notes: '' };
+    state.cart[id] = { qty: 0, senza: [], extra: [], notes: '' };
   }
   state.cart[id].qty += change;
   if (state.cart[id].qty <= 0) {
