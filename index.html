@@ -737,7 +737,7 @@ function sendWhatsAppOrder() {
   message += `--------------------------------\n`;
   message += `💰 *Totale Complessivo:* € ${total.toFixed(2)}`;
 
-  The phone = "393932228224"; 
+  const phone = "393932228224"; 
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   
   window.open(url, '_blank');
