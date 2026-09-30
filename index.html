@@ -497,9 +497,9 @@ const menuItems = [
 
 const ingredientConfig = {
   salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)"],
-  salseOpzionali: ["Ketchup", "Maionese"],
   verdure: ["Insalata", "Verza e Carote"],
-  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
+  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"],
+  salseOpzionali: ["Ketchup", "Maionese"]
 };
 
 function switchLanguage(lang) {
@@ -582,27 +582,23 @@ function renderMenu(items) {
       html += `<div class="unit-customizer">
         <div class="unit-title">Personalizza:</div>`;
 
-      // Senza
+      // Senza (Verdure + Salse che si possono rimuovere)
       html += `<div class="ingredient-block"><div class="block-title">Senza (-)</div><div class="chip-group">`;
       ingredientConfig.verdure.forEach(v => {
         const isSelected = cartItem.senza.includes(v);
         html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', 'senza', '${v}')">${v}</span>`;
       });
-      html += `</div></div>`;
-
-      // Salse
-      html += `<div class="ingredient-block"><div class="block-title">Salse</div><div class="chip-group">`;
       ingredientConfig.salse.forEach(s => {
-        const isSelected = cartItem.salse.includes(s);
-        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'salse', '${s}')">${s}</span>`;
+        const isSelected = cartItem.senza.includes(s);
+        html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', 'senza', '${s}')">${s}</span>`;
       });
       html += `</div></div>`;
 
-      // Extra
+      // Extra (Solo Ketchup e Maionese)
       html += `<div class="ingredient-block"><div class="block-title">Extra</div><div class="chip-group">`;
-      ingredientConfig.extra.forEach(e => {
-        const isSelected = cartItem.extra.includes(e);
-        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'extra', '${e}')">${e}</span>`;
+      ingredientConfig.salseOpzionali.forEach(e => {
+        const isSelected = cartItem.salseOpzionali.includes(e);
+        html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', 'salseOpzionali', '${e}')">${e}</span>`;
       });
       html += `</div></div>`;
 
