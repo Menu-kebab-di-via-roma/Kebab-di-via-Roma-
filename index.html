@@ -344,8 +344,8 @@
     </div>
   </div>
 
-  <div class="instructions-notice" data-i18n="customNotice">
-    💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su "SENZA (-)".
+  <div class="instructions-notice" id="main-notice" data-i18n="customNotice">
+    💡 Se c'è qualcosa che não ti piace, puoi semplicemente rimuoverla cliccando su "SENZA (-)".
   </div>
 
   <div class="category-nav">
@@ -373,15 +373,11 @@
 <div class="modal-overlay" id="confirm-modal">
   <div class="modal-card">
     <div class="receipt-header">
-      <h2>📋 Conferma Ordine</h2>
+      <h2 id="modal-title-text">📋 Conferma Ordine</h2>
     </div>
     <div class="receipt-body">
-      <div class="receipt-section">
-        <label style="font-weight:bold; font-size:0.7rem;">Il tuo Nome:</label>
-        <input type="text" id="customer-name" class="input-field" placeholder="Inserisci il tuo nome...">
-        
-        <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">Orario Ritiro / Consegna:</label>
-        <input type="text" id="customer-time" class="input-field" placeholder="Es. 20:30 o Subito...">
+      <div class="receipt-section" id="modal-form-inputs">
+        <!-- داینامیک ان پٹس یہاں رینڈر ہوں گے -->
       </div>
       <div id="modal-receipt-body"></div>
     </div>
@@ -409,6 +405,7 @@ const translations = {
     deliveroo: "Note Deliveroo",
     deliverooSub: "Personalizza Ordine",
     customNotice: "💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su 'SENZA (-)'.",
+    deliverooNotice: "💡 Modalità Deliveroo: Nessun prezzo visualizzato. Inserisci le tue preferenze di personalizzazione.",
     catAll: "Tutti",
     catNonKebab: "Non Solo Kebab",
     catFritti: "Fritti",
@@ -426,6 +423,7 @@ const translations = {
     deliveroo: "Deliveroo Notes",
     deliverooSub: "Customize Order",
     customNotice: "💡 If there is something you don't like, you can simply remove it by clicking 'WITHOUT (-)'.",
+    deliverooNotice: "💡 Deliveroo mode: No prices displayed. Enter your customization preferences.",
     catAll: "All",
     catNonKebab: "Not Only Kebab",
     catFritti: "Sides",
@@ -445,7 +443,6 @@ const state = {
   cart: {} 
 };
 
-// پیڈینا والے آئٹمز کو سب سے اوپر کر دیا گیا ہے
 const menuItems = [
   { id: 'pi_kebab', name: 'Piadina Kebab', basePrice: 5.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500' },
   { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 6.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500' },
@@ -504,6 +501,13 @@ function switchLanguage(lang) {
   const submitBtn = document.getElementById('whatsapp-submit-btn');
   submitBtn.innerText = state.orderType === 'deliveroo' ? translations[lang].btnDeliverooOrder : translations[lang].btnOrder;
 
+  const noticeEl = document.getElementById('main-notice');
+  if(state.orderType === 'deliveroo') {
+    noticeEl.innerText = translations[lang].deliverooNotice;
+  } else {
+    noticeEl.innerText = translations[lang].customNotice;
+  }
+
   renderMenu(currentFilteredItems || menuItems);
 }
 
@@ -515,6 +519,15 @@ function setOrderType(type) {
 
   const submitBtn = document.getElementById('whatsapp-submit-btn');
   submitBtn.innerText = type === 'deliveroo' ? translations[currentLang].btnDeliverooOrder : translations[currentLang].btnOrder;
+
+  const noticeEl = document.getElementById('main-notice');
+  if(type === 'deliveroo') {
+    noticeEl.innerText = translations[currentLang].deliverooNotice;
+    document.getElementById('total-price-box').style.display = 'none';
+  } else {
+    noticeEl.innerText = translations[currentLang].customNotice;
+    document.getElementById('total-price-box').style.display = 'block';
+  }
 
   renderMenu(currentFilteredItems || menuItems);
   updateTotal();
@@ -551,12 +564,17 @@ function renderMenu(items) {
     const currentPrice = getItemPrice(item.basePrice);
     const cartItem = state.cart[item.id] || { qty: 0, customUnits: [] };
 
+    let priceHtml = '';
+    if (state.orderType !== 'deliveroo') {
+      priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)}</div>`;
+    }
+
     let html = `
       <div class="item-header">
         <img src="${item.img}" alt="${item.name}" class="item-img" onclick="openImageModal('${item.img}', '${item.name}')">
         <div class="item-details">
           <div class="item-title">${item.name}</div>
-          <div class="item-price">€ ${currentPrice.toFixed(2)}</div>
+          ${priceHtml}
         </div>
         <div class="qty-controls">
           <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
@@ -619,7 +637,6 @@ function changeQty(id, delta) {
   if (state.cart[id].qty <= 0) {
     delete state.cart[id];
   } else {
-    // ایڈجسٹ کسٹم یونٹس کی تعداد
     while (state.cart[id].customUnits.length < state.cart[id].qty) {
       state.cart[id].customUnits.push({ senza: [], extra: [], note: '' });
     }
@@ -654,6 +671,7 @@ function updateNote(id, unitIndex, val) {
 }
 
 function updateTotal() {
+  if (state.orderType === 'deliveroo') return;
   let total = 0;
   for (let id in state.cart) {
     const itemObj = menuItems.find(m => m.id === id);
@@ -672,6 +690,39 @@ function openConfirmationModal() {
     return;
   }
 
+  // فارم کی فیلڈز کو ڈائنامیکلی آرڈر کی قسم کے مطابق سیٹ کرنا
+  let formHtml = '';
+  if (state.orderType === 'deliveroo') {
+    document.getElementById('modal-title-text').innerText = "📋 Note Deliveroo";
+    formHtml = `
+      <label style="font-weight:bold; font-size:0.7rem;">Il tuo Nome o Numero Ordine Deliveroo:</label>
+      <input type="text" id="customer-name" class="input-field" placeholder="Inserisci nome o ID Deliveroo...">
+    `;
+  } else if (state.orderType === 'consegna') {
+    document.getElementById('modal-title-text').innerText = "📋 Conferma Consegna";
+    formHtml = `
+      <label style="font-weight:bold; font-size:0.7rem;">Il tuo Nome:</label>
+      <input type="text" id="customer-name" class="input-field" placeholder="Inserisci il tuo nome...">
+      
+      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">Indirizzo di Consegna:</label>
+      <input type="text" id="customer-address" class="input-field" placeholder="Via, Civico, Città...">
+
+      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">Orario Consegna:</label>
+      <input type="text" id="customer-time" class="input-field" placeholder="Es. 20:30 o Subito...">
+    `;
+  } else {
+    document.getElementById('modal-title-text').innerText = "📋 Conferma Asporto";
+    formHtml = `
+      <label style="font-weight:bold; font-size:0.7rem;">Il tuo Nome:</label>
+      <input type="text" id="customer-name" class="input-field" placeholder="Inserisci il tuo nome...">
+      
+      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">Orario Ritiro:</label>
+      <input type="text" id="customer-time" class="input-field" placeholder="Es. 20:30 o Subito...">
+    `;
+  }
+  document.getElementById('modal-form-inputs').innerHTML = formHtml;
+
+  // رسید یا آئٹمز کی فہرست تیار کرنا
   let receiptHtml = '<div style="margin-top:5px;">';
   let total = 0;
 
@@ -682,8 +733,13 @@ function openConfirmationModal() {
     const subtotal = price * cartItem.qty;
     total += subtotal;
 
-    receiptHtml += `<div style="border-bottom:1px solid #ddd; padding:4px 0;">
-      <b>${cartItem.qty}x ${itemObj.name}</b> - € ${subtotal.toFixed(2)}`;
+    if (state.orderType === 'deliveroo') {
+      receiptHtml += `<div style="border-bottom:1px solid #ddd; padding:4px 0;">
+        <b>${cartItem.qty}x ${itemObj.name}</b>`;
+    } else {
+      receiptHtml += `<div style="border-bottom:1px solid #ddd; padding:4px 0;">
+        <b>${cartItem.qty}x ${itemObj.name}</b> - € ${subtotal.toFixed(2)}`;
+    }
     
     if (cartItem.customUnits && cartItem.customUnits.length > 0) {
       cartItem.customUnits.forEach((unit, idx) => {
@@ -698,7 +754,9 @@ function openConfirmationModal() {
     receiptHtml += `</div>`;
   });
 
-  receiptHtml += `<div style="margin-top:6px; font-weight:bold; text-align:right; font-size:0.85rem;">Totale: € ${total.toFixed(2)}</div>`;
+  if (state.orderType !== 'deliveroo') {
+    receiptHtml += `<div style="margin-top:6px; font-weight:bold; text-align:right; font-size:0.85rem;">Totale: € ${total.toFixed(2)}</div>`;
+  }
   receiptHtml += `</div>`;
 
   document.getElementById('modal-receipt-body').innerHTML = receiptHtml;
@@ -710,18 +768,27 @@ function closeConfirmationModal() {
 }
 
 function sendWhatsAppOrder() {
-  const name = document.getElementById('customer-name').value.trim();
-  const time = document.getElementById('customer-time').value.trim();
+  const name = document.getElementById('customer-name') ? document.getElementById('customer-name').value.trim() : '';
+  const time = document.getElementById('customer-time') ? document.getElementById('customer-time').value.trim() : '';
+  const address = document.getElementById('customer-address') ? document.getElementById('customer-address').value.trim() : '';
 
   if (!name) {
-    alert(currentLang === 'it' ? "Per favore inserisci il tuo nome!" : "Please enter your name!");
+    alert(currentLang === 'it' ? "Per favore inserisci il tuo nome o ID!" : "Please enter your name or ID!");
     return;
   }
 
   let message = `🛒 *NUOVO ORDINE*\n`;
-  message += `👤 *Nome:* ${name}\n`;
-  message += `⏰ *Orario:* ${time || 'Subito'}\n`;
-  message += `📍 *Tipo:* ${state.orderType.toUpperCase()}\n\n`;
+  message += `📍 *Tipo:* ${state.orderType.toUpperCase()}\n`;
+  if(state.orderType === 'deliveroo') {
+    message += `👤 *Nome / ID Deliveroo:* ${name}\n\n`;
+  } else if(state.orderType === 'consegna') {
+    message += `👤 *Nome:* ${name}\n`;
+    message += `🏠 *Indirizzo:* ${address || 'Non specificato'}\n`;
+    message += `⏰ *Orario:* ${time || 'Subito'}\n\n`;
+  } else {
+    message += `👤 *Nome:* ${name}\n`;
+    message += `⏰ *Orario:* ${time || 'Subito'}\n\n`;
+  }
 
   let total = 0;
   for (let id in state.cart) {
@@ -731,7 +798,11 @@ function sendWhatsAppOrder() {
     const subtotal = price * cartItem.qty;
     total += subtotal;
 
-    message += `• *${cartItem.qty}x ${itemObj.name}* (€ ${subtotal.toFixed(2)})\n`;
+    if (state.orderType === 'deliveroo') {
+      message += `• *${cartItem.qty}x ${itemObj.name}*\n`;
+    } else {
+      message += `• *${cartItem.qty}x ${itemObj.name}* (€ ${subtotal.toFixed(2)})\n`;
+    }
     
     if (cartItem.customUnits) {
       cartItem.customUnits.forEach((unit, idx) => {
@@ -743,7 +814,9 @@ function sendWhatsAppOrder() {
     }
   }
 
-  message += `\n💰 *TOTALE: € ${total.toFixed(2)}*`;
+  if (state.orderType !== 'deliveroo') {
+    message += `\n💰 *TOTALE: € ${total.toFixed(2)}*`;
+  }
 
   const phone = "393932228224";
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
