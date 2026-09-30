@@ -386,7 +386,7 @@
       <div id="modal-receipt-body"></div>
     </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirmationModal()">✏️️ Modifica</button>
+      <button class="btn-cancel" onclick="closeConfirmationModal()">✏ Modifica</button>
       <button class="btn-confirm" onclick="sendWhatsAppOrder()">✅ Invia su WhatsApp</button>
     </div>
   </div>
@@ -452,7 +452,7 @@ const menuItems = [
   { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 6.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500' },
   { id: 'm_panino', name: 'Menu Panino (Bibita + Patatine)', basePrice: 7.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500' },
   { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500' },
-  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500' },
+  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500' },
 
   { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: '1000157482.jpg' },
   { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: '1000157481.jpg' },
@@ -473,15 +473,16 @@ const menuItems = [
   { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
   { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
   { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=500' },
-  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=500' },
+  { id: 'sprite', name: 'Sprite (33 cl) - Estathè Pesca - Estathè Limone', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=500' },
+  { id: 'acqua_piccola', name: 'Acqua (Piccola)', basePrice: 1.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=500' },
 
-  { id: 'birra_33', name: 'Birra (33 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
-  { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
+  { id: 'birra_peroni', name: 'Birra Peroni - Santa Sessial (33/66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
+  { id: 'birra_moretti', name: 'Birra Moretti - Santa Sessial (33/66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
 ];
 
 const ingredientConfig = {
   senzaItems: [
-    "Salsa Piccante", 
+    "Salsa Piccante",
     "Salsa Yogurt", 
     "Salsa Rosa", 
     "Salsa Algerina", 
@@ -489,6 +490,7 @@ const ingredientConfig = {
     "Verza e Carote", 
     "Pomodoro", 
     "Cipolla", 
+    "olive",
     "Peperoncino"
   ],
   extraItems: [
@@ -585,7 +587,7 @@ function renderMenu(items) {
       });
       html += `</div></div>`;
 
-      // Extra Section (Only Maionese & Ketchup)
+      // Extra Section
       html += `<div class="ingredient-block"><div class="block-title">Extra</div><div class="chip-group">`;
       ingredientConfig.extraItems.forEach(e => {
         const isSelected = cartItem.extra.includes(e);
@@ -704,7 +706,6 @@ function sendWhatsAppOrder() {
     return;
   }
 
-  // अब नेम और टाइम सबसे ऊपर (First) जाएगा, और उसके बाद बाकी आर्डर की डिटेल्स नीचे जाएंगी
   let message = `👤 *Nome:* ${name}\n`;
   message += `⏰ *Orario:* ${time}\n`;
   message += `🛒 *Tipo Ordine:* ${state.orderType.toUpperCase()}\n`;
@@ -719,9 +720,6 @@ function sendWhatsAppOrder() {
     total += itemPrice;
 
     message += `• *${cartItem.qty}x ${menuItem.name}* (€ ${itemPrice.toFixed(2)})\n`;
-    if (cartItem.senza && cartItem.senza.length > 50) { // Safety check
-       // fallback
-    }
     if (cartItem.senza && cartItem.senza.length > 0) {
       message += `  ❌ Senza: ${cartItem.senza.join(', ')}\n`;
     }
@@ -743,7 +741,6 @@ function sendWhatsAppOrder() {
   closeConfirmationModal();
 }
 
-// Initial Render
 renderMenu(menuItems);
 </script>
 </body>
