@@ -498,7 +498,6 @@ const menuItems = [
 const ingredientConfig = {
   salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)"],
   verdure: ["Insalata", "Verza e Carote"],
-  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"],
   salseOpzionali: ["Ketchup", "Maionese"]
 };
 
@@ -560,7 +559,7 @@ function renderMenu(items) {
 
   items.forEach(item => {
     const finalPrice = getItemPrice(item.basePrice);
-    const cartItem = state.cart[item.id] || { qty: 0, senza: [], salse: [], extra: [], salseOpzionali: [], notes: '' };
+    const cartItem = state.cart[item.id] || { qty: 0, senza: [], salseOpzionali: [], notes: '' };
     
     let html = `
       <div class="menu-item">
@@ -582,7 +581,7 @@ function renderMenu(items) {
       html += `<div class="unit-customizer">
         <div class="unit-title">Personalizza:</div>`;
 
-      // Senza (Verdure + Salse che si possono rimuovere)
+      // Senza (Verdure + Salse)
       html += `<div class="ingredient-block"><div class="block-title">Senza (-)</div><div class="chip-group">`;
       ingredientConfig.verdure.forEach(v => {
         const isSelected = cartItem.senza.includes(v);
@@ -617,7 +616,7 @@ function renderMenu(items) {
 
 function updateQty(id, change) {
   if (!state.cart[id]) {
-    state.cart[id] = { qty: 0, senza: [], salse: [], extra: [], salseOpzionali: [], notes: '' };
+    state.cart[id] = { qty: 0, senza: [], salseOpzionali: [], notes: '' };
   }
   state.cart[id].qty += change;
   if (state.cart[id].qty <= 0) {
@@ -629,6 +628,11 @@ function updateQty(id, change) {
 function toggleIngredient(itemId, type, val) {
   const item = state.cart[itemId];
   if (!item) return;
+  
+  if (!item[type]) {
+    item[type] = [];
+  }
+
   const index = item[type].indexOf(val);
   if (index > -1) {
     item[type].splice(index, 1);
