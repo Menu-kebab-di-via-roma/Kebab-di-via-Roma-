@@ -1,0 +1,41 @@
+backend:
+  name: github
+  repo: Menu-Kebab-di-via-roma/Menu
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "menu"
+    label: "🍽️ Menu Items (کھانے اور قیمتیں)"
+    folder: "_data/menu"
+    create: true
+    fields:
+      - {label: "Item Title", name: "title", widget: "string"}
+      - {label: "Price", name: "price", widget: "string"}
+      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Category Name", name: "category", widget: "string"}
+
+  - name: "modifications"
+    label: "⚙️ Modifications (مڈیفیکیشنز)"
+    folder: "_data/modifications"
+    create: true
+    fields:
+      - {label: "Modification Title", name: "title", widget: "string"}
+      - {label: "Options / Details", name: "details", widget: "list", field: {label: "Option", name: "opt", widget: "string"}}
+
+  - name: "settings"
+    label: "🎨 Website & Buttons Control (مکمل کنٹرول)"
+    files:
+      - file: "_data/settings.yml"
+        name: "settings"
+        label: "General Settings & Buttons"
+        fields:
+          - {label: "Website Logo", name: "logo", widget: "image"}
+          - {label: "Category Navigation Buttons", name: "category_buttons", widget: "list", field: {label: "Button Name", name: "btn_name", widget: "string"}}
+          - {label: "Delivery / Action Buttons", name: "delivery_buttons", widget: "list", fields: [{label: "Button Text", name: "text", widget: "string"}, {label: "Button Link / URL", name: "url", widget: "string"}]}
+          - {label: "TikTok Photo", name: "tiktok_image", widget: "image"}
+          - {label: "TikTok Description / Click Text", name: "tiktok_text", widget: "string"}
+          - {label: "TikTok Profile Link", name: "tiktok_link", widget: "string"}
+          
