@@ -376,7 +376,13 @@
       <h2>📋 Conferma Ordine</h2>
     </div>
     <div class="receipt-body">
-      <div id="modal-user-inputs" class="receipt-section"></div>
+      <div class="receipt-section">
+        <label style="font-weight:bold; font-size:0.7rem;">Il tuo Nome:</label>
+        <input type="text" id="customer-name" class="input-field" placeholder="Inserisci il tuo nome...">
+        
+        <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">Orario Ritiro / Consegna:</label>
+        <input type="text" id="customer-time" class="input-field" placeholder="Es. 20:30 o Subito...">
+      </div>
       <div id="modal-receipt-body"></div>
     </div>
     <div class="modal-actions">
@@ -424,7 +430,7 @@ const translations = {
     catNonKebab: "Not Only Kebab",
     catFritti: "Sides",
     catBevande: "Drinks",
-    catAlcolici: "Alcoholic",
+    catAlcoholic: "Alcoholic",
     totalLabel: "Total:",
     btnOrder: "CHECK AND ORDER",
     btnDeliverooOrder: "CHECK DELIVEROO NOTES"
@@ -473,7 +479,7 @@ const menuItems = [
   { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
 ];
 
-// यहाँ सभी आवश्यक सामग्रियां 'Senza (-)' के लिए और केवल Mayonnaise व Ketchup 'Extra' के लिए सेट हैं
+// यहाँ 'Senza (-)' के लिए सभी सालसे, सलाद, छितरियोली, पमोदोरो, ए चीपोला, लीवे पेपरन चिनो आदि जोड़ दिए गए हैं
 const ingredientConfig = {
   senzaItems: [
     "Salsa Piccante", 
@@ -647,14 +653,29 @@ function updateTotal() {
 }
 
 function openConfirmationModal() {
+  const cartKeys = Object.keys(state.cart);
+  if (cartKeys.length === 0) {
+    alert("Il carrello è vuoto!");
+    return;
+  }
   document.getElementById('confirm-modal').style.display = 'flex';
-  let bodyHtml = '';
+  
+  let bodyHtml = '<div style="margin-top:6px; font-weight:bold; font-size:0.75rem;">Riepilogo Articoli:</div>';
   for (let id in state.cart) {
     const menuItem = menuItems.find(m => m.id === id);
     const cartItem = state.cart[id];
-    bodyHtml += `<div><b>${cartItem.qty}x ${menuItem.name}</b></div>`;
+    let details = [];
+    if (cartItem.senza && cartItem.senza.length > 0) details.push(`Senza: ${cartItem.senza.join(', ')}`);
+    if (cartItem.extra && cartItem.extra.length > 0) details.push(`Extra: ${cartItem.extra.join(', ')}`);
+    if (cartItem.notes) details.push(`Note: ${cartItem.notes}`);
+    
+    bodyHtml += `<div style="border-bottom:1px solid #eee; padding:3px 0;"><b>${cartItem.qty}x ${menuItem.name}</b>`;
+    if(details.length > 0) {
+      bodyHtml += `<div style="font-size:0.65rem; color:#555;">${details.join(' | ')}</div>`;
+    }
+    bodyHtml += `</div>`;
   }
-  document.getElementById('modal-receipt-body').innerHTML = bodyHtml || 'Carrello vuoto';
+  document.getElementById('modal-receipt-body').innerHTML = bodyHtml;
 }
 
 function closeConfirmationModal() {
@@ -672,7 +693,52 @@ function closeImageModal() {
 }
 
 function sendWhatsAppOrder() {
-  alert("Ordine inviato con successo!");
+  const name = document.getElementById('customer-name').value.trim();
+  const time = document.getElementById('customer-time').value.trim();
+
+  if (!name) {
+    alert("Per favore inserisci il tuo nome!");
+    return;
+  }
+  if (!time) {
+    alert("Per favore inserisci l'orario di ritiro o consegna!");
+    return;
+  }
+
+  let message = `*Nuovo Ordine - Kebab di Via Roma*\n`;
+  message += `--------------------------------\n`;
+  message += `👤 *Nome:* ${name}\n`;
+  message += `⏰ *Orario:* ${time}\n`;
+  message += `🛒 *Tipo:* ${state.orderType.toUpperCase()}\n`;
+  message += `--------------------------------\n\n`;
+
+  let total = 0;
+  for (let id in state.cart) {
+    const menuItem = menuItems.find(m => m.id === id);
+    const cartItem = state.cart[id];
+    const itemPrice = getItemPrice(menuItem.basePrice) * cartItem.qty;
+    total += itemPrice;
+
+    message += `• *${cartItem.qty}x ${menuItem.name}* (€ ${itemPrice.toFixed(2)})\n`;
+    if (cartItem.senza && cartItem.senza.length > 0) {
+      message += `  ❌ Senza: ${cartItem.senza.join(', ')}\n`;
+    }
+    if (cartItem.extra && cartItem.extra.length > 0) {
+      message += `  ➕ Extra: ${cartItem.extra.join(', ')}\n`;
+    }
+    if (cartItem.notes) {
+      message += `  💬 Note: ${cartItem.notes}\n`;
+    }
+  }
+
+  message += `\n--------------------------------\n`;
+  message += `💰 *Totale Complessivo:* € ${total.toFixed(2)}\n`;
+
+  const phone = "393932228224"; // Sostituisci con il numero WhatsApp corretto se necessario
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  
+  window.open(url, '_blank');
+  closeConfirmationModal();
 }
 
 // Initial Render
