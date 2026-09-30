@@ -386,7 +386,7 @@
       <div id="modal-receipt-body"></div>
     </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirmationModal()">✏️ Modifica</button>
+      <button class="btn-cancel" onclick="closeConfirmationModal()">✏️️ Modifica</button>
       <button class="btn-confirm" onclick="sendWhatsAppOrder()">✅ Invia su WhatsApp</button>
     </div>
   </div>
@@ -479,7 +479,6 @@ const menuItems = [
   { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
 ];
 
-// यहाँ 'Senza (-)' के लिए सभी सालसे, सलाद, छितरियोली, पमोदोरो, ए चीपोला, लीवे पेपरन चिनो आदि जोड़ दिए गए हैं
 const ingredientConfig = {
   senzaItems: [
     "Salsa Piccante", 
@@ -705,12 +704,12 @@ function sendWhatsAppOrder() {
     return;
   }
 
-  let message = `*Nuovo Ordine - Kebab di Via Roma*\n`;
-  message += `--------------------------------\n`;
-  message += `👤 *Nome:* ${name}\n`;
+  // अब नेम और टाइम सबसे ऊपर (First) जाएगा, और उसके बाद बाकी आर्डर की डिटेल्स नीचे जाएंगी
+  let message = `👤 *Nome:* ${name}\n`;
   message += `⏰ *Orario:* ${time}\n`;
-  message += `🛒 *Tipo:* ${state.orderType.toUpperCase()}\n`;
-  message += `--------------------------------\n\n`;
+  message += `🛒 *Tipo Ordine:* ${state.orderType.toUpperCase()}\n`;
+  message += `--------------------------------\n`;
+  message += `📋 *Riepilogo Ordine:*\n`;
 
   let total = 0;
   for (let id in state.cart) {
@@ -720,6 +719,9 @@ function sendWhatsAppOrder() {
     total += itemPrice;
 
     message += `• *${cartItem.qty}x ${menuItem.name}* (€ ${itemPrice.toFixed(2)})\n`;
+    if (cartItem.senza && cartItem.senza.length > 50) { // Safety check
+       // fallback
+    }
     if (cartItem.senza && cartItem.senza.length > 0) {
       message += `  ❌ Senza: ${cartItem.senza.join(', ')}\n`;
     }
@@ -731,10 +733,10 @@ function sendWhatsAppOrder() {
     }
   }
 
-  message += `\n--------------------------------\n`;
-  message += `💰 *Totale Complessivo:* € ${total.toFixed(2)}\n`;
+  message += `--------------------------------\n`;
+  message += `💰 *Totale Complessivo:* € ${total.toFixed(2)}`;
 
-  const phone = "393932228224"; // Sostituisci con il numero WhatsApp corretto se necessario
+  const phone = "393932228224"; 
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   
   window.open(url, '_blank');
