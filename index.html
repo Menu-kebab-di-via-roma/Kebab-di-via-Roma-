@@ -1,125 +1,537 @@
-// Kebab di Via Roma - Menu Code
-const state = {
-  lang: 'it',
-  currentCategory: 'tutti',
-  cart: [],
-  deliveryType: 'asporto', // 'asporto' or 'domicilio'
-  deliveryTime: 'Subito & Dom > 17:00',
-  notes: '',
-  showCartModal: false,
-  showCheckoutModal: false,
-  showSuccessModal: false,
-  formData: {
-    name: '',
-    phone: '',
-    address: '',
-    notes: ''
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kebab di Via Roma - Jesi</title>
+  <style>
+    :root {
+      --primary: #c0392b;
+      --secondary: #e67e22;
+      --deliveroo: #00cdbc;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      padding-bottom: 90px;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .title-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    header h1 { margin: 0; font-size: 1.1rem; }
+    header p { margin: 2px 0 0; font-size: 0.7rem; opacity: 0.9; }
+
+    .tiktok-logo-img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+      border: 1px solid white;
+      background: #000;
+    }
+
+    .top-controls {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+    }
+
+    .lang-switch-container {
+      display: flex;
+      gap: 2px;
+    }
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.6rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .lang-btn.active { background: white; color: var(--primary); }
+    
+    .container { max-width: 500px; margin: 0 auto; padding: 6px; }
+    
+    .order-type-selector { display: flex; gap: 4px; margin-bottom: 6px; }
+    .type-btn {
+      flex: 1;
+      padding: 5px 2px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.7rem;
+    }
+    .type-btn.active { border-color: var(--primary); background: #fdf2f2; color: var(--primary); }
+    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e6f9f8; color: #008176; }
+    .type-btn small { display: block; font-size: 0.55rem; color: #666; font-weight: normal; }
+
+    .instructions-notice {
+      background: #fff8e7;
+      border-left: 3px solid var(--secondary);
+      color: #8a6d3b;
+      padding: 4px 6px;
+      margin-bottom: 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .category-nav {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .cat-btn {
+      padding: 3px 8px;
+      background: #e9ecef;
+      border: none;
+      border-radius: 10px;
+      white-space: nowrap;
+      font-weight: 600;
+      font-size: 0.68rem;
+      cursor: pointer;
+    }
+    .cat-btn.active { background: var(--primary); color: white; }
+
+    .menu-item {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .item-header { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    .item-img {
+      width: 55px;
+      height: 55px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #eee;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .item-img:active { transform: scale(0.95); }
+
+    .item-details { flex: 1; }
+    .item-title { font-weight: bold; font-size: 0.8rem; margin-bottom: 2px; }
+    .item-price { color: var(--primary); font-weight: bold; font-size: 0.78rem; }
+    
+    .qty-controls { display: flex; align-items: center; gap: 5px; }
+    .qty-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: white;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .unit-customizer {
+      margin-top: 5px;
+      padding: 5px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      border-left: 2px solid var(--primary);
+    }
+    .unit-title { font-size: 0.68rem; font-weight: bold; margin-bottom: 3px; color: #333; }
+
+    .ingredient-block {
+      background: white;
+      padding: 3px 4px;
+      border-radius: 3px;
+      margin-bottom: 3px;
+      border: 1px solid #eee;
+    }
+    .block-title {
+      font-size: 0.6rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+
+    .chip-group { display: flex; flex-wrap: wrap; gap: 3px; }
+    
+    .chip-minus, .chip-plus {
+      font-size: 0.6rem;
+      padding: 2px 4px;
+      background: #f1f3f5;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #333;
+      line-height: 1;
+    }
+    .chip-minus.selected-senza {
+      background: #e74c3c;
+      color: white;
+      border-color: #c0392b;
+      font-weight: bold;
+      text-decoration: line-through;
+    }
+    .chip-plus.selected-extra {
+      background: #27ae60;
+      color: white;
+      border-color: #219653;
+      font-weight: bold;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 4px 6px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 0.72rem;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 6px 10px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .total-price { font-size: 0.95rem; font-weight: bold; color: var(--primary); }
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-weight: bold;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 380px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .receipt-header { background: #2c3e50; color: white; padding: 8px; text-align: center; }
+    .receipt-header h2 { margin: 0; font-size: 0.9rem; }
+    .receipt-body { padding: 8px; font-size: 0.75rem; }
+    .receipt-section { background: #f8f9fa; border: 1px dashed #ccc; padding: 5px 6px; border-radius: 4px; margin-bottom: 6px; }
+    .modal-actions { display: flex; gap: 5px; padding: 6px 8px; background: #f1f3f5; }
+    .btn-cancel, .btn-confirm {
+      flex: 1;
+      padding: 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 0.72rem;
+      color: white;
+    }
+    .btn-cancel { background: #e74c3c; }
+    .btn-confirm { background: #25D366; flex: 1.5; }
+
+    #image-modal-card {
+      background: transparent;
+      text-align: center;
+      max-width: 90%;
+    }
+    #expanded-img {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    #img-caption {
+      color: white;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="top-controls">
+    <div class="lang-switch-container">
+      <button class="lang-btn active" id="lang-it" onclick="switchLanguage('it')">IT</button>
+      <button class="lang-btn" id="lang-en" onclick="switchLanguage('en')">EN</button>
+    </div>
+  </div>
+
+  <div class="title-container">
+    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" title="TikTok">
+      <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img">
+    </a>
+    <h1>Kebab di Via Roma</h1>
+  </div>
+  <p>Via Roma 29b, Jesi (AN) | +39 393 222 8224</p>
+</header>
+
+<div class="container">
+  <div class="order-type-selector">
+    <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
+      <span data-i18n="asporto">Asporto</span>
+      <small data-i18n="asportoSub">(-0.50€ su TUTTO)</small>
+    </div>
+    <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
+      <span data-i18n="consegna">Consegna</span>
+      <small data-i18n="consegnaSub">Sab & Dom > 17:00</small>
+    </div>
+    <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
+      <span data-i18n="deliveroo">Note Deliveroo</span>
+      <small data-i18n="deliverooSub">Personalizza Ordine</small>
+    </div>
+  </div>
+
+  <div class="instructions-notice" data-i18n="customNotice">
+    💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su "SENZA (-)".
+  </div>
+
+  <div class="category-nav">
+    <button class="cat-btn active" onclick="filterCategory('all', this)" data-i18n="catAll">Tutti</button>
+    <button class="cat-btn" onclick="filterCategory('kebab', this)">Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('non-kebab', this)" data-i18n="catNonKebab">Non Solo Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('fritti', this)" data-i18n="catFritti">Fritti</button>
+    <button class="cat-btn" onclick="filterCategory('bevande', this)" data-i18n="catBevande">Bevande</button>
+    <button class="cat-btn" onclick="filterCategory('alcolici', this)" data-i18n="catAlcolici">Alcolici</button>
+  </div>
+
+  <div id="menu-container"></div>
+</div>
+
+<div class="bottom-bar">
+  <div id="total-price-box">
+    <span style="font-size: 0.6rem; color: #666;" data-i18n="totalLabel">Totale:</span><br>
+    <span class="total-price" id="grand-total">€ 0,00</span>
+  </div>
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()" data-i18n="btnOrder">
+    VERIFICA E ORDINA
+  </button>
+</div>
+
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-card">
+    <div class="receipt-header">
+      <h2>📋 Conferma Ordine</h2>
+    </div>
+    <div class="receipt-body">
+      <div id="modal-user-inputs" class="receipt-section"></div>
+      <div id="modal-receipt-body"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeConfirmationModal()">✏️ Modifica</button>
+      <button class="btn-confirm" onclick="sendWhatsAppOrder()">✅ Invia su WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="image-modal" onclick="closeImageModal()">
+  <div id="image-modal-card">
+    <img id="expanded-img" src="" alt="Zoom Image">
+    <div id="img-caption"></div>
+  </div>
+</div>
+
+<script>
+const translations = {
+  it: {
+    asporto: "Asporto",
+    asportoSub: "(-0.50€ su TUTTO)",
+    consegna: "Consegna",
+    consegnaSub: "Sab & Dom > 17:00",
+    deliveroo: "Note Deliveroo",
+    deliverooSub: "Personalizza Ordine",
+    asportoNameLabel: "Nome e Cognome: *",
+    asportoTimeLabel: "Orario di Ritiro: *",
+    customNotice: "💡 Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su 'SENZA (-)'.",
+    delivSub: "Questo strumento serve solo per inviare le preferenze del tuo ordine effettuato su Deliveroo.",
+    delivNameLabel: "Nome account Deliveroo o N° Ordine: *",
+    deliveryWarning: "⚠️ Consegna solo Sabato e Domenica dopo le 17:00.",
+    deliveryNameLabel: "Nome e Cognome: *",
+    deliveryAddressLabel: "Indirizzo Completo: *",
+    catAll: "Tutti",
+    catNonKebab: "Non Solo Kebab",
+    catFritti: "Fritti",
+    catBevande: "Bevande",
+    catAlcolici: "Alcolici",
+    totalLabel: "Totale:",
+    btnOrder: "VERIFICA E ORDINA",
+    btnDeliverooOrder: "VERIFICA NOTE DELIVEROO",
+    sauces: "Salse",
+    veggies: "Verdure",
+    extras: "Extra",
+    optionalSauces: "Aggiungi Salsa (Opzionale)"
   },
-  customizingItem: null,
-  customizationOptions: {
-    senza: [],
-    salse: [],
-    extra: [],
-    extras: []
+  en: {
+    asporto: "Takeaway",
+    asportoSub: "(-0.50€ on EVERYTHING)",
+    consegna: "Delivery",
+    consegnaSub: "Sat & Sun > 17:00",
+    deliveroo: "Deliveroo Notes",
+    deliverooSub: "Customize Order",
+    asportoNameLabel: "Full Name: *",
+    asportoTimeLabel: "Pickup Time: *",
+    customNotice: "💡 If there is something you don't like, you can simply remove it by clicking 'WITHOUT (-)'.",
+    delivSub: "Use this tool only to send ingredient preferences for your Deliveroo order.",
+    delivNameLabel: "Deliveroo Account Name or Order #: *",
+    deliveryWarning: "⚠️ Delivery available Saturday & Sunday after 17:00.",
+    deliveryNameLabel: "Full Name: *",
+    deliveryAddressLabel: "Full Address: *",
+    catAll: "All",
+    catNonKebab: "Not Only Kebab",
+    catFritti: "Sides",
+    catBevande: "Drinks",
+    catAlcolici: "Alcoholic",
+    totalLabel: "Total:",
+    btnOrder: "CHECK AND ORDER",
+    btnDeliverooOrder: "CHECK DELIVEROO NOTES",
+    sauces: "Sauces",
+    veggies: "Vegetables",
+    extras: "Extras",
+    optionalSauces: "Add Sauce (Optional)"
   }
 };
 
-const translations = {
-  it: {
-    title: "Kebab di Via Roma",
-    subtitle: "Via Roma 29b, Jesi (AN) | +39 393 222 8224",
-    asporto: "Asporto (-0,50€ su TUTTI)",
-    consegna: "Consegna & Dom > 17:00",
-    note: "Note Deliveroo",
-    notePlaceholder: "Personalizza Ordine",
-    tipBanner: "Se c'è qualcosa che non ti piace, puoi semplicemente rimuoverla cliccando su \"Senza (-)\".",
-    tutti: "Tutti",
-    kebab: "Kebab",
-    nonSolaKebab: "Non Solo Kebab",
-    fritti: "Fritti",
-    bevande: "Bevande",
-    alcolici: "Alcolici",
-    totale: "Totale",
-    verificaEOrdina: "VERIFICA E ORDINA",
-    procediWhatsApp: "Invia Ordine su WhatsApp",
-    indietro: "Indietro",
-    senza: "SENZA",
-    salse: "SALSE",
-    extra: "EXTRA",
-    aggiungiSalsa: "AGGIUNGI SALSA (OPZIONALE)",
-    aggiungi: "Aggiungi",
-    chiudi: "Chiudi",
-    nome: "Nome e Cognome",
-    telefono: "Telefono",
-    indirizzo: "Indirizzo di Consegna",
-    noteOrdine: "Note per l'ordine",
-    invia: "Invia Ordine",
-    carrelloVuoto: "Il carrello è vuoto",
-    orarioConsegna: "Orario di Consegna",
-    confermaOrdine: "Conferma Ordine"
-  },
-  en: {
-    title: "Kebab di Via Roma",
-    subtitle: "Via Roma 29b, Jesi (AN) | +39 393 222 8224",
-    asporto: "Takeaway (-€0.50 on ALL)",
-    consegna: "Delivery & Dom > 17:00",
-    note: "Deliveroo Notes",
-    notePlaceholder: "Customize Order",
-    tipBanner: "If there is something you don't like, you can simply remove it by clicking \"Senza (-)\".",
-    tutti: "All",
-    kebab: "Kebab",
-    nonSolaKebab: "Not Only Kebab",
-    fritti: "Fried",
-    bevande: "Drinks",
-    alcolici: "Alcoholic",
-    totale: "Total",
-    verificaEOrdina: "CHECKOUT & ORDER",
-    procediWhatsApp: "Send Order via WhatsApp",
-    indietro: "Back",
-    senza: "WITHOUT",
-    salse: "SAUCES",
-    extra: "EXTRA",
-    aggiungiSalsa: "ADD SAUCE (OPTIONAL)",
-    aggiungi: "Add",
-    chiudi: "Close",
-    nome: "Full Name",
-    telefono: "Phone",
-    indirizzo: "Delivery Address",
-    noteOrdine: "Order Notes",
-    invia: "Send Order",
-    carrelloVuoto: "Cart is empty",
-    orarioConsegna: "Delivery Time",
-    confermaOrdine: "Confirm Order"
-  }
+let currentLang = 'it';
+let currentFilteredItems = null;
+
+const state = {
+  orderType: 'asporto',
+  cart: {} 
 };
 
 const menuItems = [
-  { id: 1, name: "Panino Kebab", cat: "kebab", basePrice: 4.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1594998893017-361476100223?w=500' },
-  { id: 2, name: "Panino Solo Carne", cat: "kebab", basePrice: 4.50, cat: 'kebab', customizable: false, img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500' },
-  { id: 3, name: "Piadina Kebab", cat: "kebab", basePrice: 5.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500' },
-  { id: 4, name: "Piadina Kebab Solo Carne", cat: "kebab", basePrice: 6.00, cat: 'kebab', customizable: false, img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500' },
-  { id: 5, name: "Menu Panino (Bibita + Patatine)", cat: "kebab", basePrice: 6.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1610440042657-612c34d95e4f?w=500' },
-  { id: 6, name: "Panino Falafel", cat: "non-kebab", basePrice: 3.50, cat: 'non-kebab', customizable: true, img: '1790724750751.jpg' },
-  { id: 7, name: "Piadina Falafel", cat: "non-kebab", basePrice: 4.50, cat: 'non-kebab', customizable: true, img: '1790724827104.jpg' },
-  { id: 8, name: "Piatto Falafel", cat: "non-kebab", basePrice: 6.50, cat: 'non-kebab', customizable: true, img: '1790724681129.jpg' },
-  { id: 9, name: "Panino Seek Kebab", cat: "non-kebab", basePrice: 3.50, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=500' },
-  { id: 10, name: "Piadina Seek Kebab", cat: "non-kebab", basePrice: 4.50, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500' },
-  { id: 11, name: "Crispy Pollo Hamburger", cat: "non-kebab", basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500' },
-  { id: 12, name: "Patatine Fritice (Piccola)", cat: "fritti", basePrice: 2.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f777?w=500' },
-  { id: 13, name: "Patatine Fritice (Grande)", cat: "fritti", basePrice: 3.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f777?w=500' },
-  { id: 14, name: "Olive Ascolane", cat: "fritti", basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1531749840385-59914763e5b6?w=500' },
-  { id: 15, name: "Chicken Nuggets (6pz)", cat: "fritti", basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500' },
-  { id: 16, name: "Coca-Cola (33 cl)", cat: "bevande", basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
-  { id: 17, name: "Coca-Cola Zero (33 cl)", cat: "bevande", basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
-  { id: 18, name: "Fanta (33 cl)", cat: "bevande", basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1625772299848-39168ab7673b?w=500' },
-  { id: 19, name: "Sprite (33 cl)", cat: "bevande", basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1608075886620-2452426d7e9f?w=500' },
-  { id: 20, name: "Birra (33 cl)", cat: "alcolici", basePrice: 3.00, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608075886620-2452426d7e9f?w=500' },
-  { id: 21, name: "Birra (66 cl)", cat: "alcolici", basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608075886620-2452426d7e9f?w=500' }
+  { id: 'p_kebab', name: 'Panino Kebab', basePrice: 4.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=500' },
+  { id: 'p_carne', name: 'Panino Solo Carne', basePrice: 5.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=500' },
+  { id: 'pi_kebab', name: 'Piadina Kebab', basePrice: 5.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500' },
+  { id: 'pi_carne', name: 'Piadina Kebab Solo Carne', basePrice: 6.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500' },
+  { id: 'm_panino', name: 'Menu Panino (Bibita + Patatine)', basePrice: 7.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500' },
+  { id: 'm_piadina', name: 'Menu Piadina (Bibita + Patatine)', basePrice: 8.00, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500' },
+  { id: 'piatto_k', name: 'Piatto Kebab', basePrice: 7.50, cat: 'kebab', customizable: true, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500' },
+
+  { id: 'p_falafel', name: 'Panino Falafel', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: '1000157482.jpg' },
+  { id: 'pi_falafel', name: 'Piadina Falafel', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: '1000157481.jpg' },
+  { id: 'piatto_f', name: 'Piatto Falafel', basePrice: 7.00, cat: 'non-kebab', customizable: true, img: '1000157483.jpg' },
+
+  { id: 'p_seekh', name: 'Panino Seekh Kebab', basePrice: 4.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500' },
+  { id: 'pi_seekh', name: 'Piadina Seekh Kebab', basePrice: 5.00, cat: 'non-kebab', customizable: true, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500' },
+  { id: 'c_burger', name: 'Crispy pollo Hamburger', basePrice: 4.00, cat: 'non-kebab', customizable: false, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500' },
+  { id: 'p_cotoletta', name: 'Panino Cotoletta', basePrice: 4.00, cat: 'non-kebab', customizable: false, img: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?w=500' },
+
+  { id: 'pat_p', name: 'Patatine Fritte (Piccola)', basePrice: 2.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500' },
+  { id: 'pat_g', name: 'Patatine Fritte (Grande)', basePrice: 3.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500' },
+  { id: 'mozz_st', name: 'Mozzarella Stick (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=500' },
+  { id: 'ch_nug', name: 'Chicken Nuggets (6pz)', basePrice: 4.00, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500' },
+  { id: 'anelli_cip', name: 'Anelli di Cipolla (8pz)', basePrice: 3.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=500' },
+  { id: 'ch_wings', name: 'Chicken Wings (5pz)', basePrice: 4.50, cat: 'fritti', customizable: false, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500' },
+
+  { id: 'coca', name: 'Coca-Cola (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
+  { id: 'coca_zero', name: 'Coca-Cola Zero (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
+  { id: 'fanta', name: 'Fanta (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=500' },
+  { id: 'sprite', name: 'Sprite (33 cl)', basePrice: 2.00, cat: 'bevande', customizable: false, img: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=500' },
+
+  { id: 'birra_33', name: 'Birra (33 cl)', basePrice: 2.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
+  { id: 'birra_66', name: 'Birra (66 cl)', basePrice: 3.50, cat: 'alcolici', customizable: false, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' }
 ];
 
-const ingredientsConfig = {
-  senza: ["Insalata", "Verza e Carote"],
+const ingredientConfig = {
   salse: ["Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina (Agrodolce)"],
-  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"],
-  extras: ["Ketchup", "Maionese"]
+  salseOpzionali: ["Ketchup", "Maionese"],
+  verdure: ["Insalata", "Verza e Carote"],
+  extra: ["Olive", "Peperoncini", "Cetrioli", "Cipolla", "Pomodoro"]
 };
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.getElementById('lang-it').classList.toggle('active', lang === 'it');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+
+  const submitBtn = document.getElementById('whatsapp-submit-btn');
+  submitBtn.innerText = state.orderType === 'deliveroo' ? translations[lang].btnDeliverooOrder : translations[lang].btnOrder;
+
+  renderMenu(currentFilteredItems || menuItems);
+}
+
+function setOrderType(type) {
+  state.orderType = type;
+
+  document.getElementById('btn-asporto').className = 'type-btn' + (type === 'asporto' ? ' active' : '');
+  document.getElementById('btn-consegna').className = 'type-btn' + (type === 'consegna' ? ' active' : '');
+  document.getElementById('btn-deliveroo').className = 'type-btn' + (type === 'deliveroo' ? ' deliveroo-active' : '');
+
+  const submitBtn = document.getElementById('whatsapp-submit-btn');
+  submitBtn.innerText = type === 'deliveroo' ? translations[currentLang].btnDeliverooOrder : translations[currentLang].btnOrder;
+
+  renderMenu(currentFilteredItems || menuItems);
+}
+</script>
+</body>
+</html>
