@@ -1,6 +1,7 @@
 backend:
   name: github
-  repo: Menu-Kebab-di-via-roma/Menu
+  repo: Menu-kebab-di-via-roma/Kebab-di-via-Roma-
+  
 
 media_folder: "images"
 public_folder: "/images"
