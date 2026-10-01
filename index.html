@@ -71,7 +71,6 @@
       font-weight: 600;
     }
     
-    /* متحرک اسپیشل پیاڈینا پبلسٹی بٹن */
     .special-piadina-btn {
       display: inline-block;
       background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
@@ -306,29 +305,43 @@
       border-left: 3px solid var(--primary);
     }
 
+    .single-unit-box {
+      background: #f8f9f9;
+      border: 1px solid #e5e8e8;
+      border-radius: 6px;
+      padding: 6px;
+      margin-bottom: 6px;
+    }
+    .single-unit-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
     .ingredient-block {
       background: #f4f6f7;
-      padding: 6px;
-      border-radius: 6px;
-      margin-bottom: 6px;
+      padding: 5px;
+      border-radius: 5px;
+      margin-bottom: 4px;
       border: 1px solid #e5e8e8;
     }
     .block-title {
-      font-size: 0.64rem;
+      font-size: 0.60rem;
       font-weight: bold;
       color: #566573;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       text-transform: uppercase;
     }
 
     .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
     
     .chip-minus, .chip-plus {
-      font-size: 0.64rem;
-      padding: 3px 8px;
+      font-size: 0.62rem;
+      padding: 2px 7px;
       background: #ffffff;
       border: 1px solid #d5dbdb;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
       color: #2c3e50;
       font-weight: 500;
@@ -349,14 +362,14 @@
 
     .input-field {
       width: 100%;
-      padding: 7px 9px;
-      margin-top: 6px;
+      padding: 6px 8px;
+      margin-top: 4px;
       border-radius: 6px;
       border: 1px solid #bdc3c7;
       background: #ffffff;
       color: #2c3e50;
       box-sizing: border-box;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
     }
     .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 5px rgba(153,0,0,0.2); }
 
@@ -442,7 +455,6 @@
     <div class="title-box">
       <h1>Kebab di Via Roma</h1>
       <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
-      <!-- نیا متحرک پیاڈینا اسپیشل پبلسٹی بٹن -->
       <a href="javascript:void(0)" onclick="setOrderType('student')" class="special-piadina-btn">
         ✨ Nostro Piadina Speciale Artigianale Tutti i Giorni Dopo le 16:30 ✨
       </a>
@@ -945,37 +957,59 @@ function renderMenu() {
         </div>
     `;
 
+    // ہر مقدار کے لیے الگ الگ موڈیفیکیشن باکس جنریٹ کرنا
     if (qty > 0) {
       html += `<div class="unit-customizer">`;
-      if (item.senza && item.senza.length > 0) {
-        html += `
-          <div class="ingredient-block">
-            <div class="block-title">${t.senzaTitle}</div>
-            <div class="chip-group">
-        `;
-        item.senza.forEach(ing => {
-          const isSelected = state.cart[cartKey].senza && state.cart[cartKey].senza.includes(ing);
-          html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleCustom('${item.id}', 'senza', '${ing}')">${ing}</span>`;
-        });
-        html += `</div></div>`;
+      if (!state.cart[cartKey].units) {
+        state.cart[cartKey].units = [];
+      }
+      // Ensure units array matches qty length
+      while(state.cart[cartKey].units.length < qty) {
+        state.cart[cartKey].units.push({ senza: [], extra: [], note: '' });
+      }
+      while(state.cart[cartKey].units.length > qty) {
+        state.cart[cartKey].units.pop();
       }
 
-      if (item.extra && item.extra.length > 0) {
+      state.cart[cartKey].units.forEach((unit, uIdx) => {
         html += `
-          <div class="ingredient-block">
-            <div class="block-title">${t.extraTitle}</div>
-            <div class="chip-group">
+          <div class="single-unit-box">
+            <div class="single-unit-title">Pezzo #${uIdx + 1}</div>
         `;
-        item.extra.forEach(ext => {
-          const isSelected = state.cart[cartKey].extra && state.cart[cartKey].extra.includes(ext);
-          html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleCustom('${item.id}', 'extra', '${ext}')">${ext}</span>`;
-        });
-        html += `</div></div>`;
-      }
 
-      html += `
-        <input type="text" class="input-field" placeholder="${t.notePlaceholder}" value="${state.cart[cartKey].note || ''}" oninput="updateItemNote('${item.id}', this.value)">
-      </div>`;
+        if (item.senza && item.senza.length > 0) {
+          html += `
+            <div class="ingredient-block">
+              <div class="block-title">${t.senzaTitle}</div>
+              <div class="chip-group">
+          `;
+          item.senza.forEach(ing => {
+            const isSelected = unit.senza && unit.senza.includes(ing);
+            html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'senza', '${ing}')">${ing}</span>`;
+          });
+          html += `</div></div>`;
+        }
+
+        if (item.extra && item.extra.length > 0) {
+          html += `
+            <div class="ingredient-block">
+              <div class="block-title">${t.extraTitle}</div>
+              <div class="chip-group">
+          `;
+          item.extra.forEach(ext => {
+            const isSelected = unit.extra && unit.extra.includes(ext);
+            html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'extra', '${ext}')">${ext}</span>`;
+          });
+          html += `</div></div>`;
+        }
+
+        html += `
+          <input type="text" class="input-field" placeholder="${t.notePlaceholder}" value="${unit.note || ''}" oninput="updateUnitNote('${item.id}', ${uIdx}, this.value)">
+          </div>
+        `;
+      });
+
+      html += `</div>`;
     }
 
     html += `</div>`;
@@ -986,44 +1020,60 @@ function renderMenu() {
 function modifyQty(id, delta) {
   if (!state.cart[id]) {
     if (delta > 0) {
-      state.cart[id] = { qty: 1, senza: [], extra: [], note: '' };
+      state.cart[id] = { qty: 1, units: [{ senza: [], extra: [], note: '' }] };
     }
   } else {
     state.cart[id].qty += delta;
     if (state.cart[id].qty <= 0) {
       delete state.cart[id];
+    } else {
+      if (!state.cart[id].units) state.cart[id].units = [];
+      while(state.cart[id].units.length < state.cart[id].qty) {
+        state.cart[id].units.push({ senza: [], extra: [], note: '' });
+      }
+      while(state.cart[id].units.length > state.cart[id].qty) {
+        state.cart[id].units.pop();
+      }
     }
   }
   renderMenu();
   calcTotal();
 }
 
-function toggleCustom(id, type, val) {
-  if (!state.cart[id]) return;
-  if (!state.cart[id][type]) state.cart[id][type] = [];
+function toggleUnitCustom(id, uIdx, type, val) {
+  if (!state.cart[id] || !state.cart[id].units[uIdx]) return;
+  if (!state.cart[id].units[uIdx][type]) state.cart[id].units[uIdx][type] = [];
   
-  const idx = state.cart[id][type].indexOf(val);
+  const arr = state.cart[id].units[uIdx][type];
+  const idx = arr.indexOf(val);
   if (idx > -1) {
-    state.cart[id][type].splice(idx, 1);
+    arr.splice(idx, 1);
   } else {
-    state.cart[id][type].push(val);
+    arr.push(val);
   }
   renderMenu();
 }
 
-function updateItemNote(id, val) {
-  if (state.cart[id]) {
-    state.cart[id].note = val;
+function updateUnitNote(id, uIdx, val) {
+  if (state.cart[id] && state.cart[id].units[uIdx]) {
+    state.cart[id].units[uIdx].note = val;
   }
 }
 
 function calcTotal() {
   let foodSubtotal = 0;
+  let totalAsportoDiscount = 0;
+  let eligibleFoodCount = 0;
+
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
     if (item) {
       let effPrice = item.price;
-      if (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive) {
+      let isDiscountable = (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive);
+      
+      if (isDiscountable) {
+        eligibleFoodCount += state.cart[id].qty;
+        totalAsportoDiscount += (0.50 * state.cart[id].qty);
         effPrice = Math.max(0, effPrice - 0.50);
       }
       foodSubtotal += effPrice * state.cart[id].qty;
@@ -1089,33 +1139,38 @@ function openConfirmationModal() {
   }
 
   let foodSubtotal = 0;
+  let totalAsportoDiscount = 0;
   let receiptHTML = `<div style="margin-top:8px; font-weight:bold; border-bottom:1px solid #ddd; padding-bottom:4px;">Riepilogo Ordine:</div>`;
   const hidePrices = (state.orderType === 'deliveroo');
   
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
     const cartItem = state.cart[id];
-    let effPrice = item.price;
-    if (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive) {
-      effPrice = Math.max(0, effPrice - 0.50);
-    }
-    let itemTotal = effPrice * cartItem.qty;
-    foodSubtotal += itemTotal;
+    
+    cartItem.units.forEach((unit, uIdx) => {
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive);
+      if (isDiscountable) {
+        effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50;
+      }
+      foodSubtotal += effPrice;
 
-    receiptHTML += `<div style="margin-top:6px; font-size:0.77rem;"><b>${cartItem.qty}x ${item.name}</b>`;
-    if (!hidePrices) {
-      receiptHTML += ` (€ ${itemTotal.toFixed(2)})`;
-    }
-    if (cartItem.senza && cartItem.senza.length > 0) {
-      receiptHTML += `<br><span style="color:#c0392b;">Senza: ${cartItem.senza.join(', ')}</span>`;
-    }
-    if (cartItem.extra && cartItem.extra.length > 0) {
-      receiptHTML += `<br><span style="color:#27ae60;">Extra: ${cartItem.extra.join(', ')}</span>`;
-    }
-    if (cartItem.note) {
-      receiptHTML += `<br><span style="color:#555;">Note: ${cartItem.note}</span>`;
-    }
-    receiptHTML += `</div>`;
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>1x ${item.name} (Pezzo #${uIdx + 1})</b>`;
+      if (!hidePrices) {
+        receiptHTML += ` (€ ${effPrice.toFixed(2)})`;
+      }
+      if (unit.senza && unit.senza.length > 0) {
+        receiptHTML += `<br><span style="color:#c0392b;">Senza: ${unit.senza.join(', ')}</span>`;
+      }
+      if (unit.extra && unit.extra.length > 0) {
+        receiptHTML += `<br><span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
+      }
+      if (unit.note) {
+        receiptHTML += `<br><span style="color:#555;">Note: ${unit.note}</span>`;
+      }
+      receiptHTML += `</div>`;
+    });
   }
 
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
@@ -1126,6 +1181,12 @@ function openConfirmationModal() {
   `;
   if (!hidePrices) {
     receiptHTML += `<div>${t.subtotal} € ${foodSubtotal.toFixed(2)}</div>`;
+    
+    // گرین رنگ میں سكوندو (ڈسکاؤنٹ) شو کرنا
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
+      receiptHTML += `<div style="color: #27ae60; font-weight: bold; margin-top: 3px;">🎁 Sconto Asporto Totale: -€ ${totalAsportoDiscount.toFixed(2)}</div>`;
+    }
+
     if (deliveryFee > 0) {
       receiptHTML += `<div>${t.deliveryFee} € ${deliveryFee.toFixed(2)}</div>`;
     }
@@ -1195,35 +1256,38 @@ function sendWhatsAppOrder() {
   orderText += `%0A--------------------------%0A*DETTAGLIO ORDINE:*%0A`;
 
   let foodSubtotal = 0;
+  let totalAsportoDiscount = 0;
   let itemCounter = 1;
 
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
     const cartItem = state.cart[id];
-    let effPrice = item.price;
-    if (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive) {
-      effPrice = Math.max(0, effPrice - 0.50);
-    }
-    let itemTotal = effPrice * cartItem.qty;
-    foodSubtotal += itemTotal;
+    
+    cartItem.units.forEach((unit, uIdx) => {
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' && !item.isStudentExclusive);
+      if (isDiscountable) {
+        effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50;
+      }
+      foodSubtotal += effPrice;
 
-    for (let i = 0; i < cartItem.qty; i++) {
-      orderText += `%0A*${itemCounter}. ${item.name}*`;
+      orderText += `%0A*${itemCounter}. ${item.name} (Pezzo #${uIdx + 1})*`;
       if (!hidePrices) {
         orderText += ` (€ ${effPrice.toFixed(2)})`;
       }
       
-      if (cartItem.senza && cartItem.senza.length > 0) {
-        orderText += `%0A   🔸 Senza: ${cartItem.senza.join(', ')}`;
+      if (unit.senza && unit.senza.length > 0) {
+        orderText += `%0A   🔸 Senza: ${unit.senza.join(', ')}`;
       }
-      if (cartItem.extra && cartItem.extra.length > 0) {
-        orderText += `%0A   🔹 Extra: ${cartItem.extra.join(', ')}`;
+      if (unit.extra && unit.extra.length > 0) {
+        orderText += `%0A   🔹 Extra: ${unit.extra.join(', ')}`;
       }
-      if (cartItem.note) {
-        orderText += `%0A   📝 Note: ${cartItem.note}`;
+      if (unit.note) {
+        orderText += `%0A   📝 Note: ${unit.note}`;
       }
       itemCounter++;
-    }
+    });
   }
 
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
@@ -1232,8 +1296,11 @@ function sendWhatsAppOrder() {
   orderText += `%0A--------------------------%0A`;
   if (!hidePrices) {
     orderText += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}%0A`;
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
+      orderText += `🎁 *Sconto Asporto Totale:* -€ ${totalAsportoDiscount.toFixed(2)}%0A`;
+    }
     if (deliveryFee > 0) {
-      orderText += `*Consegna (Rider):* € ${deliveryFee.deliveroo || deliveryFee.toFixed(2)}%0A`;
+      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}%0A`;
     }
     if (foodSubtotal >= 40) {
       orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L%0A`;
