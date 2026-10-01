@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kebab di Via Roma - Jesi | Luxury OE Edition</title>
+  <title>Kebab di Via Roma - Jesi | Luxury Light Edition</title>
   <style>
     :root {
-      --primary: #d63031;
-      --primary-hover: #ff4757;
-      --secondary: #e1b12c;
-      --deliveroo: #00cdbc;
-      --bg: #0f0f10;
-      --card-bg: #1a1a1c;
-      --card-border: #2a2a2e;
-      --text: #f5f6fa;
-      --text-muted: #b2bec3;
+      --primary: #c0392b;
+      --primary-hover: #e74c3c;
+      --secondary: #d4ac0d;
+      --deliveroo: #00b894;
+      --bg: #fcfbfa;
+      --card-bg: #ffffff;
+      --card-border: #e6d7d5;
+      --text: #2c3e50;
+      --text-muted: #7f8c8d;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -25,15 +25,15 @@
       padding-bottom: 95px;
     }
     header {
-      background: linear-gradient(135deg, #120303, #1f0808, #2c0909);
+      background: linear-gradient(135deg, #78281f, #922b21, #b03a2e);
       color: white;
       text-align: center;
-      padding: 8px 10px;
+      padding: 10px 12px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(214, 48, 49, 0.25);
-      border-bottom: 1px solid rgba(214, 48, 49, 0.3);
+      box-shadow: 0 4px 15px rgba(120, 40, 31, 0.3);
+      border-bottom: 2px solid var(--secondary);
     }
     
     .header-flex {
@@ -43,7 +43,7 @@
       max-width: 500px;
       margin: 0 auto;
       padding: 0;
-      gap: 5px;
+      gap: 6px;
     }
 
     .title-box {
@@ -55,27 +55,28 @@
     }
     header h1 { 
       margin: 0; 
-      font-size: 1.15rem; 
-      font-weight: 850;
-      letter-spacing: 0.8px;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 1.25rem; 
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
     header p { 
-      margin: 1px 0; 
-      font-size: 0.62rem; 
-      color: var(--text-muted); 
+      margin: 2px 0; 
+      font-size: 0.68rem; 
+      color: #fadbd8; 
+      font-weight: 500;
     }
     
     .header-promo {
-      font-size: 0.52rem;
-      color: var(--secondary);
-      background: rgba(225, 177, 44, 0.1);
-      border: 1px solid rgba(225, 177, 44, 0.3);
+      font-size: 0.58rem;
+      color: #f4d03f;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(244, 208, 63, 0.4);
       padding: 2px 8px;
       border-radius: 4px;
       margin-top: 3px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.3px;
     }
 
@@ -84,21 +85,21 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3px 5px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 6px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     .tiktok-logo-img {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
       border-radius: 50%;
       background: #000;
     }
     .tiktok-text {
       font-size: 0.45rem;
-      color: #ddd;
+      color: #fff;
       margin-top: 1px;
       font-weight: bold;
     }
@@ -106,32 +107,32 @@
     .lang-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      width: 82px;
+      gap: 3px;
+      width: 88px;
     }
     .lang-btn {
-      background: rgba(214, 48, 49, 0.15);
-      border: 1px solid rgba(214, 48, 49, 0.4);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       color: #fff;
-      padding: 2px 1px;
-      font-size: 0.48rem;
-      border-radius: 3px;
+      padding: 3px 2px;
+      font-size: 0.5rem;
+      border-radius: 4px;
       cursor: pointer;
       font-weight: bold;
       text-align: center;
       transition: all 0.2s;
     }
     .lang-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary-hover);
+      background: var(--secondary);
+      color: #000;
     }
     
-    .container { max-width: 500px; margin: 0 auto; padding: 8px; }
+    .container { max-width: 500px; margin: 0 auto; padding: 10px; }
     
-    .order-type-selector { display: flex; gap: 4px; margin-bottom: 8px; }
+    .order-type-selector { display: flex; gap: 6px; margin-bottom: 10px; }
     .type-btn {
       flex: 1;
-      padding: 6px 2px;
+      padding: 7px 3px;
       border: 1px solid var(--card-border);
       border-radius: 8px;
       background: var(--card-bg);
@@ -139,56 +140,60 @@
       text-align: center;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
       transition: 0.2s;
     }
-    .type-btn.active { border-color: var(--primary); background: rgba(214, 48, 49, 0.15); color: #ff7675; }
-    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: rgba(0, 205, 188, 0.15); color: var(--deliveroo); }
-    .type-btn small { display: block; font-size: 0.52rem; color: var(--text-muted); font-weight: normal; }
+    .type-btn.active { border-color: var(--primary); background: #f9ebea; color: var(--primary); }
+    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e8f8f5; color: #009473; }
+    .type-btn small { display: block; font-size: 0.55rem; color: var(--text-muted); font-weight: normal; }
 
     .instructions-notice {
-      background: rgba(225, 177, 44, 0.08);
-      border-left: 3px solid var(--secondary);
-      color: #f1c40f;
-      padding: 6px 10px;
-      margin-bottom: 8px;
+      background: #fef9e7;
+      border-left: 4px solid var(--secondary);
+      color: #7d6608;
+      padding: 8px 10px;
+      margin-bottom: 10px;
       border-radius: 6px;
-      font-size: 0.65rem;
-      font-weight: 500;
+      font-size: 0.7rem;
+      font-weight: 600;
       line-height: 1.3;
-      border: 1px solid rgba(225, 177, 44, 0.15);
+      border-top: 1px solid #fcf3cf;
+      border-right: 1px solid #fcf3cf;
+      border-bottom: 1px solid #fcf3cf;
     }
 
     .category-nav {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
       scrollbar-width: none;
     }
     .category-nav::-webkit-scrollbar { display: none; }
     .cat-btn {
-      padding: 4px 10px;
+      padding: 5px 12px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      border-radius: 12px;
+      border-radius: 14px;
       white-space: nowrap;
       font-weight: 600;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
       transition: 0.2s;
     }
-    .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary-hover); box-shadow: 0 2px 8px rgba(214,48,49,0.4); }
+    .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(192, 57, 43, 0.3); }
 
     .menu-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
     }
     
     .item-header { 
@@ -203,134 +208,136 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
-    .item-title { font-weight: bold; font-size: 0.82rem; color: #fff; }
-    .item-price { color: #ff7675; font-weight: bold; font-size: 0.78rem; }
+    .item-title { font-weight: 700; font-size: 0.88rem; color: #212529; }
+    .item-price { color: var(--primary); font-weight: 800; font-size: 0.84rem; }
     
     .badge-18 {
       background: var(--primary);
       color: white;
-      font-size: 0.48rem;
+      font-size: 0.52rem;
       font-weight: bold;
-      padding: 1px 4px;
+      padding: 1px 5px;
       border-radius: 3px;
     }
 
-    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; }
     .qty-btn {
-      width: 25px;
-      height: 25px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 1px solid var(--card-border);
-      background: #25252b;
-      color: #fff;
+      border: 1px solid #bdc3c7;
+      background: #f8f9fa;
+      color: #2c3e50;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       transition: 0.2s;
     }
-    .qty-btn:hover { background: var(--primary); border-color: var(--primary-hover); }
+    .qty-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .unit-customizer {
-      margin-top: 8px;
-      padding: 7px;
-      background: #121214;
+      margin-top: 10px;
+      padding: 8px;
+      background: #fdfefe;
       border-radius: 6px;
-      border: 1px solid var(--card-border);
-      border-left: 2px solid var(--primary);
+      border: 1px solid #ebedef;
+      border-left: 3px solid var(--primary);
     }
-    .unit-title { font-size: 0.65rem; font-weight: bold; margin-bottom: 4px; color: var(--secondary); }
+    .unit-title { font-size: 0.7rem; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
 
     .ingredient-block {
-      background: var(--card-bg);
-      padding: 4px 6px;
+      background: #f4f6f7;
+      padding: 5px 6px;
       border-radius: 4px;
-      margin-bottom: 4px;
-      border: 1px solid var(--card-border);
+      margin-bottom: 5px;
+      border: 1px solid #e5e8e8;
     }
     .block-title {
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       font-weight: bold;
-      color: var(--text-muted);
+      color: #566573;
       margin-bottom: 3px;
       text-transform: uppercase;
     }
 
-    .chip-group { display: flex; flex-wrap: wrap; gap: 3px; }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
     
     .chip-minus, .chip-plus {
-      font-size: 0.58rem;
-      padding: 2px 6px;
-      background: #25252b;
-      border: 1px solid var(--card-border);
+      font-size: 0.62rem;
+      padding: 3px 7px;
+      background: #ffffff;
+      border: 1px solid #d5dbdb;
       border-radius: 4px;
       cursor: pointer;
-      color: #ccc;
+      color: #2c3e50;
+      font-weight: 500;
       line-height: 1.2;
     }
     .chip-minus.selected-senza {
-      background: rgba(214, 48, 49, 0.25);
-      color: #ff7675;
+      background: #f9ebea;
+      color: var(--primary);
       border-color: var(--primary);
       font-weight: bold;
       text-decoration: line-through;
     }
     .chip-plus.selected-extra {
-      background: rgba(39, 174, 96, 0.25);
-      color: #2ecc71;
-      border-color: #27ae60;
+      background: #eafaf1;
+      color: #27ae60;
+      border-color: #2ecc71;
       font-weight: bold;
     }
 
     .input-field {
       width: 100%;
-      padding: 5px 8px;
-      margin-top: 3px;
-      margin-bottom: 3px;
+      padding: 6px 8px;
+      margin-top: 4px;
+      margin-bottom: 4px;
       border-radius: 5px;
-      border: 1px solid var(--card-border);
-      background: var(--card-bg);
-      color: #fff;
+      border: 1px solid #bdc3c7;
+      background: #ffffff;
+      color: #2c3e50;
       box-sizing: border-box;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
     }
+    .input-field:focus { outline: none; border-color: var(--primary); }
 
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #141416;
+      background: #ffffff;
       border-top: 1px solid var(--card-border);
-      padding: 8px 12px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+      padding: 10px 14px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
     }
-    .total-price { font-size: 1rem; font-weight: bold; color: #ff7675; }
+    .total-price { font-size: 1.05rem; font-weight: 800; color: var(--primary); }
     .whatsapp-btn {
-      background: linear-gradient(135deg, #25d366, #1ebe5d);
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
       color: white;
       border: none;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 16px;
       font-weight: bold;
-      font-size: 0.72rem;
+      font-size: 0.76rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
     }
 
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(3px);
       display: none;
       justify-content: center;
       align-items: center;
@@ -339,31 +346,32 @@
       box-sizing: border-box;
     }
     .modal-card {
-      background: #18181b;
+      background: #ffffff;
       border: 1px solid var(--card-border);
       border-radius: 12px;
       width: 100%;
       max-width: 380px;
       max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
-    .receipt-header { background: #220909; color: white; padding: 10px; text-align: center; border-bottom: 1px solid var(--card-border); }
-    .receipt-header h2 { margin: 0; font-size: 0.9rem; color: #ff7675; }
-    .receipt-body { padding: 10px; font-size: 0.75rem; color: #ccc; }
-    .receipt-section { background: #121214; border: 1px solid var(--card-border); padding: 8px; border-radius: 6px; margin-bottom: 8px; }
-    .modal-actions { display: flex; gap: 6px; padding: 8px 10px; background: #141416; border-top: 1px solid var(--card-border); }
+    .receipt-header { background: #78281f; color: white; padding: 12px; text-align: center; border-bottom: 2px solid var(--secondary); }
+    .receipt-header h2 { margin: 0; font-size: 0.95rem; color: #ffffff; }
+    .receipt-body { padding: 12px; font-size: 0.78rem; color: #34495e; }
+    .receipt-section { background: #f8f9fa; border: 1px solid #e5e8e8; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+    .modal-actions { display: flex; gap: 8px; padding: 10px 12px; background: #fdfefe; border-top: 1px solid #e5e8e8; }
     .btn-cancel, .btn-confirm {
       flex: 1;
-      padding: 7px;
+      padding: 8px;
       border-radius: 6px;
       font-weight: bold;
       border: none;
       cursor: pointer;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: white;
     }
     .btn-cancel { background: #c0392b; }
-    .btn-confirm { background: #25D366; flex: 1.5; }
+    .btn-confirm { background: #27ae60; flex: 1.5; }
   </style>
 </head>
 <body>
@@ -426,7 +434,7 @@
 
 <div class="bottom-bar">
   <div id="total-price-box">
-    <span style="font-size: 0.58rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
+    <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
   <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
@@ -815,14 +823,14 @@ function renderMenu(items) {
         </div>
         <div class="qty-controls">
           <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
-          <span style="font-weight:bold; font-size:0.8rem; min-width:18px; text-align:center; color:#fff;">${cartItem.qty}</span>
+          <span style="font-weight:bold; font-size:0.85rem; min-width:18px; text-align:center; color:#2c3e50;">${cartItem.qty}</span>
           <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
         </div>
       </div>
     `;
 
     if (item.customizable && cartItem.qty > 0) {
-      html += `<div style="margin-top:6px;">`;
+      html += `<div style="margin-top:8px;">`;
       for (let i = 0; i < cartItem.qty; i++) {
         if (!cartItem.customUnits[i]) {
           cartItem.customUnits[i] = { senza: [], extra: [], note: '' };
@@ -942,28 +950,28 @@ function openConfirmationModal() {
   if (state.orderType === 'deliveroo') {
     document.getElementById('modal-title-text').innerText = t.modalTitleDeliv;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem; color:#bbb;">${t.nameDelivLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameDelivLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
     `;
   } else if (state.orderType === 'consegna') {
     document.getElementById('modal-title-text').innerText = t.modalTitleCons;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem; color:#bbb;">${t.nameLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
       
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block; color:#bbb;">${t.addrLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.addrLabel}</label>
       <input type="text" id="customer-address" class="input-field" placeholder="...">
 
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block; color:#bbb;">${t.timeLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.timeLabel}</label>
       <input type="text" id="customer-time" class="input-field" value="${currentTime}">
     `;
   } else {
     document.getElementById('modal-title-text').innerText = t.modalTitleAsp;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem; color:#bbb;">${t.nameLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
       
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block; color:#bbb;">${t.timeLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.timeLabel}</label>
       <input type="text" id="customer-time" class="input-field" value="${currentTime}">
     `;
   }
@@ -986,23 +994,23 @@ function openConfirmationModal() {
     if(state.lang === 'bn') itemName = itemObj.nameBn;
 
     if (state.orderType === 'deliveroo') {
-      receiptHtml += `<div style="border-bottom:1px solid #2a2a2e; padding:5px 0;"><b style="color:#fff;">${cartItem.qty}x ${itemName}</b>`;
+      receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b>`;
     } else {
-      receiptHtml += `<div style="border-bottom:1px solid #2a2a2e; padding:5px 0;"><b style="color:#fff;">${cartItem.qty}x ${itemName}</b> - <span style="color:#ff7675;">€ ${itemSubtotal.toFixed(2)}</span>`;
+      receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b> - <span style="color:var(--primary);">€ ${itemSubtotal.toFixed(2)}</span>`;
     }
     
     if (cartItem.customUnits && cartItem.customUnits.length > 0) {
       cartItem.customUnits.forEach((unit, idx) => {
-        receiptHtml += `<div style="margin-top: 3px; padding-left: 8px; border-left: 2px solid var(--primary); font-size:0.7rem;">`;
-        receiptHtml += `<b style="color:#e1b12c;">#${idx + 1}</b>`;
+        receiptHtml += `<div style="margin-top: 3px; padding-left: 8px; border-left: 2px solid var(--primary); font-size:0.72rem;">`;
+        receiptHtml += `<b style="color:#d4ac0d;">#${idx + 1}</b>`;
         
         let hasModifications = (unit.senza.length > 0 || unit.extra.length > 0 || (unit.note && unit.note.trim() !== ''));
         if (!hasModifications && itemObj.customizable) {
-          receiptHtml += ` | <span style="color:#2ecc71; font-weight:bold;">Completo</span>`;
+          receiptHtml += ` | <span style="color:#27ae60; font-weight:bold;">Completo</span>`;
         } else {
-          if (unit.senza.length > 0) receiptHtml += ` | <span style="color:#ff7675;">Senza: ${unit.senza.join(', ')}</span>`;
-          if (unit.extra.length > 0) receiptHtml += ` | <span style="color:#2ecc71;">Extra: ${unit.extra.join(', ')}</span>`;
-          if (unit.note) receiptHtml += ` | <span style="color:#aaa;">Note: ${unit.note}</span>`;
+          if (unit.senza.length > 0) receiptHtml += ` | <span style="color:var(--primary);">Senza: ${unit.senza.join(', ')}</span>`;
+          if (unit.extra.length > 0) receiptHtml += ` | <span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
+          if (unit.note) receiptHtml += ` | <span style="color:#7f8c8d;">Note: ${unit.note}</span>`;
         }
         receiptHtml += `</div>`;
       });
@@ -1012,16 +1020,16 @@ function openConfirmationModal() {
 
   if (state.orderType !== 'deliveroo') {
     if (state.orderType === 'consegna') {
-      receiptHtml += `<div style="margin-top:5px; font-size:0.75rem; color:#aaa;">${t.subtotal} € ${subtotal.toFixed(2)}</div>`;
-      receiptHtml += `<div style="font-size:0.75rem; color:#aaa;">${t.deliveryFee} € 2.50</div>`;
+      receiptHtml += `<div style="margin-top:6px; font-size:0.78rem; color:#555;">${t.subtotal} € ${subtotal.toFixed(2)}</div>`;
+      receiptHtml += `<div style="font-size:0.78rem; color:#555;">${t.deliveryFee} € 2.50</div>`;
     }
     let finalTotal = subtotal + (state.orderType === 'consegna' ? 2.50 : 0);
     
     if (subtotal > 40) {
-      receiptHtml += `<div style="margin-top:5px; color:#2ecc71; font-weight:bold; font-size:0.75rem;">${t.freeCola}</div>`;
+      receiptHtml += `<div style="margin-top:6px; color:#27ae60; font-weight:bold; font-size:0.78rem;">${t.freeCola}</div>`;
     }
 
-    receiptHtml += `<div style="margin-top:8px; font-weight:bold; text-align:right; font-size:0.9rem; color:#ff7675;">${t.totaleText} € ${finalTotal.toFixed(2)}</div>`;
+    receiptHtml += `<div style="margin-top:8px; font-weight:bold; text-align:right; font-size:0.95rem; color:var(--primary);">${t.totaleText} € ${finalTotal.toFixed(2)}</div>`;
   }
   receiptHtml += `</div>`;
 
@@ -1107,7 +1115,6 @@ function sendWhatsAppOrder() {
   window.open(whatsappUrl, '_blank');
 }
 
-// Automatically load all items when page starts
 renderMenu(menuItems);
 </script>
 
