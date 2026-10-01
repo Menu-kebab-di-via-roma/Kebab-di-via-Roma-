@@ -29,23 +29,21 @@
       background: linear-gradient(135deg, #3a0000, #6a0000, #990000);
       color: white;
       text-align: center;
-      padding: 14px 15px;
+      padding: 10px 12px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 6px 25px rgba(153, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(153, 0, 0, 0.4);
       border-bottom: 3px solid var(--gold);
     }
-    
     .header-flex {
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 500px;
       margin: 0 auto;
-      gap: 8px;
+      gap: 6px;
     }
-
     .title-box {
       text-align: center;
       flex: 1;
@@ -55,7 +53,7 @@
     }
     header h1 { 
       margin: 0; 
-      font-size: 1.6rem; 
+      font-size: 1.4rem; 
       font-weight: 900;
       letter-spacing: 1px;
       color: #ffffff;
@@ -65,21 +63,20 @@
       -webkit-text-fill-color: transparent;
     }
     header p { 
-      margin: 3px 0; 
-      font-size: 0.75rem; 
+      margin: 2px 0; 
+      font-size: 0.7rem; 
       color: var(--gold-light); 
       font-weight: 600;
     }
-    
     .special-piadina-btn {
       display: inline-block;
       background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
       color: #3a0000;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 900;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-top: 6px;
+      padding: 4px 10px;
+      border-radius: 15px;
+      margin-top: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       border: 1px solid #fff;
@@ -88,80 +85,34 @@
       cursor: pointer;
       text-decoration: none;
     }
-
     @keyframes softGlow {
       0% { opacity: 0.85; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.02); }
       100% { opacity: 0.85; transform: scale(1); }
     }
-
-    .left-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
     .tiktok-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-decoration: none;
       background: rgba(255, 255, 255, 0.12);
-      padding: 4px 6px;
-      border-radius: 8px;
+      padding: 3px 5px;
+      border-radius: 6px;
       border: 1px solid rgba(212, 175, 55, 0.4);
     }
     .tiktok-logo-img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
       border-radius: 50%;
       background: #000;
     }
     .tiktok-text {
-      font-size: 0.45rem;
+      font-size: 0.4rem;
       color: #fff;
       margin-top: 1px;
       font-weight: bold;
     }
-
-    .whatsapp-call-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      background: #25D366;
-      color: white;
-      text-decoration: none;
-      font-size: 0.58rem;
-      font-weight: bold;
-      padding: 5px 6px;
-      border-radius: 6px;
-      border: 1px solid #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      white-space: nowrap;
-    }
-
-    .header-right-controls {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-    }
-
-    .music-btn-top {
-      background: linear-gradient(135deg, #c0392b, #e74c3c);
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 4px 8px;
-      font-size: 0.62rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      white-space: nowrap;
-    }
-
     .lang-dropdown-wrapper {
       position: relative;
       display: inline-block;
@@ -170,33 +121,33 @@
       background: linear-gradient(135deg, var(--gold), #b8860b);
       border: 1px solid #fff;
       color: #000;
-      padding: 6px 10px;
-      font-size: 0.7rem;
+      padding: 5px 8px;
+      font-size: 0.68rem;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.3);
     }
     .lang-menu-popup {
       display: none;
       position: absolute;
       right: 0;
-      top: 38px;
+      top: 35px;
       background: #ffffff;
       border: 2px solid var(--gold);
       border-radius: 10px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.3);
       z-index: 3000;
-      min-width: 140px;
+      min-width: 130px;
       overflow: hidden;
     }
     .lang-menu-popup.show { display: block; }
     .lang-option {
-      padding: 9px 12px;
-      font-size: 0.75rem;
+      padding: 8px 10px;
+      font-size: 0.72rem;
       color: #2c3e50;
       background: #fff;
       border-bottom: 1px solid #f1f1f1;
@@ -209,9 +160,7 @@
       background: #fdf2e9;
       color: var(--primary);
     }
-
     .container { max-width: 500px; margin: 0 auto; padding: 12px; }
-    
     .order-type-selector { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
     .type-btn {
       flex: 1;
@@ -232,7 +181,6 @@
     .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e8f8f5; color: #009473; box-shadow: 0 3px 10px rgba(0,184,148,0.15); }
     .type-btn.student-active { border-color: var(--gold); background: #fef9e7; color: #9a7d0a; box-shadow: 0 3px 10px rgba(212,175,55,0.2); }
     .type-btn small { display: block; font-size: 0.52rem; color: var(--text-muted); font-weight: normal; }
-
     .instructions-notice {
       background: linear-gradient(to right, #fef9e7, #fcf3cf);
       border-left: 4px solid var(--gold);
@@ -246,7 +194,6 @@
       border: 1px solid #f9e79f;
       box-shadow: 0 3px 10px rgba(0,0,0,0.02);
     }
-
     .category-nav {
       display: flex;
       gap: 6px;
@@ -276,7 +223,6 @@
       border-color: #fff;
       font-weight: 900;
     }
-
     .menu-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -286,21 +232,18 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       transition: transform 0.2s;
     }
-    
     .item-header { 
       display: flex; 
       align-items: center; 
       justify-content: space-between;
       gap: 10px;
     }
-    
     .item-details { flex: 1; }
     .item-title-row {
       display: flex;
       align-items: center;
       gap: 6px;
       margin-bottom: 4px;
-      flex-wrap: wrap;
     }
     .item-title { font-weight: 750; font-size: 0.92rem; color: #212529; }
     .item-price { color: var(--primary); font-weight: 900; font-size: 0.88rem; }
@@ -321,8 +264,8 @@
       font-weight: 900;
       padding: 2px 5px;
       border-radius: 4px;
+      margin-left: 5px;
     }
-
     .qty-controls { display: flex; align-items: center; gap: 8px; }
     .qty-btn {
       width: 30px;
@@ -340,7 +283,6 @@
       transition: 0.2s;
     }
     .qty-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: scale(1.05); }
-
     .unit-customizer {
       margin-top: 10px;
       padding: 8px;
@@ -349,7 +291,6 @@
       border: 1px solid #ebedef;
       border-left: 3px solid var(--primary);
     }
-
     .single-unit-box {
       background: #f8f9f9;
       border: 1px solid #e5e8e8;
@@ -363,7 +304,6 @@
       color: var(--primary);
       margin-bottom: 4px;
     }
-
     .ingredient-block {
       background: #f4f6f7;
       padding: 5px;
@@ -378,9 +318,7 @@
       margin-bottom: 3px;
       text-transform: uppercase;
     }
-
     .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
-    
     .chip-minus, .chip-plus {
       font-size: 0.62rem;
       padding: 2px 7px;
@@ -404,7 +342,6 @@
       border-color: #2ecc71;
       font-weight: bold;
     }
-
     .input-field {
       width: 100%;
       padding: 6px 8px;
@@ -417,7 +354,6 @@
       font-size: 0.74rem;
     }
     .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 5px rgba(153,0,0,0.2); }
-
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -446,7 +382,6 @@
       transition: 0.2s;
     }
     .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(39, 174, 96, 0.5); }
-
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -490,23 +425,12 @@
 </head>
 <body>
 
-<!-- Working Background Audio Source -->
-<audio id="bg-audio" loop preload="auto">
-  <source src="https://assets.mixkit.co/music/preview/mixkit-relaxing-spaces-135.mp3" type="audio/mp3">
-</audio>
-
 <header>
   <div class="header-flex">
-    <div class="left-controls">
-      <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
-        <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img" onerror="this.src='https://cdn4.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Tiktok-512.png'">
-        <span class="tiktok-text">TikTok</span>
-      </a>
-      <!-- WhatsApp Call Button -->
-      <a href="https://wa.me/393932228224" target="_blank" class="whatsapp-call-btn">
-        📞 WA Call
-      </a>
-    </div>
+    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
+      <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img">
+      <span class="tiktok-text">TikTok</span>
+    </a>
     
     <div class="title-box">
       <h1>Kebab di Via Roma</h1>
@@ -516,23 +440,18 @@
       </a>
     </div>
 
-    <!-- Right Controls: Music Button positioned right above Language Selector -->
-    <div class="header-right-controls">
-      <button id="music-toggle-btn" class="music-btn-top" onclick="toggleBackgroundMusic()">
-        🔇 Music: OFF
+    <div class="lang-dropdown-wrapper">
+      <button class="lang-main-btn" onclick="toggleLangMenu()">
+        🌐 <span id="current-lang-label">ITA</span> ▾
       </button>
-      <div class="lang-dropdown-wrapper">
-        <button class="lang-main-btn" onclick="toggleLangMenu()">
-          🌐 <span id="current-lang-label">ITA</span> ▾
-        </button>
-        <div class="lang-menu-popup" id="langMenuPopup">
-          <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
-          <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-          <div class="lang-option" onclick="changeLanguage('hi')">🇮🇳 हिन्दी</div>
-          <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
-          <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
-          <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
-        </div>
+      <div class="lang-menu-popup" id="langMenuPopup">
+        <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+        <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+        <div class="lang-option" onclick="changeLanguage('hi')">🇮🇳 हिन्दी</div>
+        <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
+        <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
+        <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
       </div>
     </div>
   </div>
@@ -566,7 +485,7 @@
     <button class="cat-btn active" onclick="filterCategory('all', this)" id="cat-all">Tutti</button>
     <button class="cat-btn special-highlight" onclick="filterCategory('speciale', this)" id="cat-btn-speciale">✨ Piadina Speciale €5</button>
     <button class="cat-btn" onclick="filterCategory('kebab', this)" id="cat-kebab">Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('piadina', this)" id="cat-piadina">Piadina</button>
+    <button class="cat-btn" onclick="filterCategory('piadina', this)" id="cat-piadina">Piadina Kebab</button>
     <button class="cat-btn" onclick="filterCategory('non-kebab', this)" id="cat-non-kebab">Non Solo Kebab</button>
     <button class="cat-btn" onclick="filterCategory('fritti', this)" id="cat-fritti">Fritti</button>
     <button class="cat-btn" onclick="filterCategory('bevande', this)" id="cat-bevande">Bevande</button>
@@ -610,41 +529,6 @@ const state = {
   lang: 'it'
 };
 
-// Robust Background Music Setup
-const audio = document.getElementById('bg-audio');
-audio.volume = 0.3; 
-let isMusicPlaying = false;
-
-function toggleBackgroundMusic() {
-  const btn = document.getElementById('music-toggle-btn');
-  if (audio.paused) {
-    audio.play().then(() => {
-      isMusicPlaying = true;
-      btn.innerText = "🎵 Music: ON";
-      btn.style.background = "linear-gradient(135deg, #27ae60, #2ecc71)";
-    }).catch(e => { console.log("Play failed:", e); });
-  } else {
-    audio.pause();
-    isMusicPlaying = false;
-    btn.innerText = "🔇 Music: OFF";
-    btn.style.background = "linear-gradient(135deg, #c0392b, #e74c3c)";
-  }
-}
-
-// Automatically start music on the first user interaction anywhere on the screen
-document.addEventListener('click', function initAudioPlay() {
-  if (!isMusicPlaying && audio.paused) {
-    audio.play().then(() => {
-      isMusicPlaying = true;
-      const btn = document.getElementById('music-toggle-btn');
-      if(btn) {
-        btn.innerText = "🎵 Music: ON";
-        btn.style.background = "linear-gradient(135deg, #27ae60, #2ecc71)";
-      }
-    }).catch(err => { console.log("Interaction play blocked:", err); });
-  }
-}, { once: true });
-
 const commonSenza = ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Algerina (Agrodolce)', 'Salsa Rosa', 'Insalata, Verza e Carote', 'Cetrioli', 'Cipolla', 'Pomodoro', 'Olive', 'Peperoncino'];
 const commonExtra = ['Maionese', 'Ketchup', 'Extra Cipolla', 'Extra Piccante', 'Carne Extra'];
 
@@ -656,8 +540,8 @@ const translations = {
     student: "🎓 Promo Studenti", studentSub: "Offerte Speciali",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
     noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
-    noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi).',
-    studentNotice: '🎓 <b>Promo Studenti:</b> Panino con Bevanda a 4.50€ (Prima delle 16:30).',
+    noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi dal calcolo).',
+    studentNotice: '🎓 <b>Promo Studenti:</b> Menu Panino (€6.00) o Menu Piadina (€7.00) con Bevanda (Prima delle 16:30).',
     catAll: "Tutti", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici", catSpeciale: "✨ Piadina Speciale €5",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
@@ -681,38 +565,6 @@ const translations = {
     deliveryFee: "Consegna (Rider):",
     freeCola: "🎁 Coca-Cola 1.5L Omaggio (Cibo >= 40€)"
   },
-  hi: {
-    specialeBanner: "✨ स्पेशल होममेड पियादिना कबाब - सिर्फ €5.00 (हर शाम) ✨",
-    asporto: "टेक-अवे", asportoSub: "(-0.50€ खाने पर)",
-    consegna: "डिलीवरी", consegnaSub: "(+2.50€ डिलीवरी चार्ज)",
-    student: "🎓 स्टूडेंट ऑफर", studentSub: "स्पेशल ऑफर",
-    deliveroo: "डिलीवरू नोट्स", deliverooSub: "कस्टमाइज़ करें",
-    noticeAsporto: '🎁 <b>ऑफर:</b> 40 यूरो या उससे ज्यादा के ऑर्डर पर 1.5 लीटर कोका-कोला बिल्कुल मुफ्त!',
-    noticeConsegna: '🎁 <b>ऑफर:</b> 40 यूरो या उससे ज्यादा के ऑर्डर पर 1.5 लीटर कोका-कोला मुफ्त! (डिलीवरी चार्ज अलग है)।',
-    studentNotice: '🎓 <b>स्टूडेंट ऑफर:</b> पनीनो + ड्रिंक सिर्फ €4.50 (दोपहर 4:30 बजे से पहले)।',
-    catAll: "सभी", catKebab: "कबाब", catPiadina: "पियादिना", catNonKebab: "अन्य आइटम्स", catFritti: "फ्राइड", catBevande: "ड्रिंक्स", catAlcolici: "अल्कोहल", catSpeciale: "✨ स्पेशल पियादिना €5",
-    totaleText: "कुल राशि:",
-    verifyBtn: "चेक करें और ऑर्डर दें",
-    verifyDeliv: "डिलीवरू नोट्स चेक करें",
-    verifyStudent: "स्टूडेंट ऑफर कन्फर्म करें",
-    modalTitleConf: "📋 ऑर्डर कन्फर्म करें",
-    modalTitleDeliv: "📋 डिलीवरू नोट्स",
-    modalTitleCons: "📋 डिलीवरी कन्फर्म करें (+2.50€)",
-    modalTitleAsp: "📋 टेक-अवे कन्फर्म करें",
-    modalTitleStudent: "📋 स्टूडेंट ऑफर कन्फर्म करें",
-    nameLabel: "आपका नाम:",
-    nameDelivLabel: "आपका नाम या डिलीवरू ऑर्डर नंबर:",
-    addrLabel: "डिलीवरी का पता:",
-    timeLabel: "पिकअप / डिलीवरी का समय:",
-    editBtn: "✏ एडिट करें",
-    sendBtn: "✅ व्हाट्सएप पर भेजें",
-    senzaTitle: "बिना (निकालें):",
-    extraTitle: "एक्स्ट्रा (जोड़ें):",
-    notePlaceholder: "कोई अन्य नोट...",
-    subtotal: "खाने का कुल:",
-    deliveryFee: "डिलीवरी चार्ज:",
-    freeCola: "🎁 मुफ्त कोका-कोला 1.5L (खाना >= 40€)"
-  },
   en: {
     specialeBanner: "✨ Our Special Artisanal Piadina with Kebab - Only €5.00 (Every Evening) ✨",
     asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
@@ -721,7 +573,7 @@ const translations = {
     deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
     noticeAsporto: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola!',
     noticeConsegna: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
-    studentNotice: '🎓 <b>Student Promo:</b> Panino with Drink for €4.50 (Before 4:30 PM).',
+    studentNotice: '🎓 <b>Student Promo:</b> Panino Menu (€6.00) or Piadina Menu (€7.00) with Drink (Before 4:30 PM).',
     catAll: "All", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol", catSpeciale: "✨ Special Piadina €5",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
@@ -746,8 +598,7 @@ const translations = {
     freeCola: "🎁 Free 1.5L Coca-Cola (Food >= 40€)"
   }
 };
-
-for(let lang of ['ur', 'ro', 'ar']) { translations[lang] = translations.en; }
+for(let lang of ['hi', 'ur', 'ro', 'ar', 'bn']) { translations[lang] = translations.en; }
 
 const menuNamesMap = {
   it: {
@@ -760,27 +611,17 @@ const menuNamesMap = {
     'Speciale Piadina Artigianale con Kebab': 'Speciale Piadina Artigianale con Kebab',
     'Piadina Kebab': 'Piadina Kebab', 'Piadina Solo Carne': 'Piadina Solo Carne',
     'Piatto Kebab': 'Piatto Kebab'
-  },
-  hi: {
-    'Panino con Bevanda (Promo Studenti)': 'पनीनो और ड्रिंक (स्टूडेंट प्रोमो)',
-    'Menu Panino con Bevanda': 'मेनु पनीनो और ड्रिंक',
-    'Menu Piadina con Bevanda': 'मेनु पियादिना और ड्रिंक',
-    'Menu Panino con Bevanda e Patatine': 'मेनु पनीनो + ड्रिंक + चिप्स',
-    'Menu Piadina con Bevanda e Patatine': 'मेनु पियादिना + ड्रिंक + चिप्स'
   }
 };
 
 const menuData = [
   { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senza: commonSenza, extra: commonExtra },
   { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
-  
   { id: 'm_1', name: 'Menu Panino con Bevanda', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
   { id: 'm_2', name: 'Menu Piadina con Bevanda', price: 6.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
   { id: 'm_3', name: 'Menu Panino con Bevanda e Patatine', price: 6.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
   { id: 'm_4', name: 'Menu Piadina con Bevanda e Patatine', price: 7.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
-
   { id: 'st_1', name: 'Panino con Bevanda (Promo Studenti)', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
-
   { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.50, category: 'piadina', isSpecialPiadina: true, isPromo: true, desc: 'Sempre Tutti le Sere', senza: commonSenza, extra: commonExtra },
   { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
   { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
@@ -794,7 +635,7 @@ const menuData = [
   { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
-  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', sansa: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
