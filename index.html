@@ -727,7 +727,7 @@ const translations = {
     modalTitleAsp: "📋 টেকঅ্যাওয়ে নিশ্চিতকরণ",
     modalTitleStudent: "📋 ছাত্র প্রোমো নিশ্চিতকরণ",
     nameLabel: "আপনার নাম:",
-    nameDelivLabel: "আপনার নাম یا ڈیلیورو অর্ডার আইডি:",
+    nameDelivLabel: "আপনার নাম বা ডেলিভারু অর্ডার আইডি:",
     addrLabel: "ডেলিভারির ঠিকানা:",
     timeLabel: "গ্রহণের/ডেলিভারির সময়:",
     editBtn: "✏ পরিবর্তন করুন",
@@ -1210,13 +1210,13 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  let orderText = `*Ordine ${getOrderCode()}*%0A`;
-  orderText += `*Kebab di Via Roma*%0A`;
-  orderText += `*Tipo:* ${state.orderType.toUpperCase()}%0A`;
-  orderText += `*Nome:* ${name}%0A`;
-  if (addr) orderText += `*Indirizzo:* ${addr}%0A`;
-  if (time) orderText += `*Orario:* ${time}%0A`;
-  orderText += `%0A--------------------------%0A*DETTAGLIO CUCINA:*%0A`;
+  let orderText = `*Ordine ${getOrderCode()}*\n`;
+  orderText += `*Kebab di Via Roma*\n`;
+  orderText += `*Tipo:* ${state.orderType.toUpperCase()}\n`;
+  orderText += `*Nome:* ${name}\n`;
+  if (addr) orderText += `*Indirizzo:* ${addr}\n`;
+  if (time) orderText += `*Orario:* ${time}\n`;
+  orderText += `\n--------------------------\n*DETTAGLIO CUCINA:*\n`;
 
   let foodSubtotal = 0;
   let totalAsportoDiscount = 0;
@@ -1235,26 +1235,26 @@ function sendWhatsAppOrder() {
       }
       foodSubtotal += effPrice;
 
-      orderText += `%0A*${itemCounter}. ${item.name}*`;
-      orderText += `%0A   👉 _Pezzo #${uIdx + 1}_`;
+      orderText += `\n*${itemCounter}. ${item.name}*`;
+      orderText += `\n   👉 _Pezzo #${uIdx + 1}_`;
       if (!hidePrices) {
         orderText += ` (€ ${effPrice.toFixed(2)})`;
       }
       
       if (unit.senza && unit.senza.length > 0) {
-        orderText += `%0A   ❌ SENZA (Rimuovi): ${unit.senza.join(', ')}`;
+        orderText += `\n   ❌ SENZA: ${unit.senza.join(', ')}`;
       } else {
-        orderText += `%0A   ❌ SENZA: Nessuna`;
+        orderText += `\n   ❌ SENZA: Nessuna`;
       }
 
       if (unit.extra && unit.extra.length > 0) {
-        orderText += `%0A   ✅ EXTRA (Aggiungi): ${unit.extra.join(', ')}`;
+        orderText += `\n   ✅ EXTRA: ${unit.extra.join(', ')}`;
       } else {
-        orderText += `%0A   ✅ EXTRA: Nessuno`;
+        orderText += `\n   ✅ EXTRA: Nessuno`;
       }
 
       if (unit.note) {
-        orderText += `%0A   📝 Note Speciali: ${unit.note}`;
+        orderText += `\n   📝 Note: ${unit.note}`;
       }
       itemCounter++;
     });
@@ -1263,17 +1263,17 @@ function sendWhatsAppOrder() {
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
   let grandTotal = foodSubtotal + deliveryFee;
 
-  orderText += `%0A--------------------------%0A`;
+  orderText += `\n--------------------------\n`;
   if (!hidePrices) {
-    orderText += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}%0A`;
+    orderText += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}\n`;
     if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
-      orderText += `🎁 *Sconto Asporto Totale:* -€ ${totalAsportoDiscount.toFixed(2)}%0A`;
+      orderText += `🎁 *Sconto Asporto:* -€ ${totalAsportoDiscount.toFixed(2)}\n`;
     }
     if (deliveryFee > 0) {
-      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}%0A`;
+      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}\n`;
     }
     if (foodSubtotal >= 40) {
-      orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L%0A`;
+      orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L\n`;
     }
     orderText += `*TOTALE COMPLESSIVO:* € ${grandTotal.toFixed(2)}`;
   } else {
@@ -1281,7 +1281,10 @@ function sendWhatsAppOrder() {
   }
 
   let phone = "393932228224";
-  let url = `https://wa.me/${phone}?text=${orderText}`;
+  
+  // یہاں encodeURIComponent استعمال کیا گیا ہے تاکہ واٹس ایپ تمام لائنیں اور علامات بالکل درست پڑھ سکے
+  let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
+  
   window.open(url, '_blank');
   closeConfirmationModal();
 }
