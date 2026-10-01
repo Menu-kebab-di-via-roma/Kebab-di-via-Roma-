@@ -71,12 +71,37 @@
       font-weight: 600;
     }
     
+    /* متحرک اسپیشل پیاڈینا پبلسٹی بٹن */
+    .special-piadina-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
+      color: #3a0000;
+      font-size: 0.65rem;
+      font-weight: 900;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid #fff;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+      animation: pulseAttention 1.8s infinite ease-in-out;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    @keyframes pulseAttention {
+      0% { transform: scale(1); box-shadow: 0 0 5px rgba(212, 175, 55, 0.6); }
+      50% { transform: scale(1.06); box-shadow: 0 0 15px rgba(212, 175, 55, 1); background: #fff; color: #990000; }
+      100% { transform: scale(1); box-shadow: 0 0 5px rgba(212, 175, 55, 0.6); }
+    }
+
     .header-promo {
-      font-size: 0.62rem;
-      color: var(--gold);
+      font-size: 0.60rem;
+      color: var(--gold-light);
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(212, 175, 55, 0.6);
-      padding: 2px 12px;
+      padding: 2px 10px;
       border-radius: 6px;
       margin-top: 4px;
       font-weight: 700;
@@ -417,6 +442,10 @@
     <div class="title-box">
       <h1>Kebab di Via Roma</h1>
       <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
+      <!-- نیا متحرک پیاڈینا اسپیشل پبلسٹی بٹن -->
+      <a href="javascript:void(0)" onclick="setOrderType('student')" class="special-piadina-btn">
+        ✨ Nostro Piadina Speciale Artigianale Tutti i Giorni Dopo le 16:30 ✨
+      </a>
       <div class="header-promo" id="header-promo-text">🎁 Promo >= 40€: Coca-Cola 1.5L Omaggio!</div>
     </div>
 
@@ -611,7 +640,7 @@ const translations = {
     catAll: "Toate", catKebab: "Kebab", catNonKebab: "Non Kebab", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
     totaleText: "Total:",
     verifyBtn: "VERIFICă ȘI PLASEAZĂ",
-    verifyDeliv: "VERIFICĂ NOTELE DELIVEROO",
+    verifyDeliv: "VERIFICĂ NOTEle DELIVEROO",
     verifyStudent: "CONFIRMĂ PROMO STUDENȚI",
     modalTitleConf: "📋 Confirmare Comandă",
     modalTitleDeliv: "📋 Note Deliveroo",
@@ -668,7 +697,7 @@ const translations = {
     consegna: "ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি ফি)",
     student: "🎓 ছাত্র প্রোমো", studentSub: "বিশেষ অফার",
     deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
-    notice: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি খাবারের অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
+    notice: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
     studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (সোম-বৃহস্পতি)।',
     catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভাজি", catBevande: "পানীয়", catAlcolici: "মদ্যপানীয়",
     totaleText: "মোট:",
@@ -696,7 +725,6 @@ const translations = {
 };
 
 const menuData = [
-  // Student Promo Specific Items (Strictly visible only in Student mode)
   {
     id: 'st_1', name: 'Menu Panino Bibita PROMO', price: 4.50, category: 'student', isStudentExclusive: true, isPromo: true,
     desc: 'Prima di ordinare, comunicate al personale qualsiasi allergia o intolleranza (Prima delle 16:30)',
@@ -721,8 +749,6 @@ const menuData = [
     senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
     extra: ['Maionese', 'Ketchup']
   },
-
-  // Standard Menu Items
   {
     id: 'k1', name: 'Piadina Kebab', price: 5.00, category: 'kebab',
     senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
@@ -1159,7 +1185,6 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  // Exact clean format requested by the user
   let orderText = `*Kebab di Via Roma*%0A`;
   orderText += `*Tel:* +39 393 222 8224%0A`;
   orderText += `*Codice Ordine:* ${getOrderCode()}%0A`;
@@ -1208,7 +1233,7 @@ function sendWhatsAppOrder() {
   if (!hidePrices) {
     orderText += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}%0A`;
     if (deliveryFee > 0) {
-      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}%0A`;
+      orderText += `*Consegna (Rider):* € ${deliveryFee.deliveroo || deliveryFee.toFixed(2)}%0A`;
     }
     if (foodSubtotal >= 40) {
       orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L%0A`;
