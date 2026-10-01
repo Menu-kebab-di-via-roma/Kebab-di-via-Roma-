@@ -511,6 +511,7 @@ const translations = {
 };
 
 const menuItems = [
+  // --- Kebab ---
   { id: 'pi_kebab', nameIt: 'Piadina Kebab', nameEn: 'Kebab Piadina', nameUr: 'پیادینا کباب', basePrice: 5.50, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'pi_carne', nameIt: 'Piadina Kebab Solo Carne', nameEn: 'Meat-Only Kebab Piadina', nameUr: 'صرف گوشت پیادینا کباب', basePrice: 6.50, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'p_kebab', nameIt: 'Panino Kebab', nameEn: 'Kebab Panino', nameUr: 'پینینو کباب', basePrice: 4.50, cat: 'kebab', customizable: true, fixedPrice: false },
@@ -519,6 +520,7 @@ const menuItems = [
   { id: 'm_piadina', nameIt: 'Menu Piadina (Bibita + Patatine)', nameEn: 'Piadina Menu (Drink + Fries)', nameUr: 'پیادینا مینو (ڈرنک + فرائز)', basePrice: 8.00, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'piatto_k', nameIt: 'Piatto Kebab (Doner Sliced Meat)', nameEn: 'Kebab Plate', nameUr: 'کباب پلیٹ', basePrice: 7.50, cat: 'kebab', customizable: true, fixedPrice: false },
 
+  // --- Non Solo Kebab ---
   { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
   { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
   { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
@@ -527,6 +529,7 @@ const menuItems = [
   { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
   { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
 
+  // --- Fritti ---
   { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'mozz_st', nameIt: 'Mozzarella Stick (6pz)', nameEn: 'Mozzarella Sticks (6pcs)', nameUr: 'موزریلا اسٹکس (6 عدد)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
@@ -534,18 +537,23 @@ const menuItems = [
   { id: 'anelli_cip', nameIt: 'Anelli di Cipolla (8pz)', nameEn: 'Onion Rings (8pcs)', nameUr: 'آنিয়ন رنگز (8 عدد)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'ch_wings', nameIt: 'Chicken Wings (5pz)', nameEn: 'Chicken Wings (5pcs)', nameUr: 'چکن ونگز (5 عدد)', basePrice: 4.50, cat: 'fritti', customizable: false, fixedPrice: false },
 
+  // --- Bevande (Step-by-Step Price Order: 1.50 -> 2.00 -> 3.00) ---
   { id: 'coca', nameIt: 'Coca-Cola (33 cl)', nameEn: 'Coca-Cola (33 cl)', nameUr: 'کوکا کولا (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'sprite', nameIt: 'Sprite (33 cl)', nameEn: 'Sprite (33 cl)', nameUr: 'اسپرائٹ (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'hell', nameIt: 'Hell Energy Drink', nameEn: 'Hell Energy Drink', nameUr: 'ہیل انرجی ڈرنک', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'estathe_pesca', nameIt: 'Estathè Pesca', nameEn: 'Peach Estathè', nameUr: 'آڑو استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'estathe_limone', nameIt: 'Estathè Limone', nameEn: 'Lemon Estathè', nameUr: 'لیمن استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
+  
+  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
+  { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
+  
   { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true },
 
+  // --- Alcolici (Step-by-Step Price Order: 2.00 -> 3.00) ---
   { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true },
+  
   { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true },
   { id: 'moretti_66', nameIt: 'Birra Moretti (66 cl)', nameEn: 'Moretti Beer (66 cl)', nameUr: 'موریتی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true }
 ];
