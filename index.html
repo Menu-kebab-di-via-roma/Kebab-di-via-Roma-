@@ -1117,7 +1117,6 @@ function calcTotal() {
   document.getElementById('cola-progress').innerText = progressMsg;
 }
 
-// موجودہ وقت میں منٹ یا گھنٹے جمع کرنے کا فنکشن (آٹو ٹائم کے لیے)
 function getDefaultTime(minutesToAdd) {
   let now = new Date();
   now.setMinutes(now.getMinutes() + minutesToAdd);
@@ -1142,8 +1141,6 @@ function openConfirmationModal() {
   else modalTitle.innerText = t.modalTitleAsp;
 
   const formInputs = document.getElementById('modal-form-inputs');
-  
-  // اسپورٹو کے لیے موجودہ وقت سے 30 منٹ بعد اور کونسیگنا کے لیے 60 منٹ بعد کا آٹو ٹائم
   let defaultTimeVal = (state.orderType === 'consegna') ? getDefaultTime(60) : getDefaultTime(30);
 
   if (state.orderType === 'deliveroo') {
@@ -1192,13 +1189,13 @@ function openConfirmationModal() {
         receiptHTML += ` (€ ${effPrice.toFixed(2)})`;
       }
       if (unit.senza && unit.senza.length > 0) {
-        receiptHTML += `<br><span style="color:#c0392b;">Senza: ${unit.senza.join(', ')}</span>`;
+        receiptHTML += `<br><span style="color:#c0392b;">❌ Senza: ${unit.senza.join(', ')}</span>`;
       }
       if (unit.extra && unit.extra.length > 0) {
-        receiptHTML += `<br><span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
+        receiptHTML += `<br><span style="color:#27ae60;">✅ Extra: ${unit.extra.join(', ')}</span>`;
       }
       if (unit.note) {
-        receiptHTML += `<br><span style="color:#555;">Note: ${unit.note}</span>`;
+        receiptHTML += `<br><span style="color:#555;">📝 Note: ${unit.note}</span>`;
       }
       receiptHTML += `</div>`;
     });
@@ -1225,7 +1222,7 @@ function openConfirmationModal() {
       receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
     } else {
       let needed = (40 - foodSubtotal).toFixed(2);
-      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
+      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} de cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
     }
     
     receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">${t.totaleText} € ${grandTotal.toFixed(2)}</div>`;
@@ -1264,14 +1261,14 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  // واٹس ایپ میسج: شروع میں کوئی لوگو یا اضافی چیز نہیں، صرف آرڈر نمبر اور نام اور وقت
+  // واٹس ایپ میسج کے اوپر صرف آرڈر نمبر اور نام اور وقت
   let orderText = `*Ordine ${getOrderCode()}*%0A`;
   orderText += `*Kebab di Via Roma*%0A`;
   orderText += `*Tipo:* ${state.orderType.toUpperCase()}%0A`;
   orderText += `*Nome:* ${name}%0A`;
   if (addr) orderText += `*Indirizzo:* ${addr}%0A`;
   if (time) orderText += `*Orario:* ${time}%0A`;
-  orderText += `%0A--------------------------%0A*DETTAGLIO ORDINE:*%0A`;
+  orderText += `%0A--------------------------%0A*DETTAGLIO CUCINA:*%0A`;
 
   let foodSubtotal = 0;
   let totalAsportoDiscount = 0;
@@ -1290,21 +1287,27 @@ function sendWhatsAppOrder() {
       }
       foodSubtotal += effPrice;
 
-      // واضح اور صاف ترتیب تاکہ پہلے، دوسرے اور تیسرے پیس کی پوری تفصیل سمجھ آئے
+      // کچن کے لیے انتہائی واضح تفصیل (ہر پینینو یا پیادینے کا ایک ایک پیس الگ ظاہر ہوگا)
       orderText += `%0A*${itemCounter}. ${item.name}*`;
-      orderText += `%0A   👉 Pezzo #${uIdx + 1}`;
+      orderText += `%0A   👉 _Pezzo #${uIdx + 1}_`;
       if (!hidePrices) {
         orderText += ` (€ ${effPrice.toFixed(2)})`;
       }
       
       if (unit.senza && unit.senza.length > 0) {
-        orderText += `%0A   ❌ Senza: ${unit.senza.join(', ')}`;
+        orderText += `%0A   ❌ SENZA (Rimuovi): ${unit.senza.join(', ')}`;
+      } else {
+        orderText += `%0A   ❌ SENZA: Nessuna`;
       }
+
       if (unit.extra && unit.extra.length > 0) {
-        orderText += `%0A   ✅ Extra: ${unit.extra.join(', ')}`;
+        orderText += `%0A   ✅ EXTRA (Aggiungi): ${unit.extra.join(', ')}`;
+      } else {
+        orderText += `%0A   ✅ EXTRA: Nessuno`;
       }
+
       if (unit.note) {
-        orderText += `%0A   📝 Note: ${unit.note}`;
+        orderText += `%0A   📝 Note Speciali: ${unit.note}`;
       }
       itemCounter++;
     });
