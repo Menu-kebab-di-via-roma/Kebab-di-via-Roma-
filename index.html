@@ -103,7 +103,6 @@
       font-weight: bold;
     }
 
-    /* 6 Language Buttons Grid Style */
     .lang-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -190,10 +189,6 @@
       padding: 10px;
       margin-bottom: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-    }
-    .menu-item:hover {
-      border-color: rgba(214, 48, 49, 0.4);
     }
     
     .item-header { 
@@ -211,7 +206,7 @@
       margin-bottom: 3px;
     }
     .item-title { font-weight: bold; font-size: 0.82rem; color: #fff; }
-    .item-price { color: #ff7675; font-weight: bold; font-size: 0.78rem; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+    .item-price { color: #ff7675; font-weight: bold; font-size: 0.78rem; }
     
     .badge-18 {
       background: var(--primary);
@@ -276,7 +271,6 @@
       cursor: pointer;
       color: #ccc;
       line-height: 1.2;
-      transition: 0.2s;
     }
     .chip-minus.selected-senza {
       background: rgba(214, 48, 49, 0.25);
@@ -304,7 +298,6 @@
       box-sizing: border-box;
       font-size: 0.7rem;
     }
-    .input-field:focus { outline: none; border-color: var(--primary); }
 
     .bottom-bar {
       position: fixed;
@@ -331,9 +324,7 @@
       font-size: 0.72rem;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-      transition: 0.2s;
     }
-    .whatsapp-btn:hover { transform: scale(1.02); }
 
     .modal-overlay {
       position: fixed;
@@ -355,7 +346,6 @@
       max-width: 380px;
       max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
     }
     .receipt-header { background: #220909; color: white; padding: 10px; text-align: center; border-bottom: 1px solid var(--card-border); }
     .receipt-header h2 { margin: 0; font-size: 0.9rem; color: #ff7675; }
@@ -391,7 +381,6 @@
       <div class="header-promo" id="header-promo-text">🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!</div>
     </div>
 
-    <!-- 6 Language Buttons Grid -->
     <div class="lang-grid">
       <button class="lang-btn" onclick="changeLanguage('it')">ITA</button>
       <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
@@ -634,7 +623,6 @@ const translations = {
 };
 
 const menuItems = [
-  // --- Kebab ---
   { id: 'pi_kebab', nameIt: 'Piadina Kebab', nameEn: 'Kebab Piadina', nameUr: 'پیادینا کباب', nameRo: 'Piadina Kebab', nameAr: 'بيادينا كباب', nameBn: 'পিয়াদিনা কাবাব', basePrice: 5.50, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'pi_carne', nameIt: 'Piadina Kebab Solo Carne', nameEn: 'Meat-Only Kebab Piadina', nameUr: 'صرف گوشت پیادینا کباب', nameRo: 'Piadina Kebab Doar Carne', nameAr: 'بيادينا كباب لحم فقط', nameBn: 'শুধু মাংসের পিয়াদিনা কাবাব', basePrice: 6.50, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'p_kebab', nameIt: 'Panino Kebab', nameEn: 'Kebab Panino', nameUr: 'پینینو کباب', nameRo: 'Panino Kebab', nameAr: 'ساندويتش كباب', nameBn: 'পানিনো কাবাব', basePrice: 4.50, cat: 'kebab', customizable: true, fixedPrice: false },
@@ -643,7 +631,6 @@ const menuItems = [
   { id: 'm_piadina', nameIt: 'Menu Piadina (Bibita + Patatine)', nameEn: 'Piadina Menu (Drink + Fries)', nameUr: 'پیادینا مینو (ڈرنک + فرائز)', nameRo: 'Meniu Piadina (Băutură + Cartofi)', nameAr: 'وجبة بيادينا (مشروب + بطاطس)', nameBn: 'পিয়াদিনা মেনু (ড্রিংক + ফ্রেঞ্চ ফ্রাই)', basePrice: 8.00, cat: 'kebab', customizable: true, fixedPrice: false },
   { id: 'piatto_k', nameIt: 'Piatto Kebab (Doner Sliced Meat)', nameEn: 'Kebab Plate', nameUr: 'کباب پلیٹ', nameRo: 'Farfurie Kebab', nameAr: 'طبق كباب', nameBn: 'কাবাব প্লেট', basePrice: 7.50, cat: 'kebab', customizable: true, fixedPrice: false },
 
-  // --- Non Solo Kebab ---
   { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', nameRo: 'Burger Pui Crispy', nameAr: 'برجر دجاج كرسبي', nameBn: 'ক্রিস্পি চিকেন বার্গার', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
   { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', nameRo: 'Panino Șnițel', nameAr: 'ساندويتش شنيتزل', nameBn: 'স্নিতজেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
   { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', nameRo: 'Panino Falafel', nameAr: 'ساندويتش فلافل', nameBn: 'ফালাফেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
@@ -652,7 +639,6 @@ const menuItems = [
   { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', nameRo: 'Panino Seekh Kebab', nameAr: 'ساندويتش سيخ كباب', nameBn: 'সিক কাবাব পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
   { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', nameRo: 'Piadina Seekh Kebab', nameAr: 'بيادينا سيخ كباب', nameBn: 'সিক কাবাব পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
 
-  // --- Fritti ---
   { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', nameRo: 'Cartofi Prăjiți (Mici)', nameAr: 'بطاطس مقلية (صغيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (ছোট)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', nameRo: 'Cartofi Prăjiți (Mari)', nameAr: 'بطاطس مقلية (كبيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (বড়)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'mozz_st', nameIt: 'Mozzarella Stick (6pz)', nameEn: 'Mozzarella Sticks (6pcs)', nameUr: 'موزریلا اسٹکس (6 عدد)', nameRo: 'Mozzarella Sticks (6 buc)', nameAr: 'أصابع موتساريلا (6 قطع)', nameBn: 'মোজারেলা স্টিকস (৬ পিস)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
@@ -660,7 +646,6 @@ const menuItems = [
   { id: 'anelli_cip', nameIt: 'Anelli di Cipolla (8pz)', nameEn: 'Onion Rings (8pcs)', nameUr: 'آنিয়ন رنگز (8 عدد)', nameRo: 'Inele de Ceapă (8 buc)', nameAr: 'حلقات بصل (8 قطع)', nameBn: 'পেঁয়াজ রিং (৮ পিস)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'ch_wings', nameIt: 'Chicken Wings (5pz)', nameEn: 'Chicken Wings (5pcs)', nameUr: 'چکن ونگز (5 عدد)', nameRo: 'Aripioare de Pui (5 buc)', nameAr: 'أجنحة دجاج (5 قطع)', nameBn: 'চিকেন উইংস (৫ পিস)', basePrice: 4.50, cat: 'fritti', customizable: false, fixedPrice: false },
 
-  // --- Bevande (Step-by-Step Price Order: 1.50 -> 2.00 -> 3.00) ---
   { id: 'coca', nameIt: 'Coca-Cola (33 cl)', nameEn: 'Coca-Cola (33 cl)', nameUr: 'کوکا کولا (33 cl)', nameRo: 'Coca-Cola (33 cl)', nameAr: 'كوكاكولا (33 سل)', nameBn: 'কোকা-কোলা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', nameRo: 'Coca-Cola Zero (33 cl)', nameAr: 'كوكاكولا زيرو (33 سل)', nameBn: 'কোকা-কোলা জিরো (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
   { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', nameRo: 'Fanta (33 cl)', nameAr: 'فانتا (33 سل)', nameBn: 'ফ্যান্টা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
@@ -674,7 +659,6 @@ const menuItems = [
   
   { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', nameRo: 'Coca-Cola Mare (1.5 Litri)', nameAr: 'كوكاكولا كبيرة (1.5 لتر)', nameBn: 'বড় কোকা-কোলা (১.৫ লিটার)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true },
 
-  // --- Alcolici (Step-by-Step Price Order: 2.00 -> 3.00) ---
   { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', nameRo: 'Bere Peroni (33 cl)', nameAr: 'بيرة بيروني (33 سل)', nameBn: 'পেরোনি বিয়ার (৩৩ সিএল)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true },
   
   { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', nameRo: 'Bere Peroni (66 cl)', nameAr: 'بيرة بيروني (66 سل)', nameBn: 'পেরোনি বিয়ার (৬৬ সিএল)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true },
@@ -758,7 +742,7 @@ function setOrderType(type) {
 
   const noticeEl = document.getElementById('main-notice');
   if(type === 'deliveroo') {
-    noticeEl.innerText = state.lang === 'ur' ? "💡 ڈیلیورو موڈ: کوئی قیمت ظاہر نہیں ہوگی۔ اپنی پسند درج کریں۔" : (state.lang === 'en' ? "💡 Deliveroo Mode: No prices shown. Enter your preferences." : (state.lang === 'ro' ? "💡 Mod Deliveroo: Fără prețuri. Introdu preferințele." : (state.lang === 'ar' ? "💡 وضع دليفرو: لا توجد أسعار معروضة. أدخل تفضيلاتك." : (state.lang === 'bn' ? "💡 ডেলিভারু মোড: কোনো দাম দেখানো হবে না।" : "💡 Modalità Deliveroo: Nessun prezzo visualizzato."))));
+    noticeEl.innerText = state.lang === 'ur' ? "💡 ڈیلیورو موڈ: کوئی قیمت ظاہر نہیں ہوگی۔ اپنی پسند درج کریں۔" : "💡 Modalità Deliveroo: Nessun prezzo visualizzato.";
     document.getElementById('total-price-box').style.display = 'none';
   } else {
     noticeEl.innerHTML = t.notice;
@@ -947,7 +931,7 @@ function updateTotal() {
 function openConfirmationModal() {
   const cartKeys = Object.keys(state.cart);
   if (cartKeys.length === 0) {
-    alert(state.lang === 'ur' ? "کارٹ خالی ہے!" : (state.lang === 'en' ? "Cart is empty!" : (state.lang === 'ro' ? "Coșul este gol!" : (state.lang === 'ar' ? "السلة فارغة!" : (state.lang === 'bn' ? "কার্ট খালি!" : "Il carrello è vuoto!)))));
+    alert(state.lang === 'ur' ? "کارٹ خالی ہے!" : "Il carrello è vuoto!");
     return;
   }
 
@@ -1055,7 +1039,7 @@ function sendWhatsAppOrder() {
   const address = document.getElementById('customer-address') ? document.getElementById('customer-address').value.trim() : '';
 
   if (!name) {
-    alert(state.lang === 'ur' ? "براہ کرم اپنا نام درج کریں!" : (state.lang === 'en' ? "Please enter your name!" : (state.lang === 'ro' ? "Te rog introdu numele!" : (state.lang === 'ar' ? "الرجاء إدخال اسمك!" : (state.lang === 'bn' ? "দয়া করে আপনার নাম দিন!" : "Per favore inserisci il tuo nome!")))));
+    alert(state.lang === 'ur' ? "براہ کرم اپنا نام درج کریں!" : "Per favore inserisci il tuo nome!");
     return;
   }
 
@@ -1123,6 +1107,7 @@ function sendWhatsAppOrder() {
   window.open(whatsappUrl, '_blank');
 }
 
+// Automatically load all items when page starts
 renderMenu(menuItems);
 </script>
 
