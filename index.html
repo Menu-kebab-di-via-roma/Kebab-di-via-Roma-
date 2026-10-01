@@ -83,16 +83,16 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       border: 1px solid #fff;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
-      animation: pulseAttention 1.8s infinite ease-in-out;
+      box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+      animation: softGlow 3s infinite ease-in-out;
       cursor: pointer;
       text-decoration: none;
     }
 
-    @keyframes pulseAttention {
-      0% { transform: scale(1); box-shadow: 0 0 5px rgba(212, 175, 55, 0.6); }
-      50% { transform: scale(1.06); box-shadow: 0 0 15px rgba(212, 175, 55, 1); background: #fff; color: #990000; }
-      100% { transform: scale(1); box-shadow: 0 0 5px rgba(212, 175, 55, 0.6); }
+    @keyframes softGlow {
+      0% { opacity: 0.85; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 0.85; transform: scale(1); }
     }
 
     .header-promo {
@@ -498,7 +498,7 @@
   </div>
 
   <div class="instructions-notice" id="main-notice">
-    🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi dal calcolo).
+    🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!
   </div>
 
   <div class="category-nav" id="category-nav-bar">
@@ -554,8 +554,9 @@ const translations = {
     consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
     student: "🎓 Promo Studenti", studentSub: "Offerte Speciali",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
-    notice: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi).',
-    studentNotice: '🎓 <b>Promo Studenti:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (Lunedì-Giovedì).',
+    noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
+    noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi dal calcolo).',
+    studentNotice: '🎓 <b>Promo Studenti:</b> Offerte valide per studenti.',
     catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
@@ -585,8 +586,9 @@ const translations = {
     consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
     student: "🎓 Student Promo", studentSub: "Special Offers",
     deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
-    notice: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
-    studentNotice: '🎓 <b>Student Promo:</b> Please order before 4:30 PM and then come eat peacefully (Mon-Thu).',
+    noticeAsporto: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola!',
+    noticeConsegna: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
+    studentNotice: '🎓 <b>Student Promo:</b> Special offers for students.',
     catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
@@ -616,8 +618,9 @@ const translations = {
     consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری فیس)",
     student: "🎓 اسٹوڈنٹ آفر", studentSub: "اسپیشل آفرز",
     deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
-    notice: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت! (رائڈر فیس اس میں شامل نہیں ہے۔)',
-    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (سوموار تا جمعرات).',
+    noticeAsporto: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت!',
+    noticeConsegna: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت! (رائڈر فیس اس میں شامل نہیں ہے۔)',
+    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> طلباء کے لیے خصوصی آفرز۔',
     catAll: "سبھی", catKebab: "کباب", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
@@ -647,8 +650,9 @@ const translations = {
     consegna: "Livrare", consegnaSub: "(+2.50€ Livrare)",
     student: "🎓 Promo Studenți", studentSub: "Oferte Speciale",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizează",
-    notice: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou! (Taxa de livrare a riderului este exclusă).',
-    studentNotice: '🎓 <b>Promo Studenți:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (Luni-Joi).',
+    noticeAsporto: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou!',
+    noticeConsegna: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou! (Taxa de livrare a riderului este exclusă).',
+    studentNotice: '🎓 <b>Promo Studenți:</b> Oferte speciale pentru studenți.',
     catAll: "Toate", catKebab: "Kebab", catNonKebab: "Non Kebab", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
     totaleText: "Total:",
     verifyBtn: "VERIFICă ȘI PLASEAZĂ",
@@ -678,8 +682,9 @@ const translations = {
     consegna: "توصيل", consegnaSub: "(+2.50€ رسوم التوصيل)",
     student: "🎓 عرض الطلاب", studentSub: "عروض خاصة",
     deliveroo: "ملاحظات دليفريوو", deliverooSub: "تخصيص",
-    notice: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً! (رسوم التوصيل مستبعدة).',
-    studentNotice: '🎓 <b>عرض الطلاب:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (الإثنين-الخميس).',
+    noticeAsporto: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً!',
+    noticeConsegna: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً! (رسوم التوصيل مستبعدة).',
+    studentNotice: '🎓 <b>عرض الطلاب:</b> عروض خاصة للطلاب.',
     catAll: "الكل", catKebab: "كباب", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات", catAlcolici: "مشروبات كحولية",
     totaleText: "الإجمالي:",
     verifyBtn: "تحقق واطلب",
@@ -709,8 +714,9 @@ const translations = {
     consegna: "ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি ফি)",
     student: "🎓 ছাত্র প্রোমো", studentSub: "বিশেষ অফার",
     deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
-    notice: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
-    studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> Per favore ordinate prima delle 16:30 poi venite tranquillamente mangiate (সোম-বৃহস্পতি)।',
+    noticeAsporto: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
+    noticeConsegna: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
+    studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> শিক্ষার্থীদের জন্য বিশেষ অফার।',
     catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভাজি", catBevande: "পানীয়", catAlcolici: "মদ্যপানীয়",
     totaleText: "মোট:",
     verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
@@ -739,7 +745,7 @@ const translations = {
 const menuData = [
   {
     id: 'st_1', name: 'Menu Panino Bibita PROMO', price: 4.50, category: 'student', isStudentExclusive: true, isPromo: true,
-    desc: 'Prima di ordinare, comunicate al personale qualsiasi allergia o intolleranza (Prima delle 16:30)',
+    desc: 'Prima delle 16:30',
     senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
     extra: ['Maionese', 'Ketchup']
   },
@@ -751,13 +757,13 @@ const menuData = [
   },
   {
     id: 'st_3', name: 'Menu Panino Bibita', price: 5.00, category: 'student', isStudentExclusive: true, isPromo: false,
-    desc: 'Tutti i giorni (Dopo le 16:30)',
+    desc: '',
     senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
     extra: ['Maionese', 'Ketchup']
   },
   {
     id: 'st_4', name: 'Menu Panino Bibita e Patate Fritte', price: 6.00, category: 'student', isStudentExclusive: true, isPromo: false,
-    desc: 'Tutti i giorni (Quando vuoi)',
+    desc: '',
     senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
     extra: ['Maionese', 'Ketchup']
   },
@@ -849,11 +855,7 @@ function changeLanguage(lang) {
   document.getElementById('lbl-deliveroo').innerText = t.deliveroo;
   document.getElementById('lbl-deliveroo-sub').innerText = t.deliverooSub;
   
-  if (state.orderType === 'student') {
-    document.getElementById('main-notice').innerHTML = t.studentNotice;
-  } else {
-    document.getElementById('main-notice').innerHTML = t.notice;
-  }
+  updateNoticeText();
   
   document.getElementById('cat-all').innerText = t.catAll;
   document.getElementById('cat-kebab').innerText = t.catKebab;
@@ -865,6 +867,23 @@ function changeLanguage(lang) {
   
   updateMainButtonText();
   renderMenu();
+}
+
+function updateNoticeText() {
+  const t = translations[state.lang];
+  const noticeEl = document.getElementById('main-notice');
+  if (state.orderType === 'student') {
+    noticeEl.innerHTML = t.studentNotice;
+    noticeEl.style.display = 'block';
+  } else if (state.orderType === 'deliveroo') {
+    noticeEl.style.display = 'none';
+  } else if (state.orderType === 'consegna') {
+    noticeEl.innerHTML = t.noticeConsegna;
+    noticeEl.style.display = 'block';
+  } else {
+    noticeEl.innerHTML = t.noticeAsporto;
+    noticeEl.style.display = 'block';
+  }
 }
 
 function updateMainButtonText() {
@@ -891,12 +910,11 @@ function setOrderType(type) {
   else if (type === 'student') activeEl.classList.add('student-active');
   else activeEl.classList.add('active');
 
-  const t = translations[state.lang];
+  updateNoticeText();
+
   if (type === 'student') {
-    document.getElementById('main-notice').innerHTML = t.studentNotice;
     document.getElementById('category-nav-bar').style.display = 'none';
   } else {
-    document.getElementById('main-notice').innerHTML = t.notice;
     document.getElementById('category-nav-bar').style.display = 'flex';
   }
 
@@ -957,13 +975,11 @@ function renderMenu() {
         </div>
     `;
 
-    // ہر مقدار کے لیے الگ الگ موڈیفیکیشن باکس جنریٹ کرنا
     if (qty > 0) {
       html += `<div class="unit-customizer">`;
       if (!state.cart[cartKey].units) {
         state.cart[cartKey].units = [];
       }
-      // Ensure units array matches qty length
       while(state.cart[cartKey].units.length < qty) {
         state.cart[cartKey].units.push({ senza: [], extra: [], note: '' });
       }
@@ -1090,11 +1106,13 @@ function calcTotal() {
   }
 
   let progressMsg = "";
-  if (foodSubtotal >= 40) {
-    progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!";
-  } else {
-    let diff = (40 - foodSubtotal).toFixed(2);
-    progressMsg = `⚠️ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
+  if (state.orderType !== 'deliveroo') {
+    if (foodSubtotal >= 40) {
+      progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!";
+    } else {
+      let diff = (40 - foodSubtotal).toFixed(2);
+      progressMsg = `⚠️ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
+    }
   }
   document.getElementById('cola-progress').innerText = progressMsg;
 }
@@ -1182,7 +1200,6 @@ function openConfirmationModal() {
   if (!hidePrices) {
     receiptHTML += `<div>${t.subtotal} € ${foodSubtotal.toFixed(2)}</div>`;
     
-    // گرین رنگ میں سكوندو (ڈسکاؤنٹ) شو کرنا
     if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
       receiptHTML += `<div style="color: #27ae60; font-weight: bold; margin-top: 3px;">🎁 Sconto Asporto Totale: -€ ${totalAsportoDiscount.toFixed(2)}</div>`;
     }
@@ -1190,12 +1207,14 @@ function openConfirmationModal() {
     if (deliveryFee > 0) {
       receiptHTML += `<div>${t.deliveryFee} € ${deliveryFee.toFixed(2)}</div>`;
     }
+    
     if (foodSubtotal >= 40) {
       receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
     } else {
       let needed = (40 - foodSubtotal).toFixed(2);
       receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
     }
+    
     receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">${t.totaleText} € ${grandTotal.toFixed(2)}</div>`;
   } else {
     receiptHTML += `<div style="font-weight:bold; color:#009473; margin-top:4px;">Nota Deliveroo Inviata Senza Prezzi</div>`;
@@ -1310,7 +1329,7 @@ function sendWhatsAppOrder() {
     orderText += `_Nota Deliveroo senza prezzi_`;
   }
 
-  let phone = "39393222824";
+  let phone = "393932228224";
   let url = `https://wa.me/${phone}?text=${orderText}`;
   window.open(url, '_blank');
   closeConfirmationModal();
