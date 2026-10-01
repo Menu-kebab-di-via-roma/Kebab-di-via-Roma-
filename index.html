@@ -504,10 +504,9 @@
   <div class="category-nav" id="category-nav-bar">
     <button class="cat-btn active" onclick="filterCategory('all', this)" id="cat-all">Tutti</button>
     <button class="cat-btn" onclick="filterCategory('kebab', this)" id="cat-kebab">Kebab</button>
+    <button class="cat-btn" onclick="filterCategory('piadina', this)" id="cat-piadina">Piadina Kebab</button>
     <button class="cat-btn" onclick="filterCategory('non-kebab', this)" id="cat-non-kebab">Non Solo Kebab</button>
     <button class="cat-btn" onclick="filterCategory('fritti', this)" id="cat-fritti">Fritti</button>
-    <button class="cat-btn" onclick="filterCategory('bevande', this)" id="cat-bevande">Bevande</button>
-    <button class="cat-btn" onclick="filterCategory('alcolici', this)" id="cat-alcolici">Alcolici</button>
   </div>
 
   <div id="menu-container"></div>
@@ -557,7 +556,7 @@ const translations = {
     noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
     noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi dal calcolo).',
     studentNotice: '🎓 <b>Promo Studenti:</b> Offerte valide per studenti.',
-    catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
+    catAll: "Tutti", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Solo Kebab", catFritti: "Fritti",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
     verifyDeliv: "VERIFICA NOTE DELIVEROO",
@@ -589,7 +588,7 @@ const translations = {
     noticeAsporto: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola!',
     noticeConsegna: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
     studentNotice: '🎓 <b>Student Promo:</b> Special offers for students.',
-    catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
+    catAll: "All", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non-Kebab", catFritti: "Fried",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
     verifyDeliv: "VERIFY DELIVEROO NOTES",
@@ -621,7 +620,7 @@ const translations = {
     noticeAsporto: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت!',
     noticeConsegna: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت! (رائڈر فیس اس میں شامل نہیں ہے۔)',
     studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> طلباء کے لیے خصوصی آفرز۔',
-    catAll: "سبھی", catKebab: "کباب", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
+    catAll: "سبھی", catKebab: "کباب", catPiadina: "پیادینا", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
     verifyDeliv: "ڈیلیورو نوٹ چیک کریں",
@@ -653,7 +652,7 @@ const translations = {
     noticeAsporto: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou!',
     noticeConsegna: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou! (Taxa de livrare a riderului este exclusă).',
     studentNotice: '🎓 <b>Promo Studenți:</b> Oferte speciale pentru studenți.',
-    catAll: "Toate", catKebab: "Kebab", catNonKebab: "Non Kebab", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
+    catAll: "Toate", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Kebab", catFritti: "Prăjite",
     totaleText: "Total:",
     verifyBtn: "VERIFICă ȘI PLASEAZĂ",
     verifyDeliv: "VERIFICĂ NOTEle DELIVEROO",
@@ -685,7 +684,7 @@ const translations = {
     noticeAsporto: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً!',
     noticeConsegna: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً! (رسوم التوصيل مستبعدة).',
     studentNotice: '🎓 <b>عرض الطلاب:</b> عروض خاصة للطلاب.',
-    catAll: "الكل", catKebab: "كباب", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات", catAlcolici: "مشروبات كحولية",
+    catAll: "الكل", catKebab: "كباب", catPiadina: "بيادينا", catNonKebab: "أطباق أخرى", catFritti: "مقليات",
     totaleText: "الإجمالي:",
     verifyBtn: "تحقق واطلب",
     verifyDeliv: "تحقق من ملاحظات دليفريوو",
@@ -715,9 +714,9 @@ const translations = {
     student: "🎓 ছাত্র প্রোমো", studentSub: "বিশেষ অফার",
     deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
     noticeAsporto: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
-    noticeConsegna: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
+    noticeConsegna: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাده)।',
     studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> শিক্ষার্থীদের জন্য বিশেষ অফার।',
-    catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভাজি", catBevande: "পানীয়", catAlcolici: "মদ্যপানীয়",
+    catAll: "সব", catKebab: "কাবাব", catPiadina: "পিয়াদিনা", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভাজি",
     totaleText: "মোট:",
     verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
     verifyDeliv: "ডেলিভারু নোট যাচাই করুন",
@@ -743,85 +742,36 @@ const translations = {
 };
 
 const menuData = [
-  {
-    id: 'st_1', name: 'Menu Panino Bibita PROMO', price: 4.50, category: 'student', isStudentExclusive: true, isPromo: true,
-    desc: 'Prima delle 16:30',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup']
-  },
-  {
-    id: 'st_2', name: 'Menu Panino Bibita con Patate PROMO', price: 5.50, category: 'student', isStudentExclusive: true, isPromo: true,
-    desc: 'Prima delle 16:30',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup']
-  },
-  {
-    id: 'st_3', name: 'Menu Panino Bibita', price: 5.00, category: 'student', isStudentExclusive: true, isPromo: false,
-    desc: '',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup']
-  },
-  {
-    id: 'st_4', name: 'Menu Panino Bibita e Patate Fritte', price: 6.00, category: 'student', isStudentExclusive: true, isPromo: false,
-    desc: '',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup']
-  },
-  {
-    id: 'k1', name: 'Piadina Kebab', price: 5.00, category: 'kebab',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra']
-  },
-  {
-    id: 'k2', name: 'Piadina Kebab Solo Carne', price: 5.50, category: 'kebab',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Cipolla', 'Peperoncino'],
-    extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra']
-  },
-  {
-    id: 'k3', name: 'Panino Kebab', price: 4.00, category: 'kebab',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Insalata', 'Verza e Carote', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Peperoncino', 'Olive'],
-    extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra']
-  },
-  {
-    id: 'k4', name: 'Panino Solo Carne', price: 4.50, category: 'kebab',
-    senza: ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Salsa', 'Salsa Algerina', 'Cipolla', 'Peperoncino'],
-    extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra']
-  },
-  {
-    id: 'k5', name: 'Piatto Falafel', price: 4.50, category: 'kebab',
-    senza: ['Insalata', 'Pomodoro', 'Cetrioli', 'Cipolla', 'Salsa Yogurt'],
-    extra: ['Maionese', 'Ketchup', 'Falafel Extra']
-  },
-  {
-    id: 'nk1', name: 'Crispy Pollo Hamburger', price: 3.00, category: 'non-kebab',
-    senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'],
-    extra: ['Formaggio', 'Pollo Extra', 'Bacon']
-  },
-  {
-    id: 'nk2', name: 'Panino Cotoletta', price: 3.00, category: 'non-kebab',
-    senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'],
-    extra: ['Formaggio', 'Cotoletta Extra']
-  },
-  {
-    id: 'f1', name: 'Patatine Frritte (Piccola)', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
-  {
-    id: 'f2', name: 'Patatine Frritte (Grande)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
-  {
-    id: 'f3', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
-  {
-    id: 'f4', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Agrodolce'] },
-  {
-    id: 'b1', name: 'Coca-Cola 33cl', price: 2.00, category: 'bevande', senza: [], extra: [] },
-  {
-    id: 'b2', name: 'Coca-Cola 1.5L', price: 3.50, category: 'bevande', senza: [], extra: [] },
-  {
-    id: 'b3', name: 'Fanta 33cl', price: 2.00, category: 'bevande', senza: [], extra: [] },
-  {
-    id: 'b4', name: 'Sprite 33cl', price: 2.00, category: 'bevande', senza: [], extra: [] },
-  {
-    id: 'a1', name: 'Birra Moretti 33cl', price: 3.00, category: 'alcolici', senza: [], extra: [] },
-  {
-    id: 'a2', name: 'Heineken 33cl', price: 3.00, category: 'alcolici', senza: [], extra: [] }
+  // KEBAB
+  { id: 'k_1', name: 'Panino Kebab', price: 5.00, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'k_2', name: 'Panino Solo Carne', price: 5.50, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'k_3', name: 'Menu Panino', price: 7.50, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'st_1', name: 'Menu Panino Studenti', price: 6.00, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
+  { id: 'st_2', name: 'Menu Panino Studenti', price: 7.00, category: 'kebab', isStudentExclusive: true, isPromo: false, desc: '', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
+
+  // PIADINA KEBAB
+  { id: 'p_1', name: 'Piadina Kebab', price: 6.00, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'p_2', name: 'Piadina Solo Carne', price: 7.00, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'p_3', name: 'Menu Piadina', price: 8.50, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
+  { id: 'p_4', name: 'Piatto Kebab', price: 8.50, category: 'piadina', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Carne Extra'] },
+  { id: 'st_3', name: 'Menu Piadina Studenti', price: 8.00, category: 'piadina', isStudentExclusive: true, isPromo: false, desc: '', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
+
+  // NON SOLO KEBAB
+  { id: 'nk_1', name: 'Panino Falafel', price: 4.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Falafel Extra'] },
+  { id: 'nk_2', name: 'Piadina Falafel', price: 5.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Falafel Extra'] },
+  { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 6.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup'] },
+  { id: 'nk_4', name: 'Panino Seekh Kebab', price: 4.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio'] },
+  { id: 'nk_5', name: 'Crispy Hamburger', price: 4.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'], extra: ['Formaggio', 'Bacon'] },
+  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio'] },
+  { id: 'nk_7', name: 'Panino Cotoletta', price: 4.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'], extra: ['Formaggio', 'Cotoletta Extra'] },
+
+  // FRITTI
+  { id: 'f_1', name: 'Patatine Frritte Piccola', price: 3.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
+  { id: 'f_2', name: 'Patatine Frritte Grande', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
+  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Agrodolce'] },
+  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 6.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Piccante'] }
 ];
 
 let currentFilter = 'all';
@@ -859,10 +809,9 @@ function changeLanguage(lang) {
   
   document.getElementById('cat-all').innerText = t.catAll;
   document.getElementById('cat-kebab').innerText = t.catKebab;
+  document.getElementById('cat-piadina').innerText = t.catPiadina;
   document.getElementById('cat-non-kebab').innerText = t.catNonKebab;
   document.getElementById('cat-fritti').innerText = t.catFritti;
-  document.getElementById('cat-bevande').innerText = t.catBevande;
-  document.getElementById('cat-alcolici').innerText = t.catAlcolici;
   document.getElementById('lbl-totale-text').innerText = t.totaleText;
   
   updateMainButtonText();
@@ -1222,7 +1171,7 @@ function openConfirmationModal() {
       receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
     } else {
       let needed = (40 - foodSubtotal).toFixed(2);
-      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} de cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
+      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
     }
     
     receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">${t.totaleText} € ${grandTotal.toFixed(2)}</div>`;
@@ -1261,7 +1210,6 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  // واٹس ایپ میسج کے اوپر صرف آرڈر نمبر اور نام اور وقت
   let orderText = `*Ordine ${getOrderCode()}*%0A`;
   orderText += `*Kebab di Via Roma*%0A`;
   orderText += `*Tipo:* ${state.orderType.toUpperCase()}%0A`;
@@ -1287,7 +1235,6 @@ function sendWhatsAppOrder() {
       }
       foodSubtotal += effPrice;
 
-      // کچن کے لیے انتہائی واضح تفصیل (ہر پینینو یا پیادینے کا ایک ایک پیس الگ ظاہر ہوگا)
       orderText += `%0A*${itemCounter}. ${item.name}*`;
       orderText += `%0A   👉 _Pezzo #${uIdx + 1}_`;
       if (!hidePrices) {
