@@ -125,13 +125,12 @@
       font-weight: bold;
     }
 
-    /* New WhatsApp Call Button Style */
     .whatsapp-call-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
-      background: #25D366; /* WhatsApp Green */
+      background: #25D366;
       color: white;
       text-decoration: none;
       font-size: 0.58rem;
@@ -151,7 +150,7 @@
     }
 
     .music-btn-top {
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
       border: 1px solid #fff;
       color: #fff;
       padding: 4px 8px;
@@ -491,8 +490,8 @@
 </head>
 <body>
 
-<!-- Background Audio -->
-<audio id="bg-audio" loop>
+<!-- Working Background Audio Source -->
+<audio id="bg-audio" loop preload="auto">
   <source src="https://assets.mixkit.co/music/preview/mixkit-relaxing-spaces-135.mp3" type="audio/mp3">
 </audio>
 
@@ -503,7 +502,7 @@
         <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img" onerror="this.src='https://cdn4.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Tiktok-512.png'">
         <span class="tiktok-text">TikTok</span>
       </a>
-      <!-- New WhatsApp Call Button -->
+      <!-- WhatsApp Call Button -->
       <a href="https://wa.me/393932228224" target="_blank" class="whatsapp-call-btn">
         📞 WA Call
       </a>
@@ -517,7 +516,7 @@
       </a>
     </div>
 
-    <!-- Right Controls: Music Stop/Play -->
+    <!-- Right Controls: Music Button positioned right above Language Selector -->
     <div class="header-right-controls">
       <button id="music-toggle-btn" class="music-btn-top" onclick="toggleBackgroundMusic()">
         🔇 Music: OFF
@@ -611,7 +610,7 @@ const state = {
   lang: 'it'
 };
 
-// Background Music Control
+// Robust Background Music Setup
 const audio = document.getElementById('bg-audio');
 audio.volume = 0.3; 
 let isMusicPlaying = false;
@@ -632,7 +631,7 @@ function toggleBackgroundMusic() {
   }
 }
 
-// Auto-play music on first interaction
+// Automatically start music on the first user interaction anywhere on the screen
 document.addEventListener('click', function initAudioPlay() {
   if (!isMusicPlaying && audio.paused) {
     audio.play().then(() => {
@@ -642,4 +641,608 @@ document.addEventListener('click', function initAudioPlay() {
         btn.innerText = "🎵 Music: ON";
         btn.style.background = "linear-gradient(135deg, #27ae60, #2ecc71)";
       }
-    }).catch(err => { console.log("I
+    }).catch(err => { console.log("Interaction play blocked:", err); });
+  }
+}, { once: true });
+
+const commonSenza = ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Algerina (Agrodolce)', 'Salsa Rosa', 'Insalata, Verza e Carote', 'Cetrioli', 'Cipolla', 'Pomodoro', 'Olive', 'Peperoncino'];
+const commonExtra = ['Maionese', 'Ketchup', 'Extra Cipolla', 'Extra Piccante', 'Carne Extra'];
+
+const translations = {
+  it: {
+    specialeBanner: "✨ Nostro Speciale Piadina Artigianale con Kebab - Solo €5.00 (Sempre Tutti le Sere) ✨",
+    asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
+    consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
+    student: "🎓 Promo Studenti", studentSub: "Offerte Speciali",
+    deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
+    noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
+    noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi).',
+    studentNotice: '🎓 <b>Promo Studenti:</b> Panino con Bevanda a 4.50€ (Prima delle 16:30).',
+    catAll: "Tutti", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici", catSpeciale: "✨ Piadina Speciale €5",
+    totaleText: "Totale:",
+    verifyBtn: "VERIFICA E ORDINA",
+    verifyDeliv: "VERIFICA NOTE DELIVEROO",
+    verifyStudent: "CONFERMA PROMO STUDENTI",
+    modalTitleConf: "📋 Conferma Ordine",
+    modalTitleDeliv: "📋 Note Deliveroo",
+    modalTitleCons: "📋 Conferma Consegna (+2.50€)",
+    modalTitleAsp: "📋 Conferma Asporto",
+    modalTitleStudent: "📋 Conferma Promo Studenti",
+    nameLabel: "Il tuo Nome:",
+    nameDelivLabel: "Il tuo Nome o Numero Ordine Deliveroo:",
+    addrLabel: "Indirizzo di Consegna:",
+    timeLabel: "Orario Ritiro/Consegna:",
+    editBtn: "✏ Modifica",
+    sendBtn: "✅ Invia su WhatsApp",
+    senzaTitle: "Senza (Rimuovi):",
+    extraTitle: "Extra (Aggiungi):",
+    notePlaceholder: "Note extra...",
+    subtotal: "Subtotale cibo:",
+    deliveryFee: "Consegna (Rider):",
+    freeCola: "🎁 Coca-Cola 1.5L Omaggio (Cibo >= 40€)"
+  },
+  hi: {
+    specialeBanner: "✨ स्पेशल होममेड पियादिना कबाब - सिर्फ €5.00 (हर शाम) ✨",
+    asporto: "टेक-अवे", asportoSub: "(-0.50€ खाने पर)",
+    consegna: "डिलीवरी", consegnaSub: "(+2.50€ डिलीवरी चार्ज)",
+    student: "🎓 स्टूडेंट ऑफर", studentSub: "स्पेशल ऑफर",
+    deliveroo: "डिलीवरू नोट्स", deliverooSub: "कस्टमाइज़ करें",
+    noticeAsporto: '🎁 <b>ऑफर:</b> 40 यूरो या उससे ज्यादा के ऑर्डर पर 1.5 लीटर कोका-कोला बिल्कुल मुफ्त!',
+    noticeConsegna: '🎁 <b>ऑफर:</b> 40 यूरो या उससे ज्यादा के ऑर्डर पर 1.5 लीटर कोका-कोला मुफ्त! (डिलीवरी चार्ज अलग है)।',
+    studentNotice: '🎓 <b>स्टूडेंट ऑफर:</b> पनीनो + ड्रिंक सिर्फ €4.50 (दोपहर 4:30 बजे से पहले)।',
+    catAll: "सभी", catKebab: "कबाब", catPiadina: "पियादिना", catNonKebab: "अन्य आइटम्स", catFritti: "फ्राइड", catBevande: "ड्रिंक्स", catAlcolici: "अल्कोहल", catSpeciale: "✨ स्पेशल पियादिना €5",
+    totaleText: "कुल राशि:",
+    verifyBtn: "चेक करें और ऑर्डर दें",
+    verifyDeliv: "डिलीवरू नोट्स चेक करें",
+    verifyStudent: "स्टूडेंट ऑफर कन्फर्म करें",
+    modalTitleConf: "📋 ऑर्डर कन्फर्म करें",
+    modalTitleDeliv: "📋 डिलीवरू नोट्स",
+    modalTitleCons: "📋 डिलीवरी कन्फर्म करें (+2.50€)",
+    modalTitleAsp: "📋 टेक-अवे कन्फर्म करें",
+    modalTitleStudent: "📋 स्टूडेंट ऑफर कन्फर्म करें",
+    nameLabel: "आपका नाम:",
+    nameDelivLabel: "आपका नाम या डिलीवरू ऑर्डर नंबर:",
+    addrLabel: "डिलीवरी का पता:",
+    timeLabel: "पिकअप / डिलीवरी का समय:",
+    editBtn: "✏ एडिट करें",
+    sendBtn: "✅ व्हाट्सएप पर भेजें",
+    senzaTitle: "बिना (निकालें):",
+    extraTitle: "एक्स्ट्रा (जोड़ें):",
+    notePlaceholder: "कोई अन्य नोट...",
+    subtotal: "खाने का कुल:",
+    deliveryFee: "डिलीवरी चार्ज:",
+    freeCola: "🎁 मुफ्त कोका-कोला 1.5L (खाना >= 40€)"
+  },
+  en: {
+    specialeBanner: "✨ Our Special Artisanal Piadina with Kebab - Only €5.00 (Every Evening) ✨",
+    asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
+    consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
+    student: "🎓 Student Promo", studentSub: "Special Offers",
+    deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
+    noticeAsporto: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola!',
+    noticeConsegna: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
+    studentNotice: '🎓 <b>Student Promo:</b> Panino with Drink for €4.50 (Before 4:30 PM).',
+    catAll: "All", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol", catSpeciale: "✨ Special Piadina €5",
+    totaleText: "Total:",
+    verifyBtn: "VERIFY & ORDER",
+    verifyDeliv: "VERIFY DELIVEROO NOTES",
+    verifyStudent: "CONFIRM STUDENT PROMO",
+    modalTitleConf: "📋 Order Confirmation",
+    modalTitleDeliv: "📋 Deliveroo Notes",
+    modalTitleCons: "📋 Delivery Confirmation (+2.50€)",
+    modalTitleAsp: "📋 Takeaway Confirmation",
+    modalTitleStudent: "📋 Student Promo Confirmation",
+    nameLabel: "Your Name:",
+    nameDelivLabel: "Your Name or Deliveroo Order ID:",
+    addrLabel: "Delivery Address:",
+    timeLabel: "Pickup/Delivery Time:",
+    editBtn: "✏ Edit",
+    sendBtn: "✅ Send via WhatsApp",
+    senzaTitle: "Without (Remove):",
+    extraTitle: "Extra (Add):",
+    notePlaceholder: "Extra notes...",
+    subtotal: "Food Subtotal:",
+    deliveryFee: "Delivery (Rider):",
+    freeCola: "🎁 Free 1.5L Coca-Cola (Food >= 40€)"
+  }
+};
+
+for(let lang of ['ur', 'ro', 'ar']) { translations[lang] = translations.en; }
+
+const menuNamesMap = {
+  it: {
+    'Panino Kebab': 'Panino Kebab', 'Panino Solo Carne': 'Panino Solo Carne',
+    'Panino con Bevanda (Promo Studenti)': 'Panino con Bevanda (Promo Studenti)',
+    'Menu Panino con Bevanda': 'Menu Panino con Bevanda',
+    'Menu Piadina con Bevanda': 'Menu Piadina con Bevanda',
+    'Menu Panino con Bevanda e Patatine': 'Menu Panino con Bevanda e Patatine',
+    'Menu Piadina con Bevanda e Patatine': 'Menu Piadina con Bevanda e Patatine',
+    'Speciale Piadina Artigianale con Kebab': 'Speciale Piadina Artigianale con Kebab',
+    'Piadina Kebab': 'Piadina Kebab', 'Piadina Solo Carne': 'Piadina Solo Carne',
+    'Piatto Kebab': 'Piatto Kebab'
+  },
+  hi: {
+    'Panino con Bevanda (Promo Studenti)': 'पनीनो और ड्रिंक (स्टूडेंट प्रोमो)',
+    'Menu Panino con Bevanda': 'मेनु पनीनो और ड्रिंक',
+    'Menu Piadina con Bevanda': 'मेनु पियादिना और ड्रिंक',
+    'Menu Panino con Bevanda e Patatine': 'मेनु पनीनो + ड्रिंक + चिप्स',
+    'Menu Piadina con Bevanda e Patatine': 'मेनु पियादिना + ड्रिंक + चिप्स'
+  }
+};
+
+const menuData = [
+  { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  
+  { id: 'm_1', name: 'Menu Panino con Bevanda', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'm_2', name: 'Menu Piadina con Bevanda', price: 6.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'm_3', name: 'Menu Panino con Bevanda e Patatine', price: 6.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'm_4', name: 'Menu Piadina con Bevanda e Patatine', price: 7.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
+
+  { id: 'st_1', name: 'Panino con Bevanda (Promo Studenti)', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
+
+  { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.50, category: 'piadina', isSpecialPiadina: true, isPromo: true, desc: 'Sempre Tutti le Sere', senza: commonSenza, extra: commonExtra },
+  { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'p_4', name: 'Piatto Kebab', price: 8.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_1', name: 'Panino Falafel', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_2', name: 'Piadina Falafel', price: 5.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_4', name: 'Panino Seekh Kebab', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_5', name: 'Crispy Hamburger', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
+  { id: 'bev_9', name: 'Coca-Cola 1.5L', price: 3.00, category: 'bevande', isBeverage: true, senza: [], extra: [] },
+  { id: 'alc_1', name: 'Birra Moretti 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senza: [], extra: [] }
+];
+
+let currentFilter = 'all';
+
+function getLocalizedName(originalName) {
+  if (menuNamesMap[state.lang] && menuNamesMap[state.lang][originalName]) {
+    return menuNamesMap[state.lang][originalName];
+  }
+  return originalName;
+}
+
+function toggleLangMenu() {
+  document.getElementById('langMenuPopup').classList.toggle('show');
+}
+
+window.onclick = function(event) {
+  if (!event.target.closest('.lang-dropdown-wrapper')) {
+    var popup = document.getElementById('langMenuPopup');
+    if (popup && popup.classList.contains('show')) {
+      popup.classList.remove('show');
+    }
+  }
+};
+
+function changeLanguage(lang) {
+  state.lang = lang;
+  document.getElementById('current-lang-label').innerText = lang.toUpperCase();
+  document.getElementById('langMenuPopup').classList.remove('show');
+  
+  const t = translations[lang] || translations['it'];
+  document.getElementById('lbl-speciale-banner').innerText = t.specialeBanner;
+  document.getElementById('lbl-asporto').innerText = t.asporto;
+  document.getElementById('lbl-asporto-sub').innerText = t.asportoSub;
+  document.getElementById('lbl-consegna').innerText = t.consegna;
+  document.getElementById('lbl-consegna-sub').innerText = t.consegnaSub;
+  document.getElementById('lbl-student').innerText = t.student;
+  document.getElementById('lbl-student-sub').innerText = t.studentSub;
+  document.getElementById('lbl-deliveroo').innerText = t.deliveroo;
+  document.getElementById('lbl-deliveroo-sub').innerText = t.deliverooSub;
+  
+  updateNoticeText();
+  
+  document.getElementById('cat-all').innerText = t.catAll;
+  document.getElementById('cat-kebab').innerText = t.catKebab;
+  document.getElementById('cat-piadina').innerText = t.catPiadina;
+  document.getElementById('cat-non-kebab').innerText = t.catNonKebab;
+  document.getElementById('cat-fritti').innerText = t.catFritti;
+  document.getElementById('cat-bevande').innerText = t.catBevande;
+  document.getElementById('cat-alcolici').innerText = t.catAlcolici;
+  document.getElementById('cat-btn-speciale').innerText = t.catSpeciale;
+  document.getElementById('lbl-totale-text').innerText = t.totaleText;
+  
+  updateMainButtonText();
+  renderMenu();
+}
+
+function updateNoticeText() {
+  const t = translations[state.lang] || translations['it'];
+  const noticeEl = document.getElementById('main-notice');
+  if (state.orderType === 'student') {
+    noticeEl.innerHTML = t.studentNotice;
+    noticeEl.style.display = 'block';
+  } else if (state.orderType === 'deliveroo') {
+    noticeEl.style.display = 'none';
+  } else if (state.orderType === 'consegna') {
+    noticeEl.innerHTML = t.noticeConsegna;
+    noticeEl.style.display = 'block';
+  } else {
+    noticeEl.innerHTML = t.noticeAsporto;
+    noticeEl.style.display = 'block';
+  }
+}
+
+function updateMainButtonText() {
+  const t = translations[state.lang] || translations['it'];
+  const btn = document.getElementById('whatsapp-submit-btn');
+  if (state.orderType === 'deliveroo') {
+    btn.innerText = t.verifyDeliv;
+  } else if (state.orderType === 'student') {
+    btn.innerText = t.verifyStudent;
+  } else {
+    btn.innerText = t.verifyBtn;
+  }
+}
+
+function setOrderType(type) {
+  state.orderType = type;
+  ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
+    const el = document.getElementById(`btn-${t}`);
+    el.className = 'type-btn';
+  });
+  
+  const activeEl = document.getElementById(`btn-${type}`);
+  if (type === 'deliveroo') activeEl.classList.add('deliveroo-active');
+  else if (type === 'student') activeEl.classList.add('student-active');
+  else activeEl.classList.add('active');
+
+  updateNoticeText();
+
+  if (type === 'student') {
+    document.getElementById('category-nav-bar').style.display = 'none';
+  } else {
+    document.getElementById('category-nav-bar').style.display = 'flex';
+  }
+
+  updateMainButtonText();
+  renderMenu();
+  calcTotal();
+}
+
+function filterCategory(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu();
+}
+
+function renderMenu() {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+  const t = translations[state.lang] || translations['it'];
+  
+  let filtered = [];
+  if (state.orderType === 'student') {
+    filtered = menuData.filter(item => item.isStudentExclusive);
+  } else {
+    filtered = menuData.filter(item => !item.isStudentExclusive);
+    if (currentFilter === 'speciale') {
+      filtered = filtered.filter(item => item.isSpecialPiadina);
+    } else if (currentFilter !== 'all') {
+      filtered = filtered.filter(item => item.category === currentFilter);
+    }
+  }
+
+  filtered.forEach(item => {
+    let effectivePrice = item.price;
+    if (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive) {
+      effectivePrice = Math.max(0, effectivePrice - 0.50);
+    }
+
+    const cartKey = item.id;
+    const qty = state.cart[cartKey] ? state.cart[cartKey].qty : 0;
+    const hidePrices = (state.orderType === 'deliveroo');
+    const localizedTitle = getLocalizedName(item.name);
+
+    let html = `
+      <div class="menu-item" id="item-card-${item.id}">
+        <div class="item-header">
+          <div class="item-details">
+            <div class="item-title-row">
+              <span class="item-title">${localizedTitle}</span>
+              ${item.isPromo ? '<span class="badge-promo">PROMO</span>' : ''}
+              ${item.isAgeRestricted ? '<span class="badge-age">🔞 +18</span>' : ''}
+            </div>
+            <div class="item-price" ${hidePrices ? 'style="display:none;"' : ''}>€ ${effectivePrice.toFixed(2)}</div>
+            ${item.desc ? `<div style="font-size:0.75rem; color:#7f8c8d; margin-top:2px;">${item.desc}</div>` : ''}
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="modifyQty('${item.id}', -1)">-</button>
+            <span id="qty-val-${item.id}" style="font-weight:bold; font-size:0.85rem; min-width:15px; text-align:center;">${qty}</span>
+            <button class="qty-btn" onclick="modifyQty('${item.id}', 1)">+</button>
+          </div>
+        </div>
+    `;
+
+    if (qty > 0 && !item.isBeverage && !item.isAlcohol) {
+      html += `<div class="unit-customizer">`;
+      if (!state.cart[cartKey].units) { state.cart[cartKey].units = []; }
+      while(state.cart[cartKey].units.length < qty) { state.cart[cartKey].units.push({ senza: [], extra: [], note: '' }); }
+      while(state.cart[cartKey].units.length > qty) { state.cart[cartKey].units.pop(); }
+
+      state.cart[cartKey].units.forEach((unit, uIdx) => {
+        html += `<div class="single-unit-box"><div class="single-unit-title">Pezzo #${uIdx + 1}</div>`;
+        if (item.senza && item.senza.length > 0) {
+          html += `<div class="ingredient-block"><div class="block-title">${t.senzaTitle}</div><div class="chip-group">`;
+          item.senza.forEach(ing => {
+            const isSelected = unit.senza && unit.senza.includes(ing);
+            html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'senza', '${ing}')">${ing}</span>`;
+          });
+          html += `</div></div>`;
+        }
+        if (item.extra && item.extra.length > 0) {
+          html += `<div class="ingredient-block"><div class="block-title">${t.extraTitle}</div><div class="chip-group">`;
+          item.extra.forEach(ext => {
+            const isSelected = unit.extra && unit.extra.includes(ext);
+            let displayExtText = ext === 'Carne Extra' ? 'Carne Extra (+0.50€)' : ext;
+            html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'extra', '${ext}')">${displayExtText}</span>`;
+          });
+          html += `</div></div>`;
+        }
+        html += `<input type="text" class="input-field" placeholder="${t.notePlaceholder}" value="${unit.note || ''}" oninput="updateUnitNote('${item.id}', ${uIdx}, this.value)"></div>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+    container.innerHTML += html;
+  });
+}
+
+function modifyQty(id, delta) {
+  if (!state.cart[id]) {
+    if (delta > 0) { state.cart[id] = { qty: 1, units: [{ senza: [], extra: [], note: '' }] }; }
+  } else {
+    state.cart[id].qty += delta;
+    if (state.cart[id].qty <= 0) { delete state.cart[id]; } 
+    else {
+      const item = menuData.find(m => m.id === id);
+      if (item && !item.isBeverage && !item.isAlcohol) {
+        if (!state.cart[id].units) state.cart[id].units = [];
+        while(state.cart[id].units.length < state.cart[id].qty) { state.cart[id].units.push({ senza: [], extra: [], note: '' }); }
+        while(state.cart[id].units.length > state.cart[id].qty) { state.cart[id].units.pop(); }
+      }
+    }
+  }
+  renderMenu();
+  calcTotal();
+}
+
+function toggleUnitCustom(id, uIdx, type, val) {
+  if (!state.cart[id] || !state.cart[id].units[uIdx]) return;
+  if (!state.cart[id].units[uIdx][type]) state.cart[id].units[uIdx][type] = [];
+  const arr = state.cart[id].units[uIdx][type];
+  const idx = arr.indexOf(val);
+  if (idx > -1) arr.splice(idx, 1);
+  else arr.push(val);
+  renderMenu();
+  calcTotal();
+}
+
+function updateUnitNote(id, uIdx, val) {
+  if (state.cart[id] && state.cart[id].units[uIdx]) { state.cart[id].units[uIdx].note = val; }
+}
+
+function calcTotal() {
+  let foodSubtotal = 0;
+  for (let id in state.cart) {
+    const item = menuData.find(m => m.id === id);
+    if (item) {
+      let effPrice = item.price;
+      if (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive) { effPrice = Math.max(0, effPrice - 0.50); }
+      let extraCost = 0;
+      if (state.cart[id].units) {
+        state.cart[id].units.forEach(u => {
+          if (u.extra && u.extra.includes('Carne Extra')) extraCost += 0.50;
+        });
+      }
+      foodSubtotal += (effPrice * state.cart[id].qty) + extraCost;
+    }
+  }
+
+  let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
+  let grandTotal = foodSubtotal + deliveryFee;
+
+  if (state.orderType === 'deliveroo') { document.getElementById('grand-total').innerText = `Gestito da Deliveroo`; } 
+  else { document.getElementById('grand-total').innerText = `€ ${grandTotal.toFixed(2)}`; }
+
+  let progressMsg = "";
+  if (state.orderType !== 'deliveroo') {
+    if (foodSubtotal >= 40) { progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!"; } 
+    else { let diff = (40 - foodSubtotal).toFixed(2); progressMsg = `⚠️ Aggiungi € ${diff} di cibo per la Coca-Cola 1.5L Gratis!`; }
+  }
+  document.getElementById('cola-progress').innerText = progressMsg;
+}
+
+function getDefaultTime(minutesToAdd) {
+  let now = new Date();
+  now.setMinutes(now.getMinutes() + minutesToAdd);
+  return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+}
+
+function openConfirmationModal() {
+  if (Object.keys(state.cart).length === 0) { alert("Il carrello è vuoto!"); return; }
+  const t = translations[state.lang] || translations['it'];
+  const modalTitle = document.getElementById('modal-title-text');
+  
+  if (state.orderType === 'deliveroo') modalTitle.innerText = t.modalTitleDeliv;
+  else if (state.orderType === 'consegna') modalTitle.innerText = t.modalTitleCons;
+  else if (state.orderType === 'student') modalTitle.innerText = t.modalTitleStudent;
+  else modalTitle.innerText = t.modalTitleAsp;
+
+  const formInputs = document.getElementById('modal-form-inputs');
+  let defaultTimeVal = (state.orderType === 'consegna') ? getDefaultTime(60) : getDefaultTime(30);
+
+  if (state.orderType === 'deliveroo') {
+    formInputs.innerHTML = `<div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameDelivLabel}</label></div><input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi o #45">`;
+  } else if (state.orderType === 'consegna') {
+    formInputs.innerHTML = `<div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div><input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.addrLabel}</label></div><input type="text" id="cust-addr" class="input-field" placeholder="Via, Civico, Citofono">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div><input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">`;
+  } else {
+    formInputs.innerHTML = `<div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div><input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div><input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">`;
+  }
+
+  let foodSubtotalRaw = 0, foodSubtotalDiscounted = 0, totalAsportoDiscount = 0;
+  let receiptHTML = `<div style="margin-top:8px; font-weight:bold; border-bottom:1px solid #ddd; padding-bottom:4px;">Riepilogo Ordine:</div>`;
+  const hidePrices = (state.orderType === 'deliveroo');
+  
+  for (let id in state.cart) {
+    const item = menuData.find(m => m.id === id);
+    const qty = state.cart[id].qty;
+    const localizedTitle = getLocalizedName(item.name);
+
+    if (item.isBeverage || item.isAlcohol) {
+      let effPrice = item.price;
+      if(item.isAlcohol && state.orderType === 'asporto') { effPrice = Math.max(0, effPrice - 0.50); totalAsportoDiscount += 0.50 * qty; }
+      foodSubtotalRaw += item.price * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
+      if (!hidePrices) receiptHTML += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      receiptHTML += `</div>`;
+    } else {
+      state.cart[id].units.forEach((unit, uIdx) => {
+        let rawPrice = item.price, effPrice = item.price;
+        if (state.orderType === 'asporto' && !item.isStudentExclusive) { effPrice = Math.max(0, effPrice - 0.50); totalAsportoDiscount += 0.50; }
+        let unitExtraCost = (unit.extra && unit.extra.includes('Carne Extra')) ? 0.50 : 0;
+        foodSubtotalRaw += rawPrice + unitExtraCost;
+        foodSubtotalDiscounted += effPrice + unitExtraCost;
+
+        receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>1x ${localizedTitle}</b>`;
+        if (!hidePrices) receiptHTML += ` (€ ${(effPrice + unitExtraCost).toFixed(2)})`;
+
+        let hasSenza = unit.senza && unit.senza.length > 0;
+        let hasExtra = unit.extra && unit.extra.length > 0;
+        if (!hasSenza && !hasExtra && !unit.note) receiptHTML += `<br><span style="color:#27ae60;">✨ Completo</span>`;
+        else {
+          if (hasSenza) receiptHTML += `<br><span style="color:#c0392b;">❌ Senza: ${unit.senza.join(', ')}</span>`;
+          if (hasExtra) receiptHTML += `<br><span style="color:#27ae60;">✅ Extra: ${unit.extra.join(', ')}</span>`;
+        }
+        if (unit.note) receiptHTML += `<br><span style="color:#555;">📝 Note: ${unit.note}</span>`;
+        receiptHTML += `</div>`;
+      });
+    }
+  }
+
+  let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
+  let grandTotal = foodSubtotalDiscounted + deliveryFee;
+
+  receiptHTML += `<div style="margin-top:10px; border-top:1px solid #ddd; padding-top:6px; font-size:0.82rem;">`;
+  if (!hidePrices) {
+    receiptHTML += `<div>Subtotale: € ${foodSubtotalRaw.toFixed(2)}</div>`;
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) receiptHTML += `<div style="color: #27ae60; font-weight: bold; margin-top: 3px;">🎁 Sconto Asporto: -€ ${totalAsportoDiscount.toFixed(2)}</div>`;
+    if (deliveryFee > 0) receiptHTML += `<div>${t.deliveryFee} € ${deliveryFee.toFixed(2)}</div>`;
+    
+    if (foodSubtotalDiscounted >= 40) receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
+    
+    receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">Totale: € ${grandTotal.toFixed(2)}</div>`;
+  } else {
+    receiptHTML += `<div style="font-weight:bold; color:#009473; margin-top:4px;">Nota Deliveroo Inviata Senza Prezzi</div>`;
+  }
+  receiptHTML += `</div>`;
+  document.getElementById('modal-receipt-body').innerHTML = receiptHTML;
+  document.getElementById('confirm-modal').style.display = 'flex';
+}
+
+function closeConfirmationModal() { document.getElementById('confirm-modal').style.display = 'none'; }
+
+function getOrderCode() {
+  let sequence = parseInt(localStorage.getItem('kebab_order_sequence') || '0', 10);
+  sequence += 1;
+  localStorage.setItem('kebab_order_sequence', sequence);
+  return `#${String(sequence).padStart(4, '0')}`;
+}
+
+function sendWhatsAppOrder() {
+  const nameInput = document.getElementById('cust-name');
+  const name = nameInput ? nameInput.value.trim() : '';
+  if (!name) { alert("Inserisci il tuo nome!"); return; }
+
+  const addrInput = document.getElementById('cust-addr');
+  const timeInput = document.getElementById('cust-time');
+  const addr = addrInput ? addrInput.value.trim() : '';
+  const time = timeInput ? timeInput.value.trim() : '';
+  const hidePrices = (state.orderType === 'deliveroo');
+
+  let orderText = `*Ordine, ${getOrderCode()}*\n*Kebab di Via Roma*\n*Tipo:* ${state.orderType.toUpperCase()}\n*Nome:* ${name}\n`;
+  if (addr) orderText += `*Indirizzo:* ${addr}\n`;
+  if (time) orderText += `*Orario:* ${time}\n`;
+  orderText += `\n--------------------------\n*DETTAGLIO:*\n`;
+
+  let foodSubtotalRaw = 0, foodSubtotalDiscounted = 0, totalAsportoDiscount = 0, itemCounter = 1;
+
+  for (let id in state.cart) {
+    const item = menuData.find(m => m.id === id);
+    const qty = state.cart[id].qty;
+
+    if (item.isBeverage || item.isAlcohol) {
+      let effPrice = item.price;
+      if(item.isAlcohol && state.orderType === 'asporto') { effPrice = Math.max(0, effPrice - 0.50); totalAsportoDiscount += 0.50 * qty; }
+      foodSubtotalRaw += item.price * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      orderText += `\n*${itemCounter}.* *${qty}x ${item.name}*`;
+      if (!hidePrices) orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      itemCounter++;
+    } else {
+      state.cart[id].units.forEach((unit, uIdx) => {
+        let effPrice = item.price;
+        if (state.orderType === 'asporto' && !item.isStudentExclusive) { effPrice = Math.max(0, effPrice - 0.50); totalAsportoDiscount += 0.50; }
+        let unitExtraCost = (unit.extra && unit.extra.includes('Carne Extra')) ? 0.50 : 0;
+        
+        foodSubtotalRaw += item.price + unitExtraCost;
+        foodSubtotalDiscounted += effPrice + unitExtraCost;
+
+        orderText += `\n\n*${itemCounter}.* *${item.name}*`;
+        if (!hidePrices) orderText += ` (€ ${(effPrice + unitExtraCost).toFixed(2)})`;
+        
+        let hasSenza = unit.senza && unit.senza.length > 0;
+        let hasExtra = unit.extra && unit.extra.length > 0;
+        if (!hasSenza && !hasExtra && !unit.note) orderText += `\n   ✨ Completo`;
+        else {
+          if (hasSenza) orderText += `\n   ❌ SENZA: ${unit.senza.join(', ')}`;
+          if (hasExtra) orderText += `\n   ✅ EXTRA: ${unit.extra.join(', ')}`;
+        }
+        if (unit.note) orderText += `\n   📝 Note: ${unit.note}`;
+        itemCounter++;
+      });
+    }
+  }
+
+  let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
+  let grandTotal = foodSubtotalDiscounted + deliveryFee;
+
+  orderText += `\n\n--------------------------\n`;
+  if (!hidePrices) {
+    orderText += `*Subtotale Cibo:* € ${foodSubtotalRaw.toFixed(2)}\n`;
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) orderText += `🎁 *Sconto Asporto:* -€ ${totalAsportoDiscount.toFixed(2)}\n`;
+    if (deliveryFee > 0) orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}\n`;
+    if (foodSubtotalDiscounted >= 40) orderText += `🎁 *Omaggio:* Coca-Cola 1.5L\n`;
+    orderText += `*TOTALE:* € ${grandTotal.toFixed(2)}`;
+  } else {
+    orderText += `_Nota Deliveroo_`;
+  }
+
+  let phone = "393932228224";
+  let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
+  window.open(url, '_blank');
+  closeConfirmationModal();
+}
+
+renderMenu();
+calcTotal();
+</script>
+
+</body>
+</html>
