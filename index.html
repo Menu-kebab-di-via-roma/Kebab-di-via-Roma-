@@ -1,1256 +1,239 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kebab di Via Roma - Jesi | Royal Luxury Edition</title>
-  <style>
-    :root {
-      --primary: #990000;
-      --primary-hover: #b30000;
-      --gold: #d4af37;
-      --gold-light: #f3e5ab;
-      --deliveroo: #00b894;
-      --bg: #fcfbfa;
-      --card-bg: #ffffff;
-      --card-border: #e6d7d5;
-      --text: #2c3e50;
-      --text-muted: #7f8c8d;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 0;
-      padding-bottom: 95px;
-    }
-    header {
-      background: linear-gradient(135deg, #4a0000, #7a0000, #990000);
-      color: white;
-      text-align: center;
-      padding: 12px 15px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(153, 0, 0, 0.3);
-      border-bottom: 3px solid var(--gold);
-    }
-    
-    .header-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 500px;
-      margin: 0 auto;
-      gap: 8px;
-    }
-
-    .title-box {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header h1 { 
-      margin: 0; 
-      font-size: 1.3rem; 
-      font-weight: 850;
-      letter-spacing: 0.8px;
-      color: #ffffff;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-    header p { 
-      margin: 2px 0; 
-      font-size: 0.7rem; 
-      color: var(--gold-light); 
-      font-weight: 500;
-    }
-    
-    .header-promo {
-      font-size: 0.6rem;
-      color: var(--gold);
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(212, 175, 55, 0.5);
-      padding: 2px 10px;
-      border-radius: 4px;
-      margin-top: 4px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .tiktok-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 4px 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-    }
-    .tiktok-logo-img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: #000;
-    }
-    .tiktok-text {
-      font-size: 0.45rem;
-      color: #fff;
-      margin-top: 1px;
-      font-weight: bold;
-    }
-
-    /* Language Dropdown Luxury */
-    .lang-dropdown-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    .lang-main-btn {
-      background: linear-gradient(135deg, var(--gold), #b8860b);
-      border: 1px solid #fff;
-      color: #000;
-      padding: 6px 10px;
-      font-size: 0.7rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .lang-menu-popup {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 36px;
-      background: #ffffff;
-      border: 2px solid var(--gold);
-      border-radius: 8px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      z-index: 3000;
-      min-width: 130px;
-      overflow: hidden;
-    }
-    .lang-menu-popup.show { display: block; }
-    .lang-option {
-      padding: 8px 12px;
-      font-size: 0.75rem;
-      color: #2c3e50;
-      background: #fff;
-      border-bottom: 1px solid #f1f1f1;
-      cursor: pointer;
-      text-align: left;
-      font-weight: 600;
-      transition: 0.15s;
-    }
-    .lang-option:hover {
-      background: #fdf2e9;
-      color: var(--primary);
-    }
-
-    .container { max-width: 500px; margin: 0 auto; padding: 12px; }
-    
-    .order-type-selector { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-    .type-btn {
-      flex: 1;
-      min-width: 30%;
-      padding: 8px 4px;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      background: var(--card-bg);
-      color: var(--text);
-      text-align: center;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.72rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-      transition: 0.2s;
-    }
-    .type-btn.active { border-color: var(--primary); background: #fdf2e9; color: var(--primary); box-shadow: 0 2px 8px rgba(153,0,0,0.15); }
-    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e8f8f5; color: #009473; }
-    .type-btn.student-active { border-color: var(--gold); background: #fef9e7; color: #b7950b; }
-    .type-btn small { display: block; font-size: 0.52rem; color: var(--text-muted); font-weight: normal; }
-
-    .instructions-notice {
-      background: #fef9e7;
-      border-left: 4px solid var(--gold);
-      color: #7d6608;
-      padding: 9px 12px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      line-height: 1.35;
-      border: 1px solid #fcf3cf;
-    }
-
-    .category-nav {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      scrollbar-width: none;
-    }
-    .category-nav::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      padding: 6px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      border-radius: 16px;
-      white-space: nowrap;
-      font-weight: 600;
-      font-size: 0.75rem;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-      transition: 0.2s;
-    }
-    .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(153, 0, 0, 0.3); }
-
-    .menu-item {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    }
-    
-    .item-header { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between;
-      gap: 10px;
-    }
-    
-    .item-details { flex: 1; }
-    .item-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .item-title { font-weight: 700; font-size: 0.9rem; color: #212529; }
-    .item-price { color: var(--primary); font-weight: 800; font-size: 0.86rem; }
-    
-    .badge-18 {
-      background: var(--primary);
-      color: white;
-      font-size: 0.52rem;
-      font-weight: bold;
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
-
-    .qty-controls { display: flex; align-items: center; gap: 8px; }
-    .qty-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid #bdc3c7;
-      background: #f8f9fa;
-      color: #2c3e50;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-    .qty-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-    .unit-customizer {
-      margin-top: 10px;
-      padding: 8px;
-      background: #fdfefe;
-      border-radius: 6px;
-      border: 1px solid #ebedef;
-      border-left: 3px solid var(--primary);
-    }
-    .unit-title { font-size: 0.72rem; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
-
-    .ingredient-block {
-      background: #f4f6f7;
-      padding: 5px 6px;
-      border-radius: 4px;
-      margin-bottom: 5px;
-      border: 1px solid #e5e8e8;
-    }
-    .block-title {
-      font-size: 0.62rem;
-      font-weight: bold;
-      color: #566573;
-      margin-bottom: 3px;
-      text-transform: uppercase;
-    }
-
-    .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
-    
-    .chip-minus, .chip-plus {
-      font-size: 0.62rem;
-      padding: 3px 7px;
-      background: #ffffff;
-      border: 1px solid #d5dbdb;
-      border-radius: 4px;
-      cursor: pointer;
-      color: #2c3e50;
-      font-weight: 500;
-      line-height: 1.2;
-    }
-    .chip-minus.selected-senza {
-      background: #f9ebea;
-      color: var(--primary);
-      border-color: var(--primary);
-      font-weight: bold;
-      text-decoration: line-through;
-    }
-    .chip-plus.selected-extra {
-      background: #eafaf1;
-      color: #27ae60;
-      border-color: #2ecc71;
-      font-weight: bold;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 6px 8px;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      border-radius: 5px;
-      border: 1px solid #bdc3c7;
-      background: #ffffff;
-      color: #2c3e50;
-      box-sizing: border-box;
-      font-size: 0.75rem;
-    }
-    .input-field:focus { outline: none; border-color: var(--primary); }
-
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #ffffff;
-      border-top: 2px solid var(--gold);
-      padding: 10px 14px;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    .total-price { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
-    .whatsapp-btn {
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
-      color: white;
-      border: none;
-      padding: 9px 18px;
-      border-radius: 16px;
-      font-weight: bold;
-      font-size: 0.76rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-    }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(3px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    .modal-card {
-      background: #ffffff;
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      width: 100%;
-      max-width: 380px;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-    .receipt-header { background: #4a0000; color: white; padding: 12px; text-align: center; border-bottom: 2px solid var(--gold); }
-    .receipt-header h2 { margin: 0; font-size: 0.95rem; color: #ffffff; }
-    .receipt-body { padding: 12px; font-size: 0.78rem; color: #34495e; }
-    .receipt-section { background: #f8f9fa; border: 1px solid #e5e8e8; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
-    .modal-actions { display: flex; gap: 8px; padding: 10px 12px; background: #fdfefe; border-top: 1px solid #e5e8e8; }
-    .btn-cancel, .btn-confirm {
-      flex: 1;
-      padding: 8px;
-      border-radius: 6px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      font-size: 0.75rem;
-      color: white;
-    }
-    .btn-cancel { background: #990000; }
-    .btn-confirm { background: #27ae60; flex: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebab di Via Roma</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333; }
+        header { background-color: #d9534f; color: white; padding: 15px; text-align: center; }
+        .menu-container { padding: 15px; max-width: 600px; margin: auto; padding-bottom: 90px; }
+        .category { font-size: 1.2em; font-weight: bold; margin: 20px 0 10px; color: #d9534f; border-bottom: 2px solid #d9534f; padding-bottom: 5px; }
+        .item { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .item-info { flex-grow: 1; }
+        .item-name { font-weight: bold; font-size: 1em; }
+        .item-price { color: #e67e22; font-weight: bold; margin-top: 4px; }
+        .item-desc { font-size: 0.85em; color: #555; background: #fff3cd; padding: 4px 8px; border-radius: 4px; margin-top: 4px; display: inline-block; }
+        .item-controls { display: flex; align-items: center; gap: 10px; }
+        .btn-qty { background: #ddd; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; }
+        .btn-qty:hover { background: #ccc; }
+        .cart-summary { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 15px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; }
+        .whatsapp-btn { background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 1em; }
+        .whatsapp-btn:hover { background: #20ba5a; }
+        .promo-banner { background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; text-align: center; color: #856404; font-weight: bold; }
+    </style>
 </head>
 <body>
 
 <header>
-  <div class="header-flex">
-    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
-      <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img">
-      <span class="tiktok-text">TikTok</span>
-    </a>
-    
-    <div class="title-box">
-      <h1>Kebab di Via Roma</h1>
-      <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
-      <div class="header-promo" id="header-promo-text">🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!</div>
-    </div>
-
-    <!-- Language Dropdown -->
-    <div class="lang-dropdown-wrapper">
-      <button class="lang-main-btn" onclick="toggleLangMenu()">
-        🌐 <span id="current-lang-label">ITA</span> ▾
-      </button>
-      <div class="lang-menu-popup" id="langMenuPopup">
-        <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
-        <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-        <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
-        <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
-        <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
-        <div class="lang-option" onclick="changeLanguage('bn')">🇧🇩 বাংলা</div>
-      </div>
-    </div>
-  </div>
+    <h1>Kebab di Via Roma</h1>
+    <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
 </header>
 
-<div class="container">
-  <div class="order-type-selector">
-    <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
-      <span id="lbl-asporto">Asporto</span>
-      <small id="lbl-asporto-sub">(-0.50€ su Cibo)</small>
+<div class="menu-container">
+    <div class="promo-banner" id="promo-msg">
+        Promo: 1 Piadina + 1 Coca-Cola a soli € 4.50! (Menu Promozione Studenti)
     </div>
-    <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
-      <span id="lbl-consegna">Consegna</span>
-      <small id="lbl-consegna-sub">(+2.50€ Consegna)</small>
-    </div>
-    <div class="type-btn" id="btn-student" onclick="setOrderType('student')">
-      <span id="lbl-student">🎓 Promo Studenti</span>
-      <small id="lbl-student-sub">Lun-Gio &lt;16:30 (-1€ + Offerta)</small>
-    </div>
-    <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
-      <span id="lbl-deliveroo">Note Deliveroo</span>
-      <small id="lbl-deliveroo-sub">Personalizza</small>
-    </div>
-  </div>
 
-  <div class="instructions-notice" id="main-notice">
-    🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!
-  </div>
+    <!-- PROMO STUDENTI -->
+    <div class="category">Promo Studenti (Lunedì-Giovedì prima delle 16:30)</div>
+    
+    <div class="item" style="border: 2px solid #d9534f; background: #fff9f9;">
+        <div class="item-info">
+            <div class="item-name">Menu Panino Bibita</div>
+            <div class="item-price">€ 4.50</div>
+            <div class="item-desc">Prima di ordinare, comunicate al personale qualsiasi allergia o intolleranza.</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Menu Panino Bibita', -1)">-</button>
+            <span id="qty-Menu Panino Bibita">0</span>
+            <button class="btn-qty" onclick="changeQty('Menu Panino Bibita', 1)">+</button>
+        </div>
+    </div>
 
-  <div class="category-nav">
-    <button class="cat-btn active" onclick="filterCategory('all', this)" id="cat-all">Tutti</button>
-    <button class="cat-btn" onclick="filterCategory('kebab', this)" id="cat-kebab">Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('non-kebab', this)" id="cat-non-kebab">Non Solo Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('fritti', this)" id="cat-fritti">Fritti</button>
-    <button class="cat-btn" onclick="filterCategory('bevande', this)" id="cat-bevande">Bevande</button>
-    <button class="cat-btn" onclick="filterCategory('alcolici', this)" id="cat-alcolici">Alcolici</button>
-  </div>
+    <!-- KEBAB -->
+    <div class="category">Kebab</div>
+    
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Piadina Kebab</div>
+            <div class="item-price">€ 5.00</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Piadina Kebab', -1)">-</button>
+            <span id="qty-Piadina Kebab">0</span>
+            <button class="btn-qty" onclick="changeQty('Piadina Kebab', 1)">+</button>
+        </div>
+    </div>
 
-  <div id="menu-container"></div>
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Piadina Kebab Solo Carne</div>
+            <div class="item-price">€ 5.50</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Piadina Kebab Solo Carne', -1)">-</button>
+            <span id="qty-Piadina Kebab Solo Carne">0</span>
+            <button class="btn-qty" onclick="changeQty('Piadina Kebab Solo Carne', 1)">+</button>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Panino Kebab</div>
+            <div class="item-price">€ 4.00</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Panino Kebab', -1)">-</button>
+            <span id="qty-Panino Kebab">0</span>
+            <button class="btn-qty" onclick="changeQty('Panino Kebab', 1)">+</button>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Panino Solo Carne</div>
+            <div class="item-price">€ 4.50</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Panino Solo Carne', -1)">-</button>
+            <span id="qty-Panino Solo Carne">0</span>
+            <button class="btn-qty" onclick="changeQty('Panino Solo Carne', 1)">+</button>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Piatto Falafel</div>
+            <div class="item-price">€ 4.50</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Piatto Falafel', -1)">-</button>
+            <span id="qty-Piatto Falafel">0</span>
+            <button class="btn-qty" onclick="changeQty('Piatto Falafel', 1)">+</button>
+        </div>
+    </div>
+
+    <!-- NON SOLO KEBAB -->
+    <div class="category">Non Solo Kebab</div>
+
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Crispy Pollo Hamburger</div>
+            <div class="item-price">€ 3.00</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Crispy Pollo Hamburger', -1)">-</button>
+            <span id="qty-Crispy Pollo Hamburger">0</span>
+            <button class="btn-qty" onclick="changeQty('Crispy Pollo Hamburger', 1)">+</button>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-info">
+            <div class="item-name">Panino Cotoletta</div>
+            <div class="item-price">€ 3.00</div>
+        </div>
+        <div class="item-controls">
+            <button class="btn-qty" onclick="changeQty('Panino Cotoletta', -1)">-</button>
+            <span id="qty-Panino Cotoletta">0</span>
+            <button class="btn-qty" onclick="changeQty('Panino Cotoletta', 1)">+</button>
+        </div>
+    </div>
 </div>
 
-<div class="bottom-bar">
-  <div id="total-price-box">
-    <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
-    <span class="total-price" id="grand-total">€ 0,00</span>
-  </div>
-  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
-    VERIFICA E ORDINA
-  </button>
-</div>
-
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal-card">
-    <div class="receipt-header">
-      <h2 id="modal-title-text">📋 Conferma Ordine</h2>
+<!-- CART SUMMARY -->
+<div class="cart-summary">
+    <div>
+        <strong>Totale: <span id="total-price">€ 0.00</span></strong><br>
+        <small id="cola-progress" style="color: #e67e22; font-weight: bold;"></small>
     </div>
-    <div class="receipt-body">
-      <div class="receipt-section" id="modal-form-inputs"></div>
-      <div id="modal-receipt-body"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirmationModal()" id="btn-modifica">✏ Modifica</button>
-      <button class="btn-confirm" onclick="sendWhatsAppOrder()" id="btn-invia">✅ Invia su WhatsApp</button>
-    </div>
-  </div>
+    <a id="whatsapp-link" href="#" class="whatsapp-btn" target="_blank" onclick="sendOrder(event)">Invia su WhatsApp</a>
 </div>
 
 <script>
-const state = {
-  orderType: 'asporto',
-  cart: {},
-  lang: 'it'
-};
+    const prices = {
+        'Menu Panino Bibita': 4.50,
+        'Piadina Kebab': 5.00,
+        'Piadina Kebab Solo Carne': 5.50,
+        'Panino Kebab': 4.00,
+        'Panino Solo Carne': 4.50,
+        'Piatto Falafel': 4.50,
+        'Crispy Pollo Hamburger': 3.00,
+        'Panino Cotoletta': 3.00
+    };
 
-const translations = {
-  it: {
-    promo: "🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!",
-    asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
-    consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
-    student: "🎓 Promo Studenti", studentSub: "Lun-Gio (<16:30) -1€ + Offerta",
-    deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
-    notice: '🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
-    studentNotice: '🎓 <b>Promo Studenti (Lunedì-Giovedì prima delle 16:30):</b> Sconto di 1€ su quasi tutto il menu (tranne fritti e bevande). Inoltre: <b>1 Panino + 1 Coca-Cola a soli € 4.50!</b> (Kebab di Via Roma).',
-    catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
-    totaleText: "Totale:",
-    verifyBtn: "VERIFICA E ORDINA",
-    verifyDeliv: "VERIFICA NOTE DELIVEROO",
-    verifyStudent: "CONFERMA PROMO STUDENTI",
-    modalTitleConf: "📋 Conferma Ordine",
-    modalTitleDeliv: "📋 Note Deliveroo",
-    modalTitleCons: "📋 Conferma Consegna (+2.50€)",
-    modalTitleAsp: "📋 Conferma Asporto",
-    modalTitleStudent: "📋 Conferma Promo Studenti",
-    nameLabel: "Il tuo Nome:",
-    nameDelivLabel: "Il tuo Nome o Numero Ordine Deliveroo:",
-    addrLabel: "Indirizzo di Consegna:",
-    timeLabel: "Orario Ritiro/Consegna:",
-    editBtn: "✏ Modifica",
-    sendBtn: "✅ Invia su WhatsApp",
-    senzaTitle: "Senza (Rimuovi):",
-    extraTitle: "Extra (Aggiungi):",
-    notePlaceholder: "Note extra...",
-    subtotal: "Subtotale:",
-    deliveryFee: "Consegna:",
-    freeCola: "🎁 Coca-Cola 1.5L Omaggio (Ordine > 40€)"
-  },
-  en: {
-    promo: "🎁 Promo > 40€: Free 1.5L Coca-Cola!",
-    asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
-    consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
-    student: "🎓 Student Promo", studentSub: "Mon-Thu (<16:30) -1€ + Offer",
-    deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
-    notice: '🎁 <b>Promotion:</b> Orders over 40€ get a free 1.5L Coca-Cola!',
-    studentNotice: '🎓 <b>Student Promo (Mon-Thu before 4:30 PM):</b> 1€ discount on most items (excl. fries & drinks). Plus: <b>1 Panino + 1 Coca-Cola for only € 4.50!</b> (Kebab di Via Roma).',
-    catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
-    totaleText: "Total:",
-    verifyBtn: "VERIFY & ORDER",
-    verifyDeliv: "VERIFY DELIVEROO NOTES",
-    verifyStudent: "CONFIRM STUDENT PROMO",
-    modalTitleConf: "📋 Order Confirmation",
-    modalTitleDeliv: "📋 Deliveroo Notes",
-    modalTitleCons: "📋 Delivery Confirmation (+2.50€)",
-    modalTitleAsp: "📋 Takeaway Confirmation",
-    modalTitleStudent: "📋 Student Promo Confirmation",
-    nameLabel: "Your Name:",
-    nameDelivLabel: "Your Name or Deliveroo Order ID:",
-    addrLabel: "Delivery Address:",
-    timeLabel: "Pickup/Delivery Time:",
-    editBtn: "✏ Edit",
-    sendBtn: "✅ Send via WhatsApp",
-    senzaTitle: "Without (Remove):",
-    extraTitle: "Extra (Add):",
-    notePlaceholder: "Extra notes...",
-    subtotal: "Subtotal:",
-    deliveryFee: "Delivery:",
-    freeCola: "🎁 Free 1.5L Coca-Cola (Order > 40€)"
-  },
-  ur: {
-    promo: "🎁 آفر > 40€: 1.5 لیٹر کوکا کولا بالکل مفت!",
-    asporto: "ٹیک اوے", asportoSub: "(-0.50€ کھانے پر کم)",
-    consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری فیس)",
-    student: "🎓 اسٹوڈنٹ آفر", studentSub: "سوموار تا جمعرات (<4:30) -1€ + آفر",
-    deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
-    notice: '🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت ملے گی!',
-    studentNotice: '🎓 <b>اسٹوڈنٹ آفر (سوموار سے جمعرات، ساڑھے چار بجے سے پہلے پہلے):</b> فرائیڈ اور ڈرنکس کے علاوہ ہر چیز پر 1 یورو کی چھوٹ! نیز: <b>ایک پینینو اور ایک کوکا کولا صرف € 4.50 میں!</b> (کباب دی ويا روما)۔',
-    catAll: "سبھی", catKebab: "کباب", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
-    totaleText: "کل رقم:",
-    verifyBtn: "چیک کریں اور آرڈر کریں",
-    verifyDeliv: "ڈیلیورو نوٹ چیک کریں",
-    verifyStudent: "اسٹوڈنٹ آفر کی تصدیق کریں",
-    modalTitleConf: "📋 آرڈر کی تصدیق",
-    modalTitleDeliv: "📋 ڈیلیورو نوٹس",
-    modalTitleCons: "📋 ڈلیوری کی تصدیق (+2.50€)",
-    modalTitleAsp: "📋 ٹیک اوے کی تصدیق",
-    modalTitleStudent: "📋 اسٹوڈنٹ آفر کی تصدیق",
-    nameLabel: "آپ کا نام:",
-    nameDelivLabel: "آپ کا نام یا ڈیلیورو آرڈر نمبر:",
-    addrLabel: "ڈلیوری کا ایڈریس:",
-    timeLabel: "وقت:",
-    editBtn: "✏ تبدیل کریں",
-    sendBtn: "✅ واٹس ایپ پر بھیجیں",
-    senzaTitle: "بغیر (نکالیں):",
-    extraTitle: "اضافی (شامل کریں):",
-    notePlaceholder: "مزید نوٹ...",
-    subtotal: "سب ٹوٹل:",
-    deliveryFee: "ڈلیوری فیس:",
-    freeCola: "🎁 مفت کوکا کولا 1.5L (آرڈر > 40€)"
-  },
-  ro: {
-    promo: "🎁 Promo > 40€: Coca-Cola 1.5L Cadou!",
-    asporto: "La pachet", asportoSub: "(-0.50€ la Mâncare)",
-    consegna: "Livrare", consegnaSub: "(+2.50€ Livrare)",
-    student: "🎓 Promo Studenți", studentSub: "Lun-Joi (<16:30) -1€ + Ofertă",
-    deliveroo: "Note Deliveroo", deliverooSub: "Personalizează",
-    notice: '🎁 <b>Promoție:</b> La comenzi de peste 40€, primești o Coca-Cola de 1.5L gratuit!',
-    studentNotice: '🎓 <b>Promo Studenți (Luni-Joi înainte de 16:30):</b> Reducere de 1€ la majoritatea produselor (excl. cartofi și băuturi). Plus: <b>1 Panino + 1 Coca-Cola la doar 4.50€!</b> (Kebab di Via Roma).',
-    catAll: "Toate", catKebab: "Kebab", catNonKebab: "Altele", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
-    totaleText: "Total:",
-    verifyBtn: "VERIFICĂ ȘI PLASEAZĂ",
-    verifyDeliv: "VERIFICĂ NOTELE DELIVEROO",
-    verifyStudent: "CONFIRMĂ PROMO STUDENȚI",
-    modalTitleConf: "📋 Confirmare Comandă",
-    modalTitleDeliv: "📋 Note Deliveroo",
-    modalTitleCons: "📋 Confirmare Livrare (+2.50€)",
-    modalTitleAsp: "📋 Confirmare La pachet",
-    modalTitleStudent: "📋 Confirmare Promo Studenți",
-    nameLabel: "Numele tău:",
-    nameDelivLabel: "Nume sau Nr. Comandă Deliveroo:",
-    addrLabel: "Adresa de Livrare:",
-    timeLabel: "Ora de Ridicare/Livrare:",
-    editBtn: "✏ Modifică",
-    sendBtn: "✅ Trimite pe WhatsApp",
-    senzaTitle: "Fără (Elimină):",
-    extraTitle: "Extra (Adaugă):",
-    notePlaceholder: "Note suplimentare...",
-    subtotal: "Subtotal:",
-    deliveryFee: "Livrare:",
-    freeCola: "🎁 Coca-Cola 1.5L Cadou (Comandă > 40€)"
-  },
-  ar: {
-    promo: "🎁 عرض خاص > 40€: كوكاكولا 1.5 لتر مجاناً!",
-    asporto: "استلام من المحل", asportoSub: "(-0.50€ على الطعام)",
-    consegna: "توصيل", consegnaSub: "(+2.50€ للتوصيل)",
-    student: "🎓 عرض الطلاب", studentSub: "الإثنين-الخميس (<4:30) خصم 1€",
-    deliveroo: "ملاحظات دليفرو", deliverooSub: "تخصيص",
-    notice: '🎁 <b>عرض:</b> للطلبات التي تزيد عن 40 يورو، احصل على كوكاكولا 1.5 لتر مجاناً!',
-    studentNotice: '🎓 <b>عرض الطلاب (من الإثنين للخميس قبل 4:30 عصراً):</b> خصم يورو واحد (1€) على معظم المنتجات (ما عدا المقليات والمشروبات). بالإضافة إلى: <b>ساندويتش + كوكاكولا بـ 4.50 يورو فقط!</b> (كباب دي فيا روما).',
-    catAll: "الكل", catKebab: "كباب", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات باردة", catAlcolici: "مشروبات كحولية",
-    totaleText: "المجموع:",
-    verifyBtn: "تحقق واطلب",
-    verifyDeliv: "تحقق من ملاحظات دليفرو",
-    verifyStudent: "تأكيد عرض الطلاب",
-    modalTitleConf: "📋 تأكيد الطلب",
-    modalTitleDeliv: "📋 ملاحظات دليفرو",
-    modalTitleCons: "📋 تأكيد التوصيل (+2.50€)",
-    modalTitleAsp: "📋 تأكيد الاستلام من المحل",
-    modalTitleStudent: "📋 تأكيد عرض الطلاب",
-    nameLabel: "اسمك:",
-    nameDelivLabel: "اسمك أو رقم طلب دليفرو:",
-    addrLabel: "عنوان التوصيل:",
-    timeLabel: "وقت الاستلام / التوصيل:",
-    editBtn: "✏ تعديل",
-    sendBtn: "✅ إرسال عبر واتساب",
-    senzaTitle: "بدون (إزالة):",
-    extraTitle: "إضافات (إضافة):",
-    notePlaceholder: "ملاحظات إضافية...",
-    subtotal: "المجموع الفرعي:",
-    deliveryFee: "رسوم التوصيل:",
-    freeCola: "🎁 كوكاكولا 1.5 لتر مجاناً (طلب > 40€)"
-  },
-  bn: {
-    promo: "🎁 অফার > 40€: ১.৫ লিটার কোকা-কোলা একদম ফ্রি!",
-    asporto: "পার্সেল (টیک-অ্যাওয়ে)", asportoSub: "(-0.50€ খাবারে ছাড়)",
-    consegna: "হোম ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি চার্জ)",
-    student: "🎓 স্টুডেন্ট অফার", studentSub: "সোম-বৃহস্পতি (<4:30) ১€ ছাড়",
-    deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
-    notice: '🎁 <b>অফার:</b> ৪০ ইউরোর বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
-    studentNotice: '🎓 <b>স্টুডেন্ট অফার (সোমবার থেকে বৃহস্পতিবার, সাড়ে চারটার আগে):</b> ভাজাভুজি ও পানীয় ছাড়া বাকি সব খাবারে ১ یورو (1€) ছাড়! সাথে: <b>১টি পানিনো + ১টি কোকা-কোলা মাত্র ৪.৫০ ইউরো!</b> (কাবাব দি ভিয়া রোমা)।',
-    catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভুজি", catBevande: "পানীয় (কোল্ড ড্রিংকস)", catAlcolici: "অ্যালকোহল",
-    totaleText: "মোট:",
-    verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
-    verifyDeliv: "ডেলিভারু নোট যাচাই করুন",
-    verifyStudent: "স্টুডেন্ট অফার নিশ্চিত করুন",
-    modalTitleConf: "📋 অর্ডার নিশ্চিতকরণ",
-    modalTitleDeliv: "📋 ডেলিভারু নোট",
-    modalTitleCons: "📋 ডেলিভারি নিশ্চিতকরণ (+2.50€)",
-    modalTitleAsp: "📋 পার্সেল নিশ্চিতকরণ",
-    modalTitleStudent: "📋 স্টুডেন্ট অফার নিশ্চিতকরণ",
-    nameLabel: "আপনার নাম:",
-    nameDelivLabel: "আপনার নাম বা ডেলিভারু অর্ডার নম্বর:",
-    addrLabel: "ডেলিভারি ঠিকানা:",
-    timeLabel: "সময়:",
-    editBtn: "✏ পরিবর্তন করুন",
-    sendBtn: "✅ হোয়াটসঅ্যাপে পাঠান",
-    senzaTitle: "ছাড়া (বাদ দিন):",
-    extraTitle: "অতিরিক্ত (যুক্ত করুন):",
-    notePlaceholder: "বিশেষ নোট...",
-    subtotal: "সাব-টোটাল:",
-    deliveryFee: "ডেলিভারি ফি:",
-    freeCola: "🎁 ফ্রি কোকা-কোলা ১.৫ লিটার (অর্ডার > 40€)"
-  }
-};
+    let cart = {};
 
-const menuItems = [
-  { id: 'pi_kebab', nameIt: 'Piadina Kebab', nameEn: 'Kebab Piadina', nameUr: 'پیادینا کباب', nameRo: 'Piadina Kebab', nameAr: 'بيادينا كباب', nameBn: 'পিয়াদিনা কাবাব', basePrice: 5.50, studentPrice: 5.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_carne', nameIt: 'Piadina Kebab Solo Carne', nameEn: 'Meat-Only Kebab Piadina', nameUr: 'صرف گوشت پیادینا کباب', nameRo: 'Piadina Kebab Doar Carne', nameAr: 'بيادينا كباب لحم فقط', nameBn: 'শুধু মাংসের পিয়াদিনা কাবাব', basePrice: 6.50, studentPrice: 5.50, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'p_kebab', nameIt: 'Panino Kebab', nameEn: 'Kebab Panino', nameUr: 'پینینو کباب', nameRo: 'Panino Kebab', nameAr: 'ساندويتش كباب', nameBn: 'পানিনো কাবাব', basePrice: 4.50, studentPrice: 4.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'p_carne', nameIt: 'Panino Solo Carne', nameEn: 'Meat-Only Panino', nameUr: 'صرف گوشت پینینو', nameRo: 'Panino Doar Carne', nameAr: 'ساندويتش لحم فقط', nameBn: 'শুধু মাংসের পানিনো', basePrice: 5.00, studentPrice: 4.50, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'm_panino', nameIt: 'Menu Panino (Bibita + Patatine)', nameEn: 'Panino Menu (Drink + Fries)', nameUr: 'پینینو مینو (ڈرنک + فرائز)', nameRo: 'Meniu Panino (Băutură + Cartofi)', nameAr: 'وجبة ساندويتش (مشروب + بطاطس)', nameBn: 'পানিনো মেনু (ড্রিংক + ফ্রেঞ্চ ফ্রাই)', basePrice: 7.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'm_piadina', nameIt: 'Menu Piadina (Bibita + Patatine)', nameEn: 'Piadina Menu (Drink + Fries)', nameUr: 'پیادینا مینو (ڈرنک + فرائز)', nameRo: 'Meniu Piadina (Băutură + Cartofi)', nameAr: 'وجبة بيادينا (مشروب + بطاطس)', nameBn: 'পিয়াদিনা মেনু (ড্রিংক + ফ্রেঞ্চ ফ্রাই)', basePrice: 8.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'piatto_k', nameIt: 'Piatto Kebab', nameEn: 'Kebab Plate', nameUr: 'کباب پلیٹ', nameRo: 'Farfurie Kebab', nameAr: 'طبق كباب', nameBn: 'কাবাব প্লেট', basePrice: 7.50, studentPrice: 6.50, cat: 'kebab', customizable: true, fixedPrice: false },
-
-  { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', nameRo: 'Burger Pui Crispy', nameAr: 'برجر دجاج كرسبي', nameBn: 'ক্রিস্পি চিকেন বার্গার', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
-  { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', nameRo: 'Panino Șnițel', nameAr: 'ساندويتش شنيتزل', nameBn: 'স্নিতজেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
-  { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', nameRo: 'Panino Falafel', nameAr: 'ساندويتش فلافل', nameBn: 'ফালাফেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', nameRo: 'Piadina Falafel', nameAr: 'بيادينا فلافل', nameBn: 'ফালাফেল পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', nameRo: 'Farfurie Falafel', nameAr: 'طبق فلافل', nameBn: 'ফালাফেল প্লেট', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', nameRo: 'Panino Seekh Kebab', nameAr: 'ساندويتش سيخ كباب', nameBn: 'সিক কাবাব পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', nameRo: 'Piadina Seekh Kebab', nameAr: 'بيادينا سيخ كباب', nameBn: 'সিক কাবাব পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-
-  { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', nameRo: 'Cartofi Prăjiți (Mici)', nameAr: 'بطاطس مقلية (صغيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (ছোট)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', nameRo: 'Cartofi Prăjiți (Mari)', nameAr: 'بطاطس مقلية (كبيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (বড়)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'mozz_st', nameIt: 'Mozzarella Stick (6pz)', nameEn: 'Mozzarella Sticks (6pcs)', nameUr: 'موزریلا اسٹکس (6 عدد)', nameRo: 'Mozzarella Sticks (6 buc)', nameAr: 'أصابع موتساريلا (6 قطع)', nameBn: 'মোজারেলা স্টিকস (৬ পিস)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'ch_nug', nameIt: 'Chicken Nuggets (6pz)', nameEn: 'Chicken Nuggets (6pcs)', nameUr: 'چکن نگیٹس (6 عدد)', nameRo: 'Nuggets de Pui (6 buc)', nameAr: 'ناجتس دجاج (6 قطع)', nameBn: 'চিকেন নাগেটস (৬ পিস)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'anelli_cip', nameIt: 'Anelli di Cipolla (8pz)', nameEn: 'Onion Rings (8pcs)', nameUr: 'آنিয়ন رنگز (8 عدد)', nameRo: 'Inele de Ceapă (8 buc)', nameAr: 'حلقات بصل (8 قطع)', nameBn: 'পেঁয়াজ রিং (৮ পিস)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'ch_wings', nameIt: 'Chicken Wings (5pz)', nameEn: 'Chicken Wings (5pcs)', nameUr: 'چکن ونگز (5 عدد)', nameRo: 'Aripioare de Pui (5 buc)', nameAr: 'أجنحة دجاج (5 قطع)', nameBn: 'চিকেন উইংস (৫ পিস)', basePrice: 4.50, cat: 'fritti', customizable: false, fixedPrice: false },
-
-  { id: 'coca', nameIt: 'Coca-Cola (33 cl)', nameEn: 'Coca-Cola (33 cl)', nameUr: 'کوکا کولا (33 cl)', nameRo: 'Coca-Cola (33 cl)', nameAr: 'كوكاكولا (33 سل)', nameBn: 'কোকা-কোলা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', nameRo: 'Coca-Cola Zero (33 cl)', nameAr: 'كوكاكولا زيرو (33 سل)', nameBn: 'কোকা-কোলা জিরো (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', nameRo: 'Fanta (33 cl)', nameAr: 'فانتا (33 سل)', nameBn: 'ফ্যান্টা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'sprite', nameIt: 'Sprite (33 cl)', nameEn: 'Sprite (33 cl)', nameUr: 'اسپرائٹ (33 cl)', nameRo: 'Sprite (33 cl)', nameAr: 'سبرايت (33 سل)', nameBn: 'স্প্রাইট (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'hell', nameIt: 'Hell Energy Drink', nameEn: 'Hell Energy Drink', nameUr: 'ہیل انرجی ڈرنک', nameRo: 'Hell Energy Drink', nameAr: 'مشروب الطاقة هيل', nameBn: 'হেল এনার্জি ড্রিংক', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'estathe_pesca', nameIt: 'Estathè Pesca', nameEn: 'Peach Estathè', nameUr: 'آڑو استاتے', nameRo: 'Estathè Piersică', nameAr: 'إستاتي خوخ', nameBn: 'এস্তাতে পিচ', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'estathe_limone', nameIt: 'Estathè Limone', nameEn: 'Lemon Estathè', nameUr: 'لیمن استاتے', nameRo: 'Estathè Lămâie', nameAr: 'إستاتي ليمون', nameBn: 'এস্তাতে লেমন', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  
-  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', nameRo: 'Monster Energy', nameAr: 'مونستر إنرجي', nameBn: 'মনস্টার এনার্জি', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', nameRo: 'Red Bull', nameAr: 'ريد بول', nameBn: 'রেড বুল', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
-  
-  { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', nameRo: 'Coca-Cola Mare (1.5 Litri)', nameAr: 'كوكاكولا كبيرة (1.5 لتر)', nameBn: 'বড় কোকা-কোলা (১.৫ লিটার)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true },
-
-  { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', nameRo: 'Bere Peroni (33 cl)', nameAr: 'بيرة بيروني (33 سل)', nameBn: 'পেরোনি বিয়ার (৩৩ সিএল)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true },
-  
-  { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', nameRo: 'Bere Peroni (66 cl)', nameAr: 'بيرة بيروني (66 سل)', nameBn: 'পেরোনি বিয়ার (৬৬ সিএল)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true },
-  { id: 'moretti_66', nameIt: 'Birra Moretti (66 cl)', nameEn: 'Moretti Beer (66 cl)', nameUr: 'موریتی بیئر (66 cl)', nameRo: 'Bere Moretti (66 cl)', nameAr: 'بيرة موريتي (66 سل)', nameBn: 'মোরেত্তি বিয়ার (৬৬ সিএল)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true }
-];
-
-const ingredientConfig = {
-  senzaItems: [
-    "Salsa Piccante", "Salsa Yogurt", "Salsa Rosa", "Salsa Algerina", 
-    "Insalata", "Verza e Carote", "Pomodoro", "Cetrioli", "Cipolla", "Peperoncino", "Olive"
-  ],
-  extraItems: ["Maionese", "Ketchup"]
-};
-
-function toggleLangMenu() {
-  const popup = document.getElementById('langMenuPopup');
-  popup.classList.toggle('show');
-}
-
-window.onclick = function(event) {
-  if (!event.target.closest('.lang-dropdown-wrapper')) {
-    const popup = document.getElementById('langMenuPopup');
-    if (popup && popup.classList.contains('show')) {
-      popup.classList.remove('show');
-    }
-  }
-}
-
-function changeLanguage(lang) {
-  state.lang = lang;
-  const t = translations[lang];
-
-  const labels = { it: 'ITA', en: 'ENG', ur: 'اردو', ro: 'ROU', ar: 'عربي', bn: 'বাংলা' };
-  document.getElementById('current-lang-label').innerText = labels[lang];
-  document.getElementById('langMenuPopup').classList.remove('show');
-
-  document.getElementById('header-promo-text').innerText = t.promo;
-  document.getElementById('lbl-asporto').innerText = t.asporto;
-  document.getElementById('lbl-asporto-sub').innerText = t.asportoSub;
-  document.getElementById('lbl-consegna').innerText = t.consegna;
-  document.getElementById('lbl-consegna-sub').innerText = t.consegnaSub;
-  document.getElementById('lbl-student').innerText = t.student;
-  document.getElementById('lbl-student-sub').innerText = t.studentSub;
-  document.getElementById('lbl-deliveroo').innerText = t.deliveroo;
-  document.getElementById('lbl-deliveroo-sub').innerText = t.deliverooSub;
-  
-  updateNoticeText();
-
-  document.getElementById('cat-all').innerText = t.catAll;
-  document.getElementById('cat-kebab').innerText = t.catKebab;
-  document.getElementById('cat-non-kebab').innerText = t.catNonKebab;
-  document.getElementById('cat-fritti').innerText = t.catFritti;
-  document.getElementById('cat-bevande').innerText = t.catBevande;
-  document.getElementById('cat-alcolici').innerText = t.catAlcolici;
-
-  document.getElementById('lbl-totale-text').innerText = t.totaleText;
-  
-  const submitBtn = document.getElementById('whatsapp-submit-btn');
-  if (state.orderType === 'deliveroo') submitBtn.innerText = t.verifyDeliv;
-  else if (state.orderType === 'student') submitBtn.innerText = t.verifyStudent;
-  else submitBtn.innerText = t.verifyBtn;
-
-  document.getElementById('btn-modifica').innerText = t.editBtn;
-  document.getElementById('btn-invia').innerText = t.sendBtn;
-
-  renderMenu(currentFilteredItems || menuItems);
-  updateTotal();
-}
-
-function updateNoticeText() {
-  const t = translations[state.lang];
-  const noticeEl = document.getElementById('main-notice');
-  if (state.orderType === 'deliveroo') {
-    noticeEl.innerText = state.lang === 'ur' ? "💡 ڈیلیورو موڈ: کوئی قیمت ظاہر نہیں ہوگی۔ اپنی پسند درج کریں۔" : "💡 Modalità Deliveroo: Nessun prezzo visualizzato.";
-  } else if (state.orderType === 'student') {
-    noticeEl.innerHTML = t.studentNotice;
-  } else {
-    noticeEl.innerHTML = t.notice;
-  }
-}
-
-function getCurrentTimeString() {
-  const now = new Date();
-  let hours = now.getHours().toString().padStart(2, '0');
-  let minutes = now.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-}
-
-function getNextDailyOrderNumber() {
-  const today = new Date();
-  const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-  
-  let storedData = localStorage.getItem('kebab_daily_order');
-  let orderData = storedData ? JSON.parse(storedData) : { date: '', count: 0 };
-
-  if (orderData.date !== dateStr) {
-    orderData = { date: dateStr, count: 1 };
-  } else {
-    orderData.count += 1;
-  }
-
-  localStorage.setItem('kebab_daily_order', JSON.stringify(orderData));
-  return orderData.count;
-}
-
-function setOrderType(type) {
-  state.orderType = type;
-  const t = translations[state.lang];
-
-  document.getElementById('btn-asporto').className = 'type-btn' + (type === 'asporto' ? ' active' : '');
-  document.getElementById('btn-consegna').className = 'type-btn' + (type === 'consegna' ? ' active' : '');
-  document.getElementById('btn-student').className = 'type-btn' + (type === 'student' ? ' student-active' : '');
-  document.getElementById('btn-deliveroo').className = 'type-btn' + (type === 'deliveroo' ? ' deliveroo-active' : '');
-
-  const submitBtn = document.getElementById('whatsapp-submit-btn');
-  if (type === 'deliveroo') submitBtn.innerText = t.verifyDeliv;
-  else if (type === 'student') submitBtn.innerText = t.verifyStudent;
-  else submitBtn.innerText = t.verifyBtn;
-
-  updateNoticeText();
-
-  if(type === 'deliveroo') {
-    document.getElementById('total-price-box').style.display = 'none';
-  } else {
-    document.getElementById('total-price-box').style.display = 'block';
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-  updateTotal();
-}
-
-function getItemPrice(item) {
-  if (state.orderType === 'student') {
-    if (item.id === 'p_kebab') {
-      return 4.00;
-    }
-    if (item.id === 'p_carne') {
-      return 4.50;
-    }
-    if (item.studentPrice !== undefined) {
-      return item.studentPrice;
-    }
-    if (item.cat !== 'fritti' && item.cat !== 'bevande' && item.cat !== 'alcolici') {
-      return Math.max(0, item.basePrice - 1.00);
-    }
-  }
-  if (item.fixedPrice) {
-    return item.basePrice;
-  }
-  if (state.orderType === 'asporto') {
-    return Math.max(0, item.basePrice - 0.50);
-  }
-  return item.basePrice;
-}
-
-let currentFilteredItems = null;
-
-function filterCategory(cat, btn) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  if (cat === 'all') {
-    currentFilteredItems = null;
-    let itemsToRender = menuItems;
-    if (state.orderType === 'student') {
-      itemsToRender = menuItems.filter(i => !i.isAlcohol);
-    }
-    renderMenu(itemsToRender);
-  } else {
-    let items = menuItems.filter(item => item.cat === cat);
-    if (state.orderType === 'student') {
-      items = items.filter(i => !i.isAlcohol);
-    }
-    currentFilteredItems = items;
-    renderMenu(currentFilteredItems);
-  }
-}
-
-function renderMenu(items) {
-  const container = document.getElementById('menu-container');
-  container.innerHTML = '';
-  const t = translations[state.lang];
-
-  if (state.orderType === 'student') {
-    items = items.filter(i => !i.isAlcohol);
-  }
-
-  items.forEach(item => {
-    const itemCard = document.createElement('div');
-    itemCard.className = 'menu-item';
-
-    const currentPrice = getItemPrice(item);
-    const cartItem = state.cart[item.id] || { qty: 0, customUnits: [] };
-
-    let itemName = item.nameIt;
-    if(state.lang === 'en') itemName = item.nameEn;
-    if(state.lang === 'ur') itemName = item.nameUr;
-    if(state.lang === 'ro') itemName = item.nameRo;
-    if(state.lang === 'ar') itemName = item.nameAr;
-    if(state.lang === 'bn') itemName = item.nameBn;
-
-    let priceHtml = '';
-    if (state.orderType !== 'deliveroo') {
-      let isStudentPanino = (state.orderType === 'student' && (item.id === 'p_kebab' || item.id === 'p_carne'));
-      let isStudentPiatto = (state.orderType === 'student' && item.id === 'piatto_k');
-      
-      if (isStudentPanino) {
-        priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)} <small style="color:#b7950b; font-size:0.65rem;">(Panino + Coca 33cl)</small></div>`;
-      } else if (isStudentPiatto) {
-        priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)} <small style="color:#b7950b; font-size:0.65rem;">(Piatto + Bibita)</small></div>`;
-      } else {
-        priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)}</div>`;
-      }
-    }
-
-    let badgeHtml = item.isAlcohol ? `<span class="badge-18">18+</span>` : '';
-
-    let html = `
-      <div class="item-header">
-        <div class="item-details">
-          <div class="item-title-row">
-            <span class="item-title">${itemName}</span>
-            ${badgeHtml}
-          </div>
-          ${priceHtml}
-        </div>
-        <div class="qty-controls">
-          <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
-          <span style="font-weight:bold; font-size:0.85rem; min-width:18px; text-align:center; color:#2c3e50;">${cartItem.qty}</span>
-          <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
-        </div>
-      </div>
-    `;
-
-    if (item.customizable && cartItem.qty > 0) {
-      html += `<div style="margin-top:8px;">`;
-      for (let i = 0; i < cartItem.qty; i++) {
-        if (!cartItem.customUnits[i]) {
-          cartItem.customUnits[i] = { senza: [], extra: [], note: '' };
-        }
-        const unit = cartItem.customUnits[i];
-
-        html += `
-          <div class="unit-customizer">
-            <div class="unit-title">#${i + 1}:</div>
-            
-            <div class="ingredient-block">
-              <div class="block-title">${t.senzaTitle}</div>
-              <div class="chip-group">`;
-        ingredientConfig.senzaItems.forEach(ing => {
-          const isSelected = unit.senza.includes(ing);
-          html += `<span class="chip-minus ${isSelected ? 'selected-senza' : ''}" onclick="toggleIngredient('${item.id}', ${i}, 'senza', '${ing}')">${ing}</span>`;
-        });
-        html += `</div></div>`;
-
-        html += `
-            <div class="ingredient-block">
-              <div class="block-title">${t.extraTitle}</div>
-              <div class="chip-group">`;
-        ingredientConfig.extraItems.forEach(ing => {
-          const isSelected = unit.extra.includes(ing);
-          html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleIngredient('${item.id}', ${i}, 'extra', '${ing}')">${ing}</span>`;
-        });
-        html += `</div></div>`;
-
-        html += `<input type="text" class="input-field" placeholder="${t.notePlaceholder}" value="${unit.note || ''}" oninput="updateNote('${item.id}', ${i}, this.value)">`;
-        html += `</div>`;
-      }
-      html += `</div>`;
-    }
-
-    itemCard.innerHTML = html;
-    container.appendChild(itemCard);
-  });
-}
-
-function changeQty(id, delta) {
-  if (!state.cart[id]) {
-    state.cart[id] = { qty: 0, customUnits: [] };
-  }
-  
-  state.cart[id].qty += delta;
-
-  if (state.cart[id].qty <= 0) {
-    delete state.cart[id];
-  } else {
-    while (state.cart[id].customUnits.length < state.cart[id].qty) {
-      state.cart[id].customUnits.push({ senza: [], extra: [], note: '' });
-    }
-    while (state.cart[id].customUnits.length > state.cart[id].qty) {
-      state.cart[id].customUnits.pop();
-    }
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-  updateTotal();
-}
-
-function toggleIngredient(id, unitIndex, type, ing) {
-  const item = state.cart[id];
-  if (!item || !item.customUnits[unitIndex]) return;
-
-  const unit = item.customUnits[unitIndex];
-  const index = unit[type].indexOf(ing);
-  if (index > -1) {
-    unit[type].splice(index, 1);
-  } else {
-    unit[type].push(ing);
-  }
-
-  renderMenu(currentFilteredItems || menuItems);
-}
-
-function updateNote(id, unitIndex, val) {
-  if (state.cart[id] && state.cart[id].customUnits[unitIndex]) {
-    state.cart[id].customUnits[unitIndex].note = val;
-  }
-}
-
-function calculateSubtotals() {
-  let subtotal = 0;
-  for (let id in state.cart) {
-    const itemObj = menuItems.find(m => m.id === id);
-    if (itemObj) {
-      const price = getItemPrice(itemObj);
-      subtotal += price * state.cart[id].qty;
-    }
-  }
-  return subtotal;
-}
-
-function updateTotal() {
-  if (state.orderType === 'deliveroo') return;
-  let subtotal = calculateSubtotals();
-  let total = subtotal;
-  if (state.orderType === 'consegna') {
-    total += 2.50;
-  }
-  document.getElementById('grand-total').innerText = '€ ' + total.toFixed(2);
-}
-
-function openConfirmationModal() {
-  const cartKeys = Object.keys(state.cart);
-  if (cartKeys.length === 0) {
-    alert(state.lang === 'ur' ? "کارٹ خالی ہے!" : "Il carrello è vuoto!");
-    return;
-  }
-
-  const t = translations[state.lang];
-  const currentTime = getCurrentTimeString();
-  let formHtml = '';
-  
-  if (state.orderType === 'deliveroo') {
-    document.getElementById('modal-title-text').innerText = t.modalTitleDeliv;
-    formHtml = `<label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameDelivLabel}</label><input type="text" id="customer-name" class="input-field" placeholder="...">`;
-  } else if (state.orderType === 'student') {
-    document.getElementById('modal-title-text').innerText = t.modalTitleStudent;
-    formHtml = `<label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameLabel}</label><input type="text" id="customer-name" class="input-field" placeholder="Nome Studente..."><label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.timeLabel}</label><input type="text" id="customer-time" class="input-field" value="${currentTime}">`;
-  } else if (state.orderType === 'consegna') {
-    document.getElementById('modal-title-text').innerText = t.modalTitleCons;
-    formHtml = `<label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameLabel}</label><input type="text" id="customer-name" class="input-field" placeholder="..."><label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.addrLabel}</label><input type="text" id="customer-address" class="input-field" placeholder="..."><label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.timeLabel}</label><input type="text" id="customer-time" class="input-field" value="${currentTime}">`;
-  } else {
-    document.getElementById('modal-title-text').innerText = t.modalTitleAsp;
-    formHtml = `<label style="font-weight:bold; font-size:0.75rem; color:#555;">${t.nameLabel}</label><input type="text" id="customer-name" class="input-field" placeholder="..."><label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block; color:#555;">${t.timeLabel}</label><input type="text" id="customer-time" class="input-field" value="${currentTime}">`;
-  }
-  document.getElementById('modal-form-inputs').innerHTML = formHtml;
-
-  let receiptHtml = '<div style="margin-top:5px;">';
-  let subtotal = calculateSubtotals();
-
-  cartKeys.forEach(id => {
-    const cartItem = state.cart[id];
-    const itemObj = menuItems.find(m => m.id === id);
-    const price = getItemPrice(itemObj);
-    const itemSubtotal = price * cartItem.qty;
-
-    let itemName = itemObj.nameIt;
-    if(state.lang === 'en') itemName = itemObj.nameEn;
-    if(state.lang === 'ur') itemName = itemObj.nameUr;
-    if(state.lang === 'ro') itemName = itemObj.nameRo;
-    if(state.lang === 'ar') itemName = itemObj.nameAr;
-    if(state.lang === 'bn') itemName = itemObj.nameBn;
-
-    if (state.orderType === 'deliveroo') {
-      receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b>`;
-    } else {
-      receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b> - <span style="color:var(--primary);">€ ${itemSubtotal.toFixed(2)}</span>`;
-      if (state.orderType === 'student' && (itemObj.id === 'p_kebab' || itemObj.id === 'p_carne')) {
-        receiptHtml += `<div style="font-size:0.65rem; color:#b7950b; font-weight:bold;">🎓 Include Coca-Cola 33cl (Promo Studenti)</div>`;
-      } else if (state.orderType === 'student' && itemObj.id === 'piatto_k') {
-        receiptHtml += `<div style="font-size:0.65rem; color:#b7950b; font-weight:bold;">🎓 Include Bibita (Promo Studenti)</div>`;
-      }
-    }
-    
-    if (cartItem.customUnits && cartItem.customUnits.length > 0) {
-      cartItem.customUnits.forEach((unit, idx) => {
-        receiptHtml += `<div style="margin-top: 3px; padding-left: 8px; border-left: 2px solid var(--primary); font-size:0.72rem;">`;
-        receiptHtml += `<b style="color:#d4af37;">#${idx + 1}</b>`;
+    function changeQty(item, delta) {
+        if (!cart[item]) cart[item] = 0;
+        cart[item] += delta;
+        if (cart[item] <= 0) delete cart[item];
         
-        let hasModifications = (unit.senza.length > 0 || unit.extra.length > 0 || (unit.note && unit.note.trim() !== ''));
-        if (!hasModifications && itemObj.customizable) {
-          receiptHtml += ` | <span style="color:#27ae60; font-weight:bold;">Completo</span>`;
-        } else {
-          if (unit.senza.length > 0) receiptHtml += ` | <span style="color:var(--primary);">Senza: ${unit.senza.join(', ')}</span>`;
-          if (unit.extra.length > 0) receiptHtml += ` | <span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
-          if (unit.note) receiptHtml += ` | <span style="color:#7f8c8d;">Note: ${unit.note}</span>`;
+        document.getElementById(`qty-${item}`).innerText = cart[item] || 0;
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        for (let item in cart) {
+            total += prices[item] * cart[item];
         }
-        receiptHtml += `</div>`;
-      });
-    }
-    receiptHtml += `</div>`;
-  });
+        document.getElementById('total-price').innerText = `€ ${total.toFixed(2)}`;
 
-  if (state.orderType !== 'deliveroo') {
-    if (state.orderType === 'consegna') {
-      receiptHtml += `<div style="margin-top:6px; font-size:0.78rem; color:#555;">${t.subtotal} € ${subtotal.toFixed(2)}</div>`;
-      receiptHtml += `<div style="font-size:0.78rem; color:#555;">${t.deliveryFee} € 2.50</div>`;
-    }
-    let finalTotal = subtotal + (state.orderType === 'consegna' ? 2.50 : 0);
-    
-    if (subtotal > 40 && state.orderType !== 'student') {
-      receiptHtml += `<div style="margin-top:6px; color:#27ae60; font-weight:bold; font-size:0.78rem;">${t.freeCola}</div>`;
-    }
-
-    receiptHtml += `<div style="margin-top:8px; font-weight:bold; text-align:right; font-size:0.95rem; color:var(--primary);">${t.totaleText} € ${finalTotal.toFixed(2)}</div>`;
-  }
-  receiptHtml += `</div>`;
-
-  document.getElementById('modal-receipt-body').innerHTML = receiptHtml;
-  document.getElementById('confirm-modal').style.display = 'flex';
-}
-
-function closeConfirmationModal() {
-  document.getElementById('confirm-modal').style.display = 'none';
-}
-
-function sendWhatsAppOrder() {
-  const nameEl = document.getElementById('customer-name');
-  const timeEl = document.getElementById('customer-time');
-  const addressEl = document.getElementById('customer-address');
-
-  const name = nameEl ? nameEl.value.trim() : '';
-  const time = timeEl ? timeEl.value.trim() : '';
-  const address = addressEl ? addressEl.value.trim() : '';
-
-  if (!name) {
-    alert(state.lang === 'ur' ? "براہ کرم اپنا نام درج کریں!" : "Per favore inserisci il tuo nome!");
-    return;
-  }
-
-  const dailyOrderNum = getNextDailyOrderNumber();
-
-  let message = `🛒 *ORDINE #${dailyOrderNum}*\n`;
-  message += `📍 *Tipo:* ${state.orderType.toUpperCase()}\n`;
-  
-  if(state.orderType === 'deliveroo') {
-    message += `👤 *Nome / ID:* ${name}\n\n`;
-  } else if(state.orderType === 'student') {
-    message += `🎓 *PROMO STUDENTI (Lun-Gio <16:30)*\n`;
-    message += `👤 *Nome:* ${name}\n`;
-    message += `⏰ *Orario:* ${time || 'Subito'}\n\n`;
-  } else if(state.orderType === 'consegna') {
-    message += `👤 *Nome:* ${name}\n`;
-    message += `🏠 *Indirizzo:* ${address || 'Non specificato'}\n`;
-    message += `⏰ *Orario:* ${time || 'Subito'}\n\n`;
-  } else {
-    message += `👤 *Nome:* ${name}\n`;
-    message += `⏰ *Orario:* ${time || 'Subito'}\n\n`;
-  }
-
-  let subtotal = calculateSubtotals();
-
-  for (let id in state.cart) {
-    const cartItem = state.cart[id];
-    const itemObj = menuItems.find(m => m.id === id);
-    const price = getItemPrice(itemObj);
-    const itemSubtotal = price * cartItem.qty;
-
-    if (state.orderType === 'deliveroo') {
-      message += `• *${cartItem.qty}x ${itemObj.nameIt}*\n`;
-    } else {
-      message += `• *${cartItem.qty}x ${itemObj.nameIt}* (€ ${itemSubtotal.toFixed(2)})\n`;
-      if (state.orderType === 'student' && (itemObj.id === 'p_kebab' || itemObj.id === 'p_carne')) {
-        message += `   🥤 *(Include 1x Coca-Cola 33cl omaggio promo studenti)*\n`;
-      } else if (state.orderType === 'student' && itemObj.id === 'piatto_k') {
-        message += `   🥤 *(Include 1x Bibita omaggio promo studenti)*\n`;
-      }
-    }
-    
-    if (cartItem.customUnits) {
-      cartItem.customUnits.forEach((unit, idx) => {
-        message += `   🔹 *Pezzo #${idx + 1}*\n`;
-        let hasModifications = (unit.senza.length > 0 || unit.extra.length > 0 || (unit.note && unit.note.trim() !== ''));
-        if (!hasModifications && itemObj.customizable) {
-          message += `      ✅ *Completo*\n`;
+        let progressMsg = "";
+        if (total >= 40) {
+            progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!";
         } else {
-          if (unit.senza.length > 0) message += `      ❌ Senza: ${unit.senza.join(', ')}\n`;
-          if (unit.extra.length > 0) message += `      ➕ Extra: ${unit.extra.join(', ')}\n`;
-          if (unit.note) message += `      📝 Note: ${unit.note}\n`;
+            let diff = (40 - total).toFixed(2);
+            progressMsg = `Aggiungi altri € ${diff} per ricevere Coca-Cola 1.5L Omaggio!`;
         }
-      });
-    }
-  }
-
-  if (state.orderType !== 'deliveroo') {
-    if (state.orderType === 'consegna') {
-      message += `\nSubtotale: € ${subtotal.toFixed(2)}`;
-      message += `\nCosto Consegna: € 2.50`;
-    }
-    let finalTotal = subtotal + (state.orderType === 'consegna' ? 2.50 : 0);
-    
-    if (subtotal > 40 && state.orderType !== 'student') {
-      message += `\n🎁 *Promozione:* Coca-Cola 1.5L Omaggio (Ordine > 40€)`;
+        document.getElementById('cola-progress').innerText = progressMsg;
     }
 
-    message += `\n\n💰 *TOTALE: € ${finalTotal.toFixed(2)}*`;
-  }
+    function getOrderCode() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const dateStr = `${year}-${month}-${day}`;
 
-  const phone = "393932228224";
-  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
-}
+        let lastDate = localStorage.getItem('order_date');
+        let sequence = parseInt(localStorage.getItem('order_sequence') || '0', 10);
 
-renderMenu(menuItems);
+        if (lastDate !== dateStr) {
+            sequence = 1;
+            localStorage.setItem('order_date', dateStr);
+        } else {
+            sequence += 1;
+        }
+        localStorage.setItem('order_sequence', sequence);
+
+        const seqFormatted = String(sequence).padStart(3, '0');
+        return `${dateStr} #${seqFormatted}`;
+    }
+
+    function sendOrder(e) {
+        let orderText = `*Nuovo Ordine - Kebab di Via Roma*%0A`;
+        orderText += `*Codice Ordine:* ${getOrderCode()}%0A%0A`;
+        let total = 0;
+
+        for (let item in cart) {
+            let subtotal = prices[item] * cart[item];
+            total += subtotal;
+            orderText += `- ${item} x${cart[item]} (€ ${subtotal.toFixed(2)})%0A`;
+        }
+
+        orderText += `%0A*Totale:* € ${total.toFixed(2)}`;
+        
+        if (total >= 40) {
+            orderText += `%0A🎁 *Omaggio:* Coca-Cola 1.5L`;
+        }
+
+        let phone = "393393222824";
+        let url = `https://wa.me/${phone}?text=${orderText}`;
+        e.currentTarget.href = url;
+    }
 </script>
 
 </body>
