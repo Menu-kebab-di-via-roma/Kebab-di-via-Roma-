@@ -60,7 +60,6 @@
       opacity: 0.95; 
     }
     
-    /* ایڈریس کے نیچے باریک پروموشن کا سائز */
     .header-promo {
       font-size: 0.52rem;
       opacity: 0.9;
@@ -96,7 +95,6 @@
       font-weight: bold;
     }
 
-    /* زبان کے بٹنوں کا باکس */
     .lang-container {
       display: flex;
       flex-direction: column;
@@ -355,20 +353,17 @@
 
 <header>
   <div class="header-flex">
-    <!-- ٹک ٹاک لوگو اور کلک ہیئر -->
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
       <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img">
       <span class="tiktok-text">Clicca qui</span>
     </a>
     
-    <!-- درمیان میں ٹائٹل، ایڈریس اور باریک پروموشن -->
     <div class="title-box">
       <h1>Kebab di Via Roma</h1>
       <p>Via Roma 29b, Jesi (AN) | +39 393 222 8224</p>
       <div class="header-promo" id="header-promo-text">🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!</div>
     </div>
 
-    <!-- زبانیں تبدیل کرنے کے بٹن (IT, EN, UR) -->
     <div class="lang-container">
       <button class="lang-btn" onclick="changeLanguage('it')">ITA</button>
       <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
@@ -394,7 +389,7 @@
   </div>
 
   <div class="instructions-notice" id="main-notice">
-    💡 Se c'è qualcosa che non ti piace, puoi rimuoverla con "SENZA (-)". 🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!
+    🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!
   </div>
 
   <div class="category-nav">
@@ -455,7 +450,7 @@ const translations = {
     asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
     consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
-    notice: '💡 Se c\'è qualcosa che non ti piace, puoi rimuoverla con "SENZA (-)". 🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
+    notice: '🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
     catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
@@ -482,7 +477,7 @@ const translations = {
     asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
     consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
     deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
-    notice: '💡 If you don’t like an ingredient, remove it with "SENZA (-)". 🎁 <b>Promotion:</b> Orders over 40€ get a free 1.5L Coca-Cola!',
+    notice: '🎁 <b>Promotion:</b> Orders over 40€ get a free 1.5L Coca-Cola!',
     catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
@@ -509,7 +504,7 @@ const translations = {
     asporto: "ٹیک اوے (Asporto)", asportoSub: "(-0.50€ کھانے پر کم)",
     consegna: "ڈلیوری (Consegna)", consegnaSub: "(+2.50€ ڈلیوری چارجز)",
     deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
-    notice: '💡 جو چیز آپ کو پسند نہ ہو اسے "SENZA (-)" سے ختم کریں۔ 🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت ملے گی!',
+    notice: '🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت ملے گی!',
     catAll: "سبھی (Tutti)", catKebab: "کباب (Kebab)", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
@@ -893,9 +888,15 @@ function openConfirmationModal() {
       cartItem.customUnits.forEach((unit, idx) => {
         receiptHtml += `<div style="margin-top: 3px; padding-left: 8px; border-left: 2px solid var(--primary); font-size:0.7rem;">`;
         receiptHtml += `<b>#${idx + 1}</b>`;
-        if (unit.senza.length > 0) receiptHtml += ` | <span style="color:#e74c3c;">Senza: ${unit.senza.join(', ')}</span>`;
-        if (unit.extra.length > 0) receiptHtml += ` | <span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
-        if (unit.note) receiptHtml += ` | <span>Note: ${unit.note}</span>`;
+        
+        let hasModifications = (unit.senza.length > 0 || unit.extra.length > 0 || (unit.note && unit.note.trim() !== ''));
+        if (!hasModifications && itemObj.customizable) {
+          receiptHtml += ` | <span style="color:#27ae60; font-weight:bold;">Completo</span>`;
+        } else {
+          if (unit.senza.length > 0) receiptHtml += ` | <span style="color:#e74c3c;">Senza: ${unit.senza.join(', ')}</span>`;
+          if (unit.extra.length > 0) receiptHtml += ` | <span style="color:#27ae60;">Extra: ${unit.extra.join(', ')}</span>`;
+          if (unit.note) receiptHtml += ` | <span>Note: ${unit.note}</span>`;
+        }
         receiptHtml += `</div>`;
       });
     }
@@ -968,9 +969,14 @@ function sendWhatsAppOrder() {
     if (cartItem.customUnits) {
       cartItem.customUnits.forEach((unit, idx) => {
         message += `   🔹 *Pezzo #${idx + 1}*\n`;
-        if (unit.senza.length > 0) message += `      ❌ Senza: ${unit.senza.join(', ')}\n`;
-        if (unit.extra.length > 0) message += `      ➕ Extra: ${unit.extra.join(', ')}\n`;
-        if (unit.note) message += `      📝 Note: ${unit.note}\n`;
+        let hasModifications = (unit.senza.length > 0 || unit.extra.length > 0 || (unit.note && unit.note.trim() !== ''));
+        if (!hasModifications && itemObj.customizable) {
+          message += `      ✅ *Completo*\n`;
+        } else {
+          if (unit.senza.length > 0) message += `      ❌ Senza: ${unit.senza.join(', ')}\n`;
+          if (unit.extra.length > 0) message += `      ➕ Extra: ${unit.extra.join(', ')}\n`;
+          if (unit.note) message += `      📝 Note: ${unit.note}\n`;
+        }
       });
     }
   }
