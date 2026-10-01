@@ -6,12 +6,14 @@
   <title>Kebab di Via Roma - Jesi</title>
   <style>
     :root {
-      --primary: #c0392b;
-      --secondary: #e67e22;
+      --primary: #d4af37; /* Luxury Gold */
+      --primary-dark: #aa8c2c;
+      --accent: #e74c3c;
+      --bg: #121212; /* Luxury Dark Theme */
+      --card-bg: #1e1e1e;
+      --text: #f5f5f5;
+      --text-muted: #b0b0b0;
       --deliveroo: #00cdbc;
-      --bg: #f8f9fa;
-      --card-bg: #ffffff;
-      --text: #2c3e50;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,26 +21,28 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      padding-bottom: 90px;
+      padding-bottom: 100px;
     }
     header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
       color: white;
       text-align: center;
-      padding: 6px 10px;
+      padding: 10px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border-bottom: 2px solid var(--primary);
     }
     
     .header-flex {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 0;
+      gap: 5px;
     }
 
     .title-box {
@@ -50,25 +54,26 @@
     }
     header h1 { 
       margin: 0; 
-      font-size: 1.25rem; 
+      font-size: 1.3rem; 
       font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      color: var(--primary);
     }
     header p { 
-      margin: 1px 0; 
-      font-size: 0.68rem; 
-      opacity: 0.95; 
+      margin: 2px 0; 
+      font-size: 0.65rem; 
+      opacity: 0.8; 
     }
     
     .header-promo {
-      font-size: 0.52rem;
-      opacity: 0.9;
-      background: rgba(0, 0, 0, 0.15);
-      padding: 1px 6px;
+      font-size: 0.55rem;
+      color: var(--primary);
+      background: rgba(212, 175, 55, 0.1);
+      padding: 2px 8px;
       border-radius: 4px;
-      margin-top: 2px;
-      font-weight: normal;
-      letter-spacing: 0.2px;
+      margin-top: 3px;
+      font-weight: bold;
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }
 
     .tiktok-container {
@@ -76,100 +81,106 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 5px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.4);
+      border: 1px solid var(--primary);
     }
     .tiktok-logo-img {
-      width: 38px;
-      height: 38px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
       border-radius: 50%;
       background: #000;
     }
     .tiktok-text {
-      font-size: 0.5rem;
-      color: white;
+      font-size: 0.45rem;
+      color: var(--primary);
       margin-top: 1px;
       font-weight: bold;
     }
 
+    /* 6 Language Buttons Grid Style */
     .lang-container {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 3px;
+      max-width: 90px;
     }
     .lang-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: white;
-      padding: 2px 6px;
-      font-size: 0.55rem;
-      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--text);
+      padding: 2px 4px;
+      font-size: 0.5rem;
+      border-radius: 3px;
       cursor: pointer;
       font-weight: bold;
       text-align: center;
+      transition: all 0.2s;
     }
     .lang-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--primary);
+      color: #000;
     }
     
-    .container { max-width: 500px; margin: 0 auto; padding: 6px; }
+    .container { max-width: 500px; margin: 0 auto; padding: 10px; }
     
-    .order-type-selector { display: flex; gap: 4px; margin-bottom: 6px; }
+    .order-type-selector { display: flex; gap: 6px; margin-bottom: 10px; }
     .type-btn {
       flex: 1;
-      padding: 5px 2px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background: white;
+      padding: 6px 4px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text);
       text-align: center;
       cursor: pointer;
       font-weight: bold;
       font-size: 0.7rem;
     }
-    .type-btn.active { border-color: var(--primary); background: #fdf2f2; color: var(--primary); }
-    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: #e6f9f8; color: #008176; }
-    .type-btn small { display: block; font-size: 0.55rem; color: #666; font-weight: normal; }
+    .type-btn.active { border-color: var(--primary); background: rgba(212, 175, 55, 0.15); color: var(--primary); }
+    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: rgba(0, 205, 188, 0.15); color: var(--deliveroo); }
+    .type-btn small { display: block; font-size: 0.55rem; color: var(--text-muted); font-weight: normal; }
 
     .instructions-notice {
-      background: #fff8e7;
-      border-left: 3px solid var(--secondary);
-      color: #8a6d3b;
-      padding: 5px 8px;
-      margin-bottom: 6px;
-      border-radius: 4px;
-      font-size: 0.68rem;
+      background: rgba(212, 175, 55, 0.1);
+      border-left: 3px solid var(--primary);
+      color: var(--primary);
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
       font-weight: 600;
-      line-height: 1.2;
     }
 
     .category-nav {
       display: flex;
-      gap: 4px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 6px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
     }
     .cat-btn {
-      padding: 3px 8px;
-      background: #e9ecef;
-      border: none;
-      border-radius: 10px;
+      padding: 5px 12px;
+      background: #2a2a2a;
+      color: var(--text);
+      border: 1px solid #444;
+      border-radius: 15px;
       white-space: nowrap;
       font-weight: 600;
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       cursor: pointer;
     }
-    .cat-btn.active { background: var(--primary); color: white; }
+    .cat-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
 
     .menu-item {
       background: var(--card-bg);
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border: 1px solid #2c2c2c;
     }
     
     .item-header { 
@@ -178,80 +189,89 @@
       justify-content: space-between;
       gap: 10px;
     }
+
+    .item-img {
+      width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      background: #000;
+    }
     
     .item-details { flex: 1; }
     .item-title-row {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
-    .item-title { font-weight: bold; font-size: 0.82rem; }
-    .item-price { color: var(--primary); font-weight: bold; font-size: 0.78rem; }
+    .item-title { font-weight: bold; font-size: 0.85rem; color: var(--text); }
+    .item-price { color: var(--primary); font-weight: bold; font-size: 0.8rem; }
     
     .badge-18 {
-      background: #e74c3c;
+      background: var(--accent);
       color: white;
       font-size: 0.5rem;
       font-weight: bold;
-      padding: 1px 4px;
+      padding: 1px 5px;
       border-radius: 3px;
     }
 
-    .qty-controls { display: flex; align-items: center; gap: 5px; }
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
     .qty-btn {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      border: 1px solid #ccc;
-      background: white;
+      border: 1px solid var(--primary);
+      background: #2a2a2a;
+      color: var(--primary);
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
     .unit-customizer {
-      margin-top: 6px;
-      padding: 6px;
-      background: #f8f9fa;
-      border-radius: 4px;
-      border: 1px solid #e0e0e0;
-      border-left: 2px solid var(--primary);
+      margin-top: 8px;
+      padding: 8px;
+      background: #151515;
+      border-radius: 6px;
+      border: 1px solid #333;
+      border-left: 3px solid var(--primary);
     }
-    .unit-title { font-size: 0.68rem; font-weight: bold; margin-bottom: 3px; color: var(--primary); }
+    .unit-title { font-size: 0.7rem; font-weight: bold; margin-bottom: 4px; color: var(--primary); }
 
     .ingredient-block {
-      background: white;
-      padding: 3px 4px;
-      border-radius: 3px;
-      margin-bottom: 3px;
-      border: 1px solid #eee;
+      background: #1e1e1e;
+      padding: 4px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      border: 1px solid #333;
     }
     .block-title {
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       font-weight: bold;
-      color: #555;
-      margin-bottom: 2px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
       text-transform: uppercase;
     }
 
-    .chip-group { display: flex; flex-wrap: wrap; gap: 3px; }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
     
     .chip-minus, .chip-plus {
-      font-size: 0.6rem;
-      padding: 2px 5px;
-      background: #f1f3f5;
-      border: 1px solid #ced4da;
-      border-radius: 3px;
+      font-size: 0.65rem;
+      padding: 3px 6px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 4px;
       cursor: pointer;
-      color: #333;
-      line-height: 1;
+      color: var(--text);
     }
     .chip-minus.selected-senza {
-      background: #e74c3c;
+      background: var(--accent);
       color: white;
       border-color: #c0392b;
       font-weight: bold;
@@ -266,13 +286,15 @@
 
     .input-field {
       width: 100%;
-      padding: 4px 6px;
-      margin-top: 2px;
+      padding: 6px 8px;
+      margin-top: 4px;
       margin-bottom: 4px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #222;
+      color: var(--text);
       box-sizing: border-box;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
     }
 
     .bottom-bar {
@@ -280,61 +302,64 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: white;
-      padding: 6px 10px;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      background: #1a1a1a;
+      padding: 10px 15px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.6);
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
+      border-top: 1px solid var(--primary);
     }
-    .total-price { font-size: 0.95rem; font-weight: bold; color: var(--primary); }
+    .total-price { font-size: 1rem; font-weight: bold; color: var(--primary); }
     .whatsapp-btn {
       background: #25D366;
       color: white;
       border: none;
-      padding: 6px 12px;
-      border-radius: 14px;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4);
     }
 
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.85);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 2000;
-      padding: 8px;
+      padding: 10px;
       box-sizing: border-box;
     }
     .modal-card {
-      background: white;
-      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--primary);
+      border-radius: 12px;
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       max-height: 85vh;
       overflow-y: auto;
     }
-    .receipt-header { background: #2c3e50; color: white; padding: 8px; text-align: center; }
-    .receipt-header h2 { margin: 0; font-size: 0.9rem; }
-    .receipt-body { padding: 8px; font-size: 0.75rem; }
-    .receipt-section { background: #f8f9fa; border: 1px dashed #ccc; padding: 5px 6px; border-radius: 4px; margin-bottom: 6px; }
-    .modal-actions { display: flex; gap: 5px; padding: 6px 8px; background: #f1f3f5; }
+    .receipt-header { background: #252525; color: var(--primary); padding: 10px; text-align: center; border-bottom: 1px solid #333; }
+    .receipt-header h2 { margin: 0; font-size: 1rem; }
+    .receipt-body { padding: 10px; font-size: 0.78rem; color: var(--text); }
+    .receipt-section { background: #151515; border: 1px dashed #444; padding: 8px; border-radius: 6px; margin-bottom: 8px; }
+    .modal-actions { display: flex; gap: 8px; padding: 10px; background: #222; }
     .btn-cancel, .btn-confirm {
       flex: 1;
-      padding: 6px;
-      border-radius: 4px;
+      padding: 8px;
+      border-radius: 6px;
       font-weight: bold;
       border: none;
       cursor: pointer;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       color: white;
     }
-    .btn-cancel { background: #e74c3c; }
+    .btn-cancel { background: #555; }
     .btn-confirm { background: #25D366; flex: 1.5; }
   </style>
 </head>
@@ -344,7 +369,7 @@
   <div class="header-flex">
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
       <img src="4tiktok.png" alt="TikTok" class="tiktok-logo-img">
-      <span class="tiktok-text">Clicca qui</span>
+      <span class="tiktok-text">TikTok</span>
     </a>
     
     <div class="title-box">
@@ -353,10 +378,14 @@
       <div class="header-promo" id="header-promo-text">🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!</div>
     </div>
 
+    <!-- 6 Language Buttons -->
     <div class="lang-container">
       <button class="lang-btn" onclick="changeLanguage('it')">ITA</button>
       <button class="lang-btn" onclick="changeLanguage('en')">ENG</button>
       <button class="lang-btn" onclick="changeLanguage('ur')">اردو</button>
+      <button class="lang-btn" onclick="changeLanguage('ar')">العربية</button>
+      <button class="lang-btn" onclick="changeLanguage('ro')">RO</button>
+      <button class="lang-btn" onclick="changeLanguage('bn')">বাংলা</button>
     </div>
   </div>
 </header>
@@ -372,8 +401,8 @@
       <small id="lbl-consegna-sub">(+2.50€ Consegna)</small>
     </div>
     <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
-      <span id="lbl-deliveroo">Note Deliveroo</span>
-      <small id="lbl-deliveroo-sub">Personalizza</small>
+      <span id="lbl-deliveroo">Deliveroo</span>
+      <small id="lbl-deliveroo-sub">Note</small>
     </div>
   </div>
 
@@ -395,7 +424,7 @@
 
 <div class="bottom-bar">
   <div id="total-price-box">
-    <span style="font-size: 0.6rem; color: #666;" id="lbl-totale-text">Totale:</span><br>
+    <span style="font-size: 0.6rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
     <span class="total-price" id="grand-total">€ 0,00</span>
   </div>
   <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
@@ -431,18 +460,18 @@ const translations = {
     promo: "🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!",
     asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
     consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
-    deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
+    deliveroo: "Deliveroo", deliverooSub: "Note",
     notice: '🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
     catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
-    verifyDeliv: "VERIFICA NOTE DELIVEROO",
+    verifyDeliv: "VERIFICA NOTE",
     modalTitleConf: "📋 Conferma Ordine",
     modalTitleDeliv: "📋 Note Deliveroo",
     modalTitleCons: "📋 Conferma Consegna (+2.50€)",
     modalTitleAsp: "📋 Conferma Asporto",
     nameLabel: "Il tuo Nome:",
-    nameDelivLabel: "Il tuo Nome o Numero Ordine Deliveroo:",
+    nameDelivLabel: "Nome o ID Deliveroo:",
     addrLabel: "Indirizzo di Consegna:",
     timeLabel: "Orario Ritiro/Consegna:",
     editBtn: "✏ Modifica",
@@ -458,18 +487,18 @@ const translations = {
     promo: "🎁 Promo > 40€: Free 1.5L Coca-Cola!",
     asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
     consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
-    deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
+    deliveroo: "Deliveroo", deliverooSub: "Notes",
     notice: '🎁 <b>Promotion:</b> Orders over 40€ get a free 1.5L Coca-Cola!',
     catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
-    verifyDeliv: "VERIFY DELIVEROO NOTES",
+    verifyDeliv: "VERIFY NOTES",
     modalTitleConf: "📋 Order Confirmation",
     modalTitleDeliv: "📋 Deliveroo Notes",
     modalTitleCons: "📋 Delivery Confirmation (+2.50€)",
     modalTitleAsp: "📋 Takeaway Confirmation",
     nameLabel: "Your Name:",
-    nameDelivLabel: "Your Name or Deliveroo Order ID:",
+    nameDelivLabel: "Your Name or Order ID:",
     addrLabel: "Delivery Address:",
     timeLabel: "Pickup/Delivery Time:",
     editBtn: "✏ Edit",
@@ -482,22 +511,22 @@ const translations = {
     freeCola: "🎁 Free 1.5L Coca-Cola (Order > 40€)"
   },
   ur: {
-    promo: "🎁 آفر > 40€: 1.5 لیٹر کوکا کولا بالکل مفت!",
-    asporto: "ٹیک اوے (Asporto)", asportoSub: "(-0.50€ کھانے پر کم)",
-    consegna: "ڈلیوری (Consegna)", consegnaSub: "(+2.50€ ڈلیوری چارجز)",
-    deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
-    notice: '🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت ملے گی!',
-    catAll: "سبھی (Tutti)", catKebab: "کباب (Kebab)", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
+    promo: "🎁 آفر > 40€: 1.5 لیٹر کوکا کولا مفت!",
+    asporto: "ٹیک اوے", asportoSub: "(-0.50€ کھانے پر)",
+    consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری)",
+    deliveroo: "ڈیلیورو", deliverooSub: "نوٹس",
+    notice: '🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا مفت!',
+    catAll: "سبھی", catKebab: "کباب", catNonKebab: "دوسرے", catFritti: "فرائڈ", catBevande: "ڈرنکس", catAlcolici: "الکوحل",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
-    verifyDeliv: "ڈیلیورو نوٹ چیک کریں",
+    verifyDeliv: "نوٹ چیک کریں",
     modalTitleConf: "📋 آرڈر کی تصدیق",
     modalTitleDeliv: "📋 ڈیلیورو نوٹس",
-    modalTitleCons: "📋 ڈلیوری کی تصدیق (+2.50€)",
-    modalTitleAsp: "📋 ٹیک اوے کی تصدیق",
+    modalTitleCons: "📋 ڈلیوری تصدیق (+2.50€)",
+    modalTitleAsp: "📋 ٹیک اوے تصدیق",
     nameLabel: "آپ کا نام:",
-    nameDelivLabel: "آپ کا نام یا ڈیلیورو آرڈر نمبر:",
-    addrLabel: "ڈلیوری کا ایڈریس:",
+    nameDelivLabel: "نام یا آرڈر نمبر:",
+    addrLabel: "ڈلیوری ایڈریس:",
     timeLabel: "وقت:",
     editBtn: "✏ تبدیل کریں",
     sendBtn: "✅ واٹس ایپ پر بھیجیں",
@@ -507,55 +536,133 @@ const translations = {
     subtotal: "سب ٹوٹل:",
     deliveryFee: "ڈلیوری فیس:",
     freeCola: "🎁 مفت کوکا کولا 1.5L (آرڈر > 40€)"
+  },
+  ar: {
+    promo: "🎁 عرض > 40€: كوكاكولا 1.5 لتر مجاناً!",
+    asporto: "استلام", asportoSub: "(-0.50€ على الطعام)",
+    consegna: "توصيل", consegnaSub: "(+2.50€ للتوصيل)",
+    deliveroo: "ديليفرو", deliverooSub: "ملاحظات",
+    notice: '🎁 <b>عرض:</b> للطلبات التي تزيد عن 40 يورو، تحصل على كوكاكولا 1.5 لتر مجاناً!',
+    catAll: "الكل", catKebab: "كباب", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات", catAlcolici: "كحوليات",
+    totaleText: "المجموع:",
+    verifyBtn: "تحقق واطلب",
+    verifyDeliv: "تحقق من الملاحظات",
+    modalTitleConf: "📋 تأكيد الطلب",
+    modalTitleDeliv: "📋 ملاحظات ديليفرو",
+    modalTitleCons: "📋 تأكيد التوصيل (+2.50€)",
+    modalTitleAsp: "📋 تأكيد الاستلام",
+    nameLabel: "اسمك:",
+    nameDelivLabel: "الاسم أو رقم الطلب:",
+    addrLabel: "عنوان التوصيل:",
+    timeLabel: "وقت الاستلام/التوصيل:",
+    editBtn: "✏ تعديل",
+    sendBtn: "✅ إرسال عبر واتساب",
+    senzaTitle: "بدون (إزالة):",
+    extraTitle: "إضافات (إضافة):",
+    notePlaceholder: "ملاحظات إضافية...",
+    subtotal: "المجموع الفرعي:",
+    deliveryFee: "التوصيل:",
+    freeCola: "🎁 كوكاكولا 1.5 لتر مجاناً (طلب > 40€)"
+  },
+  ro: {
+    promo: "🎁 Promo > 40€: Coca-Cola 1.5L Gratuit!",
+    asporto: "La pachet", asportoSub: "(-0.50€ la mâncare)",
+    consegna: "Livrare", consegnaSub: "(+2.50€ Livrare)",
+    deliveroo: "Deliveroo", deliverooSub: "Note",
+    notice: '🎁 <b>Promoție:</b> La comenzi de peste 40 €, primești o Coca-Cola de 1.5 L gratuit!',
+    catAll: "Toate", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
+    totaleText: "Total:",
+    verifyBtn: "VERIFICĂ ȘI PLASEAZĂ",
+    verifyDeliv: "VERIFICĂ NOTELE",
+    modalTitleConf: "📋 Confirmare Comandă",
+    modalTitleDeliv: "📋 Note Deliveroo",
+    modalTitleCons: "📋 Confirmare Livrare (+2.50€)",
+    modalTitleAsp: "📋 Confirmare La Pachet",
+    nameLabel: "Numele tău:",
+    nameDelivLabel: "Nume sau ID Deliveroo:",
+    addrLabel: "Adresa de livrare:",
+    timeLabel: "Ora de ridicare/livrare:",
+    editBtn: "✏ Modifică",
+    sendBtn: "✅ Trimite pe WhatsApp",
+    senzaTitle: "Fără (Elimină):",
+    extraTitle: "Extra (Adaugă):",
+    notePlaceholder: "Note suplimentare...",
+    subtotal: "Subtotal:",
+    deliveryFee: "Livrare:",
+    freeCola: "🎁 Coca-Cola 1.5L Gratuit (Comandă > 40€)"
+  },
+  bn: {
+    promo: "🎁 অফার > 40€: ১.৫ লিটার কোকা-কোলা ফ্রি!",
+    asporto: "টেকঅ্যাওয়ে", asportoSub: "(-0.50€ খাবারে)",
+    consegna: "হোম ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি)",
+    deliveroo: "ডেলিভারু", deliverooSub: "নোট",
+    notice: '🎁 <b>অফার:</b> ৪০ ইউরোর বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
+    catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য", catFritti: "ভাজাভুজি", catBevande: "পানীয়", catAlcolici: "মদ্যপ পানীয়",
+    totaleText: "মোট:",
+    verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
+    verifyDeliv: "নোট যাচাই করুন",
+    modalTitleConf: "📋 অর্ডার নিশ্চিতকরণ",
+    modalTitleDeliv: "📋 ডেলিভারু নোট",
+    modalTitleCons: "📋 ডেলিভারি নিশ্চিতকরণ (+2.50€)",
+    modalTitleAsp: "📋 টেকঅ্যাওয়ে নিশ্চিতকরণ",
+    nameLabel: "আপনার নাম:",
+    nameDelivLabel: "নাম বা অর্ডার আইডি:",
+    addrLabel: "ডেলিভারি ঠিকানা:",
+    timeLabel: "সময়:",
+    editBtn: "✏ পরিবর্তন করুন",
+    sendBtn: "✅ WhatsApp এ পাঠান",
+    senzaTitle: "ছাড়া (বাদ দিন):",
+    extraTitle: "এক্সট্রা (যুক্ত করুন):",
+    notePlaceholder: "অতিরিক্ত নোট...",
+    subtotal: "সাবটোটাল:",
+    deliveryFee: "ডেলিভারি ফি:",
+    freeCola: "🎁 ফ্রি কোকা-কোলা ১.৫ লিটার (অর্ডার > 40€)"
   }
 };
 
 const menuItems = [
   // --- Kebab ---
-  { id: 'pi_kebab', nameIt: 'Piadina Kebab', nameEn: 'Kebab Piadina', nameUr: 'پیادینا کباب', basePrice: 5.50, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_carne', nameIt: 'Piadina Kebab Solo Carne', nameEn: 'Meat-Only Kebab Piadina', nameUr: 'صرف گوشت پیادینا کباب', basePrice: 6.50, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'p_kebab', nameIt: 'Panino Kebab', nameEn: 'Kebab Panino', nameUr: 'پینینو کباب', basePrice: 4.50, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'p_carne', nameIt: 'Panino Solo Carne', nameEn: 'Meat-Only Panino', nameUr: 'صرف گوشت پینینو', basePrice: 5.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'm_panino', nameIt: 'Menu Panino (Bibita + Patatine)', nameEn: 'Panino Menu (Drink + Fries)', nameUr: 'پینینو مینو (ڈرنک + فرائز)', basePrice: 7.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'm_piadina', nameIt: 'Menu Piadina (Bibita + Patatine)', nameEn: 'Piadina Menu (Drink + Fries)', nameUr: 'پیادینا مینو (ڈرنک + فرائز)', basePrice: 8.00, cat: 'kebab', customizable: true, fixedPrice: false },
-  { id: 'piatto_k', nameIt: 'Piatto Kebab (Doner Sliced Meat)', nameEn: 'Kebab Plate', nameUr: 'کباب پلیٹ', basePrice: 7.50, cat: 'kebab', customizable: true, fixedPrice: false },
+  { id: 'pi_kebab', nameIt: 'Piadina Kebab', nameEn: 'Kebab Piadina', nameUr: 'پیادینا کباب', nameAr: 'بيادينا كباب', nameRo: 'Piadina Kebab', nameBn: 'পিয়াদিনা কাবাব', basePrice: 5.50, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=150' },
+  { id: 'pi_carne', nameIt: 'Piadina Kebab Solo Carne', nameEn: 'Meat-Only Kebab Piadina', nameUr: 'صرف گوشت پیادینا کباب', nameAr: 'بيادينا كباب لحم فقط', nameRo: 'Piadina Kebab Doar Carne', nameBn: 'শুধু মাংসের পিয়াদিনা কাবাব', basePrice: 6.50, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=150' },
+  { id: 'p_kebab', nameIt: 'Panino Kebab', nameEn: 'Kebab Panino', nameUr: 'پینینو کباب', nameAr: 'ساندويتش كباب', nameRo: 'Panino Kebab', nameBn: 'পানিনো কাবাব', basePrice: 4.50, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=150' },
+  { id: 'p_carne', nameIt: 'Panino Solo Carne', nameEn: 'Meat-Only Panino', nameUr: 'صرف گوشت پینینو', nameAr: 'ساندويتش لحم فقط', nameRo: 'Panino Doar Carne', nameBn: 'শুধু মাংসের পানিনো', basePrice: 5.00, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=150' },
+  { id: 'm_panino', nameIt: 'Menu Panino (Bibita + Patatine)', nameEn: 'Panino Menu (Drink + Fries)', nameUr: 'پینینو مینو (ڈرنک + فرائز)', nameAr: 'وجبة ساندويتش (مشروب + بطاطس)', nameRo: 'Meniu Panino (Băutură + Cartofi)', nameBn: 'পানিনো মেনু (পানীয় + ফ্রেঞ্চ ফ্রাই)', basePrice: 7.00, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=150' },
+  { id: 'm_piadina', nameIt: 'Menu Piadina (Bibita + Patatine)', nameEn: 'Piadina Menu (Drink + Fries)', nameUr: 'پیادینا مینو (ڈرنک + فرائز)', nameAr: 'وجبة بيادينا (مشروب + بطاطس)', nameRo: 'Meniu Piadina (Băutură + Cartofi)', nameBn: 'পিয়াদিনা মেনু (পানীয় + ফ্রেঞ্চ ফ্রাই)', basePrice: 8.00, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=150' },
+  { id: 'piatto_k', nameIt: 'Piatto Kebab (Doner Sliced Meat)', nameEn: 'Kebab Plate', nameUr: 'کباب پلیٹ', nameAr: 'طبق كباب', nameRo: 'Farfurie Kebab', nameBn: 'কাবাব প্লেট', basePrice: 7.50, cat: 'kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150' },
 
   // --- Non Solo Kebab ---
-  { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
-  { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false },
-  { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
+  { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', nameAr: 'برجر دجاج مقرمش', nameRo: 'Burger Pui Crispy', nameBn: 'ক্রিস্পি চিকেন বার্গার', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150' },
+  { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', nameAr: 'ساندويتش كوتليت', nameRo: 'Panino Șnițel', nameBn: 'স্নাইডেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=150' },
+  { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', nameAr: 'ساندويتش فلافل', nameRo: 'Panino Falafel', nameBn: ও 'ফলাফেল পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=150' },
+  { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', nameAr: 'بيادينا فلافل', nameRo: 'Piadina Falafel', nameBn: 'ফলাফেল পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=150' },
+  { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', nameAr: 'طبق فلافل', nameRo: 'Farfurie Falafel', nameBn: 'ফলাফেল প্লেট', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=150' },
+  { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', nameAr: 'ساندويتش كباب سيخ', nameRo: 'Panino Seekh Kebab', nameBn: 'সিখ কাবাব পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=150' },
+  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', nameAr: 'بيادينا كباب سيخ', nameRo: 'Piadina Seekh Kebab', nameBn: 'সিখ কাবাব পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=150' },
 
   // --- Fritti ---
-  { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'mozz_st', nameIt: 'Mozzarella Stick (6pz)', nameEn: 'Mozzarella Sticks (6pcs)', nameUr: 'موزریلا اسٹکس (6 عدد)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'ch_nug', nameIt: 'Chicken Nuggets (6pz)', nameEn: 'Chicken Nuggets (6pcs)', nameUr: 'چکن نگیٹس (6 عدد)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'anelli_cip', nameIt: 'Anelli di Cipolla (8pz)', nameEn: 'Onion Rings (8pcs)', nameUr: 'آنিয়ন رنگز (8 عدد)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
-  { id: 'ch_wings', nameIt: 'Chicken Wings (5pz)', nameEn: 'Chicken Wings (5pcs)', nameUr: 'چکن ونگز (5 عدد)', basePrice: 4.50, cat: 'fritti', customizable: false, fixedPrice: false },
+  { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', nameAr: 'بطاطس مقلية (صغيرة)', nameRo: 'Cartofi prăjiți (Mici)', nameBn: 'ফ্রেঞ্চ ফ্রাই (ছোট)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=150' },
+  { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', nameAr: 'بطاطس مقلية (كبيرة)', nameRo: 'Cartofi prăjiți (Mari)', nameBn: 'ফ্রেঞ্চ ফ্রাই (বড়)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=150' },
+  { id: 'mozz_st', nameIt: 'Mozzarella Stick (6pz)', nameEn: 'Mozzarella Sticks (6pcs)', nameUr: 'موزریلا اسٹکس (6 عدد)', nameAr: 'أصابع موزاريلا (6 قطع)', nameRo: 'Batoane Mozzarella (6buc)', nameBn: 'মোজারেলা স্টিক (৬ পিস)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1548340795-5d512a3d7671?w=150' },
+  { id: 'ch_nug', nameIt: 'Chicken Nuggets (6pz)', nameEn: 'Chicken Nuggets (6pcs)', nameUr: 'چکن نگیٹس (6 عدد)', nameAr: 'ناجتس دجاج (6 قطع)', nameRo: 'Nuggets de Pui (6buc)', nameBn: 'চিকেন নাজেটস (৬ পিস)', basePrice: 4.00, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=150' },
+  { id: 'anelli_cip', nameIt: 'Anelli di Cipolla (8pz)', nameEn: 'Onion Rings (8pcs)', nameUr: 'آنিয়ন رنگز (8 عدد)', nameAr: 'حلقات بصل (8 قطع)', nameRo: 'Inele de Ceapă (8buc)', nameBn: 'পেঁয়াজ রিং (৮ পিস)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?w=150' },
+  { id: 'ch_wings', nameIt: 'Chicken Wings (5pz)', nameEn: 'Chicken Wings (5pcs)', nameUr: 'چکن ونگز (5 عدد)', nameAr: 'أجنحة دجاج (5 قطع)', nameRo: 'Aripioare de Pui (5buc)', nameBn: 'চিকেন উইংস (৫ পিস)', basePrice: 4.50, cat: 'fritti', customizable: false, fixedPrice: false, image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=150' },
 
-  // --- Bevande (Step-by-Step Price Order: 1.50 -> 2.00 -> 3.00) ---
-  { id: 'coca', nameIt: 'Coca-Cola (33 cl)', nameEn: 'Coca-Cola (33 cl)', nameUr: 'کوکا کولا (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'sprite', nameIt: 'Sprite (33 cl)', nameEn: 'Sprite (33 cl)', nameUr: 'اسپرائٹ (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'hell', nameIt: 'Hell Energy Drink', nameEn: 'Hell Energy Drink', nameUr: 'ہیل انرجی ڈرنک', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'estathe_pesca', nameIt: 'Estathè Pesca', nameEn: 'Peach Estathè', nameUr: 'آڑو استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'estathe_limone', nameIt: 'Estathè Limone', nameEn: 'Lemon Estathè', nameUr: 'لیمن استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true },
-  
-  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
-  { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true },
-  
-  { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true },
+  // --- Bevande ---
+  { id: 'coca', nameIt: 'Coca-Cola (33 cl)', nameEn: 'Coca-Cola (33 cl)', nameUr: 'کوکا کولا (33 cl)', nameAr: 'كوكاكولا (33 سل)', nameRo: 'Coca-Cola (33 cl)', nameBn: 'কোকা-কোলা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=150' },
+  { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', nameAr: 'كوكاكولا زيرو (33 سل)', nameRo: 'Coca-Cola Zero (33 cl)', nameBn: 'কোকা-কোলা জিরো (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=150' },
+  { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', nameAr: 'فانتا (33 سل)', nameRo: 'Fanta (33 cl)', nameBn: 'ফ্যান্টা (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1624552184280-9e9632bbeee9?w=150' },
+  { id: 'sprite', nameIt: 'Sprite (33 cl)', nameEn: 'Sprite (33 cl)', nameUr: 'اسپرائٹ (33 cl)', nameAr: 'سبرايت (33 سل)', nameRo: 'Sprite (33 cl)', nameBn: 'স্প্রাইট (৩৩ সিএল)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=150' },
+  { id: 'hell', nameIt: 'Hell Energy Drink', nameEn: 'Hell Energy Drink', nameUr: 'ہیل انرجی ڈرنک', nameAr: 'مشروب طاقة هيل', nameRo: 'Băutură Energetică Hell', nameBn: 'হেল এনার্জি ড্রিংক', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=150' },
+  { id: 'estathe_pesca', nameIt: 'Estathè Pesca', nameEn: 'Peach Estathè', nameUr: 'آڑو استاتے', nameAr: 'إستاتي خوخ', nameRo: 'Estathè Piersici', nameBn: 'পীচ এস্থাতে', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1543253687-c931c8e01820?w=150' },
+  { id: 'estathe_limone', nameIt: 'Estathè Limone', nameEn: 'Lemon Estathè', nameUr: 'لیمن استاتے', nameAr: 'إستاتي ليمون', nameRo: 'Estathè Lămâie', nameBn: 'লেবু এস্থাতে', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=150' },
+  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', nameAr: 'مونستر إنرجي', nameRo: 'Monster Energy', nameBn: 'মনস্টার এনার্জি', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=150' },
+  { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', nameAr: 'ريد بول', nameRo: 'Red Bull', nameBn: 'রেড বুল', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=150' },
+  { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', nameAr: 'كوكاكولا كبيرة (1.5 لتر)', nameRo: 'Coca-Cola Mare (1.5 Litri)', nameBn: 'বড় কোকা-কোলা (১.৫ লিটার)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=150' },
 
-  // --- Alcolici (Step-by-Step Price Order: 2.00 -> 3.00) ---
-  { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true },
-  
-  { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true },
-  { id: 'moretti_66', nameIt: 'Birra Moretti (66 cl)', nameEn: 'Moretti Beer (66 cl)', nameUr: 'موریتی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true }
+  // --- Alcolici ---
+  { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', nameAr: 'بيرة بيروني (33 سل)', nameRo: 'Bere Peroni (33 cl)', nameBn: 'পেরোনি বিয়ার (৩৩ সিএল)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true, image: 'https://images.unsplash.com/photo-1608270105747-2389fe42345e?w=150' },
+  { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', nameAr: 'بيرة بيروني (66 سل)', nameRo: 'Bere Peroni (66 cl)', nameBn: 'পেরোনি বিয়ার (৬৬ সিএল)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true, image: 'https://images.unsplash.com/photo-1608270105747-2389fe42345e?w=150' },
+  { id: 'moretti_66', nameIt: 'Birra Moretti (66 cl)', nameEn: 'Moretti Beer (66 cl)', nameUr: 'موریتی بیئر (66 cl)', nameAr: 'بيرة موريتي (66 سل)', nameRo: 'Bere Moretti (66 cl)', nameBn: 'মোরেত্তি বিয়ার (৬৬ সিএল)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true, image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=150' }
 ];
 
 const ingredientConfig = {
@@ -635,7 +742,7 @@ function setOrderType(type) {
 
   const noticeEl = document.getElementById('main-notice');
   if(type === 'deliveroo') {
-    noticeEl.innerText = state.lang === 'ur' ? "💡 ڈیلیورو موڈ: کوئی قیمت ظاہر نہیں ہوگی۔ اپنی پسند درج کریں۔" : (state.lang === 'en' ? "💡 Deliveroo Mode: No prices shown. Enter your preferences." : "💡 Modalità Deliveroo: Nessun prezzo visualizzato. Inserisci le tue preferenze.");
+    noticeEl.innerText = "💡 Deliveroo Mode: No prices shown.";
     document.getElementById('total-price-box').style.display = 'none';
   } else {
     noticeEl.innerHTML = t.notice;
@@ -686,6 +793,9 @@ function renderMenu(items) {
     let itemName = item.nameIt;
     if(state.lang === 'en') itemName = item.nameEn;
     if(state.lang === 'ur') itemName = item.nameUr;
+    if(state.lang === 'ar') itemName = item.nameAr || item.nameIt;
+    if(state.lang === 'ro') itemName = item.nameRo || item.nameIt;
+    if(state.lang === 'bn') itemName = item.nameBn || item.nameIt;
 
     let priceHtml = '';
     if (state.orderType !== 'deliveroo') {
@@ -696,6 +806,7 @@ function renderMenu(items) {
 
     let html = `
       <div class="item-header">
+        <img src="${item.image}" alt="${itemName}" class="item-img">
         <div class="item-details">
           <div class="item-title-row">
             <span class="item-title">${itemName}</span>
@@ -705,14 +816,14 @@ function renderMenu(items) {
         </div>
         <div class="qty-controls">
           <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
-          <span style="font-weight:bold; font-size:0.8rem; min-width:15px; text-align:center;">${cartItem.qty}</span>
+          <span style="font-weight:bold; font-size:0.85rem; min-width:15px; text-align:center;">${cartItem.qty}</span>
           <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
         </div>
       </div>
     `;
 
     if (item.customizable && cartItem.qty > 0) {
-      html += `<div style="margin-top:6px;">`;
+      html += `<div style="margin-top:8px;">`;
       for (let i = 0; i < cartItem.qty; i++) {
         if (!cartItem.customUnits[i]) {
           cartItem.customUnits[i] = { senza: [], extra: [], note: '' };
@@ -821,7 +932,7 @@ function updateTotal() {
 function openConfirmationModal() {
   const cartKeys = Object.keys(state.cart);
   if (cartKeys.length === 0) {
-    alert(state.lang === 'ur' ? "کارٹ خالی ہے!" : (state.lang === 'en' ? "Cart is empty!" : "Il carrello è vuoto!"));
+    alert("Cart is empty!");
     return;
   }
 
@@ -832,28 +943,28 @@ function openConfirmationModal() {
   if (state.orderType === 'deliveroo') {
     document.getElementById('modal-title-text').innerText = t.modalTitleDeliv;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem;">${t.nameDelivLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem;">${t.nameDelivLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
     `;
   } else if (state.orderType === 'consegna') {
     document.getElementById('modal-title-text').innerText = t.modalTitleCons;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem;">${t.nameLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem;">${t.nameLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
       
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">${t.addrLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block;">${t.addrLabel}</label>
       <input type="text" id="customer-address" class="input-field" placeholder="...">
 
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">${t.timeLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block;">${t.timeLabel}</label>
       <input type="text" id="customer-time" class="input-field" value="${currentTime}">
     `;
   } else {
     document.getElementById('modal-title-text').innerText = t.modalTitleAsp;
     formHtml = `
-      <label style="font-weight:bold; font-size:0.7rem;">${t.nameLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem;">${t.nameLabel}</label>
       <input type="text" id="customer-name" class="input-field" placeholder="...">
       
-      <label style="font-weight:bold; font-size:0.7rem; margin-top:4px; display:block;">${t.timeLabel}</label>
+      <label style="font-weight:bold; font-size:0.75rem; margin-top:5px; display:block;">${t.timeLabel}</label>
       <input type="text" id="customer-time" class="input-field" value="${currentTime}">
     `;
   }
@@ -871,11 +982,14 @@ function openConfirmationModal() {
     let itemName = itemObj.nameIt;
     if(state.lang === 'en') itemName = itemObj.nameEn;
     if(state.lang === 'ur') itemName = itemObj.nameUr;
+    if(state.lang === 'ar') itemName = itemObj.nameAr || itemObj.nameIt;
+    if(state.lang === 'ro') itemName = itemObj.nameRo || itemObj.nameIt;
+    if(state.lang === 'bn') itemName = itemObj.nameBn || itemObj.nameIt;
 
     if (state.orderType === 'deliveroo') {
-      receiptHtml += `<div style="border-bottom:1px solid #ddd; padding:4px 0;"><b>${cartItem.qty}x ${itemName}</b>`;
+      receiptHtml += `<div style="border-bottom:1px solid #333; padding:5px 0;"><b>${cartItem.qty}x ${itemName}</b>`;
     } else {
-      receiptHtml += `<div style="border-bottom:1px solid #ddd; padding:4px 0;"><b>${cartItem.qty}x ${itemName}</b> - € ${itemSubtotal.toFixed(2)}`;
+      receiptHtml += `<div style="border-bottom:1px solid #333; padding:5px 0;"><b>${cartItem.qty}x ${itemName}</b> - € ${itemSubtotal.toFixed(2)}`;
     }
     
     if (cartItem.customUnits && cartItem.customUnits.length > 0) {
@@ -899,16 +1013,16 @@ function openConfirmationModal() {
 
   if (state.orderType !== 'deliveroo') {
     if (state.orderType === 'consegna') {
-      receiptHtml += `<div style="margin-top:4px; font-size:0.75rem; color:#555;">${t.subtotal} € ${subtotal.toFixed(2)}</div>`;
-      receiptHtml += `<div style="font-size:0.75rem; color:#555;">${t.deliveryFee} € 2.50</div>`;
+      receiptHtml += `<div style="margin-top:5px; font-size:0.75rem; color:#aaa;">${t.subtotal} € ${subtotal.toFixed(2)}</div>`;
+      receiptHtml += `<div style="font-size:0.75rem; color:#aaa;">${t.deliveryFee} € 2.50</div>`;
     }
     let finalTotal = subtotal + (state.orderType === 'consegna' ? 2.50 : 0);
     
     if (subtotal > 40) {
-      receiptHtml += `<div style="margin-top:4px; color:#27ae60; font-weight:bold; font-size:0.75rem;">${t.freeCola}</div>`;
+      receiptHtml += `<div style="margin-top:5px; color:#27ae60; font-weight:bold; font-size:0.75rem;">${t.freeCola}</div>`;
     }
 
-    receiptHtml += `<div style="margin-top:6px; font-weight:bold; text-align:right; font-size:0.85rem;">${t.totaleText} € ${finalTotal.toFixed(2)}</div>`;
+    receiptHtml += `<div style="margin-top:8px; font-weight:bold; text-align:right; font-size:0.9rem; color:var(--primary);">${t.totaleText} € ${finalTotal.toFixed(2)}</div>`;
   }
   receiptHtml += `</div>`;
 
@@ -926,7 +1040,7 @@ function sendWhatsAppOrder() {
   const address = document.getElementById('customer-address') ? document.getElementById('customer-address').value.trim() : '';
 
   if (!name) {
-    alert(state.lang === 'ur' ? "براہ کرم اپنا نام درج کریں!" : (state.lang === 'en' ? "Please enter your name!" : "Per favore inserisci il tuo nome!"));
+    alert("Please enter your name!");
     return;
   }
 
