@@ -1018,7 +1018,7 @@ function calcTotal() {
     progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!";
   } else {
     let diff = (40 - foodSubtotal).toFixed(2);
-    progressMsg = `Aggiungi altri € ${diff} di cibo per la Coca-Cola 1.5L Omaggio!`;
+    progressMsg = `⚠️ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
   }
   document.getElementById('cola-progress').innerText = progressMsg;
 }
@@ -1105,6 +1105,9 @@ function openConfirmationModal() {
     }
     if (foodSubtotal >= 40) {
       receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
+    } else {
+      let needed = (40 - foodSubtotal).toFixed(2);
+      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
     }
     receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">${t.totaleText} € ${grandTotal.toFixed(2)}</div>`;
   } else {
@@ -1156,15 +1159,19 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  let orderText = `*Nuovo Ordine - Kebab di Via Roma*%0A`;
+  // Exact clean format requested by the user
+  let orderText = `*Kebab di Via Roma*%0A`;
+  orderText += `*Tel:* +39 393 222 8224%0A`;
   orderText += `*Codice Ordine:* ${getOrderCode()}%0A`;
   orderText += `*Tipo:* ${state.orderType.toUpperCase()}%0A`;
   orderText += `*Nome/ID:* ${name}%0A`;
   if (addr) orderText += `*Indirizzo:* ${addr}%0A`;
   if (time) orderText += `*Orario:* ${time}%0A`;
-  orderText += `%0A*Dettaglio Ordine:*%0A`;
+  orderText += `%0A--------------------------%0A*DETTAGLIO ORDINE:*%0A`;
 
   let foodSubtotal = 0;
+  let itemCounter = 1;
+
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
     const cartItem = state.cart[id];
@@ -1175,40 +1182,43 @@ function sendWhatsAppOrder() {
     let itemTotal = effPrice * cartItem.qty;
     foodSubtotal += itemTotal;
 
-    if (!hidePrices) {
-      orderText += `- ${cartItem.qty}x ${item.name} (€ ${itemTotal.toFixed(2)})%0A`;
-    } else {
-      orderText += `- ${cartItem.qty}x ${item.name}%0A`;
-    }
-
-    if (cartItem.senza && cartItem.senza.length > 0) {
-      orderText += `  Senza: ${cartItem.senza.join(', ')}%0A`;
-    }
-    if (cartItem.extra && cartItem.extra.length > 0) {
-      orderText += `  Extra: ${cartItem.extra.join(', ')}%0A`;
-    }
-    if (cartItem.note) {
-      orderText += `  Note: ${cartItem.note}%0A`;
+    for (let i = 0; i < cartItem.qty; i++) {
+      orderText += `%0A*${itemCounter}. ${item.name}*`;
+      if (!hidePrices) {
+        orderText += ` (€ ${effPrice.toFixed(2)})`;
+      }
+      
+      if (cartItem.senza && cartItem.senza.length > 0) {
+        orderText += `%0A   🔸 Senza: ${cartItem.senza.join(', ')}`;
+      }
+      if (cartItem.extra && cartItem.extra.length > 0) {
+        orderText += `%0A   🔹 Extra: ${cartItem.extra.join(', ')}`;
+      }
+      if (cartItem.note) {
+        orderText += `%0A   📝 Note: ${cartItem.note}`;
+      }
+      itemCounter++;
     }
   }
 
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
   let grandTotal = foodSubtotal + deliveryFee;
 
+  orderText += `%0A--------------------------%0A`;
   if (!hidePrices) {
-    orderText += `%0A*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}`;
+    orderText += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}%0A`;
     if (deliveryFee > 0) {
-      orderText += `%0A*Consegna (Rider):* € ${deliveryFee.toFixed(2)}`;
+      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}%0A`;
     }
     if (foodSubtotal >= 40) {
-      orderText += `%0A🎁 *Omaggio:* Coca-Cola 1.5L`;
+      orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L%0A`;
     }
-    orderText += `%0A*Totale Complessivo:* € ${grandTotal.toFixed(2)}`;
+    orderText += `*TOTALE COMPLESSIVO:* € ${grandTotal.toFixed(2)}`;
   } else {
-    orderText += `%0A_Nota Deliveroo senza prezzi_`;
+    orderText += `_Nota Deliveroo senza prezzi_`;
   }
 
-  let phone = "393932228224";
+  let phone = "39393222824";
   let url = `https://wa.me/${phone}?text=${orderText}`;
   window.open(url, '_blank');
   closeConfirmationModal();
