@@ -177,14 +177,31 @@
       align-items: center; 
       gap: 10px;
     }
+    
+    .img-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
     .item-img {
       width: 55px;
       height: 55px;
       border-radius: 6px;
       object-fit: cover;
-      flex-shrink: 0;
       border: 1px solid #eee;
-      cursor: pointer;
+      display: block;
+    }
+    .badge-18 {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: #e74c3c;
+      color: white;
+      font-size: 0.5rem;
+      font-weight: bold;
+      padding: 1px 3px;
+      border-radius: 3px;
+      border: 1px solid white;
     }
 
     .item-details { flex: 1; }
@@ -539,11 +556,11 @@ const menuItems = [
 
   { id: 'c_burger', nameIt: 'Crispy Pollo Hamburger', nameEn: 'Crispy Chicken Burger', nameUr: 'کرسپی چکن برگر', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false, img: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=500' },
   { id: 'p_cotoletta', nameIt: 'Panino Cotoletta', nameEn: 'Cutlet Panino', nameUr: 'کوٹلیتا پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: false, fixedPrice: false, img: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?w=500' },
-  { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: '1000157482.jpg' },
-  { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: '1000157481.jpg' },
-  { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: '1000157483.jpg' },
-  { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=500' },
-  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500' },
+  { id: 'p_falafel', nameIt: 'Panino Falafel', nameEn: 'Falafel Panino', nameUr: 'فلافل پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=500' },
+  { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=500' },
+  { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500' },
+  { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500' },
+  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false, img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500' },
 
   { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500' },
   { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false, img: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=500' },
@@ -556,14 +573,14 @@ const menuItems = [
   { id: 'coca_zero', nameIt: 'Coca-Cola Zero (33 cl)', nameEn: 'Coca-Cola Zero (33 cl)', nameUr: 'کوکا کولا زیرو (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=500' },
   { id: 'fanta', nameIt: 'Fanta (33 cl)', nameEn: 'Fanta (33 cl)', nameUr: 'فانٹا (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=500' },
   { id: 'sprite', nameIt: 'Sprite (33 cl)', nameEn: 'Sprite (33 cl)', nameUr: 'اسپرائٹ (33 cl)', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1543253687-c931c8e01820?w=500' },
-  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
+  { id: 'monster', nameIt: 'Monster Energy', nameEn: 'Monster Energy', nameUr: 'مانسٹر انرجی ڈرنک', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500' },
   { id: 'red_bull', nameIt: 'Red Bull', nameEn: 'Red Bull', nameUr: 'ریڈ بل', basePrice: 2.00, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500' },
   { id: 'hell', nameIt: 'Hell Energy Drink', nameEn: 'Hell Energy Drink', nameUr: 'ہیل انرجی ڈرنک', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
   { id: 'estathe_pesca', nameIt: 'Estathè Pesca', nameEn: 'Peach Estathè', nameUr: 'آڑو استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1543253687-c931c8e01820?w=500' },
   { id: 'estathe_limone', nameIt: 'Estathè Limone', nameEn: 'Lemon Estathè', nameUr: 'لیمن استاتے', basePrice: 1.50, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1543253687-c931c8e01820?w=500' },
   { id: 'coca_grande', nameIt: 'Coca-Cola Grande (1.5 Litri)', nameEn: 'Large Coca-Cola (1.5L)', nameUr: 'بڑی کوکا کولا (1.5 لیٹر)', basePrice: 3.00, cat: 'bevande', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500' },
 
-  { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
+  { id: 'peroni_33', nameIt: 'Birra Peroni (33 cl)', nameEn: 'Peroni Beer (33 cl)', nameUr: 'پیرونی بیئر (33 cl)', basePrice: 2.00, cat: 'alcolici', customizable: false, fixedPrice: true, isAlcohol: true, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
   { id: 'peroni_66', nameIt: 'Birra Peroni (66 cl)', nameEn: 'Peroni Beer (66 cl)', nameUr: 'پیرونی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true, img: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500' },
   { id: 'moretti_66', nameIt: 'Birra Moretti (66 cl)', nameEn: 'Moretti Beer (66 cl)', nameUr: 'موریتی بیئر (66 cl)', basePrice: 3.00, cat: 'alcolici', customizable: false, fixedPrice: false, isAlcohol: true, img: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=500' }
 ];
@@ -702,9 +719,14 @@ function renderMenu(items) {
       priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)}</div>`;
     }
 
+    let badgeHtml = item.isAlcohol ? `<span class="badge-18">18+</span>` : '';
+
     let html = `
       <div class="item-header">
-        <img src="${item.img}" alt="${itemName}" class="item-img" onclick="openImageModal('${item.img}', '${itemName}')">
+        <div class="img-wrapper" onclick="openImageModal('${item.img}', '${itemName}')">
+          <img src="${item.img}" alt="${itemName}" class="item-img">
+          ${badgeHtml}
+        </div>
         <div class="item-details">
           <div class="item-title">${itemName}</div>
           ${priceHtml}
