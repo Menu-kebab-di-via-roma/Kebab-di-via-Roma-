@@ -1117,6 +1117,15 @@ function calcTotal() {
   document.getElementById('cola-progress').innerText = progressMsg;
 }
 
+// موجودہ وقت میں منٹ یا گھنٹے جمع کرنے کا فنکشن (آٹو ٹائم کے لیے)
+function getDefaultTime(minutesToAdd) {
+  let now = new Date();
+  now.setMinutes(now.getMinutes() + minutesToAdd);
+  let hours = String(now.getHours()).padStart(2, '0');
+  let minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
 function openConfirmationModal() {
   let hasItems = Object.keys(state.cart).length > 0;
   if (!hasItems) {
@@ -1133,6 +1142,10 @@ function openConfirmationModal() {
   else modalTitle.innerText = t.modalTitleAsp;
 
   const formInputs = document.getElementById('modal-form-inputs');
+  
+  // اسپورٹو کے لیے موجودہ وقت سے 30 منٹ بعد اور کونسیگنا کے لیے 60 منٹ بعد کا آٹو ٹائم
+  let defaultTimeVal = (state.orderType === 'consegna') ? getDefaultTime(60) : getDefaultTime(30);
+
   if (state.orderType === 'deliveroo') {
     formInputs.innerHTML = `
       <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameDelivLabel}</label></div>
@@ -1145,14 +1158,14 @@ function openConfirmationModal() {
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.addrLabel}</label></div>
       <input type="text" id="cust-addr" class="input-field" placeholder="Via, Civico, Citofono">
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
-      <input type="text" id="cust-time" class="input-field" placeholder="Es. 20:30">
+      <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
     `;
   } else {
     formInputs.innerHTML = `
       <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div>
       <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome">
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
-      <input type="text" id="cust-time" class="input-field" placeholder="Es. Subito / 19:45">
+      <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
     `;
   }
 
@@ -1230,12 +1243,10 @@ function closeConfirmationModal() {
 }
 
 function getOrderCode() {
-  // آرڈر نمبر 1 سے شروع ہوگا اور خود بخود بڑھتا رہے گا (مثلاً #001، #002...)
   let sequence = parseInt(localStorage.getItem('kebab_order_sequence') || '0', 10);
   sequence += 1;
   localStorage.setItem('kebab_order_sequence', sequence);
-
-  const seqFormatted = String(sequence).padStart(4, '0'); // چار ہندسوں میں (مثلاً #0001)
+  const seqFormatted = String(sequence).padStart(4, '0');
   return `#${seqFormatted}`;
 }
 
@@ -1253,11 +1264,11 @@ function sendWhatsAppOrder() {
   const time = timeInput ? timeInput.value.trim() : '';
   const hidePrices = (state.orderType === 'deliveroo');
 
-  let orderText = `*Kebab di Via Roma*%0A`;
-  orderText += `*Tel:* +39 393 222 8224%0A`;
-  orderText += `*Ordine Numero:* ${getOrderCode()}%0A`;
+  // واٹس ایپ میسج: شروع میں کوئی لوگو یا اضافی چیز نہیں، صرف آرڈر نمبر اور نام اور وقت
+  let orderText = `*Ordine ${getOrderCode()}*%0A`;
+  orderText += `*Kebab di Via Roma*%0A`;
   orderText += `*Tipo:* ${state.orderType.toUpperCase()}%0A`;
-  orderText += `*Nome/ID:* ${name}%0A`;
+  orderText += `*Nome:* ${name}%0A`;
   if (addr) orderText += `*Indirizzo:* ${addr}%0A`;
   if (time) orderText += `*Orario:* ${time}%0A`;
   orderText += `%0A--------------------------%0A*DETTAGLIO ORDINE:*%0A`;
@@ -1279,16 +1290,18 @@ function sendWhatsAppOrder() {
       }
       foodSubtotal += effPrice;
 
-      orderText += `%0A*${itemCounter}. ${item.name} (Pezzo #${uIdx + 1})*`;
+      // واضح اور صاف ترتیب تاکہ پہلے، دوسرے اور تیسرے پیس کی پوری تفصیل سمجھ آئے
+      orderText += `%0A*${itemCounter}. ${item.name}*`;
+      orderText += `%0A   👉 Pezzo #${uIdx + 1}`;
       if (!hidePrices) {
         orderText += ` (€ ${effPrice.toFixed(2)})`;
       }
       
       if (unit.senza && unit.senza.length > 0) {
-        orderText += `%0A   🔸 Senza: ${unit.senza.join(', ')}`;
+        orderText += `%0A   ❌ Senza: ${unit.senza.join(', ')}`;
       }
       if (unit.extra && unit.extra.length > 0) {
-        orderText += `%0A   🔹 Extra: ${unit.extra.join(', ')}`;
+        orderText += `%0A   ✅ Extra: ${unit.extra.join(', ')}`;
       }
       if (unit.note) {
         orderText += `%0A   📝 Note: ${unit.note}`;
