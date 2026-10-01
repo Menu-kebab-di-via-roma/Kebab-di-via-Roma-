@@ -29,12 +29,12 @@
       background: linear-gradient(135deg, #3a0000, #6a0000, #990000);
       color: white;
       text-align: center;
-      padding: 14px 15px;
+      padding: 8px 12px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 6px 25px rgba(153, 0, 0, 0.4);
-      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 4px 15px rgba(153, 0, 0, 0.4);
+      border-bottom: 2px solid var(--gold);
     }
     
     .header-flex {
@@ -43,7 +43,7 @@
       justify-content: space-between;
       max-width: 500px;
       margin: 0 auto;
-      gap: 8px;
+      gap: 6px;
     }
 
     .title-box {
@@ -55,7 +55,7 @@
     }
     header h1 { 
       margin: 0; 
-      font-size: 1.6rem; 
+      font-size: 1.4rem; 
       font-weight: 900;
       letter-spacing: 1px;
       color: #ffffff;
@@ -65,34 +65,33 @@
       -webkit-text-fill-color: transparent;
     }
     header p { 
-      margin: 3px 0; 
-      font-size: 0.75rem; 
+      margin: 2px 0 0 0; 
+      font-size: 0.7rem; 
       color: var(--gold-light); 
       font-weight: 600;
     }
-    
-    .special-piadina-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
-      color: #3a0000;
-      font-size: 0.68rem;
-      font-weight: 900;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-top: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border: 1px solid #fff;
-      box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
-      animation: softGlow 3s infinite ease-in-out;
-      cursor: pointer;
-      text-decoration: none;
+
+    .header-right-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
     }
 
-    @keyframes softGlow {
-      0% { opacity: 0.85; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: 0.85; transform: scale(1); }
+    .whatsapp-call-btn {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     .tiktok-container {
@@ -106,14 +105,14 @@
       border: 1px solid rgba(212, 175, 55, 0.4);
     }
     .tiktok-logo-img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
       border-radius: 50%;
       background: #000;
     }
     .tiktok-text {
-      font-size: 0.45rem;
+      font-size: 0.4rem;
       color: #fff;
       margin-top: 1px;
       font-weight: bold;
@@ -127,21 +126,21 @@
       background: linear-gradient(135deg, var(--gold), #b8860b);
       border: 1px solid #fff;
       color: #000;
-      padding: 6px 10px;
-      font-size: 0.7rem;
+      padding: 5px 8px;
+      font-size: 0.65rem;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
       display: flex;
       align-items: center;
       gap: 4px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     .lang-menu-popup {
       display: none;
       position: absolute;
       right: 0;
-      top: 38px;
+      top: 34px;
       background: #ffffff;
       border: 2px solid var(--gold);
       border-radius: 10px;
@@ -457,22 +456,24 @@
     <div class="title-box">
       <h1>Kebab di Via Roma</h1>
       <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
-      <a href="javascript:void(0)" onclick="filterCategory('speciale', document.getElementById('cat-btn-speciale'))" class="special-piadina-btn" id="lbl-speciale-banner">
-        ✨ Nostro Speciale Piadina Artigianale con Kebab - Solo €5.00 (Sempre Tutti le Sere) ✨
-      </a>
     </div>
 
-    <div class="lang-dropdown-wrapper">
-      <button class="lang-main-btn" onclick="toggleLangMenu()">
-        🌐 <span id="current-lang-label">ITA</span> ▾
-      </button>
-      <div class="lang-menu-popup" id="langMenuPopup">
-        <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
-        <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-        <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
-        <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
-        <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
-        <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
+    <div class="header-right-controls">
+      <a href="https://wa.me/393932228224?text=Salve,%20vorrei%20chiamarvi%20per%20un%20informazione." target="_blank" class="whatsapp-call-btn">
+        📞 <span id="lbl-call">Call</span>
+      </a>
+      <div class="lang-dropdown-wrapper">
+        <button class="lang-main-btn" onclick="toggleLangMenu()">
+          🌐 <span id="current-lang-label">ITA</span> ▾
+        </button>
+        <div class="lang-menu-popup" id="langMenuPopup">
+          <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+          <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+          <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
+          <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
+          <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
+          <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
+        </div>
       </div>
     </div>
   </div>
@@ -555,7 +556,7 @@ const commonExtra = ['Maionese', 'Ketchup', 'Extra Cipolla', 'Extra Piccante', '
 
 const translations = {
   it: {
-    specialeBanner: "✨ Nostro Speciale Piadina Artigianale con Kebab - Solo €5.00 (Sempre Tutti le Sere) ✨",
+    callText: "Call",
     asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
     consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
     student: "🎓 Promo Studenti", studentSub: "Offerte Speciali",
@@ -587,7 +588,7 @@ const translations = {
     freeCola: "🎁 Coca-Cola 1.5L Omaggio (Cibo >= 40€)"
   },
   en: {
-    specialeBanner: "✨ Our Special Artisanal Piadina with Kebab - Only €5.00 (Every Evening) ✨",
+    callText: "Call",
     asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
     consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
     student: "🎓 Student Promo", studentSub: "Special Offers",
@@ -619,7 +620,7 @@ const translations = {
     freeCola: "🎁 Free 1.5L Coca-Cola (Food >= 40€)"
   },
   ur: {
-    specialeBanner: "✨ ہمارا اسپیشل ہوم میڈ پیادینا کباب کے ساتھ - صرف €5.00 (ہر شام) ✨",
+    callText: "কল",
     asporto: "ٹیک اوے", asportoSub: "(-0.50€ کھانے پر کم)",
     consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری فیس)",
     student: "🎓 اسٹوڈنٹ آفر", studentSub: "اسپیشل آفرز",
@@ -651,7 +652,7 @@ const translations = {
     freeCola: "🎁 مفت کوکا کولا 1.5L (کھانا >= 40€)"
   },
   ro: {
-    specialeBanner: "✨ Piadina Noastră Specială Artizanală cu Kebab - Doar €5.00 (În Fiecare Seară) ✨",
+    callText: "Apel",
     asporto: "La pachet", asportoSub: "(-0.50€ la Mâncare)",
     consegna: "Livrare", consegnaSub: "(+2.50€ Livrare)",
     student: "🎓 Promo Studenți", studentSub: "Oferte Speciale",
@@ -683,7 +684,7 @@ const translations = {
     freeCola: "🎁 Coca-Cola 1.5L Cadou (Mâncare >= 40€)"
   },
   ar: {
-    specialeBanner: "✨ بيادينا الخاصة المصنوعة منزلياً مع الكباب - فقط €5.00 (كل مساء) ✨",
+    callText: "اتصال",
     asporto: "استلام من المحل", asportoSub: "(-0.50€ على الطعام)",
     consegna: "توصيل", consegnaSub: "(+2.50€ رسوم التوصيل)",
     student: "🎓 عرض الطلاب", studentSub: "عروض خاصة",
@@ -715,7 +716,7 @@ const translations = {
     freeCola: "🎁 كوكا كولا 1.5 لتر مجاناً (طعام >= 40€)"
   },
   bn: {
-    specialeBanner: "✨ আমাদের বিশেষ হাতের তৈরি পিয়াদিনা কাবাবসহ - মাত্র €5.00 (প্রতি সন্ধ্যায়) ✨",
+    callText: "কল",
     asporto: "টেকঅ্যাওয়ে", asportoSub: "(-0.50€ খাবারে ছাড়)",
     consegna: "ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি ফি)",
     student: "🎓 ছাত্র প্রোমো", studentSub: "বিশেষ অফার",
@@ -965,11 +966,11 @@ const menuData = [
   // Kebab
   { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senza: commonSenza, extra: commonExtra },
   { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
-  { id: 'k_3', name: 'Menu Panino+bibia+patatine', price: 7.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
   
   // Student Menu
-  { id: 'st_1', name: 'Menu Panino con Bevanda', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
-  { id: 'st_2', name: 'Menu Panino con Bevanda', price: 5.00, category: 'kebab', isStudentExclusive: true, isPromo: false, desc: 'Dopo le 16:30', senza: commonSenza, extra: commonExtra },
+  { id: 'st_1', name: 'Menu Panino con Bevanda', price: 6.00, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
+  { id: 'st_2', name: 'Menu Panino con Bevanda', price: 7.50, category: 'kebab', isStudentExclusive: true, isPromo: false, desc: 'Dopo le 16:30', senza: commonSenza, extra: commonExtra },
 
   // Piadina Kebab
   { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.50, category: 'piadina', isSpecialPiadina: true, isPromo: true, desc: 'Sempre Tutti le Sere', senza: commonSenza, extra: commonExtra },
@@ -985,23 +986,23 @@ const menuData = [
   { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
   { id: 'nk_4', name: 'Panino Seekh Kebab', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
   { id: 'nk_5', name: 'Crispy Hamburger', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
-  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 5.50, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
   { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
 
   // Fritti
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
-  { id: 'f_3', name: 'Anelli di Cipolla (8pz)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
-  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 4.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
 
   // Bevande
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_2', name: 'Coca-Cola Zero 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_3', name: 'Sprite 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_4', name: 'Fanta 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
-  { id: 'bev_5', name: 'Hell Energy drink 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
+  { id: 'bev_5', name: 'Hill Energy 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_7', name: 'Estathè Limone 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_8', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senza: [], extra: [] },
@@ -1040,7 +1041,7 @@ function changeLanguage(lang) {
   document.getElementById('langMenuPopup').classList.remove('show');
   
   const t = translations[lang];
-  document.getElementById('lbl-speciale-banner').innerText = t.specialeBanner;
+  document.getElementById('lbl-call').innerText = t.callText;
   document.getElementById('lbl-asporto').innerText = t.asporto;
   document.getElementById('lbl-asporto-sub').innerText = t.asportoSub;
   document.getElementById('lbl-consegna').innerText = t.consegna;
@@ -1325,7 +1326,7 @@ function calcTotal() {
       progressMsg = "🎁 Coca-Cola 1.5L Omaggio Inclusa!";
     } else {
       let diff = (40 - foodSubtotal).toFixed(2);
-      progressMsg = `⚠️️ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
+      progressMsg = `⚠ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
     }
   }
   document.getElementById('cola-progress').innerText = progressMsg;
