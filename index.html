@@ -444,7 +444,7 @@
     </div>
     <div class="type-btn" id="btn-student" onclick="setOrderType('student')">
       <span id="lbl-student">🎓 Promo Studenti</span>
-      <small id="lbl-student-sub">Lunedì-Giovedì &lt;16:30</small>
+      <small id="lbl-student-sub">Lun-Gio &lt;16:30 (-1€ + Offerta)</small>
     </div>
     <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
       <span id="lbl-deliveroo">Note Deliveroo</span>
@@ -506,10 +506,10 @@ const translations = {
     promo: "🎁 Promo > 40€: Coca-Cola 1.5L Omaggio!",
     asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
     consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
-    student: "🎓 Promo Studenti", studentSub: "Lun-Gio (<16:30) €4.50",
+    student: "🎓 Promo Studenti", studentSub: "Lun-Gio (<16:30) -1€ + Offerta",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
     notice: '🎁 <b>Promozione:</b> Per ordini superiori a 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
-    studentNotice: '🎓 <b>Promo Studenti (Offerta Esclusiva Kebab di Via Roma):</b> Dal Lunedì al Giovedì, prima delle 16:30, per tutti gli studenti: <b>1 Panino + 1 Coca-Cola a soli € 4.50!</b> (Valido solo per Asporto).',
+    studentNotice: '🎓 <b>Promo Studenti (Lunedì-Giovedì prima delle 16:30):</b> Sconto di 1€ su quasi tutto il menu (tranne fritti e bevande). Inoltre: <b>1 Panino + 1 Coca-Cola a soli € 4.50!</b> (Kebab di Via Roma).',
     catAll: "Tutti", catKebab: "Kebab", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
@@ -519,7 +519,7 @@ const translations = {
     modalTitleDeliv: "📋 Note Deliveroo",
     modalTitleCons: "📋 Conferma Consegna (+2.50€)",
     modalTitleAsp: "📋 Conferma Asporto",
-    modalTitleStudent: "📋 Conferma Promo Studenti (€4.50)",
+    modalTitleStudent: "📋 Conferma Promo Studenti",
     nameLabel: "Il tuo Nome:",
     nameDelivLabel: "Il tuo Nome o Numero Ordine Deliveroo:",
     addrLabel: "Indirizzo di Consegna:",
@@ -537,10 +537,10 @@ const translations = {
     promo: "🎁 Promo > 40€: Free 1.5L Coca-Cola!",
     asporto: "Takeaway", asportoSub: "(-0.50€ on Food)",
     consegna: "Delivery", consegnaSub: "(+2.50€ Delivery)",
-    student: "🎓 Student Promo", studentSub: "Mon-Thu (<16:30) €4.50",
+    student: "🎓 Student Promo", studentSub: "Mon-Thu (<16:30) -1€ + Offer",
     deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
     notice: '🎁 <b>Promotion:</b> Orders over 40€ get a free 1.5L Coca-Cola!',
-    studentNotice: '🎓 <b>Student Promo (Kebab di Via Roma Special):</b> Monday to Thursday, before 4:30 PM: <b>1 Panino + 1 Coca-Cola for only € 4.50!</b> (Takeaway only).',
+    studentNotice: '🎓 <b>Student Promo (Mon-Thu before 4:30 PM):</b> 1€ discount on most items (excl. fries & drinks). Plus: <b>1 Panino + 1 Coca-Cola for only € 4.50!</b> (Kebab di Via Roma).',
     catAll: "All", catKebab: "Kebab", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
@@ -550,7 +550,7 @@ const translations = {
     modalTitleDeliv: "📋 Deliveroo Notes",
     modalTitleCons: "📋 Delivery Confirmation (+2.50€)",
     modalTitleAsp: "📋 Takeaway Confirmation",
-    modalTitleStudent: "📋 Student Promo Confirmation (€4.50)",
+    modalTitleStudent: "📋 Student Promo Confirmation",
     nameLabel: "Your Name:",
     nameDelivLabel: "Your Name or Deliveroo Order ID:",
     addrLabel: "Delivery Address:",
@@ -568,10 +568,10 @@ const translations = {
     promo: "🎁 آفر > 40€: 1.5 لیٹر کوکا کولا بالکل مفت!",
     asporto: "ٹیک اوے", asportoSub: "(-0.50€ کھانے پر کم)",
     consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری فیس)",
-    student: "🎓 اسٹوڈنٹ آفر", studentSub: "سوموار تا جمعرات (<4:30) €4.50",
+    student: "🎓 اسٹوڈنٹ آفر", studentSub: "سوموار تا جمعرات (<4:30) -1€ + آفر",
     deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
     notice: '🎁 <b>آفر:</b> 40 یورو سے اوپر کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت ملے گی!',
-    studentNotice: '🎓 <b>اسٹوڈنٹ آفر (کباب دی ويا روما کی طرف سے):</b> سوموار سے جمعرات تک، ساڑھے چار بجے سے پہلے پہلے: <b>ایک پینینو اور ایک کوکا کولا صرف € 4.50 میں!</b> (صرف اسپورٹو کے لیے)۔',
+    studentNotice: '🎓 <b>اسٹوڈنٹ آفر (سوموار سے جمعرات، ساڑھے چار بجے سے پہلے پہلے):</b> فرائیڈ اور ڈرنکس کے علاوہ ہر چیز پر 1 یورو کی چھوٹ! نیز: <b>ایک پینینو اور ایک کوکا کولا صرف € 4.50 میں!</b> (کباب دی ويا روما)۔',
     catAll: "سبھی", catKebab: "کباب", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
@@ -581,7 +581,7 @@ const translations = {
     modalTitleDeliv: "📋 ڈیلیورو نوٹس",
     modalTitleCons: "📋 ڈلیوری کی تصدیق (+2.50€)",
     modalTitleAsp: "📋 ٹیک اوے کی تصدیق",
-    modalTitleStudent: "📋 اسٹوڈنٹ آفر کی تصدیق (€4.50)",
+    modalTitleStudent: "📋 اسٹوڈنٹ آفر کی تصدیق",
     nameLabel: "آپ کا نام:",
     nameDelivLabel: "آپ کا نام یا ڈیلیورو آرڈر نمبر:",
     addrLabel: "ڈلیوری کا ایڈریس:",
@@ -599,10 +599,10 @@ const translations = {
     promo: "🎁 Promo > 40€: Coca-Cola 1.5L Cadou!",
     asporto: "La pachet", asportoSub: "(-0.50€ la Mâncare)",
     consegna: "Livrare", consegnaSub: "(+2.50€ Livrare)",
-    student: "🎓 Promo Studenți", studentSub: "Lun-Joi (<16:30) €4.50",
+    student: "🎓 Promo Studenți", studentSub: "Lun-Joi (<16:30) -1€ + Ofertă",
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizează",
     notice: '🎁 <b>Promoție:</b> La comenzi de peste 40€, primești o Coca-Cola de 1.5L gratuit!',
-    studentNotice: '🎓 <b>Promo Studenți (Kebab di Via Roma):</b> De luni până joi, înainte de ora 16:30: <b>1 Panino + 1 Coca-Cola la doar 4.50€!</b> (Valabil doar pentru la pachet).',
+    studentNotice: '🎓 <b>Promo Studenți (Luni-Joi înainte de 16:30):</b> Reducere de 1€ la majoritatea produselor (excl. cartofi și băuturi). Plus: <b>1 Panino + 1 Coca-Cola la doar 4.50€!</b> (Kebab di Via Roma).',
     catAll: "Toate", catKebab: "Kebab", catNonKebab: "Altele", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice",
     totaleText: "Total:",
     verifyBtn: "VERIFICĂ ȘI PLASEAZĂ",
@@ -612,7 +612,7 @@ const translations = {
     modalTitleDeliv: "📋 Note Deliveroo",
     modalTitleCons: "📋 Confirmare Livrare (+2.50€)",
     modalTitleAsp: "📋 Confirmare La pachet",
-    modalTitleStudent: "📋 Confirmare Promo Studenți (4.50€)",
+    modalTitleStudent: "📋 Confirmare Promo Studenți",
     nameLabel: "Numele tău:",
     nameDelivLabel: "Nume sau Nr. Comandă Deliveroo:",
     addrLabel: "Adresa de Livrare:",
@@ -630,10 +630,10 @@ const translations = {
     promo: "🎁 عرض خاص > 40€: كوكاكولا 1.5 لتر مجاناً!",
     asporto: "استلام من المحل", asportoSub: "(-0.50€ على الطعام)",
     consegna: "توصيل", consegnaSub: "(+2.50€ للتوصيل)",
-    student: "🎓 عرض الطلاب", studentSub: "الإثنين-الخميس (<4:30) €4.50",
+    student: "🎓 عرض الطلاب", studentSub: "الإثنين-الخميس (<4:30) خصم 1€",
     deliveroo: "ملاحظات دليفرو", deliverooSub: "تخصيص",
     notice: '🎁 <b>عرض:</b> للطلبات التي تزيد عن 40 يورو، احصل على كوكاكولا 1.5 لتر مجاناً!',
-    studentNotice: '🎓 <b>عرض الطلاب (من كباب دي فيا روما):</b> من الإثنين إلى الخميس، قبل الساعة 4:30 عصراً: <b>ساندويتش + كوكاكولا بـ 4.50 يورو فقط!</b> (للاستلام من المحل فقط).',
+    studentNotice: '🎓 <b>عرض الطلاب (من الإثنين للخميس قبل 4:30 عصراً):</b> خصم يورو واحد (1€) على معظم المنتجات (ما عدا المقليات والمشروبات). بالإضافة إلى: <b>ساندويتش + كوكاكولا بـ 4.50 يورو فقط!</b> (كباب دي فيا روما).',
     catAll: "الكل", catKebab: "كباب", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات باردة", catAlcolici: "مشروبات كحولية",
     totaleText: "المجموع:",
     verifyBtn: "تحقق واطلب",
@@ -643,7 +643,7 @@ const translations = {
     modalTitleDeliv: "📋 ملاحظات دليفرو",
     modalTitleCons: "📋 تأكيد التوصيل (+2.50€)",
     modalTitleAsp: "📋 تأكيد الاستلام من المحل",
-    modalTitleStudent: "📋 تأكيد عرض الطلاب (€4.50)",
+    modalTitleStudent: "📋 تأكيد عرض الطلاب",
     nameLabel: "اسمك:",
     nameDelivLabel: "اسمك أو رقم طلب دليفرو:",
     addrLabel: "عنوان التوصيل:",
@@ -661,10 +661,10 @@ const translations = {
     promo: "🎁 অফার > 40€: ১.৫ লিটার কোকা-কোলা একদম ফ্রি!",
     asporto: "পার্সেল (টیک-অ্যাওয়ে)", asportoSub: "(-0.50€ খাবারে ছাড়)",
     consegna: "হোম ডেলিভারি", consegnaSub: "(+2.50€ ডেলিভারি চার্জ)",
-    student: "🎓 স্টুডেন্ট অফার", studentSub: "সোম-বৃহস্পতি (<4:30) €4.50",
+    student: "🎓 স্টুডেন্ট অফার", studentSub: "সোম-বৃহস্পতি (<4:30) ১€ ছাড়",
     deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
     notice: '🎁 <b>অফার:</b> ৪০ ইউরোর বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
-    studentNotice: '🎓 <b>স্টুডেন্ট অফার (কাবাব দি ভিয়া রোমা):</b> সোমবার থেকে বৃহস্পতিবার, বিকেল সাড়ে চারটার আগে: <b>১টি পানিনো + ১টি কোকা-কোলা মাত্র ৪.৫০ ইউরোতে!</b> (শুধুমাত্র পার্সেলের জন্য প্রযোজ্য)।',
+    studentNotice: '🎓 <b>স্টুডেন্ট অফার (সোমবার থেকে বৃহস্পতিবার, সাড়ে চারটার আগে):</b> ভাজাভুজি ও পানীয় ছাড়া বাকি সব খাবারে ১ یورو (1€) ছাড়! সাথে: <b>১টি পানিনো + ১টি কোকা-কোলা মাত্র ৪.৫০ ইউরো!</b> (কাবাব দি ভিয়া রোমা)।',
     catAll: "সব", catKebab: "কাবাব", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভুজি", catBevande: "পানীয় (কোল্ড ড্রিংকস)", catAlcolici: "অ্যালকোহল",
     totaleText: "মোট:",
     verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
@@ -674,7 +674,7 @@ const translations = {
     modalTitleDeliv: "📋 ডেলিভারু নোট",
     modalTitleCons: "📋 ডেলিভারি নিশ্চিতকরণ (+2.50€)",
     modalTitleAsp: "📋 পার্সেল নিশ্চিতকরণ",
-    modalTitleStudent: "📋 স্টুডেন্ট অফার নিশ্চিতকরণ (€4.50)",
+    modalTitleStudent: "📋 স্টুডেন্ট অফার নিশ্চিতকরণ",
     nameLabel: "আপনার নাম:",
     nameDelivLabel: "আপনার নাম বা ডেলিভারু অর্ডার নম্বর:",
     addrLabel: "ডেলিভারি ঠিকানা:",
@@ -705,7 +705,7 @@ const menuItems = [
   { id: 'pi_falafel', nameIt: 'Piadina Falafel', nameEn: 'Falafel Piadina', nameUr: 'فلافل پیادینا', nameRo: 'Piadina Falafel', nameAr: 'بيادينا فلافل', nameBn: 'ফালাফেল পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
   { id: 'piatto_f', nameIt: 'Piatto Falafel', nameEn: 'Falafel Plate', nameUr: 'فلافل پلیٹ', nameRo: 'Farfurie Falafel', nameAr: 'طبق فلافل', nameBn: 'ফালাফেল প্লেট', basePrice: 7.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
   { id: 'p_seekh', nameIt: 'Panino Seekh Kebab', nameEn: 'Seekh Kebab Panino', nameUr: 'سیخ کباب پینینو', nameRo: 'Panino Seekh Kebab', nameAr: 'ساندويتش سيخ كباب', nameBn: 'সিক কাবাব পানিনো', basePrice: 4.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
-  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', nameRo: 'Piadina Seekh Kebab', nameAr: 'بيادينا سيخ كباب', nameBn: 'সিক কাবাব পিয়াদিনা', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
+  { id: 'pi_seekh', nameIt: 'Piadina Seekh Kebab', nameEn: 'Seekh Kebab Piadina', nameUr: 'سیخ کباب پیادینا', nameRo: 'Piadina Seekh Kebab', nameAr: 'بيادينا سيخ كباب', nameBn: 'সিক কাবাব پিয়াদینا', basePrice: 5.00, cat: 'non-kebab', customizable: true, fixedPrice: false },
 
   { id: 'pat_p', nameIt: 'Patatine Fritte (Piccola)', nameEn: 'French Fries (Small)', nameUr: 'فرنچ فرائز (چھوٹی)', nameRo: 'Cartofi Prăjiți (Mici)', nameAr: 'بطاطس مقلية (صغيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (ছোট)', basePrice: 2.50, cat: 'fritti', customizable: false, fixedPrice: false },
   { id: 'pat_g', nameIt: 'Patatine Fritte (Grande)', nameEn: 'French Fries (Large)', nameUr: 'فرنچ فرائز (بڑی)', nameRo: 'Cartofi Prăjiți (Mari)', nameAr: 'بطاطس مقلية (كبيرة)', nameBn: 'ফ্রেঞ্চ ফ্রাই (বড়)', basePrice: 3.50, cat: 'fritti', customizable: false, fixedPrice: false },
@@ -746,7 +746,6 @@ function toggleLangMenu() {
   popup.classList.toggle('show');
 }
 
-// Close language dropdown if clicked outside
 window.onclick = function(event) {
   if (!event.target.closest('.lang-dropdown-wrapper')) {
     const popup = document.getElementById('langMenuPopup');
@@ -861,8 +860,13 @@ function setOrderType(type) {
 
 function getItemPrice(item) {
   if (state.orderType === 'student') {
+    // If it's a panino item for the 4.50 bundle offer
     if (item.id === 'p_kebab' || item.id === 'p_carne' || item.id === 'p_falafel' || item.id === 'p_seekh') {
-      return 4.50; // Special student bundle price includes Panino + Coca-Cola handled in logic or unit
+      return 4.50;
+    }
+    // For other items (excluding fritti and bevande/alcolici), apply 1€ discount
+    if (item.cat !== 'fritti' && item.cat !== 'bevande' && item.cat !== 'alcolici') {
+      return Math.max(0, item.basePrice - 1.00);
     }
   }
   if (item.fixedPrice) {
@@ -880,23 +884,17 @@ function filterCategory(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  if (state.orderType === 'student' && (cat === 'bevande' || cat === 'alcolici')) {
-    currentFilteredItems = [];
-    renderMenu([]);
-    return;
-  }
-
   if (cat === 'all') {
     currentFilteredItems = null;
     let itemsToRender = menuItems;
     if (state.orderType === 'student') {
-      itemsToRender = menuItems.filter(i => !i.isAlcohol && (i.cat === 'kebab' || i.cat === 'non-kebab'));
+      itemsToRender = menuItems.filter(i => !i.isAlcohol);
     }
     renderMenu(itemsToRender);
   } else {
     let items = menuItems.filter(item => item.cat === cat);
     if (state.orderType === 'student') {
-      items = items.filter(i => !i.isAlcohol && (i.cat === 'kebab' || i.cat === 'non-kebab'));
+      items = items.filter(i => !i.isAlcohol);
     }
     currentFilteredItems = items;
     renderMenu(currentFilteredItems);
@@ -909,7 +907,7 @@ function renderMenu(items) {
   const t = translations[state.lang];
 
   if (state.orderType === 'student') {
-    items = items.filter(i => !i.isAlcohol && (i.cat === 'kebab' || i.cat === 'non-kebab'));
+    items = items.filter(i => !i.isAlcohol);
   }
 
   items.forEach(item => {
@@ -928,7 +926,12 @@ function renderMenu(items) {
 
     let priceHtml = '';
     if (state.orderType !== 'deliveroo') {
-      priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)}</div>`;
+      let isStudentBundle = (state.orderType === 'student' && (item.id === 'p_kebab' || item.id === 'p_carne' || item.id === 'p_falafel' || item.id === 'p_seekh'));
+      if (isStudentBundle) {
+        priceHtml = `<div class="item-price">€ 4.50 <small style="color:#b7950b; font-size:0.65rem;">(Panino + Coca 33cl)</small></div>`;
+      } else {
+        priceHtml = `<div class="item-price">€ ${currentPrice.toFixed(2)}</div>`;
+      }
     }
 
     let badgeHtml = item.isAlcohol ? `<span class="badge-18">18+</span>` : '';
@@ -1103,8 +1106,8 @@ function openConfirmationModal() {
       receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b>`;
     } else {
       receiptHtml += `<div style="border-bottom:1px solid #e5e8e8; padding:6px 0;"><b style="color:#2c3e50;">${cartItem.qty}x ${itemName}</b> - <span style="color:var(--primary);">€ ${itemSubtotal.toFixed(2)}</span>`;
-      if (state.orderType === 'student') {
-        receiptHtml += `<div style="font-size:0.65rem; color:#b7950b; font-weight:bold;">🎓 Include Coca-Cola (Promo Studenti)</div>`;
+      if (state.orderType === 'student' && (itemObj.id === 'p_kebab' || itemObj.id === 'p_carne' || itemObj.id === 'p_falafel' || itemObj.id === 'p_seekh')) {
+        receiptHtml += `<div style="font-size:0.65rem; color:#b7950b; font-weight:bold;">🎓 Include Coca-Cola 33cl (Promo Studenti)</div>`;
       }
     }
     
@@ -1192,8 +1195,8 @@ function sendWhatsAppOrder() {
       message += `• *${cartItem.qty}x ${itemObj.nameIt}*\n`;
     } else {
       message += `• *${cartItem.qty}x ${itemObj.nameIt}* (€ ${itemSubtotal.toFixed(2)})\n`;
-      if (state.orderType === 'student') {
-        message += `   🥤 *(Include 1x Coca-Cola omaggio promo studenti)*\n`;
+      if (state.orderType === 'student' && (itemObj.id === 'p_kebab' || itemObj.id === 'p_carne' || itemObj.id === 'p_falafel' || itemObj.id === 'p_seekh')) {
+        message += `   🥤 *(Include 1x Coca-Cola 33cl omaggio promo studenti)*\n`;
       }
     }
     
