@@ -119,6 +119,26 @@
       font-weight: bold;
     }
 
+    .header-right-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .music-btn-top {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 0.62rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+
     .lang-dropdown-wrapper {
       position: relative;
       display: inline-block;
@@ -447,6 +467,11 @@
 </head>
 <body>
 
+<!-- Background Audio Extracted from Video -->
+<audio id="bg-audio" loop autoplay>
+  <source src="https://assets.mixkit.co/music/preview/mixkit-relaxing-spaces-135.mp3" type="audio/mp3">
+</audio>
+
 <header>
   <div class="header-flex">
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
@@ -462,17 +487,23 @@
       </a>
     </div>
 
-    <div class="lang-dropdown-wrapper">
-      <button class="lang-main-btn" onclick="toggleLangMenu()">
-        🌐 <span id="current-lang-label">ITA</span> ▾
+    <!-- Right Controls: Music Stop/Play button positioned above Language Selector -->
+    <div class="header-right-controls">
+      <button id="music-toggle-btn" class="music-btn-top" onclick="toggleBackgroundMusic()">
+        🎵 Music: ON
       </button>
-      <div class="lang-menu-popup" id="langMenuPopup">
-        <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
-        <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-        <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
-        <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
-        <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
-        <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
+      <div class="lang-dropdown-wrapper">
+        <button class="lang-main-btn" onclick="toggleLangMenu()">
+          🌐 <span id="current-lang-label">ITA</span> ▾
+        </button>
+        <div class="lang-menu-popup" id="langMenuPopup">
+          <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+          <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+          <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
+          <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
+          <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
+          <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
+        </div>
       </div>
     </div>
   </div>
@@ -516,17 +547,6 @@
   <div id="menu-container"></div>
 </div>
 
-<!-- Background Relaxing Music Player Box -->
-<div id="music-player-box" style="position: fixed; bottom: 70px; right: 15px; z-index: 9999; background: rgba(0, 0, 0, 0.8); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-  <audio id="bg-audio" loop>
-    <source src="https://assets.mixkit.co/music/preview/mixkit-relaxing-spaces-135.mp3" type="audio/mp3">
-  </audio>
-  <button id="music-toggle-btn" onclick="toggleBackgroundMusic()" style="background: linear-gradient(135deg, #d4af37, #b8860b); border: none; color: #000; font-weight: bold; padding: 4px 10px; border-radius: 12px; cursor: pointer; font-size: 0.7rem;">
-    🎵 Play Music
-  </button>
-  <span style="font-size: 0.60rem; color: #fff; font-weight: 600;">Relaxing Vibe</span>
-</div>
-
 <div class="bottom-bar">
   <div id="total-price-box">
     <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
@@ -561,20 +581,29 @@ const state = {
   lang: 'it'
 };
 
+// Background Music Control
 const audio = document.getElementById('bg-audio');
-audio.volume = 0.25; // آواز کو دھیما اور پرسکون رکھنے کے لیے
+audio.volume = 0.3; // دھیمی آواز
+
+// بروزر کی آٹو پلے پالیسی کو ہینڈل کرنے کے لیے
+window.addEventListener('DOMContentLoaded', () => {
+  audio.play().catch(error => {
+    console.log("Autoplay prevented by browser, waiting for user interaction.");
+    document.getElementById('music-toggle-btn').innerText = "🎵 Music: OFF";
+  });
+});
 
 function toggleBackgroundMusic() {
   const btn = document.getElementById('music-toggle-btn');
   if (audio.paused) {
     audio.play().then(() => {
-      btn.innerText = "⏸ Pause Music";
-    }).catch(e => {
-      console.log("Audio play blocked:", e);
+      btn.innerText = "🎵 Music: ON";
+      btn.style.background = "linear-gradient(135deg, #27ae60, #2ecc71)";
     });
   } else {
     audio.pause();
-    btn.innerText = "🎵 Play Music";
+    btn.innerText = "🔇 Music: OFF";
+    btn.style.background = "linear-gradient(135deg, #c0392b, #e74c3c)";
   }
 }
 
@@ -762,7 +791,7 @@ const translations = {
     modalTitleAsp: "📋 টেকঅ্যাওয়ে নিশ্চিতকরণ",
     modalTitleStudent: "📋 ছাত্র প্রোমো নিশ্চিতকরণ",
     nameLabel: "আপনার নাম:",
-    nameDelivLabel: "আপনার নাম یا ডেলিভারু অর্ডার আইডি:",
+    nameDelivLabel: "আপনার নাম বা ডেলিভারু অর্ডার আইডি:",
     addrLabel: "ডেলিভারির ঠিকানা:",
     timeLabel: "গ্রহণের/ডেলিভারির সময়:",
     editBtn: "✏ পরিবর্তন করুন",
