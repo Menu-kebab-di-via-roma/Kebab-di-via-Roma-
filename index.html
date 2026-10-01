@@ -547,15 +547,84 @@ const state = {
   lang: 'it'
 };
 
-// فرضی مینو اور ڈیٹا کا ڈھانچہ (یہاں آپ کا پورا مینو موجود ہے)
-const menuItems = [
+const menuData = [
   { id: 1, category: 'kebab', name: 'Piadina Kebab', price: 5.00, hasCustomization: true },
-  { id: 2, category: 'kebab', name: 'Piadina Kebab Solo Carne', price: 6.00, hasCustomization: true }
-  // باقی مینو آئٹمز آپ کے پرانے کوڈ کے مطابق یہاں ہیں
+  { id: 2, category: 'kebab', name: 'Piadina Kebab Solo Carne', price: 6.00, hasCustomization: true },
+  { id: 3, category: 'kebab', name: 'Panino Kebab', price: 6.00, hasCustomization: true },
+  { id: 4, category: 'kebab', name: 'Piatto Kebab', price: 9.00, hasCustomization: true },
+  { id: 5, category: 'non-kebab', name: 'Pizza Margherita', price: 5.00, hasCustomization: false },
+  { id: 6, category: 'fritti', name: 'Patatine Fritte', price: 3.50, hasCustomization: false },
+  { id: 7, category: 'bevande', name: 'Coca-Cola 33cl', price: 2.00, hasCustomization: false },
+  { id: 8, category: 'alcolici', name: 'Birra Moretti 33cl', price: 3.00, hasCustomization: false }
 ];
+
+function renderMenu(filter = 'all') {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+  
+  const filtered = filter === 'all' ? menuData : menuData.filter(i => i.category === filter);
+  
+  filtered.forEach(item => {
+    let div = document.createElement('div');
+    div.className = 'menu-item';
+    div.innerHTML = `
+      <div class="item-header">
+        <div class="item-details">
+          <div class="item-title-row">
+            <span class="item-title">${item.name}</span>
+          </div>
+          <span class="item-price">€ ${item.price.toFixed(2)}</span>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+          <span id="qty-${item.id}">${state.cart[item.id] ? state.cart[item.id].qty : 0}</span>
+          <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function filterCategory(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+function updateQty(id, change) {
+  let item = menuData.find(i => i.id === id);
+  if (!state.cart[id]) {
+    if (change > 0) {
+      state.cart[id] = { name: item.name, price: item.price, qty: change, customizations: [] };
+    }
+  } else {
+    state.cart[id].qty += change;
+    if (state.cart[id].qty <= 0) {
+      delete state.cart[id];
+    }
+  }
+  
+  if(document.getElementById(`qty-${id}`)) {
+    document.getElementById(`qty-${id}`).innerText = state.cart[id] ? state.cart[id].qty : 0;
+  }
+  updateTotal();
+}
+
+function updateTotal() {
+  let total = 0;
+  for (let id in state.cart) {
+    total += state.cart[id].price * state.cart[id].qty;
+  }
+  document.getElementById('grand-total').innerText = `€ ${total.toFixed(2)}`;
+}
 
 function setOrderType(type) {
   state.orderType = type;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  if(document.getElementById(`btn-${type}`)) {
+    document.getElementById(`btn-${type}`).classList.add('active');
+  }
 }
 
 function toggleLangMenu() {
@@ -564,10 +633,31 @@ function toggleLangMenu() {
 
 function changeLanguage(lang) {
   state.lang = lang;
+  document.getElementById('current-lang-label').innerText = lang.toUpperCase();
   document.getElementById('langMenuPopup').classList.remove('show');
 }
 
 function openConfirmationModal() {
+  let modalInputs = document.getElementById('modal-form-inputs');
+  modalInputs.innerHTML = `
+    <label style="font-weight:bold;">Nome:</label>
+    <input type="text" id="cust-name" class="input-field" value="Cliente" placeholder="Il tuo nome">
+    <label style="font-weight:bold; margin-top:6px; display:block;">Orario:</label>
+    <input type="text" id="cust-time" class="input-field" value="Subito" placeholder="Orario">
+  `;
+
+  let receiptBody = document.getElementById('modal-receipt-body');
+  let summaryHtml = '';
+  let total = 0;
+
+  for (let id in state.cart) {
+    let item = state.cart[id];
+    summaryHtml += `${item.qty}x ${item.name} - € ${(item.price * item.qty).toFixed(2)}<br>`;
+    total += item.price * item.qty;
+  }
+  summaryHtml += `<br><b>TOTALE: € ${total.toFixed(2)}</b>`;
+  receiptBody.innerHTML = summaryHtml;
+
   document.getElementById('confirm-modal').style.display = 'flex';
 }
 
@@ -575,54 +665,43 @@ function closeConfirmationModal() {
   document.getElementById('confirm-modal').style.display = 'none';
 }
 
-// واٹس ایپ پر آرڈر بھیجنے کا اپڈیٹ شدہ فنکشن (مکمل اطالوی زبان اور آپ کی ترتیب کے ساتھ)
+// واٹس ایپ پر آرڈر بھیجنے کا فنکشن (مکمل اطالوی زبان اور مطلوبہ فارمیٹ کے ساتھ)
 function sendWhatsAppOrder() {
-    // 1. تاریخ بغیر ڈیش کے (جیسے 20261001)
+    // تاریخ بغیر ڈیش کے (جیسے 20261001)
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     const dateStr = `${year}${month}${day}`;
 
-    // 2. آرڈر نمبر کا آٹو انکریمنٹ (لوکل اسٹاوریج سے مینج ہوگا تاکہ ہر بار بڑھتا رہے)
+    // آرڈر نمبر کاؤنٹر (آٹو جنریٹڈ 5 ہندسوں میں)
     let orderCount = localStorage.getItem('kebab_order_count') || 0;
     orderCount = parseInt(orderCount) + 1;
     localStorage.setItem('kebab_order_count', orderCount);
-    
-    // 5 ہندسوں میں فارمیٹ (جیسے #00001, #00005)
     let formattedOrderNum = String(orderCount).padStart(5, '0');
 
-    // 3. واٹس ایپ میسج کا ڈھانچہ (مکمل اطالوی زبان اور مطلوبہ ترتیب)
+    // واٹس ایپ میسج (مکمل اطالوی زبان میں)
     let message = `*Ordine #${formattedOrderNum}*\n`;
     message += `*Kebab di Via Roma*\n`;
     message += `*${dateStr}*\n\n`;
     
-    // کسٹمر کی تفصیلات (اطالوی زبان میں لیبلز)
     let orderTypeStr = state.orderType.toUpperCase();
-    let customerName = document.getElementById('cust-name') ? document.getElementById('cust-name').value || "Cliente" : "Cliente";
-    let orderTime = document.getElementById('cust-time') ? document.getElementById('cust-time').value || "Subito" : "Subito";
+    let customerName = document.getElementById('cust-name').value || "Cliente";
+    let orderTime = document.getElementById('cust-time').value || "Subito";
 
     message += `📍 Tipo: ${orderTypeStr}\n`;
     message += `👤 Nome: ${customerName}\n`;
     message += `🕒 Orario: ${orderTime}\n\n`;
 
-    // کارٹ کے آئٹمز کو شامل کرنا
     let totalPrice = 0;
-    for (let itemId in state.cart) {
-        let itemData = state.cart[itemId];
-        // فرض کریں کارٹ ڈیٹا آپ کے پرانے سٹرکچر کے مطابق ہے
-        message += `${itemData.qty}x ${itemData.name} (€ ${itemData.price.toFixed(2)})\n`;
-        if (itemData.customizations) {
-            itemData.customizations.forEach(custom => {
-                message += `  🔹 ${custom}\n`;
-            });
-        }
-        totalPrice += itemData.price * itemData.qty;
+    for (let id in state.cart) {
+        let item = state.cart[id];
+        message += `${item.qty}x ${item.name} (€ ${item.price.toFixed(2)})\n`;
+        totalPrice += item.price * item.qty;
     }
 
     message += `\n💰 *TOTALE: € ${totalPrice.toFixed(2)}*`;
 
-    // واٹس ایپ نمبر
     const phoneNumber = "393932228224"; 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -630,6 +709,11 @@ function sendWhatsAppOrder() {
     window.open(whatsappUrl, '_blank');
     closeConfirmationModal();
 }
+
+// ابتدائی لوڈنگ پر مینو کو رینڈر کرنا
+window.onload = function() {
+  renderMenu('all');
+};
 </script>
 </body>
 </html>
