@@ -564,6 +564,9 @@ const state = {
   lang: 'it'
 };
 
+const commonSenza = ['Salsa Piccante', 'Salsa Yogurt', 'Salsa Algerina (Agrodolce)', 'Salsa Rosa', 'Insalata, Verza e Carote', 'Cetrioli', 'Cipolla', 'Pomodoro', 'Olive', 'Peperoncino'];
+const commonExtra = ['Maionese', 'Ketchup', 'Extra Cipolla', 'Extra Piccante', 'Carne Extra'];
+
 const translations = {
   it: {
     promo: "🎁 Promo >= 40€: Coca-Cola 1.5L Omaggio!",
@@ -573,7 +576,7 @@ const translations = {
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
     noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
     noticeConsegna: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio! (I costi di consegna del rider sono esclusi dal calcolo).',
-    studentNotice: '🎓 <b>Promo Studenti:</b> Offerte valide per studenti.',
+    studentNotice: '🎓 <b>Promo Studenti:</b> Menu Panino (€6.00) o Menu Piadina (€7.00) con Bevanda (Prima delle 16:30).',
     catAll: "Tutti", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Solo Kebab", catFritti: "Fritti", catBevande: "Bevande", catAlcolici: "Alcolici", catSpeciale: "✨ Piadina Speciale €5",
     totaleText: "Totale:",
     verifyBtn: "VERIFICA E ORDINA",
@@ -605,7 +608,7 @@ const translations = {
     deliveroo: "Deliveroo Notes", deliverooSub: "Customize",
     noticeAsporto: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola!',
     noticeConsegna: '🎁 <b>Promotion:</b> Food orders of 40€ or more get a free 1.5L Coca-Cola! (Rider delivery fees excluded).',
-    studentNotice: '🎓 <b>Student Promo:</b> Special offers for students.',
+    studentNotice: '🎓 <b>Student Promo:</b> Panino Menu (€6.00) or Piadina Menu (€7.00) with Drink (Before 4:30 PM).',
     catAll: "All", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non-Kebab", catFritti: "Fried", catBevande: "Drinks", catAlcolici: "Alcohol", catSpeciale: "✨ Special Piadina €5",
     totaleText: "Total:",
     verifyBtn: "VERIFY & ORDER",
@@ -637,7 +640,7 @@ const translations = {
     deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
     noticeAsporto: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت!',
     noticeConsegna: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت! (رائڈر فیس اس میں شامل نہیں ہے۔)',
-    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> طلباء کے لیے خصوصی آفرز۔',
+    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> مینو پینینو (€6.00) یا مینو پیادینا (€7.00) مع ڈرنک (دوپہر 4:30 سے پہلے)',
     catAll: "سبھی", catKebab: "کباب", catPiadina: "پیادینا", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات", catSpeciale: "✨ اسپیشل پیادینا €5",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
@@ -669,7 +672,7 @@ const translations = {
     deliveroo: "Note Deliveroo", deliverooSub: "Personalizează",
     noticeAsporto: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou!',
     noticeConsegna: '🎁 <b>Promoție:</b> Comenzi de mâncare de la 40 € în sus primesc o Coca-Cola de 1.5 L cadou! (Taxa de livrare a riderului este exclusă).',
-    studentNotice: '🎓 <b>Promo Studenți:</b> Oferte speciale pentru studenți.',
+    studentNotice: '🎓 <b>Promo Studenți:</b> Menu Panino (€6.00) sau Menu Piadina (€7.00) cu Băutură (Înainte de 16:30).',
     catAll: "Toate", catKebab: "Kebab", catPiadina: "Piadina", catNonKebab: "Non Kebab", catFritti: "Prăjite", catBevande: "Băuturi", catAlcolici: "Alcoolice", catSpeciale: "✨ Piadina Specială €5",
     totaleText: "Total:",
     verifyBtn: "VERIFICă ȘI PLASEAZĂ",
@@ -701,7 +704,7 @@ const translations = {
     deliveroo: "ملاحظات دليفريوو", deliverooSub: "تخصيص",
     noticeAsporto: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً!',
     noticeConsegna: '🎁 <b>العرض:</b> للطلبات بقيمة 40 يورو أو أكثر على الطعام، احصل على كوكا كولا 1.5 لتر مجاناً! (رسوم التوصيل مستبعدة).',
-    studentNotice: '🎓 <b>عرض الطلاب:</b> عروض خاصة للطلاب.',
+    studentNotice: '🎓 <b>عرض الطلاب:</b> ميني بانيو (€6.00) أو بيادينا (€7.00) مع مشروب (قبل 4:30).',
     catAll: "الكل", catKebab: "كباب", catPiadina: "بيادينا", catNonKebab: "أطباق أخرى", catFritti: "مقليات", catBevande: "مشروبات", catAlcolici: "مشروبات كحولية", catSpeciale: "✨ بيادينا خاصة €5",
     totaleText: "الإجمالي:",
     verifyBtn: "تحقق واطلب",
@@ -733,7 +736,7 @@ const translations = {
     deliveroo: "ডেলিভারু নোট", deliverooSub: "কাস্টমাইজ করুন",
     noticeAsporto: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি!',
     noticeConsegna: '🎁 <b>অফার:</b> ৪০ ইউরো বা তার বেশি অর্ডারে ১.৫ লিটার কোকা-কোলা একদম ফ্রি! (রাইডার ফি বাদে)।',
-    studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> শিক্ষার্থীদের জন্য বিশেষ অফার।',
+    studentNotice: '🎓 <b>ছাত্র প্রোমো:</b> মেনু প্যানিনো (€6.00) বা মেনু পিয়াদিনা (€7.00) ড্রিংকসহ (বিকাল ৪:৩০ এর আগে)।',
     catAll: "সব", catKebab: "কাবাব", catPiadina: "পিয়াদিনা", catNonKebab: "অন্যান্য খাবার", catFritti: "ভাজাভাজি", catBevande: "পানীয়", catAlcolici: "মদ্যপানীয়", catSpeciale: "✨ বিশেষ পিয়াদিনা €5",
     totaleText: "মোট:",
     verifyBtn: "যাচাই করুন এবং অর্ডার করুন",
@@ -760,39 +763,41 @@ const translations = {
 };
 
 const menuData = [
-  // KEBAB
-  { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'st_1', name: 'Menu Panino Studenti', price: 5.50, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
-  { id: 'st_2', name: 'Menu Panino Studenti', price: 6.50, category: 'kebab', isStudentExclusive: true, isPromo: false, desc: '', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
+  // Kebab
+  { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senza: commonSenza, extra: commonExtra },
+  
+  // Student Menu (Updated prices: Panino €6.00, Piadina €7.00)
+  { id: 'st_1', name: 'Menu Panino con Bevanda', price: 6.00, category: 'kebab', isStudentExclusive: true, isPromo: true, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
+  { id: 'st_2', name: 'Menu Panino con Bevanda', price: 7.50, category: 'kebab', isStudentExclusive: true, isPromo: false, desc: 'Dopo le 16:30', senza: commonSenza, extra: commonExtra },
 
-  // PIADINA KEBAB (نیا اسپیشل پیادینا بٹن والا آئٹم یہاں شامل ہے)
-  { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.00, category: 'piadina', isSpecialPiadina: true, isPromo: true, desc: 'Sempre Tutti le Sere', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'p_3', name: 'Menu Piadina', price: 8.00, category: 'piadina', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio', 'Carne Extra'] },
-  { id: 'p_4', name: 'Piatto Kebab', price: 8.00, category: 'piadina', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Carne Extra'] },
-  { id: 'st_3', name: 'Menu Piadina Studenti', price: 7.50, category: 'piadina', isStudentExclusive: true, isPromo: false, desc: '', senza: ['Salsa Piccante', 'Salsa Yogurt', 'Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup'] },
+  // Piadina Kebab
+  { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.00, category: 'piadina', isSpecialPiadina: true, isPromo: true, desc: 'Sempre Tutti le Sere', senza: commonSenza, extra: commonExtra },
+  { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'p_3', name: 'Menu Piadina', price: 8.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'p_4', name: 'Piatto Kebab', price: 8.00, category: 'piadina', senza: commonSenza, extra: commonExtra },
+  { id: 'st_3', name: 'Menu Piadina con Bevanda', price: 7.00, category: 'piadina', isStudentExclusive: true, isPromo: false, desc: 'Prima delle 16:30', senza: commonSenza, extra: commonExtra },
 
-  // NON SOLO KEBAB
-  { id: 'nk_1', name: 'Panino Falafel', price: 4.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Falafel Extra'] },
-  { id: 'nk_2', name: 'Piadina Falafel', price: 5.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup', 'Falafel Extra'] },
-  { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla', 'Salsa Yogurt'], extra: ['Maionese', 'Ketchup'] },
-  { id: 'nk_4', name: 'Panino Seekh Kebab', price: 4.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio'] },
-  { id: 'nk_5', name: 'Crispy Hamburger', price: 4.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'], extra: ['Formaggio', 'Bacon'] },
-  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Cipolla'], extra: ['Maionese', 'Ketchup', 'Formaggio'] },
-  { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senza: ['Insalata', 'Pomodoro', 'Maionese', 'Ketchup'], extra: ['Formaggio', 'Cotoletta Extra'] },
+  // Non Solo Kebab
+  { id: 'nk_1', name: 'Panino Falafel', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_2', name: 'Piadina Falafel', price: 5.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_4', name: 'Panino Seekh Kebab', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_5', name: 'Crispy Hamburger', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
+  { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senza: commonSenza, extra: commonExtra },
 
-  // FRITTI
-  { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
-  { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Algerina'] },
+  // Fritti
+  { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Agrodolce'] },
-  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese', 'Salsa Piccante'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sansa: [], extra: ['Ketchup', 'Maionese'] },
+  { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senza: [], extra: ['Ketchup', 'Maionese'] },
 
-  // BEVANDE (نئی تبدیلیاں: اکوا فریزانتے چھوٹا، اور ایس تحے پیسکا / لیمونے الگ الگ €1.50)
+  // Bevande
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_2', name: 'Coca-Cola Zero 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_3', name: 'Sprite 33cl', price: 1.50, category: 'bevande', isBeverage: true, senza: [], extra: [] },
@@ -803,7 +808,7 @@ const menuData = [
   { id: 'bev_8', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senza: [], extra: [] },
   { id: 'bev_9', name: 'Coca-Cola 1.5L', price: 3.00, category: 'bevande', isBeverage: true, senza: [], extra: [] },
 
-  // ALCOLICI
+  // Alcolici
   { id: 'alc_1', name: 'Birra Moretti 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senza: [], extra: [] },
   { id: 'alc_2', name: 'Birra Peroni 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senza: [], extra: [] }
 ];
@@ -936,7 +941,8 @@ function renderMenu() {
 
   filtered.forEach(item => {
     let effectivePrice = item.price;
-    if (state.orderType === 'asporto' && !item.isBeverage && !item.isAlcohol && !item.isStudentExclusive) {
+    // Asporto discount applies to food and alcolici (50 cents)
+    if (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive) {
       effectivePrice = Math.max(0, effectivePrice - 0.50);
     }
 
@@ -1003,7 +1009,8 @@ function renderMenu() {
           `;
           item.extra.forEach(ext => {
             const isSelected = unit.extra && unit.extra.includes(ext);
-            html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'extra', '${ext}')">${ext}</span>`;
+            let displayExtText = ext === 'Carne Extra' ? 'Carne Extra (+0.50€)' : ext;
+            html += `<span class="chip-plus ${isSelected ? 'selected-extra' : ''}" onclick="toggleUnitCustom('${item.id}', ${uIdx}, 'extra', '${ext}')">${displayExtText}</span>`;
           });
           html += `</div></div>`;
         }
@@ -1060,6 +1067,7 @@ function toggleUnitCustom(id, uIdx, type, val) {
     arr.push(val);
   }
   renderMenu();
+  calcTotal();
 }
 
 function updateUnitNote(id, uIdx, val) {
@@ -1076,13 +1084,24 @@ function calcTotal() {
     const item = menuData.find(m => m.id === id);
     if (item) {
       let effPrice = item.price;
-      let isDiscountable = (state.orderType === 'asporto' && !item.isBeverage && !item.isAlcohol && !item.isStudentExclusive);
+      let isDiscountable = (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive);
       
       if (isDiscountable) {
         totalAsportoDiscount += (0.50 * state.cart[id].qty);
         effPrice = Math.max(0, effPrice - 0.50);
       }
-      foodSubtotal += effPrice * state.cart[id].qty;
+
+      // Add extra costs (Carne Extra adds 0.50 per unit where selected)
+      let extraCost = 0;
+      if (state.cart[id].units) {
+        state.cart[id].units.forEach(u => {
+          if (u.extra && u.extra.includes('Carne Extra')) {
+            extraCost += 0.50;
+          }
+        });
+      }
+
+      foodSubtotal += (effPrice * state.cart[id].qty) + extraCost;
     }
   }
 
@@ -1166,8 +1185,21 @@ function openConfirmationModal() {
     const cartItem = state.cart[id];
     const qty = cartItem.qty;
 
-    if (item.isBeverage || item.isAlcohol) {
+    if (item.isBeverage) {
       let effPrice = item.price;
+      foodSubtotal += effPrice * qty;
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${item.name}</b>`;
+      if (!hidePrices) {
+        receiptHTML += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      }
+      receiptHTML += `</div>`;
+    } else if (item.isAlcohol) {
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto');
+      if (isDiscountable) {
+        effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50 * qty;
+      }
       foodSubtotal += effPrice * qty;
       receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${item.name}</b>`;
       if (!hidePrices) {
@@ -1182,11 +1214,13 @@ function openConfirmationModal() {
           effPrice = Math.max(0, effPrice - 0.50);
           totalAsportoDiscount += 0.50;
         }
-        foodSubtotal += effPrice;
+        let unitExtraCost = (unit.extra && unit.extra.includes('Carne Extra')) ? 0.50 : 0;
+        let totalUnitPzPrice = effPrice + unitExtraCost;
+        foodSubtotal += totalUnitPzPrice;
 
         receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>1x ${item.name} (Pezzo #${uIdx + 1})</b>`;
         if (!hidePrices) {
-          receiptHTML += ` (€ ${effPrice.toFixed(2)})`;
+          receiptHTML += ` (€ ${totalUnitPzPrice.toFixed(2)})`;
         }
         if (unit.senza && unit.senza.length > 0) {
           receiptHTML += `<br><span style="color:#c0392b;">❌ Senza: ${unit.senza.join(', ')}</span>`;
@@ -1279,8 +1313,21 @@ function sendWhatsAppOrder() {
     const cartItem = state.cart[id];
     const qty = cartItem.qty;
 
-    if (item.isBeverage || item.isAlcohol) {
+    if (item.isBeverage) {
       let effPrice = item.price;
+      foodSubtotal += effPrice * qty;
+      orderText += `\n*${itemCounter}. ${qty}x ${item.name}*`;
+      if (!hidePrices) {
+        orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      }
+      itemCounter++;
+    } else if (item.isAlcohol) {
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto');
+      if (isDiscountable) {
+        effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50 * qty;
+      }
       foodSubtotal += effPrice * qty;
       orderText += `\n*${itemCounter}. ${qty}x ${item.name}*`;
       if (!hidePrices) {
@@ -1298,12 +1345,14 @@ function sendWhatsAppOrder() {
           effPrice = Math.max(0, effPrice - 0.50);
           totalAsportoDiscount += 0.50;
         }
-        foodSubtotal += effPrice;
+        let unitExtraCost = (unit.extra && unit.extra.includes('Carne Extra')) ? 0.50 : 0;
+        let totalUnitPzPrice = effPrice + unitExtraCost;
+        foodSubtotal += totalUnitPzPrice;
 
         orderText += `\n*${itemCounter}. ${item.name}*`;
         orderText += `\n   👉 _Pezzo #${uIdx + 1}_`;
         if (!hidePrices) {
-          orderText += ` (€ ${effPrice.toFixed(2)})`;
+          orderText += ` (€ ${totalUnitPzPrice.toFixed(2)})`;
         }
         
         if (unit.senza && unit.senza.length > 0) {
