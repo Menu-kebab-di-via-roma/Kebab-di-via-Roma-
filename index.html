@@ -572,11 +572,32 @@
 </div>
 
 <script>
-// مکمل اور اصل مینیو ڈیٹا کے ساتھ لوکل سٹوریج کا نظام برقرار رکھا گیا ہے
+// مینیو کا مکمل ڈیٹا
+const menuData = [
+  { id: 1, cat: 'speciale', name: '✨ Piadina Speciale', price: 5.00, desc: 'Promo speciale con ingredienti extra inclusi', isFood: true, hasCustom: true, promo: 'PROMO €5' },
+  { id: 2, cat: 'kebab', name: 'Kebab nel Piatto', price: 8.50, desc: 'Carne kebab, patatine, insalata, pomodori, salsa', isFood: true, hasCustom: true },
+  { id: 3, cat: 'kebab', name: 'Kebab Panino', price: 6.50, desc: 'Panino con carne kebab e verdure fresche', isFood: true, hasCustom: true },
+  { id: 4, cat: 'piadina', name: 'Piadina Kebab Classica', price: 6.50, desc: 'Piadina arrotolata con carne kebab e salse', isFood: true, hasCustom: true },
+  { id: 5, cat: 'piadina', name: 'Piadina Kebab con Formaggio', price: 7.00, desc: 'Piadina kebab arricchita con formaggio filante', isFood: true, hasCustom: true },
+  { id: 6, cat: 'non-kebab', name: 'Falafel Piatto', price: 7.50, desc: 'Polpette di ceci speziate con contorno', isFood: true, hasCustom: true },
+  { id: 7, cat: 'non-kebab', name: 'Falafel Panino', price: 6.00, desc: 'Panino vegetariano con falafel e verdure', isFood: true, hasCustom: true },
+  { id: 8, cat: 'fritti', name: 'Patatine Fritte', price: 3.50, desc: 'Porzione di patatine fritte croccanti', isFood: true, hasCustom: false },
+  { id: 9, cat: 'fritti', name: 'Olive Ascolane (6pz)', price: 4.00, desc: 'Olive ripiene e fritte alla dorata', isFood: true, hasCustom: false },
+  { id: 10, cat: 'bevande', name: 'Coca-Cola 33cl', price: 2.50, desc: 'Lattina 33cl', isFood: false, hasCustom: false },
+  { id: 11, cat: 'bevande', name: 'Acqua Minerale 50cl', price: 1.50, desc: 'Bottiglia 50cl', isFood: false, hasCustom: false },
+  { id: 12, cat: 'alcolici', name: 'Birra Moretti 33cl', price: 3.00, desc: 'Birra in bottiglia', isFood: false, hasCustom: false, ageCheck: true }
+];
+
+const ingredientsConfig = {
+  senza: ['Insalata', 'Pomodori', 'Cipolla', 'Salsa Yogurt', 'Salsa Piccante', 'Maionese'],
+  extra: ['Formaggio (+1€)', 'Carne Extra (+2€)', 'Doppia Salsa']
+};
+
 const state = {
   orderType: localStorage.getItem('kebab_orderType') || 'asporto',
   cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
-  lang: 'it'
+  lang: 'it',
+  currentCategory: 'all'
 };
 
 function saveCartToLocalStorage() {
@@ -584,13 +605,225 @@ function saveCartToLocalStorage() {
   localStorage.setItem('kebab_orderType', state.orderType);
 }
 
+function setOrderType(type) {
+  state.orderType = type;
+  document.querySelectorAll('.order-type-selector .type-btn').forEach(btn => btn.classList.remove('active', 'deliveroo-active', 'student-active'));
+  
+  const activeBtn = document.getElementById(`btn-${type}`);
+  if (activeBtn) {
+    if (type === 'deliveroo') activeBtn.classList.add('deliveroo-active');
+    else if (type === 'student') activeBtn.classList.add('student-active');
+    else activeBtn.classList.add('active');
+  }
+  saveCartToLocalStorage();
+  renderMenu();
+  updateGrandTotal();
+}
+
+function toggleLangMenu() {
+  document.getElementById('langMenuPopup').classList.toggle('show');
+}
+
+function changeLanguage(lang) {
+  state.lang = lang;
+  document.getElementById('current-lang-label').innerText = lang.toUpperCase();
+  toggleLangMenu();
+  renderMenu();
+}
+
+function filterCategory(cat, btn) {
+  state.currentCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderMenu();
+}
+
+function changeQty(id, delta) {
+  if (!state.cart[id]) {
+    state.cart[id] = { qty: 0, units: [{ senza: [], extra: [], note: '' }] };
+  }
+  state.cart[id].qty += delta;
+  if (state.cart[id].qty <= 0) {
+    delete state.cart[id];
+  } else {
+    // ایڈجस्ट کریں یونٹس کی تعداد کو
+    while (state.cart[id].units.length < state.cart[id].qty) {
+      state.cart[id].units.push({ senza: [], extra: [], note: '' });
+    }
+    while (state.cart[id].units.length > state.cart[id].qty) {
+      state.cart[id].units.pop();
+    }
+  }
+  saveCartToLocalStorage();
+  renderMenu();
+  updateGrandTotal();
+}
+
+function toggleOption(id, unitIdx, type, item) {
+  if (!state.cart[id] || !state.cart[id].units[unitIdx]) return;
+  const list = state.cart[id].units[unitIdx][type];
+  const idx = list.indexOf(item);
+  if (idx > -1) list.splice(idx, 1);
+  else list.push(item);
+  saveCartToLocalStorage();
+}
+
+function updateUnitNote(id, unitIdx, val) {
+  if (state.cart[id] && state.cart[id].units[unitIdx]) {
+    state.cart[id].units[unitIdx].note = val;
+    saveCartToLocalStorage();
+  }
+}
+
+function renderMenu() {
+  const container = document.getElementById('menu-container');
+  container.innerHTML = '';
+
+  const filtered = menuData.filter(item => state.currentCategory === 'all' || item.cat === state.currentCategory);
+
+  filtered.forEach(item => {
+    const cartItem = state.cart[item.id];
+    const qty = cartItem ? cartItem.qty : 0;
+
+    let html = `
+      <div class="menu-item">
+        <div class="item-header">
+          <div class="item-details">
+            <div class="item-title-row">
+              <span class="item-title">${item.name}</span>
+              ${item.promo ? `<span class="badge-promo">${item.promo}</span>` : ''}
+              ${item.ageCheck ? `<span class="badge-age">18+</span>` : ''}
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 3px;">${item.desc}</div>
+            <div class="item-price">€ ${item.price.toFixed(2)}</div>
+          </div>
+          <div class="qty-controls">
+            ${qty > 0 ? `<button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>` : ''}
+            ${qty > 0 ? `<span style="font-weight: bold; font-size: 0.85rem;">${qty}</span>` : ''}
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+    `;
+
+    if (qty > 0 && item.hasCustom) {
+      html += `<div class="unit-customizer">`;
+      for (let i = 0; i < qty; i++) {
+        const unit = cartItem.units[i] || { senza: [], extra: [], note: '' };
+        html += `
+          <div class="single-unit-box">
+            <div class="single-unit-title">Pezzo #${i + 1} Personalizzazione</div>
+            <div class="ingredient-block">
+              <div class="block-title">Senza (Rimuovi):</div>
+              <div class="chip-group">
+                ${ingredientsConfig.senza.map(ing => `
+                  <span class="chip-minus ${unit.senza.includes(ing) ? 'selected-senza' : ''}" onclick="toggleOption(${item.id},${i}, 'senza', '${ing}')">${ing}</span>
+                `).join('')}
+              </div>
+            </div>
+            <div class="ingredient-block">
+              <div class="block-title">Extra (Aggiungi):</div>
+              <div class="chip-group">
+                ${ingredientsConfig.extra.map(ext => `
+                  <span class="chip-plus ${unit.extra.includes(ext) ? 'selected-extra' : ''}" onclick="toggleOption(${item.id},${i}, 'extra', '${ext}')">${ext}</span>
+                `).join('')}
+              </div>
+            </div>
+            <input type="text" class="input-field" placeholder="Note specifiche per questo pezzo..." value="${unit.note}" oninput="updateUnitNote(${item.id}, ${i}, this.value)">
+          </div>
+        `;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+    container.innerHTML += html;
+  });
+}
+
+function updateGrandTotal() {
+  let foodSubtotal = 0;
+  let drinkSubtotal = 0;
+
+  for (const id in state.cart) {
+    const item = menuData.find(m => m.id == id);
+    if (!item) continue;
+    const qty = state.cart[id].qty;
+    let itemTotal = item.price * qty;
+
+    // ایکسٹ्रा اجزاء کی اضافی قیمت کا حساب
+    state.cart[id].units.forEach(u => {
+      u.extra.forEach(ext => {
+        if (ext.includes('1€')) itemTotal += 1.00;
+        if (ext.includes('2€')) itemTotal += 2.00;
+      });
+    });
+
+    if (item.isFood) foodSubtotal += itemTotal;
+    else drinkSubtotal += itemTotal;
+  }
+
+  let finalFood = foodSubtotal;
+  if (state.orderType === 'asporto') {
+    finalFood = Math.max(0, foodSubtotal - (0.50 * Object.values(state.cart).reduce((acc, curr) => acc + curr.qty, 0)));
+  }
+
+  let deliveryFee = state.orderType === 'consegna' ? 2.50 : 0;
+  let grandTotal = finalFood + drinkSubtotal + deliveryFee;
+
+  document.getElementById('grand-total').innerText = `€ ${grandTotal.toFixed(2)}`;
+  
+  const colaProgress = document.getElementById('cola-progress');
+  if (foodSubtotal >= 40) {
+    colaProgress.innerHTML = `🎉 Coca-Cola 1.5L در Omagio!`;
+  } else {
+    colaProgress.innerHTML = `Mancano € ${(40 - foodSubtotal).toFixed(2)} per la Coca-Cola omaggio`;
+  }
+}
+
+function openConfirmationModal() {
+  document.getElementById('confirm-modal').style.display = 'flex';
+  let bodyHtml = `<div style="font-weight: bold; margin-bottom: 6px;">Riepilogo Ordine:</div>`;
+  
+  for (const id in state.cart) {
+    const item = menuData.find(m => m.id == id);
+    const cartItem = state.cart[id];
+    bodyHtml += `<div>• ${cartItem.qty}x ${item.name}</div>`;
+  }
+  
+  document.getElementById('modal-receipt-body').innerHTML = bodyHtml;
+  document.getElementById('modal-form-inputs').innerHTML = `
+    <input type="text" id="cust-name" class="input-field" placeholder="Il tuo Nome e Cognome *">
+    <input type="text" id="cust-phone" class="input-field" placeholder="Il tuo Telefono *">
+    <input type="text" id="cust-address" class="input-field" placeholder="Indirizzo di Consegna (se Consegna)">
+  `;
+}
+
+function closeConfirmationModal() {
+  document.getElementById('confirm-modal').style.display = 'none';
+}
+
 // واٹس ایپ پر آرڈر بھیجنے کے بعد کارٹ اور لوکل سٹوریج کو مکمل زیرو (خالی) کرنا
 function sendWhatsAppOrder() {
+  const name = document.getElementById('cust-name').value;
+  const phone = document.getElementById('cust-phone').value;
+  
+  if (!name || !phone) {
+    alert('Per favore inserisci Nome e Telefono.');
+    return;
+  }
+
   state.cart = {};
   localStorage.removeItem('kebab_cart');
   localStorage.removeItem('kebab_orderType');
   location.reload();
 }
+
+// ابتدائی لوڈنگ
+window.onload = function() {
+  setOrderType(state.orderType);
+  renderMenu();
+  updateGrandTotal();
+};
 </script>
 
 </body>
