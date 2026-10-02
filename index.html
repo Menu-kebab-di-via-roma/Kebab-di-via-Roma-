@@ -559,7 +559,6 @@ const state = {
   lang: 'it'
 };
 
-// لوکل اسٹوریج میں کارٹ محفوظ کرنے کا فنکشن
 function saveCartToStorage() {
   localStorage.setItem('kebab_cart', JSON.stringify(state.cart));
 }
@@ -1364,7 +1363,7 @@ function modifyQty(id, delta) {
       }
     }
   }
-  saveCartToStorage(); // 💾 کارٹ تبدیل ہوتے ہی لوکل اسٹوریج میں محفوظ ہو جائے گا
+  saveCartToStorage();
   renderMenu();
   calcTotal();
 }
@@ -1380,7 +1379,7 @@ function toggleUnitCustom(id, uIdx, type, key) {
   } else {
     arr.push(key);
   }
-  saveCartToStorage(); // 💾 کسٹمائزیشن محفوظ ہوگی
+  saveCartToStorage();
   renderMenu();
   calcTotal();
 }
@@ -1388,7 +1387,7 @@ function toggleUnitCustom(id, uIdx, type, key) {
 function updateUnitNote(id, uIdx, val) {
   if (state.cart[id] && state.cart[id].units[uIdx]) {
     state.cart[id].units[uIdx].note = val;
-    saveCartToStorage(); // 💾 نوٹ محفوظ ہوگا
+    saveCartToStorage();
   }
 }
 
@@ -1731,19 +1730,21 @@ function sendWhatsAppOrder() {
     orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  let encodedMessage = encodeURIComponent(orderText);
-  let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
-  window.open(whatsappUrl, '_blank');
+  // ✅ بالکل اصل اور درست واٹس ایپ ಲಿংক
+  let phone = "393932228224";
+  let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
+  window.open(url, '_blank');
+  
   closeConfirmationModal();
 
-  // 🚀 واٹس ایپ پر آرڈر کامیابی سے بھیجنے کے بعد کارٹ اور لوکل اسٹوریج کو مکمل خالی (Zero) کرنا
+  // 🚀 واٹس ایپ کھلنے کے بعد کارٹ اور لوکل اسٹوریج کو مکمل خالی کرنا
   state.cart = {};
   localStorage.removeItem('kebab_cart');
   renderMenu();
   calcTotal();
 }
 
-// ابتدائی رینڈر
+// ابتدائی لوڈنگ
 renderMenu();
 calcTotal();
 </script>
