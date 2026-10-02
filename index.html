@@ -1,614 +1,3 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kebab di Via Roma - Jesi | Royal Luxury Edition</title>
-  <!-- Google Fonts: Playfair Display & Outfit for Ultra-Luxury Look -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #800020; /* Deep Burgundy Wine */
-      --primary-hover: #a40029;
-      --gold: #d4af37;
-      --gold-light: #f3e5ab;
-      --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-      --deliveroo: #00b894;
-      --bg: #0d0d0d; /* Royal Dark Charcoal Background */
-      --card-bg: rgba(25, 25, 25, 0.75); /* Glassmorphism Base */
-      --card-border: rgba(212, 175, 55, 0.25);
-      --text: #f5f6fa;
-      --text-muted: #b2bec3;
-    }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(128, 0, 32, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 40%);
-      color: var(--text);
-      margin: 0;
-      padding: 0;
-      padding-bottom: 105px;
-    }
-    header {
-      background: linear-gradient(135deg, #1a0005, #40000d, #660014);
-      color: white;
-      text-align: center;
-      padding: 12px 14px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-      border-bottom: 2px solid var(--gold);
-      backdrop-filter: blur(10px);
-    }
-    
-    .header-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 500px;
-      margin: 0 auto;
-      gap: 8px;
-    }
-
-    .title-box {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header h1 { 
-      margin: 0; 
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; 
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      color: #ffffff;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-    }
-    header p { 
-      margin: 3px 0 0 0; 
-      font-size: 0.68rem; 
-      color: var(--gold-light); 
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-
-    .header-right-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      align-items: flex-end;
-    }
-
-    .whatsapp-call-btn {
-      background: linear-gradient(135deg, #1e7e34, #28a745);
-      border: 1px solid var(--gold);
-      color: #fff;
-      padding: 5px 9px;
-      font-size: 0.65rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-      transition: transform 0.2s;
-    }
-    .whatsapp-call-btn:hover { transform: scale(1.05); }
-
-    .tiktok-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 4px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      backdrop-filter: blur(5px);
-    }
-    .tiktok-logo-img {
-      width: 22px;
-      height: 22px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: #000;
-    }
-    .tiktok-text {
-      font-size: 0.45rem;
-      color: var(--gold-light);
-      margin-top: 1px;
-      font-weight: bold;
-    }
-
-    .lang-dropdown-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    .lang-main-btn {
-      background: var(--gold-gradient);
-      border: 1px solid #fff;
-      color: #111;
-      padding: 5px 9px;
-      font-size: 0.68rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-    }
-    .lang-menu-popup {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 36px;
-      background: #1a1a1a;
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      z-index: 3000;
-      min-width: 150px;
-      overflow: hidden;
-      backdrop-filter: blur(15px);
-    }
-    .lang-menu-popup.show { display: block; }
-    .lang-option {
-      padding: 10px 14px;
-      font-size: 0.78rem;
-      color: #f5f6fa;
-      background: transparent;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      cursor: pointer;
-      text-align: left;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-    .lang-option:hover {
-      background: rgba(212, 175, 55, 0.2);
-      color: var(--gold-light);
-    }
-
-    .container { max-width: 500px; margin: 0 auto; padding: 14px; }
-    
-    .order-type-selector { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-    .type-btn {
-      flex: 1;
-      min-width: 30%;
-      padding: 9px 6px;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      color: var(--text);
-      text-align: center;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 0.72rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: all 0.25s ease;
-    }
-    .type-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
-    .type-btn.active { border-color: var(--gold); background: linear-gradient(135deg, rgba(128,0,32,0.6), rgba(40,0,10,0.8)); color: #fff; box-shadow: 0 6px 20px rgba(128,0,32,0.4); }
-    .type-btn.deliveroo-active { border-color: var(--deliveroo); background: rgba(0, 184, 148, 0.25); color: #55efc4; box-shadow: 0 6px 20px rgba(0,184,148,0.3); }
-    .type-btn.student-active { border-color: var(--gold); background: rgba(212, 175, 55, 0.25); color: var(--gold-light); box-shadow: 0 6px 20px rgba(212,175,55,0.3); }
-    .type-btn small { display: block; font-size: 0.52rem; color: var(--text-muted); font-weight: normal; margin-top: 2px; }
-
-    .instructions-notice {
-      background: linear-gradient(135deg, rgba(40,30,0,0.8), rgba(25,20,0,0.9));
-      border-left: 4px solid var(--gold);
-      color: var(--gold-light);
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      border-radius: 10px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      line-height: 1.4;
-      border: 1px solid rgba(212,175,55,0.3);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-
-    .category-nav {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      scrollbar-width: none;
-    }
-    .category-nav::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      padding: 7px 15px;
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      border-radius: 20px;
-      white-space: nowrap;
-      font-weight: 600;
-      font-size: 0.75rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: all 0.2s;
-    }
-    .cat-btn:hover { color: #fff; border-color: var(--gold); }
-    .cat-btn.active { background: var(--primary); color: white; border-color: var(--gold); box-shadow: 0 6px 18px rgba(128, 0, 32, 0.6); }
-    .cat-btn.special-highlight {
-      background: var(--gold-gradient);
-      color: #111;
-      border-color: #fff;
-      font-weight: 800;
-      box-shadow: 0 6px 20px rgba(212,175,55,0.4);
-    }
-
-    .menu-item {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      transition: transform 0.25s, border-color 0.25s;
-    }
-    .menu-item:hover {
-      transform: translateY(-3px);
-      border-color: rgba(212, 175, 55, 0.5);
-    }
-    
-    .item-header { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between;
-      gap: 10px;
-    }
-    
-    .item-details { flex: 1; }
-    .item-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .item-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: #ffffff; letter-spacing: 0.3px; }
-    .item-price { color: var(--gold-light); font-weight: 800; font-size: 0.9rem; }
-    .badge-promo {
-      background: var(--gold-gradient);
-      color: #111;
-      font-size: 0.55rem;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    .qty-controls { display: flex; align-items: center; gap: 8px; }
-    .qty-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--gold);
-      background: rgba(255,255,255,0.08);
-      color: var(--gold-light);
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      transition: 0.2s;
-    }
-    .qty-btn:hover { background: var(--primary); color: #fff; border-color: #fff; transform: scale(1.1); }
-
-    .unit-customizer {
-      margin-top: 12px;
-      padding: 10px;
-      background: rgba(10, 10, 10, 0.6);
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-left: 3px solid var(--gold);
-    }
-
-    .single-unit-box {
-      background: rgba(25, 25, 25, 0.6);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 8px;
-    }
-    .single-unit-title {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--gold-light);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .ingredient-block {
-      background: rgba(35, 35, 35, 0.7);
-      padding: 6px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .block-title {
-      font-size: 0.62rem;
-      font-weight: bold;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
-    
-    .chip-minus, .chip-plus {
-      font-size: 0.64rem;
-      padding: 3px 8px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 6px;
-      cursor: pointer;
-      color: var(--text);
-      font-weight: 500;
-      transition: all 0.15s;
-    }
-    .chip-minus:hover, .chip-plus:hover { border-color: var(--gold); }
-    .chip-minus.selected-senza {
-      background: rgba(192, 57, 43, 0.3);
-      color: #ff7675;
-      border-color: #c0392b;
-      font-weight: bold;
-      text-decoration: line-through;
-    }
-    .chip-plus.selected-extra {
-      background: rgba(39, 174, 96, 0.3);
-      color: #55efc4;
-      border-color: #27ae60;
-      font-weight: bold;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 7px 10px;
-      margin-top: 4px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(15, 15, 15, 0.8);
-      color: #fff;
-      box-sizing: border-box;
-      font-size: 0.75rem;
-    }
-    .input-field:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.3); }
-
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(15, 15, 15, 0.92);
-      backdrop-filter: blur(20px);
-      border-top: 2px solid var(--gold);
-      padding: 12px 16px;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    .total-price { font-size: 1.25rem; font-weight: 900; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .whatsapp-btn {
-      background: linear-gradient(135deg, #1e7e34, #28a745);
-      color: white;
-      border: 1px solid var(--gold);
-      padding: 11px 20px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 0.8rem;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
-      transition: 0.25s;
-    }
-    .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(40, 167, 69, 0.7); }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: 12px;
-      box-sizing: border-box;
-    }
-    .modal-card {
-      background: #1a1a1a;
-      border: 2px solid var(--gold);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 400px;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-    }
-    .receipt-header { background: linear-gradient(135deg, #40000d, #800020); color: white; padding: 14px; text-align: center; border-bottom: 2px solid var(--gold); }
-    .receipt-header h2 { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #ffffff; letter-spacing: 0.5px; }
-    .receipt-body { padding: 16px; font-size: 0.8rem; color: #dcdde1; }
-    .receipt-section { background: rgba(25, 25, 25, 0.8); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-bottom: 12px; }
-    .modal-actions { display: flex; gap: 10px; padding: 14px; background: #121212; border-top: 1px solid rgba(255,255,255,0.08); }
-    .btn-cancel, .btn-confirm {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      border: none;
-      cursor: pointer;
-      font-size: 0.78rem;
-      color: white;
-    }
-    .btn-cancel { background: #800020; border: 1px solid rgba(255,255,255,0.2); }
-    .btn-confirm { background: linear-gradient(135deg, #1e7e34, #28a745); border: 1px solid var(--gold); flex: 1.5; }
-  </style>
-</head>
-<body>
-
-<header>
-  <div class="header-flex">
-    <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
-      <img src="1000157484.png" alt="TikTok" class="tiktok-logo-img">
-      <span class="tiktok-text">TikTok</span>
-    </a>
-    
-    <div class="title-box">
-      <h1>Kebab di Via Roma</h1>
-      <p>Via Roma 29b, Jesi | +39 393 222 8224</p>
-    </div>
-
-    <div class="header-right-controls">
-      <a href="https://wa.me/393932228224?text=Salve,%20vorrei%20chiamarvi%20per%20un%20informazione." target="_blank" class="whatsapp-call-btn">
-        📞 <span id="lbl-call">Call</span>
-      </a>
-      <div class="lang-dropdown-wrapper">
-        <button class="lang-main-btn" onclick="toggleLangMenu()">
-          🌐 <span id="current-lang-label">ITA</span> ▾
-        </button>
-        <div class="lang-menu-popup" id="langMenuPopup">
-          <div class="lang-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
-          <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-          <div class="lang-option" onclick="changeLanguage('ur')">🇵🇰 اردو</div>
-          <div class="lang-option" onclick="changeLanguage('ro')">🇷🇴 Română</div>
-          <div class="lang-option" onclick="changeLanguage('ar')">🇸🇦 العربية</div>
-          <div class="lang-option" onclick="changeLanguage('bn')">🇧 বাংলা</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  <div class="order-type-selector">
-    <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
-      <span id="lbl-asporto">Asporto</span>
-      <small id="lbl-asporto-sub">(-0.50€ su Cibo)</small>
-    </div>
-    <div class="type-btn" id="btn-consegna" onclick="setOrderType('consegna')">
-      <span id="lbl-consegna">Consegna</span>
-      <small id="lbl-consegna-sub">(+2.50€ Consegna)</small>
-    </div>
-    <div class="type-btn" id="btn-student" onclick="setOrderType('student')">
-      <span id="lbl-student">🎓 Promo Studenti</span>
-      <small id="lbl-student-sub">Offerte Speciali</small>
-    </div>
-    <div class="type-btn" id="btn-deliveroo" onclick="setOrderType('deliveroo')">
-      <span id="lbl-deliveroo">Note Deliveroo</span>
-      <small id="lbl-deliveroo-sub">Personalizza</small>
-    </div>
-  </div>
-
-  <div class="instructions-notice" id="main-notice">
-    🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!
-  </div>
-
-  <div class="category-nav" id="category-nav-bar">
-    <button class="cat-btn active" onclick="filterCategory('all', this)" id="cat-all">Tutti</button>
-    <button class="cat-btn special-highlight" onclick="filterCategory('speciale', this)" id="cat-btn-speciale">✨ Piadina Speciale €5</button>
-    <button class="cat-btn" onclick="filterCategory('kebab', this)" id="cat-kebab">Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('piadina', this)" id="cat-piadina">Piadina Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('non-kebab', this)" id="cat-non-kebab">Non Solo Kebab</button>
-    <button class="cat-btn" onclick="filterCategory('fritti', this)" id="cat-fritti">Fritti</button>
-    <button class="cat-btn" onclick="filterCategory('bevande', this)" id="cat-bevande">Bevande</button>
-    <button class="cat-btn" onclick="filterCategory('alcolici', this)" id="cat-alcolici">Alcolici</button>
-  </div>
-
-  <div id="menu-container"></div>
-</div>
-
-<div class="bottom-bar">
-  <div id="total-price-box">
-    <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
-    <span class="total-price" id="grand-total">€ 0,00</span>
-    <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: var(--gold-light); margin-top: 2px;"></div>
-  </div>
-  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
-    VERIFICA E ORDINA
-  </button>
-</div>
-
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal-card">
-    <div class="receipt-header">
-      <h2 id="modal-title-text">📋 Conferma Ordine</h2>
-    </div>
-    <div class="receipt-body">
-      <div class="receipt-section" id="modal-form-inputs"></div>
-      <div id="modal-receipt-body"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirmationModal()" id="btn-modifica">✏ Modifica</button>
-      <button class="btn-confirm" onclick="sendWhatsAppOrder()" id="btn-invia">✅ Invia su WhatsApp</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const state = {
-  orderType: 'asporto',
-  cart: {},
-  lang: 'it'
-};
-
-const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
-const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
-
-const ingredientsDict = {
-  it: {
-    piccante: 'Salsa Piccante', yogurt: 'Salsa Yogurt', algerina: 'Salsa Algerina (Agrodolce)', rosa: 'Salsa Rosa', insalata: 'Insalata, Verza e Carote', cetrioli: 'Cetrioli', cipolla: 'Cipolla', pomodoro: 'Pomodoro', olive: 'Olive', peperoncino: 'Peperoncino',
-    maionese: 'Maionese', ketchup: 'Ketchup', extra_cipolla: 'Extra Cipolla', extra_piccante: 'Extra Piccante', carne_extra: 'Carne Extra'
-  },
-  en: {
-    piccante: 'Spicy Sauce', yogurt: 'Yogurt Sauce', algerina: 'Algerian Sauce (Sweet & Sour)', rosa: 'Pink Sauce', insalata: 'Lettuce, Cabbage & Carrots', cetrioli: 'Cucumbers', cipolla: 'Onion', pomodoro: 'Tomato', olive: 'Olives', peperoncino: 'Chili',
-    maionese: 'Mayonnaise', ketchup: 'Ketchup', extra_cipolla: 'Extra Onion', extra_piccante: 'Extra Spicy', carne_extra: 'Extra Meat'
-  },
-  ur: {
-    piccante: 'اسپائسی ساس', yogurt: 'یوگرٹ ساس', algerina: 'الجیریہ ساس', rosa: 'پِنک ساس', insalata: 'سلاد، گوبھی اور گاجر', cetrioli: 'کھیرے', cipolla: 'پیاز', pomodoro: 'ٹماٹر', olive: 'زیتون', peperoncino: 'مرچ',
-    maionese: 'ميونيز', ketchup: 'کیچپ', extra_cipolla: 'اضافی پیاز', extra_piccante: 'اضافی مرچ', carne_extra: 'اضافی گوشت'
-  },
-  ro: {
-    piccante: 'Sos Picant', yogurt: 'Sos de Iaurt', algerina: 'Sos Algerian (Dulce-Acrișor)', rosa: 'Sos Roz', insalata: 'Salată, Varză și Morcovi', cetrioli: 'Castraveți', cipolla: 'Ceapă', pomodoro: 'Roșii', olive: 'Măsline', peperoncino: 'Ardei Iute',
-    maionese: 'Maioneză', ketchup: 'Ketchup', extra_cipolla: 'Ceapă Extra', extra_piccante: 'Picant Extra', carne_extra: 'Carne Extra'
-  },
-  ar: {
-    piccante: 'صلصة حارة', yogurt: 'صلصة زبادي', algerina: 'صلصة جزائرية', rosa: 'صلصة وردية', insalata: 'خس، ملفوف وجزر', cetrioli: 'خيار', cipolla: 'بصل', pomodoro: 'طماطم', olive: 'زيتون', peperoncino: 'فلفل حار',
-    maionese: 'مايونيز', ketchup: 'كاتشب', extra_cipolla: 'بصل إضافي', extra_piccante: 'حار إضافي', carne_extra: 'لحم إضافي'
-  },
-  bn: {
-    piccante: 'ঝাল সস', yogurt: 'দই সস', algerina: 'আলজেরিয়ান সস', rosa: 'পিঙ্ক সস', insalata: 'সালাদ ও বাঁধাকপি', cetrioli: 'শসা', cipolla: 'পেঁয়াজ', pomodoro: 'টমেটো', olive: 'জলপাই', peperoncino: 'মরিচ',
-    maionese: 'মেয়োনিজ', ketchup: 'কেচাপ', extra_cipolla: 'অতিরিক্ত পেঁয়াজ', extra_piccante: 'অতিরিক্ত ঝাল', carne_extra: 'অতিরিক্ত মাংস'
-  }
-};
-
-const translations = {
-  it: {
-    callText: "Call",
-    asporto: "Asporto", asportoSub: "(-0.50€ su Cibo)",
-    consegna: "Consegna", consegnaSub: "(+2.50€ Consegna)",
-    student: "🎓 Promo Studenti", studentSub: "Offerte Speciali",
-    deliveroo: "Note Deliveroo", deliverooSub: "Personalizza",
-    noticeAsporto: '🎁 <b>Promozione:</b> Per ordini di cibo a partire da 40 €, ricevi una Coca-Cola da 1.5 L in omaggio!',
     noticeConsegna: '🎁 <b>Promozione:</b> Per ordini a domicilio a partire da 45 €, la consegna è gratuita!',
     noticeStudent: '🎓 <b>Promo Studenti:</b> Sconto speciale riservato agli studenti mostrando il badge scolastico!',
     noticeDeliveroo: '🛵 <b>Nota Deliveroo:</b> Questa sezione ti aiuta a simulare o preparare le note per il tuo ordine.',
@@ -663,7 +52,7 @@ const translations = {
     modalTitle: "📋 آرڈر کی تصدیق",
     modifica: "✏ ترمیم کریں",
     invia: "✅ واٹس ایپ پر بھیجیں",
-    nameLabel: "पूرا نام:",
+    nameLabel: "पूरा نام:",
     phoneLabel: "فون نمبر:",
     addressLabel: "ڈیلیوری کا پتہ (گلی، نمبر، انٹرکام):",
     notesLabel: "ریستوران کے لیے اضافی نوٹس:",
@@ -798,7 +187,7 @@ const menuData = [
     category: 'fritti',
     name: 'Mozzarella Sticks (6 pezzi)',
     price: 4.00,
-    desc: 'Bastoncini di mozzarella impanati e friti.'
+    desc: 'スティック Bastoncini di mozzarella impanati e friiti (con maionese e ketchup).'
   },
   {
     id: 'anelli_cipolla',
@@ -949,7 +338,7 @@ function setOrderType(type) {
 
   updateNoticeBanner();
   updateTotalPrice();
-  renderMenu();
+  renderMenu(); // To recalculate prices if asporto discount applies (-0.50 on food)
 }
 
 function filterCategory(cat, btnElem) {
@@ -990,12 +379,12 @@ function renderMenu(filterCat = 'all') {
             <span class="item-title">${item.name}</span>
             ${item.isPromo ? '<span class="badge-promo">PROMO</span>' : ''}
           </div>
-          <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 4px;">${item.desc}</div>
-          <div class="item-price">€ ${effPrice.toFixed(2)} ${state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' ? '<small style="color:#55efc4; font-weight:normal;">(sconto asporto)</small>' : ''}</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 3px;">${item.desc}</div>
+          <div class="item-price">€ ${effPrice.toFixed(2)} ${state.orderType === 'asporto' && item.category !== 'bevande' && item.category !== 'alcolici' ? '<small style="color:#27ae60; font-weight:normal;">(sconto asporto)</small>' : ''}</div>
         </div>
         <div class="qty-controls">
           <button class="qty-btn" onclick="modifyItemQty('${itemKey}', -1)">-</button>
-          <span style="font-weight: bold; font-size: 0.95rem; min-width: 18px; text-align: center; color: #fff;">${totalQty}</span>
+          <span style="font-weight: bold; font-size: 0.9rem; min-width: 18px; text-align: center;">${totalQty}</span>
           <button class="qty-btn" onclick="modifyItemQty('${itemKey}', 1)">+</button>
         </div>
       </div>
@@ -1013,6 +402,7 @@ function renderMenu(filterCat = 'all') {
         if (isCustomizable) {
           const dict = ingredientsDict[state.lang] || ingredientsDict['it'];
           
+          // Senza
           html += `<div class="ingredient-block"><div class="block-title">Senza / Togli:</div><div class="chip-group">`;
           commonSenzaKeys.forEach(ingKey => {
             const isSelected = unit.senza && unit.senza.includes(ingKey);
@@ -1021,6 +411,7 @@ function renderMenu(filterCat = 'all') {
           });
           html += `</div></div>`;
 
+          // Extra
           html += `<div class="ingredient-block"><div class="block-title">Extra / Aggiungi:</div><div class="chip-group">`;
           commonExtraKeys.forEach(ingKey => {
             const isSelected = unit.extra && unit.extra.includes(ingKey);
@@ -1030,6 +421,7 @@ function renderMenu(filterCat = 'all') {
           html += `</div></div>`;
         }
 
+        // Note per unit
         html += `
             <input type="text" class="input-field" placeholder="Note specifiche per questo pezzo (es. ben cotto)..." value="${unit.note || ''}" oninput="updateUnitNote('${itemKey}', ${idx}, this.value)">
           </div>
@@ -1158,11 +550,11 @@ function openConfirmationModal() {
   const formInputsDiv = document.getElementById('modal-form-inputs');
   let formHtml = `
     <div style="margin-bottom: 8px;">
-      <label style="font-weight:bold; font-size:0.73rem; color:var(--gold-light);">${t.nameLabel}</label>
+      <label style="font-weight:bold; font-size:0.73rem;">${t.nameLabel}</label>
       <input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi">
     </div>
     <div style="margin-bottom: 8px;">
-      <label style="font-weight:bold; font-size:0.73rem; color:var(--gold-light);">${t.phoneLabel}</label>
+      <label style="font-weight:bold; font-size:0.73rem;">${t.phoneLabel}</label>
       <input type="tel" id="cust-phone" class="input-field" placeholder="Es. 333 1234567">
     </div>
   `;
@@ -1170,7 +562,7 @@ function openConfirmationModal() {
   if (state.orderType === 'consegna') {
     formHtml += `
       <div style="margin-bottom: 8px;">
-        <label style="font-weight:bold; font-size:0.73rem; color:var(--gold-light);">${t.addressLabel}</label>
+        <label style="font-weight:bold; font-size:0.73rem;">${t.addressLabel}</label>
         <input type="text" id="cust-address" class="input-field" placeholder="Es. Via Roma 29, int. 2">
       </div>
     `;
@@ -1178,14 +570,15 @@ function openConfirmationModal() {
 
   formHtml += `
     <div>
-      <label style="font-weight:bold; font-size:0.73rem; color:var(--gold-light);">${t.notesLabel}</label>
+      <label style="font-weight:bold; font-size:0.73rem;">${t.notesLabel}</label>
       <input type="text" id="cust-notes" class="input-field" placeholder="Es. Citofonare Rossi, campanello rotto...">
     </div>
   `;
   formInputsDiv.innerHTML = formHtml;
 
+  // Build receipt summary
   const receiptBodyDiv = document.getElementById('modal-receipt-body');
-  let receiptHtml = `<div style="font-weight:bold; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:4px; color:var(--gold);">Riepilogo Ordine (${state.orderType.toUpperCase()})</div>`;
+  let receiptHtml = `<div style="font-weight:bold; margin-bottom:6px; border-bottom:1px solid #ddd; padding-bottom:4px;">Riepilogo Ordine (${state.orderType.toUpperCase()})</div>`;
   
   for (const itemId in state.cart) {
     const itemObj = menuData.find(i => i.id === itemId);
@@ -1194,31 +587,31 @@ function openConfirmationModal() {
 
     units.forEach((unit, idx) => {
       const effPrice = getItemEffectivePrice(itemObj);
-      receiptHtml += `<div style="margin-bottom:6px; font-size:0.78rem;"><b>- ${itemObj.name}</b>: € ${effPrice.toFixed(2)}`;
+      receiptHtml += `<div style="margin-bottom:6px; font-size:0.76rem;"><b>- ${itemObj.name}</b>: € ${effPrice.toFixed(2)}`;
       
       const dict = ingredientsDict[state.lang] || ingredientsDict['it'];
       if (unit.senza && unit.senza.length > 0) {
         const senzaNames = unit.senza.map(k => dict[k] || k).join(', ');
-        receiptHtml += `<br><span style="color:#ff7675; font-size:0.7rem;">Senza: ${senzaNames}</span>`;
+        receiptHtml += `<br><span style="color:#c0392b; font-size:0.7rem;">Senza: ${senzaNames}</span>`;
       }
       if (unit.extra && unit.extra.length > 0) {
         const extraNames = unit.extra.map(k => dict[k] || k).join(', ');
-        receiptHtml += `<br><span style="color:#55efc4; font-size:0.7rem;">Extra: ${extraNames}</span>`;
+        receiptHtml += `<br><span style="color:#27ae60; font-size:0.7rem;">Extra: ${extraNames}</span>`;
       }
       if (unit.note) {
-        receiptHtml += `<br><span style="color:#b2bec3; font-size:0.7rem;">Nota: ${unit.note}</span>`;
+        receiptHtml += `<br><span style="color:#7f8c8d; font-size:0.7rem;">Nota: ${unit.note}</span>`;
       }
       receiptHtml += `</div>`;
     });
   }
 
   const { foodTotal, deliveryFee, grandTotal } = calculateSubtotals();
-  receiptHtml += `<div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:8px; padding-top:6px; font-size:0.82rem;">`;
+  receiptHtml += `<div style="border-top:1px solid #ddd; margin-top:8px; padding-top:6px; font-size:0.82rem;">`;
   if (state.orderType === 'consegna') {
     receiptHtml += `<div>Subtotale Cibo: € ${foodTotal.toFixed(2)}</div>`;
     receiptHtml += `<div>Consegna: € ${deliveryFee.toFixed(2)}</div>`;
   }
-  receiptHtml += `<div style="font-weight:bold; color:var(--gold-light); font-size:1rem; margin-top:4px;">Totale Complessivo: € ${grandTotal.toFixed(2)}</div>`;
+  receiptHtml += `<div style="font-weight:bold; color:var(--primary); font-size:0.95rem; margin-top:4px;">Totale Complessivo: € ${grandTotal.toFixed(2)}</div>`;
   receiptHtml += `</div>`;
 
   receiptBodyDiv.innerHTML = receiptHtml;
@@ -1268,13 +661,13 @@ function sendWhatsAppOrder() {
       const effPrice = getItemEffectivePrice(itemObj);
       text += `• ${itemObj.name} (€ ${effPrice.toFixed(2)})\n`;
       
-      const dict = ingredientsDict['it'];
+      const dict = ingredientsDict['it']; // Standardize internal WhatsApp text in Italian for the restaurant owner
       if (unit.senza && unit.senza.length > 0) {
         const senzaNames = unit.senza.map(k => dict[k] || k).join(', ');
         text += `   ❌ Senza: ${senzaNames}\n`;
       }
       if (unit.extra && unit.extra.length > 0) {
-        const extraNames = unit.extra.map(k => dict[k] || k).join(', ');
+        const extraNames = unit.extra.map(k => dict[k] || k).join(',؍ ' ).replace(/؍/g, '');
         text += `   ➕ Extra: ${extraNames}\n`;
       }
       if (unit.note) {
@@ -1302,6 +695,7 @@ function sendWhatsAppOrder() {
   closeConfirmationModal();
 }
 
+// Initial render
 renderMenu();
 updateTotalPrice();
 </script>
