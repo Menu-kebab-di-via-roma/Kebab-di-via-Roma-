@@ -23,7 +23,7 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      padding-bottom: 95px;
+      padding-bottom: 115px;
     }
     header {
       background: linear-gradient(135deg, #3a0000, #6a0000, #990000);
@@ -94,7 +94,6 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* TikTok button with official SVG logo style */
     .tiktok-container {
       display: flex;
       flex-direction: column;
@@ -380,6 +379,7 @@
     }
     .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 5px rgba(153,0,0,0.2); }
 
+    /* Bottom Bar & Cart Drawer Styling */
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -387,12 +387,16 @@
       right: 0;
       background: #ffffff;
       border-top: 2px solid var(--gold);
-      padding: 10px 14px;
       box-shadow: 0 -6px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    .bottom-main-row {
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1000;
     }
     .total-price { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
     .whatsapp-btn {
@@ -408,6 +412,40 @@
       transition: 0.2s;
     }
     .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(39, 174, 96, 0.5); }
+
+    /* Cart Drawer (Recheck Section) */
+    .cart-drawer-toggle {
+      background: #fdf2e9;
+      border-top: 1px solid var(--card-border);
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .cart-drawer-content {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px 14px;
+      background: #f8f9fa;
+      border-top: 1px solid #e5e8e8;
+      display: none;
+      font-size: 0.76rem;
+    }
+    .cart-drawer-content.open {
+      display: block;
+    }
+    .drawer-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px dashed #d5dbdb;
+    }
 
     .modal-overlay {
       position: fixed;
@@ -454,7 +492,6 @@
 
 <header>
   <div class="header-flex">
-    <!-- TikTok Button with official style SVG icon and text -->
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
       <svg class="tiktok-icon-svg" viewBox="0 0 24 24">
         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -526,15 +563,25 @@
   <div id="menu-container"></div>
 </div>
 
+<!-- Bottom Bar with Cart Recheck Drawer Button -->
 <div class="bottom-bar">
-  <div id="total-price-box">
-    <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
-    <span class="total-price" id="grand-total">€ 0,00</span>
-    <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
+  <div class="cart-drawer-toggle" onclick="toggleCartDrawer()">
+    <span>🛒 <span id="cart-items-count-text">0 articoli nel carrello</span> (Clicca per riچیک کریں)</span>
+    <span id="drawer-arrow" style="font-size: 1rem; transition: transform 0.3s;">▼</span>
   </div>
-  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
-    VERIFICA E ORDINA
-  </button>
+  <div class="cart-drawer-content" id="cart-drawer-body">
+    <!-- حود بخود کارٹ کی لسٹ یہاں آئے گی -->
+  </div>
+  <div class="bottom-main-row">
+    <div id="total-price-box">
+      <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
+      <span class="total-price" id="grand-total">€ 0,00</span>
+      <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
+    </div>
+    <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
+      VERIFICA E ORDINA
+    </button>
+  </div>
 </div>
 
 <div class="modal-overlay" id="confirm-modal">
@@ -554,13 +601,21 @@
 </div>
 
 <script>
+// LocalStorage سے کارٹ اور آرڈر ٹائپ لوڈ کرنا
 const state = {
-  orderType: 'asporto',
-  cart: {},
-  lang: 'it'
+  orderType: localStorage.getItem('kebab_orderType') || 'asporto',
+  cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
+  lang: localStorage.getItem('kebab_lang') || 'it'
 };
 
-// جدا کیے گئے اجزاء: سلاد الگ اور بند گوبھی/گاجر الگ
+// لوکل اسٹوریج میں ڈیٹا سیو کرنے کا فنکشن
+function saveStateToStorage() {
+  localStorage.setItem('kebab_cart', JSON.stringify(state.cart));
+  localStorage.setItem('kebab_orderType', state.orderType);
+  localStorage.setItem('kebab_lang', state.lang);
+  updateCartDrawerUI();
+}
+
 const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
 
@@ -1042,26 +1097,22 @@ const menuNamesMap = {
 };
 
 const menuData = [
-  // Kebab (قیمت 5.00€ کباب کی کر دی گئی ہے)
   { id: 'k_1', name: 'Panino Kebab', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   
-  // Student Menu Items (قیمت پرومو 4.50€ کر دی گئی ہے)
   { id: 'st_1', name: 'MENÙ PANINO CON BIBITA (PROMO)', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, descKey: 'descStudent1', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_2', name: 'MENÙ PANINO CON BIBITA', price: 5.00, category: 'kebab', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_3', name: 'MENÙ PIADINA CON BIBITA', price: 6.00, category: 'piadina', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_4', name: 'MENÙ PANINO CON BIBITA PIÙ PATATINE', price: 6.00, category: 'kebab', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_5', name: 'MENÙ PIADINA CON BIBITA PIÙ PATATINE', price: 7.00, category: 'piadina', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Piadina Kebab
   { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.50, category: 'piadina', isSpecialPiadina: true, isPromo: true, descKey: 'descPiadinaSpeciale', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_3', name: 'Menu Piadina', price: 8.00, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_4', name: 'Piatto Kebab', price: 8.00, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Non Solo Kebab
   { id: 'nk_1', name: 'Panino Falafel', price: 4.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_2', name: 'Piadina Falafel', price: 5.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
@@ -1070,7 +1121,6 @@ const menuData = [
   { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Fritti
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
@@ -1078,13 +1128,12 @@ const menuData = [
   { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
-  // Bevande
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_2', name: 'Coca-Cola Zero 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_3', name: 'Sprite 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_4', name: 'Fanta 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_5', name: 'Hill Energy 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
-  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, sans: [], extraKeys: [] },
+  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_7', name: 'Estathè Limone 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_8', name: 'Acqua Naturale', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_9', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1092,7 +1141,6 @@ const menuData = [
   { id: 'bev_11', name: 'Red Bull', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_12', name: 'Monster Energy Drink', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
 
-  // Alcolici
   { id: 'alc_1', name: 'Birra Moretti 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senzaKeys: [], extraKeys: [] },
   { id: 'alc_2', name: 'Birra Peroni 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senzaKeys: [], extraKeys: [] }
 ];
@@ -1144,6 +1192,7 @@ window.onclick = function(event) {
 
 function changeLanguage(lang) {
   state.lang = lang;
+  saveStateToStorage();
   document.getElementById('current-lang-label').innerText = lang.toUpperCase();
   document.getElementById('langMenuPopup').classList.remove('show');
   
@@ -1172,6 +1221,7 @@ function changeLanguage(lang) {
   
   updateMainButtonText();
   renderMenu();
+  updateCartDrawerUI();
 }
 
 function updateNoticeText() {
@@ -1205,6 +1255,7 @@ function updateMainButtonText() {
 
 function setOrderType(type) {
   state.orderType = type;
+  saveStateToStorage();
   ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
     const el = document.getElementById(`btn-${t}`);
     el.className = 'type-btn';
@@ -1368,8 +1419,10 @@ function modifyQty(id, delta) {
       }
     }
   }
+  saveStateToStorage();
   renderMenu();
   calcTotal();
+  updateCartDrawerUI();
 }
 
 function toggleUnitCustom(id, uIdx, type, key) {
@@ -1383,13 +1436,16 @@ function toggleUnitCustom(id, uIdx, type, key) {
   } else {
     arr.push(key);
   }
+  saveStateToStorage();
   renderMenu();
   calcTotal();
+  updateCartDrawerUI();
 }
 
 function updateUnitNote(id, uIdx, val) {
   if (state.cart[id] && state.cart[id].units[uIdx]) {
     state.cart[id].units[uIdx].note = val;
+    saveStateToStorage();
   }
 }
 
@@ -1440,6 +1496,48 @@ function calcTotal() {
     }
   }
   document.getElementById('cola-progress').innerText = progressMsg;
+}
+
+// کارٹ ریچیک ڈراور ٹوگل کرنے کا فنکشن
+function toggleCartDrawer() {
+  const drawerContent = document.getElementById('cart-drawer-body');
+  const arrow = document.getElementById('drawer-arrow');
+  drawerContent.classList.toggle('open');
+  if (drawerContent.classList.contains('open')) {
+    arrow.style.transform = 'rotate(180deg)';
+  } else {
+    arrow.style.transform = 'rotate(0deg)';
+  }
+}
+
+// کارٹ ڈراور کا UI اور ریچیک لسٹ اپ ڈیٹ کرنا
+function updateCartDrawerUI() {
+  let totalItems = 0;
+  let drawerHTML = '';
+  
+  for (let id in state.cart) {
+    const item = menuData.find(m => m.id === id);
+    const cartItem = state.cart[id];
+    totalItems += cartItem.qty;
+    const localizedTitle = getLocalizedName(item.name);
+    
+    drawerHTML += `
+      <div class="drawer-item-row">
+        <span><b>${cartItem.qty}x</b> ${localizedTitle}</span>
+        <div style="display:flex; gap:4px;">
+          <button onclick="modifyQty('${id}', 1)" style="padding:2px 6px; font-weight:bold; cursor:pointer;">+</button>
+          <button onclick="modifyQty('${id}', -1)" style="padding:2px 6px; font-weight:bold; cursor:pointer;">-</button>
+        </div>
+      </div>
+    `;
+  }
+
+  if (totalItems === 0) {
+    drawerHTML = `<div style="text-align:center; color:#7f8c8d;">Il carrello è vuoto (کارٹ خالی ہے)</div>`;
+  }
+
+  document.getElementById('cart-items-count-text').innerText = `${totalItems} articoli nel carrello`;
+  document.getElementById('cart-drawer-body').innerHTML = drawerHTML;
 }
 
 function getDefaultTime(minutesToAdd) {
@@ -1738,10 +1836,24 @@ function sendWhatsAppOrder() {
   
   window.open(url, '_blank');
   closeConfirmationModal();
+
+  // 🚀 واٹس ایپ پر آرڈر بھیجنے کے بعد کارٹ اور لوکل اسٹوریج کو مکمل خالی کرنا
+  state.cart = {};
+  localStorage.removeItem('kebab_cart');
+  renderMenu();
+  calcTotal();
+  updateCartDrawerUI();
+  // اگر ڈراور کھلا ہو تو اسے بند کر دیں
+  document.getElementById('cart-drawer-body').classList.remove('open');
+  document.getElementById('drawer-arrow').style.transform = 'rotate(0deg)';
 }
 
+// ابتدائی لوڈنگ
+document.getElementById('current-lang-label').innerText = state.lang.toUpperCase();
+setOrderType(state.orderType);
 renderMenu();
 calcTotal();
+updateCartDrawerUI();
 </script>
 
 </body>
