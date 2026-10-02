@@ -394,35 +394,14 @@
       z-index: 1000;
     }
     .total-price { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
-    
-    .bottom-actions {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .cart-preview-btn {
-      background: linear-gradient(135deg, var(--gold), #b8860b);
-      color: #000;
-      border: none;
-      padding: 9px 12px;
-      border-radius: 16px;
-      font-weight: 900;
-      font-size: 0.75rem;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(212,175,55,0.3);
-      transition: 0.2s;
-    }
-    .cart-preview-btn:hover { transform: translateY(-2px); }
-
     .whatsapp-btn {
       background: linear-gradient(135deg, #27ae60, #2ecc71);
       color: white;
       border: none;
-      padding: 10px 16px;
-      border-radius: 16px;
+      padding: 10px 18px;
+      border-radius: 18px;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
       transition: 0.2s;
@@ -551,17 +530,11 @@
     <span class="total-price" id="grand-total">€ 0,00</span>
     <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
   </div>
-  <div class="bottom-actions">
-    <button class="cart-preview-btn" onclick="openCartPreviewModal()">
-      🛒 Cart
-    </button>
-    <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
-      VERIFICA E ORDINA
-    </button>
-  </div>
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
+    VERIFICA E ORDINA
+  </button>
 </div>
 
-<!-- 1. آرڈر کنفرمیشن ماڈل -->
 <div class="modal-overlay" id="confirm-modal">
   <div class="modal-card">
     <div class="receipt-header">
@@ -578,30 +551,12 @@
   </div>
 </div>
 
-<!-- 2. کارٹ ری چیک پاپ اپ ماڈل -->
-<div class="modal-overlay" id="cart-modal">
-  <div class="modal-card">
-    <div class="receipt-header">
-      <h2>🛒 Il Mio Carrello</h2>
-    </div>
-    <div class="receipt-body" id="cart-modal-body"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeCartPreviewModal()" style="background: #7f8c8d;">Chiudi</button>
-      <button class="btn-confirm" onclick="closeCartPreviewModal(); openConfirmationModal();">Procedi all'Ordine</button>
-    </div>
-  </div>
-</div>
-
 <script>
 const state = {
   orderType: 'asporto',
-  cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
+  cart: {},
   lang: 'it'
 };
-
-function saveCartToStorage() {
-  localStorage.setItem('kebab_cart', JSON.stringify(state.cart));
-}
 
 const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
@@ -990,7 +945,7 @@ const menuNamesMap = {
     'Red Bull': 'Red Bull',
     'Monster Energy Drink': 'Monster Energy Drink',
     'Birra Moretti 66cl': 'Bere Moretti 66cl',
-    'Bere Peroni 66cl': 'Bere Peroni 66cl',
+    'Birra Peroni 66cl': 'Bere Peroni 66cl',
     'MENÙ PANINO CON BIBITA (PROMO)': 'MENIU SANDVIȘ CU BĂUTURĂ (PROMO)',
     'MENÙ PANINO CON BIBITA': 'MENIU SANDVIȘ CU BĂUTURĂ',
     'MENÙ PIADINA CON BIBITA': 'MENIU PIADINA CU BĂUTURĂ',
@@ -1112,7 +1067,7 @@ const menuData = [
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sans: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1403,7 +1358,6 @@ function modifyQty(id, delta) {
       }
     }
   }
-  saveCartToStorage();
   renderMenu();
   calcTotal();
 }
@@ -1419,7 +1373,6 @@ function toggleUnitCustom(id, uIdx, type, key) {
   } else {
     arr.push(key);
   }
-  saveCartToStorage();
   renderMenu();
   calcTotal();
 }
@@ -1427,7 +1380,6 @@ function toggleUnitCustom(id, uIdx, type, key) {
 function updateUnitNote(id, uIdx, val) {
   if (state.cart[id] && state.cart[id].units[uIdx]) {
     state.cart[id].units[uIdx].note = val;
-    saveCartToStorage();
   }
 }
 
@@ -1488,49 +1440,6 @@ function getDefaultTime(minutesToAdd) {
   return `${hours}:${minutes}`;
 }
 
-// 🛒 کارٹ کا پاپ اپ کھولنا
-function openCartPreviewModal() {
-  let hasItems = Object.keys(state.cart).length > 0;
-  if (!hasItems) {
-    alert("Il carrello è vuoto!");
-    return;
-  }
-
-  let cartHTML = `<div style="font-weight:bold; border-bottom:1px solid #ddd; padding-bottom:4px; margin-bottom:8px;">Articoli nel Carrello:</div>`;
-  
-  for (let id in state.cart) {
-    const item = menuData.find(m => m.id === id);
-    const cartItem = state.cart[id];
-    const qty = cartItem.qty;
-    const localizedTitle = getLocalizedName(item.name);
-
-    cartHTML += `<div style="margin-bottom:8px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
-    
-    if (cartItem.units) {
-      cartItem.units.forEach((unit, uIdx) => {
-        let hasSenza = unit.senza && unit.senza.length > 0;
-        let hasExtra = unit.extra && unit.extra.length > 0;
-        if (hasSenza || hasExtra || unit.note) {
-          cartHTML += `<br><span style="color:#555;">[#${uIdx + 1}]`;
-          if (hasSenza) cartHTML += ` Senza: ${unit.senza.map(k => getLocalizedIngredient(k)).join(', ')}`;
-          if (hasExtra) cartHTML += ` Extra: ${unit.extra.map(k => getLocalizedIngredient(k)).join(', ')}`;
-          if (unit.note) cartHTML += ` Note: ${unit.note}`;
-          cartHTML += `</span>`;
-        }
-      });
-    }
-    cartHTML += `</div>`;
-  }
-
-  document.getElementById('cart-modal-body').innerHTML = cartHTML;
-  document.getElementById('cart-modal').style.display = 'flex';
-}
-
-function closeCartPreviewModal() {
-  document.getElementById('cart-modal').style.display = 'none';
-}
-
-// 📋 آرڈر کنفرمیشن پاپ اپ کھولنا
 function openConfirmationModal() {
   let hasItems = Object.keys(state.cart).length > 0;
   if (!hasItems) {
@@ -1672,7 +1581,7 @@ function openConfirmationModal() {
       receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
     }
     
-    receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">Totale: € ${grandTotal.toFixed(2)}</div>`;
+    receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">Complessive Price / Totale: € ${grandTotal.toFixed(2)}</div>`;
   } else {
     receiptHTML += `<div style="font-weight:bold; color:#009473; margin-top:4px;">Nota Deliveroo Inviata Senza Prezzi</div>`;
   }
@@ -1694,7 +1603,6 @@ function getOrderCode() {
   return `#${seqFormatted}`;
 }
 
-// 📱 واٹس ایپ پر آرڈر بھیجنے کا فنکشن
 function sendWhatsAppOrder() {
   const nameInput = document.getElementById('cust-name');
   const name = nameInput ? nameInput.value.trim() : '';
@@ -1814,24 +1722,11 @@ function sendWhatsAppOrder() {
     orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  let phone = "393932228224";
-  let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
-  
+  let encodedMessage = encodeURIComponent(orderText);
+  let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
   closeConfirmationModal();
-
-  // کارٹ کو زیرو کرنے کا عمل
-  state.cart = {};
-  localStorage.removeItem('kebab_cart');
-  renderMenu();
-  calcTotal();
-
-  // واٹس ایپ ونڈو کھولنا
-  window.open(url, '_blank');
 }
-
-// ابتدائی لوڈنگ
-renderMenu();
-calcTotal();
 </script>
 </body>
 </html>
