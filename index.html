@@ -553,7 +553,7 @@
 
 <script>
 const state = {
-  orderType: localStorage.getItem('kebab_order_type') || 'asporto',
+  orderType: 'asporto',
   cart: {},
   lang: 'it'
 };
@@ -1065,7 +1065,7 @@ const menuData = [
 
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', sansaKeys: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
@@ -1078,7 +1078,7 @@ const menuData = [
   { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_7', name: 'Estathè Limone 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_8', name: 'Acqua Naturale', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
-  { id: 'bev_9', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, sansaKeys: [], extraKeys: [] },
+  { id: 'bev_9', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_10', name: 'Coca-Cola 1.5L', price: 3.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_11', name: 'Red Bull', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_12', name: 'Monster Energy Drink', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1195,24 +1195,23 @@ function updateMainButtonText() {
 
 function setOrderType(type) {
   state.orderType = type;
-  localStorage.setItem('kebab_order_type', type);
+  localStorage.setItem('kebab_order_type', type); // Presistence
   ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
     const el = document.getElementById(`btn-${t}`);
-    if (el) el.className = 'type-btn';
+    el.className = 'type-btn';
   });
   
   const activeEl = document.getElementById(`btn-${type}`);
-  if (activeEl) {
-    if (type === 'deliveroo') activeEl.classList.add('deliveroo-active');
-    else if (type === 'student') activeEl.classList.add('student-active');
-    else activeEl.classList.add('active');
-  }
+  if (type === 'deliveroo') activeEl.classList.add('deliveroo-active');
+  else if (type === 'student') activeEl.classList.add('student-active');
+  else activeEl.classList.add('active');
 
   updateNoticeText();
 
-  const catNav = document.getElementById('category-nav-bar');
-  if (catNav) {
-    catNav.style.display = (type === 'student') ? 'none' : 'flex';
+  if (type === 'student') {
+    document.getElementById('category-nav-bar').style.display = 'none';
+  } else {
+    document.getElementById('category-nav-bar').style.display = 'flex';
   }
 
   updateMainButtonText();
@@ -1229,8 +1228,9 @@ function filterCategory(cat, btn) {
 
 function renderMenu() {
   const container = document.getElementById('menu-container');
-  if (!container) return;
   container.innerHTML = '';
+  
+  const t = translations[state.lang];
   
   let filtered = [];
   if (state.orderType === 'student') {
@@ -1297,7 +1297,7 @@ function renderMenu() {
         if (item.senzaKeys && item.senzaKeys.length > 0) {
           html += `
             <div class="ingredient-block">
-              <div class="block-title">${translations[state.lang].senzaTitle}</div>
+              <div class="block-title">${t.senzaTitle}</div>
               <div class="chip-group">
           `;
           item.senzaKeys.forEach(key => {
@@ -1311,7 +1311,7 @@ function renderMenu() {
         if (item.extraKeys && item.extraKeys.length > 0) {
           html += `
             <div class="ingredient-block">
-              <div class="block-title">${translations[state.lang].extraTitle}</div>
+              <div class="block-title">${t.extraTitle}</div>
               <div class="chip-group">
           `;
           item.extraKeys.forEach(key => {
@@ -1324,7 +1324,7 @@ function renderMenu() {
         }
 
         html += `
-          <input type="text" class="input-field" placeholder="${translations[state.lang].notePlaceholder}" value="${unit.note || ''}" oninput="updateUnitNote('${item.id}', ${uIdx}, this.value)">
+          <input type="text" class="input-field" placeholder="${t.notePlaceholder}" value="${unit.note || ''}" oninput="updateUnitNote('${item.id}', ${uIdx}, this.value)">
           </div>
         `;
       });
@@ -1386,6 +1386,7 @@ function updateUnitNote(id, uIdx, val) {
 
 function calcTotal() {
   let foodSubtotal = 0;
+  let totalAsportoDiscount = 0;
 
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
@@ -1394,6 +1395,7 @@ function calcTotal() {
       let isDiscountable = (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive);
       
       if (isDiscountable) {
+        totalAsportoDiscount += (0.50 * state.cart[id].qty);
         effPrice = Math.max(0, effPrice - 0.50);
       }
 
@@ -1413,13 +1415,10 @@ function calcTotal() {
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
   let grandTotal = foodSubtotal + deliveryFee;
 
-  const totalEl = document.getElementById('grand-total');
-  if (totalEl) {
-    if (state.orderType === 'deliveroo') {
-      totalEl.innerText = `Gestito da Deliveroo`;
-    } else {
-      totalEl.innerText = `€ ${grandTotal.toFixed(2)}`;
-    }
+  if (state.orderType === 'deliveroo') {
+    document.getElementById('grand-total').innerText = `Gestito da Deliveroo`;
+  } else {
+    document.getElementById('grand-total').innerText = `€ ${grandTotal.toFixed(2)}`;
   }
 
   let progressMsg = "";
@@ -1431,8 +1430,7 @@ function calcTotal() {
       progressMsg = `⚠ Aggiungi altri € ${diff} di cibo per avere la Coca-Cola 1.5L Gratis!`;
     }
   }
-  const colaEl = document.getElementById('cola-progress');
-  if (colaEl) colaEl.innerText = progressMsg;
+  document.getElementById('cola-progress').innerText = progressMsg;
 }
 
 function getDefaultTime(minutesToAdd) {
@@ -1458,173 +1456,303 @@ function openConfirmationModal() {
   else if (state.orderType === 'student') modalTitle.innerText = t.modalTitleStudent;
   else modalTitle.innerText = t.modalTitleAsp;
 
-  let formHtml = '';
-  if (state.orderType === 'deliveroo') {
-    formHtml += `<label style="font-weight:bold; display:block; margin-bottom:4px;">${t.nameDelivLabel}</label>`;
-    formHtml += `<input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi / Ordine #1234" style="margin-bottom:8px;">`;
-  } else {
-    formHtml += `<label style="font-weight:bold; display:block; margin-bottom:4px;">${t.nameLabel}</label>`;
-    formHtml += `<input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome e cognome" style="margin-bottom:8px;">`;
-    
-    if (state.orderType === 'consegna') {
-      formHtml += `<label style="font-weight:bold; display:block; margin-bottom:4px;">${t.addrLabel}</label>`;
-      formHtml += `<input type="text" id="cust-address" class="input-field" placeholder="Indirizzo, Civico, Citofono" style="margin-bottom:8px;">`;
-    }
+  const formInputs = document.getElementById('modal-form-inputs');
+  let defaultTimeVal = (state.orderType === 'consegna') ? getDefaultTime(60) : getDefaultTime(30);
 
-    formHtml += `<label style="font-weight:bold; display:block; margin-bottom:4px;">${t.timeLabel}</label>`;
-    let defaultTimeVal = (state.orderType === 'consegna') ? getDefaultTime(45) : getDefaultTime(20);
-    formHtml += `<input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">`;
+  if (state.orderType === 'deliveroo') {
+    formInputs.innerHTML = `
+      <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameDelivLabel}</label></div>
+      <input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi o #45" oninput="saveCustomerData()">
+    `;
+  } else if (state.orderType === 'consegna') {
+    formInputs.innerHTML = `
+      <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div>
+      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome" oninput="saveCustomerData()">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.addrLabel}</label></div>
+      <input type="text" id="cust-addr" class="input-field" placeholder="Via, Civico, Citofono" oninput="saveCustomerData()">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
+      <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
+    `;
+  } else {
+    formInputs.innerHTML = `
+      <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div>
+      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome" oninput="saveCustomerData()">
+      <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
+      <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
+    `;
   }
 
-  document.getElementById('modal-form-inputs').innerHTML = formHtml;
+  // Auto loading saved customer data into modal inputs
+  setTimeout(() => {
+    if(document.getElementById('cust-name')) document.getElementById('cust-name').value = localStorage.getItem('kebab_cust_name') || '';
+    if(document.getElementById('cust-addr')) document.getElementById('cust-addr').value = localStorage.getItem('kebab_cust_addr') || '';
+  }, 50);
 
-  let receiptHtml = `<div style="font-weight:bold; margin-bottom:6px;">Riepilogo Ordine (${state.orderType.toUpperCase()}):</div>`;
-  let foodSubtotal = 0;
-
+  let foodSubtotalRaw = 0;
+  let foodSubtotalDiscounted = 0;
+  let totalAsportoDiscount = 0;
+  let receiptHTML = `<div style="margin-top:8px; font-weight:bold; border-bottom:1px solid #ddd; padding-bottom:4px;">Riepilogo Ordine:</div>`;
+  const hidePrices = (state.orderType === 'deliveroo');
+  
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
-    if (item) {
+    const cartItem = state.cart[id];
+    const qty = cartItem.qty;
+    const localizedTitle = getLocalizedName(item.name);
+
+    if (item.isBeverage) {
       let effPrice = item.price;
-      let isDiscountable = (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive);
-      if (isDiscountable) effPrice = Math.max(0, effPrice - 0.50);
-
-      receiptHtml += `<div style="border-bottom:1px dashed #d5dbdb; padding:6px 0;">`;
-      receiptHtml += `<b>${state.cart[id].qty}x ${getLocalizedName(item.name)}</b>`;
-      if (state.orderType !== 'deliveroo') {
-        receiptHtml += ` <span style="float:right; color:var(--primary);">€ ${(effPrice * state.cart[id].qty).toFixed(2)}</span>`;
+      foodSubtotalRaw += effPrice * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
+      if (!hidePrices) {
+        receiptHTML += ` (€ ${(effPrice * qty).toFixed(2)})`;
       }
-
-      if (state.cart[id].units) {
-        state.cart[id].units.forEach((u, idx) => {
-          let customText = [];
-          if (u.senza && u.senza.length > 0) {
-            customText.push(`Senza: ${u.senza.map(s => getLocalizedIngredient(s)).join(', ')}`);
-          }
-          if (u.extra && u.extra.length > 0) {
-            customText.push(`Extra: ${u.extra.map(e => getLocalizedIngredient(e)).join(', ')}`);
-          }
-          if (u.note) {
-            customText.push(`Nota: ${u.note}`);
-          }
-          if (customText.length > 0) {
-            receiptHtml += `<div style="font-size:0.7rem; color:#7f8c8d; margin-left:10px;">• Pezzo #${idx+1}: ${customText.join(' | ')}</div>`;
-          }
-        });
+      receiptHTML += `</div>`;
+    } else if (item.isAlcohol) {
+      let rawPrice = item.price;
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto');
+      if (isDiscountable) {
+        effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50 * qty;
       }
-      receiptHtml += `</div>`;
-      foodSubtotal += effPrice * state.cart[id].qty;
+      foodSubtotalRaw += rawPrice * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
+      if (!hidePrices) {
+        receiptHTML += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      }
+      receiptHTML += `</div>`;
+    } else {
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
+      
+      cartItem.units.forEach((unit, uIdx) => {
+        let rawPrice = item.price;
+        let effPrice = item.price;
+        let isDiscountable = (state.orderType === 'asporto' && !item.isStudentExclusive);
+        if (isDiscountable) {
+          effPrice = Math.max(0, effPrice - 0.50);
+          totalAsportoDiscount += 0.50;
+        }
+        let unitExtraCost = (unit.extra && unit.extra.includes('carne_extra')) ? 0.50 : 0;
+        
+        foodSubtotalRaw += rawPrice + unitExtraCost;
+        foodSubtotalDiscounted += effPrice + unitExtraCost;
+
+        receiptHTML += `<br><span style="font-weight:600; color:#555;">[#${uIdx + 1}]</span>`;
+        let hasSenza = unit.senza && unit.senza.length > 0;
+        let hasExtra = unit.extra && unit.extra.length > 0;
+
+        if (!hasSenza && !hasExtra && !unit.note) {
+          receiptHTML += ` <span style="color:#27ae60;">✨ Completo</span>`;
+        } else {
+          if (hasSenza) {
+            let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
+            receiptHTML += ` <span style="color:#c0392b;">❌ Senza: ${senzaNames}</span>`;
+          }
+          if (hasExtra) {
+            let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
+            receiptHTML += ` <span style="color:#27ae60;">✅ Extra: ${extraNames}</span>`;
+          }
+        }
+        if (unit.note) {
+          receiptHTML += ` <span style="color:#555;">📝 Note: ${unit.note}</span>`;
+        }
+      });
+      receiptHTML += `</div>`;
     }
   }
 
-  if (state.orderType !== 'deliveroo') {
-    let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
-    let grandTotal = foodSubtotal + deliveryFee;
+  let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
+  let grandTotal = foodSubtotalDiscounted + deliveryFee;
 
-    receiptHtml += `<div style="margin-top:10px; padding-top:6px; border-top:1px solid #bdc3c7;">`;
-    receiptHtml += `<div>${t.subtotal} <b>€ ${foodSubtotal.toFixed(2)}</b></div>`;
-    if (state.orderType === 'consegna') {
-      receiptHtml += `<div>${t.deliveryFee} <b>€ ${deliveryFee.toFixed(2)}</b></div>`;
+  receiptHTML += `
+    <div style="margin-top:10px; border-top:1px solid #ddd; padding-top:6px; font-size:0.82rem;">
+  `;
+  if (!hidePrices) {
+    receiptHTML += `<div>Subtotale: € ${foodSubtotalRaw.toFixed(2)}</div>`;
+    
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
+      receiptHTML += `<div style="color: #27ae60; font-weight: bold; margin-top: 3px;">🎁 Sconto Asporto: -€ ${totalAsportoDiscount.toFixed(2)}</div>`;
     }
-    if (foodSubtotal >= 40) {
-      receiptHtml += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
+
+    if (deliveryFee > 0) {
+      receiptHTML += `<div>${t.deliveryFee} € ${deliveryFee.toFixed(2)}</div>`;
     }
-    receiptHtml += `<div style="font-size:1rem; font-weight:bold; color:var(--primary); margin-top:6px;">Totale: € ${grandTotal.toFixed(2)}</div>`;
-    receiptHtml += `</div>`;
+    
+    if (foodSubtotalDiscounted >= 40) {
+      receiptHTML += `<div style="color:#27ae60; font-weight:bold; margin-top:4px;">${t.freeCola}</div>`;
+    } else {
+      let needed = (40 - foodSubtotalDiscounted).toFixed(2);
+      receiptHTML += `<div style="color:#c0392b; font-weight:bold; margin-top:4px; font-size:0.75rem;">⚠️ Aggiungi altri € ${needed} di cibo per avere la Coca-Cola 1.5L Gratis!</div>`;
+    }
+    
+    receiptHTML += `<div style="font-weight:bold; font-size:0.98rem; color:#990000; margin-top:6px;">Complessive Price / Totale: € ${grandTotal.toFixed(2)}</div>`;
+  } else {
+    receiptHTML += `<div style="font-weight:bold; color:#009473; margin-top:4px;">Nota Deliveroo Inviata Senza Prezzi</div>`;
   }
+  receiptHTML += `</div>`;
 
-  document.getElementById('modal-receipt-body').innerHTML = receiptHtml;
+  document.getElementById('modal-receipt-body').innerHTML = receiptHTML;
   document.getElementById('confirm-modal').style.display = 'flex';
+}
+
+function saveCustomerData() {
+  const nameInput = document.getElementById('cust-name');
+  const addrInput = document.getElementById('cust-addr');
+  if (nameInput) localStorage.setItem('kebab_cust_name', nameInput.value.trim());
+  if (addrInput) localStorage.setItem('kebab_cust_addr', addrInput.value.trim());
 }
 
 function closeConfirmationModal() {
   document.getElementById('confirm-modal').style.display = 'none';
 }
 
+function getOrderCode() {
+  let sequence = parseInt(localStorage.getItem('kebab_order_sequence') || '0', 10);
+  sequence += 1;
+  localStorage.setItem('kebab_order_sequence', sequence);
+  const seqFormatted = String(sequence).padStart(4, '0');
+  return `#${seqFormatted}`;
+}
+
 function sendWhatsAppOrder() {
   const nameInput = document.getElementById('cust-name');
   const name = nameInput ? nameInput.value.trim() : '';
+  
+  // नाम लिखना अनिवार्य (Required Name Validation)
   if (!name) {
-    alert("Per favore inserisci il tuo nome!");
-    if (nameInput) nameInput.focus();
+    alert("Inserisci il tuo nome prima di procedere! (नाम लिखना अनिवार्य है)");
+    if(nameInput) nameInput.focus();
     return;
   }
 
-  let text = `*NUOVO ORDINE - Kebab di Via Roma*\n`;
-  text += `--------------------------------\n`;
-  text += `*Modalità:* ${state.orderType.toUpperCase()}\n`;
-  text += `*Cliente:* ${name}\n`;
+  const addrInput = document.getElementById('cust-addr');
+  const addr = addrInput ? addrInput.value.trim() : '';
+  const timeInput = document.getElementById('cust-time');
+  const time = timeInput ? timeInput.value.trim() : '';
+  const hidePrices = (state.orderType === 'deliveroo');
 
-  if (state.orderType === 'consegna') {
-    const addrInput = document.getElementById('cust-address');
-    const address = addrInput ? addrInput.value.trim() : '';
-    if (!address) {
-      alert("Per favore inserisci l'indirizzo di consegna!");
-      if (addrInput) addrInput.focus();
-      return;
-    }
-    text += `*Indirizzo:* ${address}\n`;
-  }
+  let orderText = `*Ordine, ${getOrderCode()}*\n`;
+  orderText += `*Kebab di Via Roma*\n`;
+  orderText += `*Tipo:* ${state.orderType.toUpperCase()}\n`;
+  orderText += `*Nome:* ${name}\n`;
+  if (addr) orderText += `*Indirizzo:* ${addr}\n`;
+  if (time) orderText += `*Orario:* ${time}\n`;
+  orderText += `\n--------------------------\n*DETTAGLIO CUCINA:*\n`;
 
-  if (state.orderType !== 'deliveroo') {
-    const timeInput = document.getElementById('cust-time');
-    const time = timeInput ? timeInput.value.trim() : '';
-    text += `*Orario Richiesto:* ${time}\n`;
-  }
+  let foodSubtotalRaw = 0;
+  let foodSubtotalDiscounted = 0;
+  let totalAsportoDiscount = 0;
+  let itemCounter = 1;
 
-  text += `--------------------------------\n*PRODOTTI SCELTI:*\n`;
-
-  let foodSubtotal = 0;
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
-    if (item) {
+    const cartItem = state.cart[id];
+    const qty = cartItem.qty;
+    const localizedTitle = getLocalizedName(item.name);
+
+    if (item.isBeverage) {
       let effPrice = item.price;
-      if (state.orderType === 'asporto' && !item.isBeverage && !item.isStudentExclusive) {
+      foodSubtotalRaw += effPrice * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}`;
+      if (!hidePrices) {
+        orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
+      }
+      orderText += `\n`;
+      itemCounter++;
+    } else if (item.isAlcohol) {
+      let rawPrice = item.price;
+      let effPrice = item.price;
+      let isDiscountable = (state.orderType === 'asporto');
+      if (isDiscountable) {
         effPrice = Math.max(0, effPrice - 0.50);
+        totalAsportoDiscount += 0.50 * qty;
       }
-      text += `• ${state.cart[id].qty}x ${item.name}`;
-      if (state.orderType !== 'deliveroo') {
-        text += ` (€ ${(effPrice * state.cart[id].qty).toFixed(2)})`;
+      foodSubtotalRaw += rawPrice * qty;
+      foodSubtotalDiscounted += effPrice * qty;
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}`;
+      if (!hidePrices) {
+        orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
       }
-      text += `\n`;
+      orderText += `\n`;
+      itemCounter++;
+    } else {
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}\n`;
+      cartItem.units.forEach((unit, uIdx) => {
+        let rawPrice = item.price;
+        let effPrice = item.price;
+        let isDiscountable = (state.orderType === 'asporto' && !item.isStudentExclusive);
+        if (isDiscountable) {
+          effPrice = Math.max(0, effPrice - 0.50);
+          totalAsportoDiscount += 0.50;
+        }
+        let unitExtraCost = (unit.extra && unit.extra.includes('carne_extra')) ? 0.50 : 0;
+        
+        foodSubtotalRaw += rawPrice + unitExtraCost;
+        foodSubtotalDiscounted += effPrice + unitExtraCost;
 
-      if (state.cart[id].units) {
-        state.cart[id].units.forEach((u, idx) => {
-          let customText = [];
-          if (u.senza && u.senza.length > 0) customText.push(`Senza: ${u.senza.join(', ')}`);
-          if (u.extra && u.extra.join(', ')) customText.push(`Extra: ${u.extra.join(', ')}`);
-          if (u.note) customText.push(`Nota: ${u.note}`);
-          if (customText.length > 0) {
-            text += `   ↳ Pezzo #${idx+1}: ${customText.join(' | ')}\n`;
+        orderText += `   ▪ [Pezzo #${uIdx + 1}]`;
+        let hasSenza = unit.senza && unit.senza.length > 0;
+        let hasExtra = unit.extra && unit.extra.length > 0;
+
+        if (!hasSenza && !hasExtra && !unit.note) {
+          orderText += ` Completo`;
+        } else {
+          if (hasSenza) {
+            let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
+            orderText += ` | Senza: ${senzaNames}`;
           }
-        });
-      }
-      foodSubtotal += effPrice * state.cart[id].qty;
+          if (hasExtra) {
+            let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
+            orderText += ` | Extra: ${extraNames}`;
+          }
+        }
+        // नोटबुक वैकल्पिक है (Note is optional, will only show if written)
+        if (unit.note) {
+          orderText += ` | Note: ${unit.note}`;
+        }
+        orderText += `\n`;
+      });
+      itemCounter++;
     }
   }
 
-  text += `--------------------------------\n`;
-  if (state.orderType !== 'deliveroo') {
-    let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
-    let grandTotal = foodSubtotal + deliveryFee;
-    text += `*Subtotale Cibo:* € ${foodSubtotal.toFixed(2)}\n`;
-    if (state.orderType === 'consegna') {
-      text += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}\n`;
+  let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
+  let grandTotal = foodSubtotalDiscounted + deliveryFee;
+
+  orderText += `\n--------------------------\n`;
+  if (!hidePrices) {
+    orderText += `Subtotale cibo: € ${foodSubtotalRaw.toFixed(2)}\n`;
+    if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
+      orderText += `Sconto Asporto: -€ ${totalAsportoDiscount.toFixed(2)}\n`;
     }
-    if (foodSubtotal >= 40) {
-      text += `🎁 *OMAGGIO:* Coca-Cola 1.5L inclusa!\n`;
+    if (deliveryFee > 0) {
+      orderText += `Consegna (Rider): € ${deliveryFee.toFixed(2)}\n`;
     }
-    text += `*TOTALE COMPLESSIVO:* € ${grandTotal.toFixed(2)}\n`;
+    if (foodSubtotalDiscounted >= 40) {
+      orderText += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
+    }
+    orderText += `*TOTALE COMPLESSIVO: € ${grandTotal.toFixed(2)}*\n`;
   } else {
-    text += `*Nota:* Ordine Deliveroo\n`;
+    orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  const encoded = encodeURIComponent(text);
-  const whatsappUrl = `https://wa.me/393932228224?text=${encoded}`;
+  let encodedMessage = encodeURIComponent(orderText);
+  let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
+  closeConfirmationModal();
 }
 
-// Initial setup on load
-setOrderType(state.orderType);
+// ऑटो लोडिंग (Auto Loading Local Storage Data on Startup)
+window.onload = function() {
+  const savedOrderType = localStorage.getItem('kebab_order_type');
+  if (savedOrderType) {
+    setOrderType(savedOrderType);
+  }
+};
 </script>
 </body>
 </html>
