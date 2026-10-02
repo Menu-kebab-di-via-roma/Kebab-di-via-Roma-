@@ -191,7 +191,7 @@
     }
     .type-btn.active { border-color: var(--primary); background: #fdf2e9; color: var(--primary); box-shadow: 0 3px 10px rgba(153,0,0,0.15); }
     
-    /* آپ کی فرمائش کے مطابق لگزری، کلر فل اور شائننگ بٹنز سٹائل */
+    /* لگزری، کلر فل اور شائننگ بٹنز */
     .type-btn.deliveroo-active, .btn-deliveroo-lux { 
       border-color: #0073e6; 
       background: linear-gradient(135deg, #00bfff, #0073e6); 
@@ -507,7 +507,6 @@
 </header>
 
 <div class="container">
-  <!-- یہاں آرڈر ٹائپ والے بٹنز کو آپ کے بتائے ہوئے لگزری اور کلر فل شیڈز دیے گئے ہیں -->
   <div class="order-type-selector">
     <div class="type-btn active" id="btn-asporto" onclick="setOrderType('asporto')">
       <span id="lbl-asporto">Asporto</span>
@@ -573,7 +572,7 @@
 </div>
 
 <script>
-// لوکل سٹوریج سے کارٹ ڈیٹا لوڈ کرنا تاکہ ریفریش یا سرچ سے ڈیٹا ضائع نہ ہو
+// مکمل اور اصل مینیو ڈیٹا کے ساتھ لوکل سٹوریج کا نظام برقرار رکھا گیا ہے
 const state = {
   orderType: localStorage.getItem('kebab_orderType') || 'asporto',
   cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
@@ -585,17 +584,11 @@ function saveCartToLocalStorage() {
   localStorage.setItem('kebab_orderType', state.orderType);
 }
 
-// واٹس ایپ پر آرڈر بھیجنے کا فنکشن جس کے بعد کارٹ خود بخود زیرو ہو جائے گی
+// واٹس ایپ پر آرڈر بھیجنے کے بعد کارٹ اور لوکل سٹوریج کو مکمل زیرو (خالی) کرنا
 function sendWhatsAppOrder() {
-  // ترتیب کے مطابق گروپنگ: 1. Piadina, 2. Kebab, 3. Non Solo Kebab, 4. Fritti, 5. Bevande, 6. Alcolici
-  let sortedCategories = ['piadina', 'kebab', 'non-kebab', 'fritti', 'bevande', 'alcolici'];
-  
-  // آرڈر کنفرم ہونے پر کارٹ اور لوکل سٹوریج کو مکمل زیرو (خالی) کرنا
   state.cart = {};
   localStorage.removeItem('kebab_cart');
   localStorage.removeItem('kebab_orderType');
-  
-  // ونڈو بند یا ریفریश کرنے کا عمل
   location.reload();
 }
 </script>
