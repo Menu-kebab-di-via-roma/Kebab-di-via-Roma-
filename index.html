@@ -94,7 +94,6 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* TikTok button with official SVG logo style */
     .tiktok-container {
       display: flex;
       flex-direction: column;
@@ -454,7 +453,6 @@
 
 <header>
   <div class="header-flex">
-    <!-- TikTok Button with official style SVG icon and text -->
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
       <svg class="tiktok-icon-svg" viewBox="0 0 24 24">
         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -560,7 +558,6 @@ const state = {
   lang: 'it'
 };
 
-// جدا کیے گئے اجزاء: سلاد الگ اور بند گوبھی/گاجر الگ
 const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
 
@@ -1042,26 +1039,22 @@ const menuNamesMap = {
 };
 
 const menuData = [
-  // Kebab (قیمت 5.00€ کباب کی کر دی گئی ہے)
   { id: 'k_1', name: 'Panino Kebab', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   
-  // Student Menu Items (قیمت پرومو 4.50€ کر دی گئی ہے)
   { id: 'st_1', name: 'MENÙ PANINO CON BIBITA (PROMO)', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, descKey: 'descStudent1', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_2', name: 'MENÙ PANINO CON BIBITA', price: 5.00, category: 'kebab', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_3', name: 'MENÙ PIADINA CON BIBITA', price: 6.00, category: 'piadina', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_4', name: 'MENÙ PANINO CON BIBITA PIÙ PATATINE', price: 6.00, category: 'kebab', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_5', name: 'MENÙ PIADINA CON BIBITA PIÙ PATATINE', price: 7.00, category: 'piadina', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Piadina Kebab
   { id: 'sp_piadina', name: 'Speciale Piadina Artigianale con Kebab', price: 5.50, category: 'piadina', isSpecialPiadina: true, isPromo: true, descKey: 'descPiadinaSpeciale', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_1', name: 'Piadina Kebab', price: 5.50, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_2', name: 'Piadina Solo Carne', price: 6.50, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_3', name: 'Menu Piadina', price: 8.00, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'p_4', name: 'Piatto Kebab', price: 8.00, category: 'piadina', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Non Solo Kebab
   { id: 'nk_1', name: 'Panino Falafel', price: 4.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_2', name: 'Piadina Falafel', price: 5.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_3', name: 'Piatto Falafel (6pz)', price: 5.50, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
@@ -1070,21 +1063,19 @@ const menuData = [
   { id: 'nk_6', name: 'Piadina Seekh Kebab', price: 6.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'nk_7', name: 'Panino Cotoletta', price: 4.00, category: 'non-kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
 
-  // Fritti
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sans: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
-  // Bevande
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_2', name: 'Coca-Cola Zero 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_3', name: 'Sprite 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_4', name: 'Fanta 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_5', name: 'Hill Energy 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
-  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, sans: [], extraKeys: [] },
+  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_7', name: 'Estathè Limone 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_8', name: 'Acqua Naturale', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_9', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1092,7 +1083,6 @@ const menuData = [
   { id: 'bev_11', name: 'Red Bull', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_12', name: 'Monster Energy Drink', price: 2.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
 
-  // Alcolici
   { id: 'alc_1', name: 'Birra Moretti 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senzaKeys: [], extraKeys: [] },
   { id: 'alc_2', name: 'Birra Peroni 66cl', price: 3.00, category: 'alcolici', isAlcohol: true, isAgeRestricted: true, senzaKeys: [], extraKeys: [] }
 ];
@@ -1650,10 +1640,11 @@ function sendWhatsAppOrder() {
       let effPrice = item.price;
       foodSubtotalRaw += effPrice * qty;
       foodSubtotalDiscounted += effPrice * qty;
-      orderText += `\n*${itemCounter}.* *${qty}x ${localizedTitle}*`;
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}`;
       if (!hidePrices) {
         orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
       }
+      orderText += `\n`;
       itemCounter++;
     } else if (item.isAlcohol) {
       let rawPrice = item.price;
@@ -1665,17 +1656,14 @@ function sendWhatsAppOrder() {
       }
       foodSubtotalRaw += rawPrice * qty;
       foodSubtotalDiscounted += effPrice * qty;
-      orderText += `\n*${itemCounter}.* *${qty}x ${localizedTitle}*`;
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}`;
       if (!hidePrices) {
         orderText += ` (€ ${(effPrice * qty).toFixed(2)})`;
       }
-      if (item.isAgeRestricted) {
-        orderText += ` 🔞 [+18]`;
-      }
+      orderText += `\n`;
       itemCounter++;
     } else {
-      orderText += `\n\n*${itemCounter}.* *${qty}x ${localizedTitle}*`;
-      
+      orderText += `\n*${itemCounter}.* ${qty}x ${localizedTitle}\n`;
       cartItem.units.forEach((unit, uIdx) => {
         let rawPrice = item.price;
         let effPrice = item.price;
@@ -1689,25 +1677,26 @@ function sendWhatsAppOrder() {
         foodSubtotalRaw += rawPrice + unitExtraCost;
         foodSubtotalDiscounted += effPrice + unitExtraCost;
 
-        orderText += `\n   *${uIdx + 1}.*`;
+        orderText += `   ▪ [Pezzo #${uIdx + 1}]`;
         let hasSenza = unit.senza && unit.senza.length > 0;
         let hasExtra = unit.extra && unit.extra.length > 0;
 
         if (!hasSenza && !hasExtra && !unit.note) {
-          orderText += ` ✨ Completo`;
+          orderText += ` Completo`;
         } else {
           if (hasSenza) {
             let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += ` ❌ Senza: ${senzaNames}`;
+            orderText += ` | Senza: ${senzaNames}`;
           }
           if (hasExtra) {
             let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += ` ✅ Extra: ${extraNames}`;
+            orderText += ` | Extra: ${extraNames}`;
           }
         }
         if (unit.note) {
-          orderText += ` 📝 Note: ${unit.note}`;
+          orderText += ` | Note: ${unit.note}`;
         }
+        orderText += `\n`;
       });
       itemCounter++;
     }
@@ -1716,33 +1705,28 @@ function sendWhatsAppOrder() {
   let deliveryFee = (state.orderType === 'consegna') ? 2.50 : 0;
   let grandTotal = foodSubtotalDiscounted + deliveryFee;
 
-  orderText += `\n\n--------------------------\n`;
+  orderText += `\n--------------------------\n`;
   if (!hidePrices) {
-    orderText += `*Subtotale Cibo:* € ${foodSubtotalRaw.toFixed(2)}\n`;
+    orderText += `Subtotale cibo: € ${foodSubtotalRaw.toFixed(2)}\n`;
     if (state.orderType === 'asporto' && totalAsportoDiscount > 0) {
-      orderText += `🎁 *Sconto Asporto:* -€ ${totalAsportoDiscount.toFixed(2)}\n`;
+      orderText += `Sconto Asporto: -€ ${totalAsportoDiscount.toFixed(2)}\n`;
     }
     if (deliveryFee > 0) {
-      orderText += `*Consegna (Rider):* € ${deliveryFee.toFixed(2)}\n`;
+      orderText += `Consegna (Rider): € ${deliveryFee.toFixed(2)}\n`;
     }
     if (foodSubtotalDiscounted >= 40) {
-      orderText += `🎁 *Omaggio Inclusa:* Coca-Cola 1.5L\n`;
+      orderText += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
     }
-    orderText += `*COMPLESSIVO PREZZO / TOTALE:* € ${grandTotal.toFixed(2)}`;
+    orderText += `*TOTALE COMPLESSIVO: € ${grandTotal.toFixed(2)}*\n`;
   } else {
-    orderText += `_Nota Deliveroo senza prezzi_`;
+    orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  let phone = "393932228224";
-  let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
-  
-  window.open(url, '_blank');
+  let encodedMessage = encodeURIComponent(orderText);
+  let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
   closeConfirmationModal();
 }
-
-renderMenu();
-calcTotal();
 </script>
-
 </body>
 </html>
