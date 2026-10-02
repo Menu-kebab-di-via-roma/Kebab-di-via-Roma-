@@ -1067,7 +1067,7 @@ const menuData = [
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sans: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1092,7 +1092,7 @@ const descDict = {
   en: { descStudent1: 'Monday - Friday until 4:30 PM (Promo Sandwich 4.50€)', descStudentAlways: 'Always available for students', descPiadinaSpeciale: 'Every Evening' },
   ur: { descStudent1: 'پیر سے جمعہ دوپہر 4:30 تک (پرومو سینڈوچ 4.50€)', descStudentAlways: 'طلباء کے لیے ہمیشہ دستیاب', descPiadinaSpeciale: 'ہر شام دستیاب' },
   ro: { descStudent1: 'Luni - Vineri până la 16:30 (Sandviș Promo la 4,50€)', descStudentAlways: 'Mereu disponibil pentru studenți', descPiadinaSpeciale: 'În fiecare seară' },
-  ar: { descStudent1: 'من الاثنين إلى الجمعة حتى 4:30 مساءً (ساندويتش العرض بـ 4.50€)', descStudentAlways: 'متاح دائماً للطلاب', descPiadinaSpeciale: 'كل مساء' },
+  ar: { descStudent1: 'من الاثنين حتى الجمعة حتى 4:30 مساءً (ساندويتش العرض بـ 4.50€)', descStudentAlways: 'متاح دائماً للطلاب', descPiadinaSpeciale: 'كل مساء' },
   bn: { descStudent1: 'সোমবার - শুক্রবার বিকেল ৪:৩০ পর্যন্ত (প্রোমো স্যান্ডউইচ ৪.৫০€)', descStudentAlways: 'ছাত্রদের জন্য সবসময় উপলব্ধ', descPiadinaSpeciale: 'প্রতিদিন সন্ধ্যায়' }
 };
 
@@ -1195,6 +1195,7 @@ function updateMainButtonText() {
 
 function setOrderType(type) {
   state.orderType = type;
+  localStorage.setItem('kebab_order_type', type); // Presistence
   ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
     const el = document.getElementById(`btn-${t}`);
     el.className = 'type-btn';
@@ -1461,25 +1462,31 @@ function openConfirmationModal() {
   if (state.orderType === 'deliveroo') {
     formInputs.innerHTML = `
       <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameDelivLabel}</label></div>
-      <input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi o #45">
+      <input type="text" id="cust-name" class="input-field" placeholder="Es. Mario Rossi o #45" oninput="saveCustomerData()">
     `;
   } else if (state.orderType === 'consegna') {
     formInputs.innerHTML = `
       <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div>
-      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome">
+      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome" oninput="saveCustomerData()">
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.addrLabel}</label></div>
-      <input type="text" id="cust-addr" class="input-field" placeholder="Via, Civico, Citofono">
+      <input type="text" id="cust-addr" class="input-field" placeholder="Via, Civico, Citofono" oninput="saveCustomerData()">
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
       <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
     `;
   } else {
     formInputs.innerHTML = `
       <div style="margin-bottom:6px;"><label style="font-weight:bold;">${t.nameLabel}</label></div>
-      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome">
+      <input type="text" id="cust-name" class="input-field" placeholder="Il tuo nome" oninput="saveCustomerData()">
       <div style="margin-bottom:6px; margin-top:6px;"><label style="font-weight:bold;">${t.timeLabel}</label></div>
       <input type="text" id="cust-time" class="input-field" value="${defaultTimeVal}">
     `;
   }
+
+  // Auto loading saved customer data into modal inputs
+  setTimeout(() => {
+    if(document.getElementById('cust-name')) document.getElementById('cust-name').value = localStorage.getItem('kebab_cust_name') || '';
+    if(document.getElementById('cust-addr')) document.getElementById('cust-addr').value = localStorage.getItem('kebab_cust_addr') || '';
+  }, 50);
 
   let foodSubtotalRaw = 0;
   let foodSubtotalDiscounted = 0;
@@ -1591,6 +1598,13 @@ function openConfirmationModal() {
   document.getElementById('confirm-modal').style.display = 'flex';
 }
 
+function saveCustomerData() {
+  const nameInput = document.getElementById('cust-name');
+  const addrInput = document.getElementById('cust-addr');
+  if (nameInput) localStorage.setItem('kebab_cust_name', nameInput.value.trim());
+  if (addrInput) localStorage.setItem('kebab_cust_addr', addrInput.value.trim());
+}
+
 function closeConfirmationModal() {
   document.getElementById('confirm-modal').style.display = 'none';
 }
@@ -1606,8 +1620,11 @@ function getOrderCode() {
 function sendWhatsAppOrder() {
   const nameInput = document.getElementById('cust-name');
   const name = nameInput ? nameInput.value.trim() : '';
+  
+  // नाम लिखना अनिवार्य (Required Name Validation)
   if (!name) {
-    alert("Inserisci il tuo nome o identificativo!");
+    alert("Inserisci il tuo nome prima di procedere! (नाम लिखना अनिवार्य है)");
+    if(nameInput) nameInput.focus();
     return;
   }
 
@@ -1693,6 +1710,7 @@ function sendWhatsAppOrder() {
             orderText += ` | Extra: ${extraNames}`;
           }
         }
+        // नोटबुक वैकल्पिक है (Note is optional, will only show if written)
         if (unit.note) {
           orderText += ` | Note: ${unit.note}`;
         }
@@ -1727,6 +1745,14 @@ function sendWhatsAppOrder() {
   window.open(whatsappUrl, '_blank');
   closeConfirmationModal();
 }
+
+// ऑटो लोडिंग (Auto Loading Local Storage Data on Startup)
+window.onload = function() {
+  const savedOrderType = localStorage.getItem('kebab_order_type');
+  if (savedOrderType) {
+    setOrderType(savedOrderType);
+  }
+};
 </script>
 </body>
 </html>
