@@ -23,7 +23,7 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      padding-bottom: 115px;
+      padding-bottom: 95px;
     }
     header {
       background: linear-gradient(135deg, #3a0000, #6a0000, #990000);
@@ -379,7 +379,6 @@
     }
     .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 5px rgba(153,0,0,0.2); }
 
-    /* Bottom Bar & Cart Drawer Styling */
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -387,16 +386,12 @@
       right: 0;
       background: #ffffff;
       border-top: 2px solid var(--gold);
-      box-shadow: 0 -6px 20px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      z-index: 1000;
-    }
-    .bottom-main-row {
       padding: 10px 14px;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 1000;
     }
     .total-price { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
     .whatsapp-btn {
@@ -412,40 +407,6 @@
       transition: 0.2s;
     }
     .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(39, 174, 96, 0.5); }
-
-    /* Cart Drawer (Recheck Section) */
-    .cart-drawer-toggle {
-      background: #fdf2e9;
-      border-top: 1px solid var(--card-border);
-      padding: 6px 14px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: var(--primary);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
-    .cart-drawer-content {
-      max-height: 200px;
-      overflow-y: auto;
-      padding: 10px 14px;
-      background: #f8f9fa;
-      border-top: 1px solid #e5e8e8;
-      display: none;
-      font-size: 0.76rem;
-    }
-    .cart-drawer-content.open {
-      display: block;
-    }
-    .drawer-item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      padding-bottom: 4px;
-      border-bottom: 1px dashed #d5dbdb;
-    }
 
     .modal-overlay {
       position: fixed;
@@ -563,25 +524,15 @@
   <div id="menu-container"></div>
 </div>
 
-<!-- Bottom Bar with Cart Recheck Drawer Button -->
 <div class="bottom-bar">
-  <div class="cart-drawer-toggle" onclick="toggleCartDrawer()">
-    <span>🛒 <span id="cart-items-count-text">0 articoli nel carrello</span> (Clicca per riچیک کریں)</span>
-    <span id="drawer-arrow" style="font-size: 1rem; transition: transform 0.3s;">▼</span>
+  <div id="total-price-box">
+    <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
+    <span class="total-price" id="grand-total">€ 0,00</span>
+    <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
   </div>
-  <div class="cart-drawer-content" id="cart-drawer-body">
-    <!-- حود بخود کارٹ کی لسٹ یہاں آئے گی -->
-  </div>
-  <div class="bottom-main-row">
-    <div id="total-price-box">
-      <span style="font-size: 0.62rem; color: var(--text-muted);" id="lbl-totale-text">Totale:</span><br>
-      <span class="total-price" id="grand-total">€ 0,00</span>
-      <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
-    </div>
-    <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
-      VERIFICA E ORDINA
-    </button>
-  </div>
+  <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
+    VERIFICA E ORDINA
+  </button>
 </div>
 
 <div class="modal-overlay" id="confirm-modal">
@@ -601,19 +552,11 @@
 </div>
 
 <script>
-// LocalStorage سے کارٹ اور آرڈر ٹائپ لوڈ کرنا
 const state = {
-  orderType: localStorage.getItem('kebab_orderType') || 'asporto',
-  cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
-  lang: localStorage.getItem('kebab_lang') || 'it'
+  orderType: 'asporto',
+  cart: {},
+  lang: 'it'
 };
-
-function saveStateToStorage() {
-  localStorage.setItem('kebab_cart', JSON.stringify(state.cart));
-  localStorage.setItem('kebab_orderType', state.orderType);
-  localStorage.setItem('kebab_lang', state.lang);
-  updateCartDrawerUI();
-}
 
 const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
@@ -1002,7 +945,7 @@ const menuNamesMap = {
     'Red Bull': 'Red Bull',
     'Monster Energy Drink': 'Monster Energy Drink',
     'Birra Moretti 66cl': 'Bere Moretti 66cl',
-    'Bere Peroni 66cl': 'Bere Peroni 66cl',
+    'Birra Peroni 66cl': 'Bere Peroni 66cl',
     'MENÙ PANINO CON BIBITA (PROMO)': 'MENIU SANDVIȘ CU BĂUTURĂ (PROMO)',
     'MENÙ PANINO CON BIBITA': 'MENIU SANDVIȘ CU BĂUTURĂ',
     'MENÙ PIADINA CON BIBITA': 'MENIU PIADINA CU BĂUTURĂ',
@@ -1124,7 +1067,7 @@ const menuData = [
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sans: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1191,7 +1134,6 @@ window.onclick = function(event) {
 
 function changeLanguage(lang) {
   state.lang = lang;
-  saveStateToStorage();
   document.getElementById('current-lang-label').innerText = lang.toUpperCase();
   document.getElementById('langMenuPopup').classList.remove('show');
   
@@ -1220,7 +1162,6 @@ function changeLanguage(lang) {
   
   updateMainButtonText();
   renderMenu();
-  updateCartDrawerUI();
 }
 
 function updateNoticeText() {
@@ -1254,7 +1195,6 @@ function updateMainButtonText() {
 
 function setOrderType(type) {
   state.orderType = type;
-  saveStateToStorage();
   ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
     const el = document.getElementById(`btn-${t}`);
     el.className = 'type-btn';
@@ -1418,10 +1358,8 @@ function modifyQty(id, delta) {
       }
     }
   }
-  saveStateToStorage();
   renderMenu();
   calcTotal();
-  updateCartDrawerUI();
 }
 
 function toggleUnitCustom(id, uIdx, type, key) {
@@ -1435,16 +1373,13 @@ function toggleUnitCustom(id, uIdx, type, key) {
   } else {
     arr.push(key);
   }
-  saveStateToStorage();
   renderMenu();
   calcTotal();
-  updateCartDrawerUI();
 }
 
 function updateUnitNote(id, uIdx, val) {
   if (state.cart[id] && state.cart[id].units[uIdx]) {
     state.cart[id].units[uIdx].note = val;
-    saveStateToStorage();
   }
 }
 
@@ -1495,48 +1430,6 @@ function calcTotal() {
     }
   }
   document.getElementById('cola-progress').innerText = progressMsg;
-}
-
-// کارٹ ریچیک ڈراور ٹوگل کرنے کا فنکشن
-function toggleCartDrawer() {
-  const drawerContent = document.getElementById('cart-drawer-body');
-  const arrow = document.getElementById('drawer-arrow');
-  drawerContent.classList.toggle('open');
-  if (drawerContent.classList.contains('open')) {
-    arrow.style.transform = 'rotate(180deg)';
-  } else {
-    arrow.style.transform = 'rotate(0deg)';
-  }
-}
-
-// کارٹ ڈراور کا UI اور ریچیک لسٹ اپ ڈیٹ کرنا
-function updateCartDrawerUI() {
-  let totalItems = 0;
-  let drawerHTML = '';
-  
-  for (let id in state.cart) {
-    const item = menuData.find(m => m.id === id);
-    const cartItem = state.cart[id];
-    totalItems += cartItem.qty;
-    const localizedTitle = getLocalizedName(item.name);
-    
-    drawerHTML += `
-      <div class="drawer-item-row">
-        <span><b>${cartItem.qty}x</b> ${localizedTitle}</span>
-        <div style="display:flex; gap:4px;">
-          <button onclick="modifyQty('${id}', 1)" style="padding:2px 6px; font-weight:bold; cursor:pointer;">+</button>
-          <button onclick="modifyQty('${id}', -1)" style="padding:2px 6px; font-weight:bold; cursor:pointer;">-</button>
-        </div>
-      </div>
-    `;
-  }
-
-  if (totalItems === 0) {
-    drawerHTML = `<div style="text-align:center; color:#7f8c8d;">Il carrello è vuoto (کارٹ خالی ہے)</div>`;
-  }
-
-  document.getElementById('cart-items-count-text').innerText = `${totalItems} articoli nel carrello`;
-  document.getElementById('cart-drawer-body').innerHTML = drawerHTML;
 }
 
 function getDefaultTime(minutesToAdd) {
@@ -1833,23 +1726,7 @@ function sendWhatsAppOrder() {
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
   closeConfirmationModal();
-
-  // 🚀 واٹس ایپ پر آرڈر سेंड ہونے کے بعد کارٹ اور لوکل اسٹوریج خالی ہو جائے گا
-  state.cart = {};
-  localStorage.removeItem('kebab_cart');
-  renderMenu();
-  calcTotal();
-  updateCartDrawerUI();
-  document.getElementById('cart-drawer-body').classList.remove('open');
-  document.getElementById('drawer-arrow').style.transform = 'rotate(0deg)';
 }
-
-// ابتدائی لوڈنگ
-document.getElementById('current-lang-label').innerText = state.lang.toUpperCase();
-setOrderType(state.orderType);
-renderMenu();
-calcTotal();
-updateCartDrawerUI();
 </script>
 </body>
 </html>
