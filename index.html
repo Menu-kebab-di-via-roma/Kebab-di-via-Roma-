@@ -564,7 +564,7 @@ const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante
 const ingredientsDict = {
   it: {
     piccante: 'Salsa Piccante', yogurt: 'Salsa Yogurt', algerina: 'Salsa Algerina (Agrodolce)', rosa: 'Salsa Rosa', insalata: 'Insalata', verza_carote: 'Verza e Carote', cetrioli: 'Cetrioli', cipolla: 'Cipolla', pomodoro: 'Pomodoro', olive: 'Olive', peperoncino: 'Peperoncino',
-    maionese: 'Maionese', ketchup: 'Ketchup', extra_cipolla: 'Extra Cipolla', extra_piccante: 'Extra Piccante', carne_extra: 'Carne Extra'
+    maionese: 'Maionese', ketchup: 'Ketchup', più_cipolla: 'piu Cipolla', più_piccante: 'piu Piccante', carne_piu: 'Carne più'
   },
   en: {
     piccante: 'Spicy Sauce', yogurt: 'Yogurt Sauce', algerina: 'Algerian Sauce (Sweet & Sour)', rosa: 'Pink Sauce', insalata: 'Lettuce', verza_carote: 'Cabbage & Carrots', cetrioli: 'Cucumbers', cipolla: 'Onion', pomodoro: 'Tomato', olive: 'Olives', peperoncino: 'Chili',
@@ -654,7 +654,7 @@ const translations = {
     freeCola: "🎁 Free 1.5L Coca-Cola (Food >= 40€)"
   },
   ur: {
-    callText: "কল",
+    callText: "کول",
     asporto: "ٹیک اوے", asportoSub: "(-0.50€ کھانے پر کم)",
     consegna: "ڈلیوری", consegnaSub: "(+2.50€ ڈلیوری فیس)",
     student: "🎓 اسٹوڈنٹ آفر", studentSub: "اسپیشل آفرز",
@@ -1195,7 +1195,7 @@ function updateMainButtonText() {
 
 function setOrderType(type) {
   state.orderType = type;
-  localStorage.setItem('kebab_order_type', type); // Presistence
+  localStorage.setItem('kebab_order_type', type);
   ['asporto', 'consegna', 'student', 'deliveroo'].forEach(t => {
     const el = document.getElementById(`btn-${t}`);
     el.className = 'type-btn';
@@ -1431,6 +1431,9 @@ function calcTotal() {
     }
   }
   document.getElementById('cola-progress').innerText = progressMsg;
+
+  // Local Storage Save Formula Added Here
+  localStorage.setItem('cart', JSON.stringify(state.cart));
 }
 
 function getDefaultTime(minutesToAdd) {
@@ -1482,7 +1485,6 @@ function openConfirmationModal() {
     `;
   }
 
-  // Auto loading saved customer data into modal inputs
   setTimeout(() => {
     if(document.getElementById('cust-name')) document.getElementById('cust-name').value = localStorage.getItem('kebab_cust_name') || '';
     if(document.getElementById('cust-addr')) document.getElementById('cust-addr').value = localStorage.getItem('kebab_cust_addr') || '';
@@ -1621,7 +1623,6 @@ function sendWhatsAppOrder() {
   const nameInput = document.getElementById('cust-name');
   const name = nameInput ? nameInput.value.trim() : '';
   
-  // नाम लिखना अनिवार्य (Required Name Validation)
   if (!name) {
     alert("Inserisci il tuo nome prima di procedere! (नाम लिखना अनिवार्य है)");
     if(nameInput) nameInput.focus();
@@ -1710,7 +1711,6 @@ function sendWhatsAppOrder() {
             orderText += ` | ✅ Extra: ${extraNames}`;
           }
         }
-        // नोटबुक वैकल्पिक है (Note is optional, will only show if written)
         if (unit.note) {
           orderText += ` | Note: ${unit.note}`;
         }
@@ -1746,11 +1746,21 @@ function sendWhatsAppOrder() {
   closeConfirmationModal();
 }
 
-// ऑटो लोडिंग (Auto Loading Local Storage Data on Startup)
 window.onload = function() {
   const savedOrderType = localStorage.getItem('kebab_order_type');
   if (savedOrderType) {
     setOrderType(savedOrderType);
+  }
+  // Load saved cart from localStorage on startup if available
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    try {
+      state.cart = JSON.parse(savedCart);
+      renderMenu();
+      calcTotal();
+    } catch(e) {
+      console.error("Error loading cart:", e);
+    }
   }
 };
 </script>
