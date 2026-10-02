@@ -1695,19 +1695,19 @@ function sendWhatsAppOrder() {
         foodSubtotalDiscounted += effPrice + unitExtraCost;
 
         orderText += `   ▪  #${uIdx + 1}`;
-        let hasSenza = unit.❌senza && unit.senza.length > 0;
-        let hasExtra = unit.✅extra && unit.extra.length > 0;
+        let hasSenza = unit.senza && unit.senza.length > 0;
+        let hasExtra = unit.extra && unit.extra.length > 0;
 
         if (!hasSenza && !hasExtra && !unit.note) {
-          orderText += ` ❤️Completo`;
+          orderText += ` ❤️ Completo`;
         } else {
           if (hasSenza) {
             let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += ` | Senza: ${senzaNames}`;
+            orderText += ` | ❌ Senza: ${senzaNames}`;
           }
           if (hasExtra) {
             let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += ` | Extra: ${extraNames}`;
+            orderText += ` | ✅ Extra: ${extraNames}`;
           }
         }
         // नोटबुक वैकल्पिक है (Note is optional, will only show if written)
