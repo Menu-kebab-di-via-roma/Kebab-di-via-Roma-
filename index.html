@@ -1066,7 +1066,7 @@ const menuData = [
   { id: 'f_1', name: 'Patatine Frritte Piccola', price: 2.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', sansaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
@@ -1432,7 +1432,7 @@ function calcTotal() {
   }
   document.getElementById('cola-progress').innerText = progressMsg;
 
-  // Local Storage Save Formula Added Here
+  // کارٹ کا ڈیٹا لوکل سٹوریج میں سیو ہورہا ہے
   localStorage.setItem('cart', JSON.stringify(state.cart));
 }
 
@@ -1651,8 +1651,8 @@ function sendWhatsAppOrder() {
   for (let id in state.cart) {
     const item = menuData.find(m => m.id === id);
     const cartItem = state.cart[id];
-    const qty = cartItem.qty;
-    const localizedTitle = getLocalizedName(item.name);
+    let qty = cartItem.qty;
+    let localizedTitle = getLocalizedName(item.name);
 
     if (item.isBeverage) {
       let effPrice = item.price;
@@ -1733,7 +1733,7 @@ function sendWhatsAppOrder() {
       orderText += `Consegna (Rider): € ${deliveryFee.toFixed(2)}\n`;
     }
     if (foodSubtotalDiscounted >= 40) {
-      orderText += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
+      orderTest += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
     }
     orderText += `*TOTALE COMPLESSIVO: € ${grandTotal.toFixed(2)}*\n`;
   } else {
@@ -1743,25 +1743,40 @@ function sendWhatsAppOrder() {
   let encodedMessage = encodeURIComponent(orderText);
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
+  
+  // واٹس ایپ پر آرڈر بھیجنے کے بعد کارٹ اور لوکل سٹوریج کو زیرو (خالی) کرنے کا کوڈ
+  state.cart = {};
+  localStorage.removeItem('cart');
+  renderMenu();
+  calcTotal();
+
   closeConfirmationModal();
 }
 
+// درست ترتیب کے ساتھ پیج لوڈ ہونے پر ڈیٹا لوڈ کرنے کا فنکشن
 window.onload = function() {
-  const savedOrderType = localStorage.getItem('kebab_order_type');
-  if (savedOrderType) {
-    setOrderType(savedOrderType);
-  }
-  // Load saved cart from localStorage on startup if available
+  // 1. سب سے پہلے لوکل سٹوریج سے پرانا کارٹ ڈیٹا لوڈ کریں
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
     try {
       state.cart = JSON.parse(savedCart);
-      renderMenu();
-      calcTotal();
     } catch(e) {
       console.error("Error loading cart:", e);
+      state.cart = {};
     }
   }
+
+  // 2. اس کے بعد آرڈر کی محفوظ شدہ قسم (Order Type) لوڈ کریں
+  const savedOrderType = localStorage.getItem('kebab_order_type');
+  if (savedOrderType) {
+    setOrderType(savedOrderType);
+  } else {
+    setOrderType('asporto');
+  }
+
+  // 3. آخر میں مینو اور ٹوٹل کو سکرین پر رینڈر کریں
+  renderMenu();
+  calcTotal();
 };
 </script>
 </body>
