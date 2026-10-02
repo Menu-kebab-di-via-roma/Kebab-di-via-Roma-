@@ -94,28 +94,34 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
+    /* TikTok button with official SVG logo style */
     .tiktok-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.12);
-      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 5px 8px;
       border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1px solid var(--gold);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: 0.2s;
     }
-    .tiktok-logo-img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: #000;
+    .tiktok-container:hover {
+      background: rgba(0, 0, 0, 0.7);
+      transform: scale(1.05);
+    }
+    .tiktok-icon-svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
     }
     .tiktok-text {
-      font-size: 0.4rem;
+      font-size: 0.5rem;
       color: #fff;
-      margin-top: 1px;
+      margin-top: 2px;
       font-weight: bold;
+      letter-spacing: 0.5px;
     }
 
     .lang-dropdown-wrapper {
@@ -448,8 +454,11 @@
 
 <header>
   <div class="header-flex">
+    <!-- TikTok Button with official style SVG icon and text -->
     <a href="https://www.tiktok.com/@kebab.di.via.roma?_r=1&_t=ZN-9A987G9V8yM" target="_blank" class="tiktok-container" title="TikTok">
-      <img src="1000157484.png" alt="TikTok" class="tiktok-logo-img">
+      <svg class="tiktok-icon-svg" viewBox="0 0 24 24">
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+      </svg>
       <span class="tiktok-text">TikTok</span>
     </a>
     
@@ -489,7 +498,7 @@
       <span id="lbl-consegna">Consegna</span>
       <small id="lbl-consegna-sub">(+2.50€ Consegna)</small>
     </div>
-    <div class="type-btn" id="btn-student" onclick="setOrderType('student')">
+    <div class="type-btn" id="btn-student" onclick="setOrderType('student')" title="Clicca per vedere le info e promozioni studenti">
       <span id="lbl-student">🎓 Promo Studenti</span>
       <small id="lbl-student-sub">Offerte Speciali</small>
     </div>
@@ -551,32 +560,33 @@ const state = {
   lang: 'it'
 };
 
-const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
+// جدا کیے گئے اجزاء: سلاد الگ اور بند گوبھی/گاجر الگ
+const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
 
 const ingredientsDict = {
   it: {
-    piccante: 'Salsa Piccante', yogurt: 'Salsa Yogurt', algerina: 'Salsa Algerina (Agrodolce)', rosa: 'Salsa Rosa', insalata: 'Insalata, Verza e Carote', cetrioli: 'Cetrioli', cipolla: 'Cipolla', pomodoro: 'Pomodoro', olive: 'Olive', peperoncino: 'Peperoncino',
+    piccante: 'Salsa Piccante', yogurt: 'Salsa Yogurt', algerina: 'Salsa Algerina (Agrodolce)', rosa: 'Salsa Rosa', insalata: 'Insalata', verza_carote: 'Verza e Carote', cetrioli: 'Cetrioli', cipolla: 'Cipolla', pomodoro: 'Pomodoro', olive: 'Olive', peperoncino: 'Peperoncino',
     maionese: 'Maionese', ketchup: 'Ketchup', extra_cipolla: 'Extra Cipolla', extra_piccante: 'Extra Piccante', carne_extra: 'Carne Extra'
   },
   en: {
-    piccante: 'Spicy Sauce', yogurt: 'Yogurt Sauce', algerina: 'Algerian Sauce (Sweet & Sour)', rosa: 'Pink Sauce', insalata: 'Lettuce, Cabbage & Carrots', cetrioli: 'Cucumbers', cipolla: 'Onion', pomodoro: 'Tomato', olive: 'Olives', peperoncino: 'Chili',
+    piccante: 'Spicy Sauce', yogurt: 'Yogurt Sauce', algerina: 'Algerian Sauce (Sweet & Sour)', rosa: 'Pink Sauce', insalata: 'Lettuce', verza_carote: 'Cabbage & Carrots', cetrioli: 'Cucumbers', cipolla: 'Onion', pomodoro: 'Tomato', olive: 'Olives', peperoncino: 'Chili',
     maionese: 'Mayonnaise', ketchup: 'Ketchup', extra_cipolla: 'Extra Onion', extra_piccante: 'Extra Spicy', carne_extra: 'Extra Meat'
   },
   ur: {
-    piccante: 'اسپائسی ساس', yogurt: 'یوگرٹ ساس', algerina: 'الجیریہ ساس', rosa: 'پِنک ساس', insalata: 'سلاد، گوبھی اور گاجر', cetrioli: 'کھیرے', cipolla: 'پیاز', pomodoro: 'ٹماٹر', olive: 'زیتون', peperoncino: 'مرچ',
+    piccante: 'اسپائسی ساس', yogurt: 'یوگرٹ ساس', algerina: 'الجیریہ ساس', rosa: 'پِنک ساس', insalata: 'سلاد', verza_carote: 'گوبھی اور گاجر', cetrioli: 'کھیرے', cipolla: 'پیاز', pomodoro: 'ٹماٹر', olive: 'زیتون', peperoncino: 'مرچ',
     maionese: 'ميونيز', ketchup: 'کیچپ', extra_cipolla: 'اضافی پیاز', extra_piccante: 'اضافی مرچ', carne_extra: 'اضافی گوشت'
   },
   ro: {
-    piccante: 'Sos Picant', yogurt: 'Sos de Iaurt', algerina: 'Sos Algerian (Dulce-Acrișor)', rosa: 'Sos Roz', insalata: 'Salată, Varză și Morcovi', cetrioli: 'Castraveți', cipolla: 'Ceapă', pomodoro: 'Roșii', olive: 'Măsline', peperoncino: 'Ardei Iute',
+    piccante: 'Sos Picant', yogurt: 'Sos de Iaurt', algerina: 'Sos Algerian (Dulce-Acrișor)', rosa: 'Sos Roz', insalata: 'Salată', verza_carote: 'Varză și Morcovi', cetrioli: 'Castraveți', cipolla: 'Ceapă', pomodoro: 'Roșii', olive: 'Măsline', peperoncino: 'Ardei Iute',
     maionese: 'Maioneză', ketchup: 'Ketchup', extra_cipolla: 'Ceapă Extra', extra_piccante: 'Picant Extra', carne_extra: 'Carne Extra'
   },
   ar: {
-    piccante: 'صلصة حارة', yogurt: 'صلصة زبادي', algerina: 'صلصة جزائرية', rosa: 'صلصة وردية', insalata: 'خس، ملفوف وجزر', cetrioli: 'خيار', cipolla: 'بصل', pomodoro: 'طماطم', olive: 'زيتون', peperoncino: 'فلفل حار',
+    piccante: 'صلصة حارة', yogurt: 'صلصة زبادي', algerina: 'صلصة جزائرية', rosa: 'صلصة وردية', insalata: 'خس', verza_carote: 'ملفوف وجزر', cetrioli: 'خيار', cipolla: 'بصل', pomodoro: 'طماطم', olive: 'زيتون', peperoncino: 'فلفل حار',
     maionese: 'مايونيز', ketchup: 'كاتشب', extra_cipolla: 'بصل إضافي', extra_piccante: 'حار إضافي', carne_extra: 'لحم إضافي'
   },
   bn: {
-    piccante: 'ঝাল সস', yogurt: 'দই সস', algerina: 'আলজেরিয়ান সস', rosa: 'পিঙ্ক সস', insalata: 'সালাদ ও বাঁধাকপি', cetrioli: 'শসা', cipolla: 'পেঁয়াজ', pomodoro: 'টমেটো', olive: 'জলপাই', peperoncino: 'মরিচ',
+    piccante: 'ঝাল সস', yogurt: 'দই সস', algerina: 'আলজেরিয়ান সস', rosa: 'পিঙ্ক সস', insalata: 'সালাদ', verza_carote: 'বাঁধাকপি ও গাজর', cetrioli: 'শসা', cipolla: 'পেঁয়াজ', pomodoro: 'টমেটো', olive: 'জলপাই', peperoncino: 'মরিচ',
     maionese: 'মেয়োনিজ', ketchup: 'কেচাপ', extra_cipolla: 'অতিরিক্ত পেঁয়াজ', extra_piccante: 'অতিরিক্ত ঝাল', carne_extra: 'অতিরিক্ত মাংস'
   }
 };
@@ -654,7 +664,7 @@ const translations = {
     deliveroo: "ڈیلیورو نوٹس", deliverooSub: "حسب ضرورت",
     noticeAsporto: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت!',
     noticeConsegna: '🎁 <b>آفر:</b> کم از کم 40 یورو یا اس سے زائد کے کھانے کے آرڈر پر 1.5 لیٹر کوکا کولا بالکل مفت! (رائڈر فیس اس میں شامل نہیں ہے۔)',
-    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> اسپیشل پروमो مینو پیر سے جمعہ دوپہر 4:30 تک ہے۔ باقی اسٹوڈنٹ مینو ہر وقت دستیاب ہیں!',
+    studentNotice: '🎓 <b>اسٹوڈنٹ آفر:</b> اسپیشل پرومو مینو پیر سے جمعہ دوپہر 4:30 تک ہے۔ باقی اسٹوڈنٹ مینو ہر وقت دستیاب ہیں!',
     catAll: "سبھی", catKebab: "کباب", catPiadina: "پیادینا", catNonKebab: "دوسرے کھانے", catFritti: "فرائڈ آئٹمز", catBevande: "کولڈ ڈرنکس", catAlcolici: "الکوحل مشروبات", catSpeciale: "✨ اسپیشل پیادینا €5",
     totaleText: "کل رقم:",
     verifyBtn: "چیک کریں اور آرڈر کریں",
@@ -1001,7 +1011,7 @@ const menuNamesMap = {
     'Piatto Falafel (6pz)': 'ফলাফেল প্লেট (৬ পিস)',
     'Panino Seekh Kebab': 'সিক কাবাব স্যান্ডউইচ',
     'Crispy Hamburger': 'ক্রিস্পি হ্যামবার্গার',
-    'Piadina Seekh Kebab': 'সিক কাবাব পিয়াদینا',
+    'Piadina Seekh Kebab': 'সিক কাবাব পিয়াদিনা',
     'Panino Cotoletta': 'কাটলেট স্যান্ডউইচ',
     'Patatine Frritte Piccola': 'ছোট ফ্রেঞ্চ ফ্রাই',
     'Patatine Frritte Grande': 'বড় ফ্রেঞ্চ ফ্রাই',
@@ -1032,12 +1042,12 @@ const menuNamesMap = {
 };
 
 const menuData = [
-  // Kebab
-  { id: 'k_1', name: 'Panino Kebab', price: 4.50, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
+  // Kebab (قیمت 5.00€ کباب کی کر دی گئی ہے)
+  { id: 'k_1', name: 'Panino Kebab', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_2', name: 'Panino Solo Carne', price: 5.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'k_3', name: 'Menu Panino', price: 7.00, category: 'kebab', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   
-  // Student Menu Items
+  // Student Menu Items (قیمت پرومو 4.50€ کر دی گئی ہے)
   { id: 'st_1', name: 'MENÙ PANINO CON BIBITA (PROMO)', price: 4.50, category: 'kebab', isStudentExclusive: true, isPromo: true, descKey: 'descStudent1', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_2', name: 'MENÙ PANINO CON BIBITA', price: 5.00, category: 'kebab', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
   { id: 'st_3', name: 'MENÙ PIADINA CON BIBITA', price: 6.00, category: 'piadina', isStudentExclusive: true, isPromo: false, descKey: 'descStudentAlways', senzaKeys: commonSenzaKeys, extraKeys: commonExtraKeys },
@@ -1074,7 +1084,7 @@ const menuData = [
   { id: 'bev_3', name: 'Sprite 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_4', name: 'Fanta 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_5', name: 'Hill Energy 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
-  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
+  { id: 'bev_6', name: 'Estathè Pesca 33cl', price: 1.50, category: 'bevande', isBeverage: true, sans: [], extraKeys: [] },
   { id: 'bev_7', name: 'Estathè Limone 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_8', name: 'Acqua Naturale', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
   { id: 'bev_9', name: 'Acqua Frizzante Piccola (Acqua)', price: 1.00, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1088,12 +1098,12 @@ const menuData = [
 ];
 
 const descDict = {
-  it: { descStudent1: 'Lunedì - Venerdì fino alle 16:30', descStudentAlways: 'Sempre disponibile per studenti', descPiadinaSpeciale: 'Sempre Tutti le Sere' },
-  en: { descStudent1: 'Monday - Friday until 4:30 PM', descStudentAlways: 'Always available for students', descPiadinaSpeciale: 'Every Evening' },
-  ur: { descStudent1: 'پیر سے جمعہ دوپہر 4:30 تک', descStudentAlways: 'طلباء کے لیے ہمیشہ دستیاب', descPiadinaSpeciale: 'ہر شام دستیاب' },
-  ro: { descStudent1: 'Luni - Vineri până la 16:30', descStudentAlways: 'Mereu disponibil pentru studenți', descPiadinaSpeciale: 'În fiecare seară' },
-  ar: { descStudent1: 'من الاثنين إلى الجمعة حتى 4:30 مساءً', descStudentAlways: 'متاح دائماً للطلاب', descPiadinaSpeciale: 'كل مساء' },
-  bn: { descStudent1: 'সোমবার - শুক্রবার বিকেল ৪:৩০ পর্যন্ত', descStudentAlways: 'ছাত্রদের জন্য সবসময় উপলব্ধ', descPiadinaSpeciale: 'প্রতিদিন সন্ধ্যায়' }
+  it: { descStudent1: 'Lunedì - Venerdì fino alle 16:30 (Panino Promo a 4,50€)', descStudentAlways: 'Sempre disponibile per studenti', descPiadinaSpeciale: 'Sempre Tutti le Sere' },
+  en: { descStudent1: 'Monday - Friday until 4:30 PM (Promo Sandwich 4.50€)', descStudentAlways: 'Always available for students', descPiadinaSpeciale: 'Every Evening' },
+  ur: { descStudent1: 'پیر سے جمعہ دوپہر 4:30 تک (پرومو سینڈوچ 4.50€)', descStudentAlways: 'طلباء کے لیے ہمیشہ دستیاب', descPiadinaSpeciale: 'ہر شام دستیاب' },
+  ro: { descStudent1: 'Luni - Vineri până la 16:30 (Sandviș Promo la 4,50€)', descStudentAlways: 'Mereu disponibil pentru studenți', descPiadinaSpeciale: 'În fiecare seară' },
+  ar: { descStudent1: 'من الاثنين إلى الجمعة حتى 4:30 مساءً (ساندويتش العرض بـ 4.50€)', descStudentAlways: 'متاح دائماً للطلاب', descPiadinaSpeciale: 'كل مساء' },
+  bn: { descStudent1: 'সোমবার - শুক্রবার বিকেল ৪:৩০ পর্যন্ত (প্রোমো স্যান্ডউইচ ৪.৫০€)', descStudentAlways: 'ছাত্রদের জন্য সবসময় উপলব্ধ', descPiadinaSpeciale: 'প্রতিদিন সন্ধ্যায়' }
 };
 
 let currentFilter = 'all';
@@ -1518,6 +1528,8 @@ function openConfirmationModal() {
       }
       receiptHTML += `</div>`;
     } else {
+      receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>${qty}x ${localizedTitle}</b>`;
+      
       cartItem.units.forEach((unit, uIdx) => {
         let rawPrice = item.price;
         let effPrice = item.price;
@@ -1531,32 +1543,27 @@ function openConfirmationModal() {
         foodSubtotalRaw += rawPrice + unitExtraCost;
         foodSubtotalDiscounted += effPrice + unitExtraCost;
 
-        receiptHTML += `<div style="margin-top:6px; font-size:0.77rem; border-left:2px solid var(--primary); padding-left:6px;"><b>1x ${localizedTitle} (Pezzo #${uIdx + 1})</b>`;
-        if (!hidePrices) {
-          receiptHTML += ` (€ ${(effPrice + unitExtraCost).toFixed(2)})`;
-        }
-
+        receiptHTML += `<br><span style="font-weight:600; color:#555;">[#${uIdx + 1}]</span>`;
         let hasSenza = unit.senza && unit.senza.length > 0;
         let hasExtra = unit.extra && unit.extra.length > 0;
 
         if (!hasSenza && !hasExtra && !unit.note) {
-          receiptHTML += `<br><span style="color:#27ae60;">✨ Completo</span>`;
+          receiptHTML += ` <span style="color:#27ae60;">✨ Completo</span>`;
         } else {
           if (hasSenza) {
             let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
-            receiptHTML += `<br><span style="color:#c0392b;">❌ Senza: ${senzaNames}</span>`;
+            receiptHTML += ` <span style="color:#c0392b;">❌ Senza: ${senzaNames}</span>`;
           }
           if (hasExtra) {
             let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
-            receiptHTML += `<br><span style="color:#27ae60;">✅ Extra: ${extraNames}</span>`;
+            receiptHTML += ` <span style="color:#27ae60;">✅ Extra: ${extraNames}</span>`;
           }
         }
-
         if (unit.note) {
-          receiptHTML += `<br><span style="color:#555;">📝 Note: ${unit.note}</span>`;
+          receiptHTML += ` <span style="color:#555;">📝 Note: ${unit.note}</span>`;
         }
-        receiptHTML += `</div>`;
       });
+      receiptHTML += `</div>`;
     }
   }
 
@@ -1667,6 +1674,8 @@ function sendWhatsAppOrder() {
       }
       itemCounter++;
     } else {
+      orderText += `\n\n*${itemCounter}.* *${qty}x ${localizedTitle}*`;
+      
       cartItem.units.forEach((unit, uIdx) => {
         let rawPrice = item.price;
         let effPrice = item.price;
@@ -1680,32 +1689,27 @@ function sendWhatsAppOrder() {
         foodSubtotalRaw += rawPrice + unitExtraCost;
         foodSubtotalDiscounted += effPrice + unitExtraCost;
 
-        orderText += `\n\n*${uIdx + 1}.* *${localizedTitle}*`;
-        if (!hidePrices) {
-          orderText += ` (€ ${(effPrice + unitExtraCost).toFixed(2)})`;
-        }
-        
+        orderText += `\n   *${uIdx + 1}.*`;
         let hasSenza = unit.senza && unit.senza.length > 0;
         let hasExtra = unit.extra && unit.extra.length > 0;
 
         if (!hasSenza && !hasExtra && !unit.note) {
-          orderText += `\n   ✨ Completo`;
+          orderText += ` ✨ Completo`;
         } else {
           if (hasSenza) {
             let senzaNames = unit.senza.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += `\n   ❌ SENZA: ${senzaNames}`;
+            orderText += ` ❌ Senza: ${senzaNames}`;
           }
           if (hasExtra) {
             let extraNames = unit.extra.map(k => getLocalizedIngredient(k)).join(', ');
-            orderText += `\n   ✅ EXTRA: ${extraNames}`;
+            orderText += ` ✅ Extra: ${extraNames}`;
           }
         }
-
         if (unit.note) {
-          orderText += `\n   📝 Note: ${unit.note}`;
+          orderText += ` 📝 Note: ${unit.note}`;
         }
-        itemCounter++;
       });
+      itemCounter++;
     }
   }
 
