@@ -552,7 +552,7 @@
     <div id="cola-progress" style="font-size: 0.65rem; font-weight: bold; color: #d35400; margin-top: 2px;"></div>
   </div>
   <div class="bottom-actions">
-    <button class="cart-preview-btn" onclick="openCartPreviewModal()" id="cart-preview-btn-text">
+    <button class="cart-preview-btn" onclick="openCartPreviewModal()">
       🛒 Cart
     </button>
     <button class="whatsapp-btn" id="whatsapp-submit-btn" onclick="openConfirmationModal()">
@@ -561,7 +561,7 @@
   </div>
 </div>
 
-<!-- آرڈر کنفرمیشن اور موڈیفیکیشن ماڈل -->
+<!-- 1. آرڈر کنفرمیشن ماڈل -->
 <div class="modal-overlay" id="confirm-modal">
   <div class="modal-card">
     <div class="receipt-header">
@@ -578,7 +578,7 @@
   </div>
 </div>
 
-<!-- کارٹ ری چیک کرنے کا ماڈل -->
+<!-- 2. کارٹ ری چیک کرنے کا ماڈل -->
 <div class="modal-overlay" id="cart-modal">
   <div class="modal-card">
     <div class="receipt-header">
@@ -1488,7 +1488,7 @@ function getDefaultTime(minutesToAdd) {
   return `${hours}:${minutes}`;
 }
 
-// کارٹ ری چیک پاپ اپ کھولنا
+// 🛒 کارٹ کا پاپ اپ کھولنا
 function openCartPreviewModal() {
   let hasItems = Object.keys(state.cart).length > 0;
   if (!hasItems) {
@@ -1530,6 +1530,7 @@ function closeCartPreviewModal() {
   document.getElementById('cart-modal').style.display = 'none';
 }
 
+// 📋 آرڈر کنفرمیشن پاپ اپ کھولنا
 function openConfirmationModal() {
   let hasItems = Object.keys(state.cart).length > 0;
   if (!hasItems) {
@@ -1693,6 +1694,7 @@ function getOrderCode() {
   return `#${seqFormatted}`;
 }
 
+// 📱 واٹس ایپ پر آرڈر بھیجنے کا فنکشن
 function sendWhatsAppOrder() {
   const nameInput = document.getElementById('cust-name');
   const name = nameInput ? nameInput.value.trim() : '';
@@ -1812,13 +1814,12 @@ function sendWhatsAppOrder() {
     orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  // درست واٹس ایپ ಲಿংক
   let phone = "393932228224";
   let url = `https://wa.me/${phone}?text=${encodeURIComponent(orderText)}`;
   
   closeConfirmationModal();
 
-  // واٹس ایپ کھولنے کے ساتھ ہی کارٹ اور لوکل اسٹوریج کو زیرو (خالی) کرنا
+  // کارٹ کو زیرو کرنے کا عمل
   state.cart = {};
   localStorage.removeItem('kebab_cart');
   renderMenu();
