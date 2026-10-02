@@ -552,11 +552,17 @@
 </div>
 
 <script>
+// LocalStorage کے ذریعے کارٹ کا ڈیٹا محفوظ اور لوڈ کرنا
 const state = {
   orderType: 'asporto',
-  cart: {},
+  cart: JSON.parse(localStorage.getItem('kebab_cart')) || {},
   lang: 'it'
 };
+
+// لوکل اسٹوریج میں کارٹ محفوظ کرنے کا فنکشن
+function saveCartToStorage() {
+  localStorage.setItem('kebab_cart', JSON.stringify(state.cart));
+}
 
 const commonSenzaKeys = ['piccante', 'yogurt', 'algerina', 'rosa', 'insalata', 'verza_carote', 'cetrioli', 'cipolla', 'pomodoro', 'olive', 'peperoncino'];
 const commonExtraKeys = ['maionese', 'ketchup', 'extra_cipolla', 'extra_piccante', 'carne_extra'];
@@ -945,7 +951,7 @@ const menuNamesMap = {
     'Red Bull': 'Red Bull',
     'Monster Energy Drink': 'Monster Energy Drink',
     'Birra Moretti 66cl': 'Bere Moretti 66cl',
-    'Birra Peroni 66cl': 'Bere Peroni 66cl',
+    'Bere Peroni 66cl': 'Bere Peroni 66cl',
     'MENÙ PANINO CON BIBITA (PROMO)': 'MENIU SANDVIȘ CU BĂUTURĂ (PROMO)',
     'MENÙ PANINO CON BIBITA': 'MENIU SANDVIȘ CU BĂUTURĂ',
     'MENÙ PIADINA CON BIBITA': 'MENIU PIADINA CU BĂUTURĂ',
@@ -1067,7 +1073,7 @@ const menuData = [
   { id: 'f_2', name: 'Patatine Frritte Grande', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_3', name: 'Anelli Cipolla (8pz)', price: 3.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_4', name: 'Mozzarella Stick (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
-  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', sans: [], extraKeys: ['ketchup', 'maionese'] },
+  { id: 'f_5', name: 'Chicken Nuggets (6pz)', price: 4.00, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
   { id: 'f_6', name: 'Chicken Wings (5pz)', price: 5.50, category: 'fritti', senzaKeys: [], extraKeys: ['ketchup', 'maionese'] },
 
   { id: 'bev_1', name: 'Coca-Cola 33cl', price: 1.50, category: 'bevande', isBeverage: true, senzaKeys: [], extraKeys: [] },
@@ -1358,6 +1364,7 @@ function modifyQty(id, delta) {
       }
     }
   }
+  saveCartToStorage(); // 💾 کارٹ تبدیل ہوتے ہی لوکل اسٹوریج میں محفوظ ہو جائے گا
   renderMenu();
   calcTotal();
 }
@@ -1373,6 +1380,7 @@ function toggleUnitCustom(id, uIdx, type, key) {
   } else {
     arr.push(key);
   }
+  saveCartToStorage(); // 💾 کسٹمائزیشن محفوظ ہوگی
   renderMenu();
   calcTotal();
 }
@@ -1380,6 +1388,7 @@ function toggleUnitCustom(id, uIdx, type, key) {
 function updateUnitNote(id, uIdx, val) {
   if (state.cart[id] && state.cart[id].units[uIdx]) {
     state.cart[id].units[uIdx].note = val;
+    saveCartToStorage(); // 💾 نوٹ محفوظ ہوگا
   }
 }
 
@@ -1726,7 +1735,17 @@ function sendWhatsAppOrder() {
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
   closeConfirmationModal();
+
+  // 🚀 واٹس ایپ پر آرڈر کامیابی سے بھیجنے کے بعد کارٹ اور لوکل اسٹوریج کو مکمل خالی (Zero) کرنا
+  state.cart = {};
+  localStorage.removeItem('kebab_cart');
+  renderMenu();
+  calcTotal();
 }
+
+// ابتدائی رینڈر
+renderMenu();
+calcTotal();
 </script>
 </body>
 </html>
