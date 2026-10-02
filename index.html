@@ -1432,7 +1432,6 @@ function calcTotal() {
   }
   document.getElementById('cola-progress').innerText = progressMsg;
 
-  // کارٹ کا ڈیٹا لوکل سٹوریج میں سیو ہورہا ہے
   localStorage.setItem('cart', JSON.stringify(state.cart));
 }
 
@@ -1624,7 +1623,7 @@ function sendWhatsAppOrder() {
   const name = nameInput ? nameInput.value.trim() : '';
   
   if (!name) {
-    alert("Inserisci il tuo nome prima di procedere! (नाम लिखना अनिवार्य है)");
+    alert("Inserisci il tuo nome prima di procedere!");
     if(nameInput) nameInput.focus();
     return;
   }
@@ -1733,7 +1732,7 @@ function sendWhatsAppOrder() {
       orderText += `Consegna (Rider): € ${deliveryFee.toFixed(2)}\n`;
     }
     if (foodSubtotalDiscounted >= 40) {
-      orderTest += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
+      orderText += `🎁 Coca-Cola 1.5L Omaggio Inclusa!\n`;
     }
     orderText += `*TOTALE COMPLESSIVO: € ${grandTotal.toFixed(2)}*\n`;
   } else {
@@ -1744,7 +1743,6 @@ function sendWhatsAppOrder() {
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
   
-  // واٹس ایپ پر آرڈر بھیجنے کے بعد کارٹ اور لوکل سٹوریج کو زیرو (خالی) کرنے کا کوڈ
   state.cart = {};
   localStorage.removeItem('cart');
   renderMenu();
@@ -1753,9 +1751,7 @@ function sendWhatsAppOrder() {
   closeConfirmationModal();
 }
 
-// درست ترتیب کے ساتھ پیج لوڈ ہونے پر ڈیٹا لوڈ کرنے کا فنکشن
 window.onload = function() {
-  // 1. سب سے پہلے لوکل سٹوریج سے پرانا کارٹ ڈیٹا لوڈ کریں
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
     try {
@@ -1766,7 +1762,6 @@ window.onload = function() {
     }
   }
 
-  // 2. اس کے بعد آرڈر کی محفوظ شدہ قسم (Order Type) لوڈ کریں
   const savedOrderType = localStorage.getItem('kebab_order_type');
   if (savedOrderType) {
     setOrderType(savedOrderType);
@@ -1774,7 +1769,6 @@ window.onload = function() {
     setOrderType('asporto');
   }
 
-  // 3. آخر میں مینو اور ٹوٹل کو سکرین پر رینڈر کریں
   renderMenu();
   calcTotal();
 };
