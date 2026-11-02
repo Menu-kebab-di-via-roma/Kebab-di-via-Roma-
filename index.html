@@ -1739,14 +1739,19 @@ function sendWhatsAppOrder() {
     orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  fetch('http://192.168.1.80:9100/', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-    body: orderText
-  }).catch(err => console.log("Print error:", err));
+  let encodedText = encodeURIComponent(orderText);
+window.location.href = 'rawbt://text/' + encodedText;
+
+let encodedMessage = encodeURIComponent(orderText);
+let whatsappUrl = 'https://wa.me/393932228224?text=' + encodedMessage;
+window.open(whatsappUrl, '_blank');
+
+state.cart = {};
+localStorage.removeItem('cart');
+renderMenu();
+calTotal();
+
+closeConfirmationModal();
 
   let encodedMessage = encodeURIComponent(orderText);
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
