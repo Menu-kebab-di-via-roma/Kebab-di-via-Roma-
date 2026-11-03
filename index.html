@@ -1739,8 +1739,10 @@ function sendWhatsAppOrder() {
     orderText += `*Note Deliveroo Inviate*\n`;
   }
 
-  let encodedText = encodeURIComponent(orderText);
-window.location.href = 'rawbt://text/' + encodedText;
+  let iframe = document.createElement('iframe');
+iframe.style.display = 'none';
+iframe.src = 'rawbt://text/' + encodeURIComponent(orderText);
+document.body.appendChild(iframe);
 
 let encodedMessage = encodeURIComponent(orderText);
 let whatsappUrl = 'https://wa.me/393932228224?text=' + encodedMessage;
