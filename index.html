@@ -1744,17 +1744,6 @@ iframe.style.display = 'none';
 iframe.src = 'rawbt://text/' + encodeURIComponent(orderText);
 document.body.appendChild(iframe);
 
-let encodedMessage = encodeURIComponent(orderText);
-let whatsappUrl = 'https://wa.me/393932228224?text=' + encodedMessage;
-window.open(whatsappUrl, '_blank');
-
-state.cart = {};
-localStorage.removeItem('cart');
-renderMenu();
-calTotal();
-
-closeConfirmationModal();
-
   let encodedMessage = encodeURIComponent(orderText);
   let whatsappUrl = `https://wa.me/393932228224?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
